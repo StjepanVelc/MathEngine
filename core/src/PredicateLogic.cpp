@@ -219,12 +219,14 @@ private:
 			return PredicateExpression::negation(parseUnary());
 		}
 		if (match("\u2200") || matchKeyword("forall")) {
-			return PredicateExpression::forAll(parseIdentifier("Ocekivano ime varijable iza \u2200"),
-											   parseUnary());
+			auto variable = parseIdentifier("Ocekivano ime varijable iza \u2200");
+			auto body = parseUnary();
+			return PredicateExpression::forAll(std::move(variable), std::move(body));
 		}
 		if (match("\u2203") || matchKeyword("exists")) {
-			return PredicateExpression::exists(parseIdentifier("Ocekivano ime varijable iza \u2203"),
-											   parseUnary());
+			auto variable = parseIdentifier("Ocekivano ime varijable iza \u2203");
+			auto body = parseUnary();
+			return PredicateExpression::exists(std::move(variable), std::move(body));
 		}
 		return parseAtom();
 	}
