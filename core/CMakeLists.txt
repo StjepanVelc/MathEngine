@@ -2,6 +2,10 @@
 
 add_library(aksiomat_core STATIC
 	src/LogicExpression.cpp
+	src/LogicParser.cpp
+	src/TruthTable.cpp
+	src/PredicateLogic.cpp
+	src/Arithmetic.cpp
 )
 
 target_include_directories(aksiomat_core PUBLIC
@@ -18,10 +22,14 @@ if (EMSCRIPTEN)
 		OUTPUT_NAME "aksiomat"
 		SUFFIX ".js"
 	)
+	# C++ iznimke moraju biti uključene da ih bindings mogu uhvatiti u WASM-u.
+	target_compile_options(aksiomat_core PRIVATE "-fexceptions")
+	target_compile_options(aksiomat_wasm PRIVATE "-fexceptions")
 	target_link_options(aksiomat_wasm PRIVATE
 		"-sMODULARIZE=1"
 		"-sEXPORT_NAME=createAksiomatModule"
 		"--bind"
+		"-fexceptions"
 	)
 
 	# Nakon svakog builda automatski kopiraj aksiomat.js i aksiomat.wasm u web/.

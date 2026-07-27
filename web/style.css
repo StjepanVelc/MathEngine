@@ -37,3 +37,190 @@ section {
     border: 1px solid #313244;
     border-radius: 8px;
 }
+
+.chapter {
+    padding: 0;
+    overflow: hidden;
+}
+
+.chapter-toggle {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    background: #313244;
+    color: var(--accent);
+    border: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+}
+
+.chapter-toggle:hover {
+    background: #45475a;
+}
+
+.chapter-body {
+    padding: 1rem;
+}
+
+#arith-input {
+    padding: 0.5rem;
+    width: 60%;
+    background: #313244;
+    color: var(--fg);
+    border: 1px solid #45475a;
+    border-radius: 4px;
+}
+
+#arith-eval {
+    padding: 0.5rem 1rem;
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+output.error {
+    color: #f38ba8;
+}
+
+.parsed {
+    opacity: 0.8;
+    min-height: 1.2em;
+}
+
+.parsed.error {
+    color: #f38ba8;
+}
+
+.symbol-palette {
+    display: flex;
+    gap: 0.4rem;
+    margin-bottom: 0.6rem;
+}
+
+.symbol-palette button {
+    min-width: 2.4rem;
+    padding: 0.4rem;
+    font-size: 1.1rem;
+    background: #313244;
+    color: var(--accent);
+    border: 1px solid #45475a;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.symbol-palette button:hover {
+    background: #45475a;
+}
+
+#logic-input {
+    padding: 0.5rem;
+    width: 80%;
+    background: #313244;
+    color: var(--fg);
+    border: 1px solid #45475a;
+    border-radius: 4px;
+}
+
+#logic-vars {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin: 0.6rem 0;
+}
+
+.formula-input {
+    display: block;
+    padding: 0.5rem;
+    width: 80%;
+    margin: 0.4rem 0;
+    background: #313244;
+    color: var(--fg);
+    border: 1px solid #45475a;
+    border-radius: 4px;
+}
+
+.subchapter-nav,
+.difficulty-nav,
+.form-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.subchapter-toggle,
+.difficulty-btn,
+#truth-table-btn,
+#pred-eval,
+#form-check,
+#form-next {
+    padding: 0.5rem 1rem;
+    background: #313244;
+    color: var(--accent);
+    border: 1px solid #45475a;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.subchapter-toggle:hover,
+.difficulty-btn:hover,
+#truth-table-btn:hover,
+#pred-eval:hover,
+#form-check:hover,
+#form-next:hover {
+    background: #45475a;
+}
+
+.subchapter-toggle.active,
+.difficulty-btn.active {
+    background: var(--accent);
+    color: var(--bg);
+}
+
+.subchapter-panel {
+    margin-top: 1rem;
+}
+
+.truth-table {
+    margin-top: 0.8rem;
+    border-collapse: collapse;
+}
+
+.truth-table th,
+.truth-table td {
+    border: 1px solid #45475a;
+    padding: 0.3rem 0.8rem;
+    text-align: center;
+}
+
+.truth-table th {
+    background: #313244;
+    color: var(--accent);
+}
+
+.truth-table .true-cell {
+    color: #a6e3a1;
+    font-weight: 600;
+}
+
+.truth-table .false-cell {
+    color: #f38ba8;
+}
+
+.sentence {
+    font-size: 1.1rem;
+    font-style: italic;
+}
+
+.legend {
+    opacity: 0.75;
+}
+
+.parsed.correct {
+    color: #a6e3a1;
+    opacity: 1;
+}

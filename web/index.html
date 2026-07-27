@@ -12,18 +12,118 @@
         <p class="subtitle">C++ matematička jezgra → WebAssembly → web-aplikacija</p>
 
         <section id="status">
-            <p>WASM modul još nije priključen — ovo je placeholder frontend.</p>
+            <p>Učitavam WASM modul…</p>
         </section>
 
-        <section id="demo" hidden>
-            <h2>Demo: (p ∧ ¬q)</h2>
-            <label><input type="checkbox" id="var-p"> p</label>
-            <label><input type="checkbox" id="var-q"> q</label>
-            <p>Rezultat: <output id="result">—</output></p>
+        <!-- Poglavlje: Logika -->
+        <section class="chapter" hidden>
+            <button class="chapter-toggle" aria-expanded="false">Logika ▸</button>
+            <div class="chapter-body" hidden>
+                <div class="subchapter-nav">
+                    <button type="button" class="subchapter-toggle" data-panel="panel-propositional">Iskazna logika</button>
+                    <button type="button" class="subchapter-toggle" data-panel="panel-predicate">Predikatna logika</button>
+                    <button type="button" class="subchapter-toggle" data-panel="panel-formalization">Formalizacija rečenica</button>
+                </div>
+
+                <!-- Podpoglavlje: Iskazna logika -->
+                <div id="panel-propositional" class="subchapter-panel" hidden>
+                    <h2>Iskazna logika</h2>
+                    <p>Podržani operatori: ¬ (negacija), ∧ (konjunkcija), ∨ (disjunkcija), → (implikacija), ↔ (ekvivalencija), zagrade i varijable.<br>
+                       Možeš tipkati i ASCII: <code>! &amp; | -&gt; &lt;-&gt;</code></p>
+                    <div class="symbol-palette" data-target="logic-input">
+                        <button type="button" data-symbol="¬">¬</button>
+                        <button type="button" data-symbol="∧">∧</button>
+                        <button type="button" data-symbol="∨">∨</button>
+                        <button type="button" data-symbol="→">→</button>
+                        <button type="button" data-symbol="↔">↔</button>
+                        <button type="button" data-symbol="(">(</button>
+                        <button type="button" data-symbol=")">)</button>
+                    </div>
+                    <input type="text" id="logic-input" class="formula-input" placeholder="npr. (p ∧ ¬q) → r" autocomplete="off">
+                    <p id="logic-parsed" class="parsed"></p>
+                    <div id="logic-vars"></div>
+                    <p>Rezultat: <output id="logic-result">—</output></p>
+                    <button type="button" id="truth-table-btn">Tablica istinitosti</button>
+                    <div id="truth-table-box"></div>
+                </div>
+
+                <!-- Podpoglavlje: Predikatna logika -->
+                <div id="panel-predicate" class="subchapter-panel" hidden>
+                    <h2>Predikatna logika</h2>
+                    <p>Kvantifikatori: ∀ (za svaki), ∃ (postoji); predikati kao <code>P(x)</code>, <code>Manji(x, y)</code>; veznici kao u iskaznoj logici.<br>
+                       ASCII: <code>forall x</code>, <code>exists x</code></p>
+                    <div class="symbol-palette" data-target="pred-input">
+                        <button type="button" data-symbol="∀">∀</button>
+                        <button type="button" data-symbol="∃">∃</button>
+                        <button type="button" data-symbol="¬">¬</button>
+                        <button type="button" data-symbol="∧">∧</button>
+                        <button type="button" data-symbol="∨">∨</button>
+                        <button type="button" data-symbol="→">→</button>
+                        <button type="button" data-symbol="↔">↔</button>
+                        <button type="button" data-symbol="(">(</button>
+                        <button type="button" data-symbol=")">)</button>
+                    </div>
+                    <input type="text" id="pred-input" class="formula-input" placeholder="npr. ∀x ∃y Manji(x, y)" autocomplete="off">
+                    <p id="pred-parsed" class="parsed"></p>
+                    <h3>Interpretacija (konačna domena)</h3>
+                    <label>Domena (elementi odvojeni zarezom):<br>
+                        <input type="text" id="pred-domain" class="formula-input" placeholder="npr. 1,2,3" autocomplete="off">
+                    </label>
+                    <label>Činjenice — n-torke za koje su predikati istiniti, odvojene točka-zarezom:<br>
+                        <input type="text" id="pred-facts" class="formula-input" placeholder="npr. Paran(2);Manji(1,2);Manji(2,3)" autocomplete="off">
+                    </label>
+                    <button type="button" id="pred-eval">Evaluiraj</button>
+                    <p>Rezultat: <output id="pred-result">—</output></p>
+                </div>
+
+                <!-- Podpoglavlje: Formalizacija rečenica -->
+                <div id="panel-formalization" class="subchapter-panel" hidden>
+                    <h2>Formalizacija rečenica</h2>
+                    <p>Prevedi rečenicu na jezik logike. Prihvaća se svaka logički ekvivalentna formula.</p>
+                    <div class="difficulty-nav">
+                        <button type="button" class="difficulty-btn" data-difficulty="pocetna">Početna</button>
+                        <button type="button" class="difficulty-btn" data-difficulty="srednja">Srednja</button>
+                        <button type="button" class="difficulty-btn" data-difficulty="napredna">Napredna</button>
+                    </div>
+                    <div id="form-exercise" hidden>
+                        <p id="form-sentence" class="sentence"></p>
+                        <p id="form-legend" class="legend"></p>
+                        <div class="symbol-palette" data-target="form-input">
+                            <button type="button" data-symbol="¬">¬</button>
+                            <button type="button" data-symbol="∧">∧</button>
+                            <button type="button" data-symbol="∨">∨</button>
+                            <button type="button" data-symbol="→">→</button>
+                            <button type="button" data-symbol="↔">↔</button>
+                            <button type="button" data-symbol="(">(</button>
+                            <button type="button" data-symbol=")">)</button>
+                        </div>
+                        <input type="text" id="form-input" class="formula-input" placeholder="upiši formulu…" autocomplete="off">
+                        <div class="form-actions">
+                            <button type="button" id="form-check">Provjeri</button>
+                            <button type="button" id="form-next">Sljedeći zadatak</button>
+                        </div>
+                        <p id="form-feedback" class="parsed"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Poglavlje: Aritmetika -->
+        <section class="chapter" hidden>
+            <button class="chapter-toggle" aria-expanded="false">Aritmetika ▸</button>
+            <div class="chapter-body" hidden>
+                <h2>Kalkulator izraza</h2>
+                <p>Podržane operacije: +, −, ×, ÷, zagrade i decimalni brojevi.</p>
+                <input type="text" id="arith-input" placeholder="npr. 2*(3+4)/7" autocomplete="off">
+                <button id="arith-eval">Izračunaj</button>
+                <p>Rezultat: <output id="arith-result">—</output></p>
+            </div>
         </section>
     </main>
 
     <script src="aksiomat.js"></script>
+    <script src="formalization.js"></script>
+    <script src="predicates.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

@@ -12,6 +12,10 @@ FetchContent_MakeAvailable(googletest)
 
 add_executable(core_tests
 	test_logic_expression.cpp
+	test_logic_parser.cpp
+	test_truth_table.cpp
+	test_predicate_logic.cpp
+	test_arithmetic.cpp
 )
 
 target_link_libraries(core_tests PRIVATE
