@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathEngine</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main>
+        <h1>MathEngine</h1>
+        <p class="subtitle">C++ matematička jezgra → WebAssembly → web-aplikacija</p>
+
+        <section id="status">
+            <p>WASM modul još nije priključen — ovo je placeholder frontend.</p>
+        </section>
+
+        <section id="demo" hidden>
+            <h2>Demo: (p ∧ ¬q)</h2>
+            <label><input type="checkbox" id="var-p"> p</label>
+            <label><input type="checkbox" id="var-q"> q</label>
+            <p>Rezultat: <output id="result">—</output></p>
+        </section>
+    </main>
+
+    <script src="aksiomat.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
