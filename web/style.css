@@ -210,6 +210,7 @@ output.error {
 }
 
 .subchapter-nav,
+.arithmetic-nav,
 .difficulty-nav,
 .form-actions {
     display: flex;
@@ -219,6 +220,7 @@ output.error {
 }
 
 .subchapter-toggle,
+.arithmetic-toggle,
 .difficulty-btn,
 #truth-table-btn,
 #pred-eval,
@@ -233,6 +235,7 @@ output.error {
 }
 
 .subchapter-toggle:hover,
+.arithmetic-toggle:hover,
 .difficulty-btn:hover,
 #truth-table-btn:hover,
 #pred-eval:hover,
@@ -242,9 +245,49 @@ output.error {
 }
 
 .subchapter-toggle.active,
+.arithmetic-toggle.active,
 .difficulty-btn.active {
     background: var(--accent);
     color: var(--bg);
+}
+
+.arithmetic-panel {
+    margin-top: 1rem;
+}
+
+.compact-input,
+.arithmetic-panel select,
+.arithmetic-panel input[type="number"] {
+    max-width: 12rem;
+    padding: 0.5rem;
+    margin: 0.3rem;
+    background: #313244;
+    color: var(--fg);
+    border: 1px solid #45475a;
+    border-radius: 4px;
+}
+
+.arithmetic-panel button {
+    padding: 0.5rem 1rem;
+    margin: 0.3rem;
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.arithmetic-panel button:hover {
+    filter: brightness(1.1);
+}
+
+.arithmetic-panel output,
+.arithmetic-panel div:not(.symbol-palette) {
+    overflow-wrap: anywhere;
+}
+
+.error {
+    color: #f38ba8;
 }
 
 .subchapter-panel {

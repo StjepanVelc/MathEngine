@@ -133,11 +133,74 @@
         <section class="chapter" hidden>
             <button class="chapter-toggle" aria-expanded="false">Aritmetika ▸</button>
             <div class="chapter-body" hidden>
-                <h2>Kalkulator izraza</h2>
-                <p>Podržane operacije: +, −, ×, ÷, zagrade i decimalni brojevi.</p>
-                <input type="text" id="arith-input" placeholder="npr. 2*(3+4)/7" autocomplete="off">
-                <button id="arith-eval">Izračunaj</button>
-                <p>Rezultat: <output id="arith-result">—</output></p>
+                <div class="arithmetic-nav">
+                    <button type="button" class="arithmetic-toggle" data-panel="arith-calculator">Kalkulator</button>
+                    <button type="button" class="arithmetic-toggle" data-panel="arith-fractions">Razlomci</button>
+                    <button type="button" class="arithmetic-toggle" data-panel="arith-percentages">Postotci</button>
+                    <button type="button" class="arithmetic-toggle" data-panel="arith-number-theory">Teorija brojeva</button>
+                    <button type="button" class="arithmetic-toggle" data-panel="arith-numeral-systems">Brojevni sustavi</button>
+                </div>
+
+                <div id="arith-calculator" class="arithmetic-panel" hidden>
+                    <h2>Kalkulator</h2>
+                    <p>Podržano: +, −, ×, ÷, %, ^, !, pi, e, sqrt, abs, min, max, round, floor, ceil i mod.</p>
+                    <div class="symbol-palette" data-target="arith-input">
+                        <button type="button" data-symbol="^">xʸ</button><button type="button" data-symbol="!">!</button>
+                        <button type="button" data-symbol="sqrt(">√</button><button type="button" data-symbol="pi">π</button>
+                        <button type="button" data-symbol="abs(">|x|</button><button type="button" data-symbol="(">(</button><button type="button" data-symbol=")">)</button>
+                    </div>
+                    <input type="text" id="arith-input" class="formula-input" placeholder="npr. -2^2 + sqrt(16) * 3!" autocomplete="off">
+                    <button id="arith-eval">Izračunaj</button>
+                    <p>Rezultat: <output id="arith-result">—</output></p>
+                </div>
+
+                <div id="arith-fractions" class="arithmetic-panel" hidden>
+                    <h2>Razlomci</h2>
+                    <input id="fraction-left" class="compact-input" placeholder="1/2">
+                    <select id="fraction-operation"><option>+</option><option>-</option><option>*</option><option>/</option></select>
+                    <input id="fraction-right" class="compact-input" placeholder="1/3">
+                    <button id="fraction-eval">Izračunaj</button>
+                    <div id="fraction-result"></div>
+                    <h3>Decimalni broj u razlomak</h3>
+                    <input id="decimal-fraction-input" class="compact-input" placeholder="1.25">
+                    <button id="decimal-fraction-eval">Pretvori</button>
+                    <output id="decimal-fraction-result">—</output>
+                </div>
+
+                <div id="arith-percentages" class="arithmetic-panel" hidden>
+                    <h2>Postotci</h2>
+                    <select id="percentage-operation">
+                        <option value="of">Koliko je A% od B?</option><option value="increase">Povećaj A za B%</option>
+                        <option value="decrease">Smanji A za B%</option><option value="ratio">A je koliko % od B?</option>
+                        <option value="originalIncrease">Početna vrijednost prije povećanja</option>
+                        <option value="originalDecrease">Početna vrijednost prije smanjenja</option>
+                    </select>
+                    <input id="percentage-first" type="number" step="any" class="compact-input" placeholder="A">
+                    <input id="percentage-second" type="number" step="any" class="compact-input" placeholder="B">
+                    <button id="percentage-eval">Izračunaj</button>
+                    <p>Rezultat: <output id="percentage-result">—</output></p>
+                </div>
+
+                <div id="arith-number-theory" class="arithmetic-panel" hidden>
+                    <h2>Teorija brojeva</h2>
+                    <input id="number-theory-input" class="compact-input" type="number" min="1" step="1" placeholder="npr. 360">
+                    <button id="number-theory-eval">Analiziraj</button>
+                    <div id="number-theory-result"></div>
+                    <h3>NZD i NZV</h3>
+                    <input id="gcd-left" class="compact-input" type="number" min="0" step="1" placeholder="48">
+                    <input id="gcd-right" class="compact-input" type="number" min="0" step="1" placeholder="18">
+                    <button id="gcd-eval">Izračunaj</button>
+                    <output id="gcd-result">—</output>
+                </div>
+
+                <div id="arith-numeral-systems" class="arithmetic-panel" hidden>
+                    <h2>Brojevni sustavi</h2>
+                    <input id="numeral-input" class="compact-input" placeholder="npr. FF">
+                    <label>Iz baze <input id="numeral-from" type="number" min="2" max="36" value="16"></label>
+                    <label>U bazu <input id="numeral-to" type="number" min="2" max="36" value="10"></label>
+                    <button id="numeral-eval">Pretvori</button>
+                    <p>Rezultat: <output id="numeral-result">—</output></p>
+                </div>
             </div>
         </section>
     </main>
@@ -145,6 +208,7 @@
     <script src="aksiomat.js"></script>
     <script src="formalization.js"></script>
     <script src="predicates.js"></script>
+    <script src="arithmetic.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

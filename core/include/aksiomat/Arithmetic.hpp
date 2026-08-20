@@ -4,9 +4,9 @@
 
 namespace aksiomat {
 
-// Aritmetički evaluator izraza.
-// Podržava: +, -, *, /, zagrade, decimalne brojeve, unarni minus.
-// Baca std::invalid_argument za neispravan izraz i dijeljenje s nulom.
+// Kompatibilna fasada naprednog aritmetičkog parsera i evaluatora.
+// Podržava +, -, *, /, %, ^, !, zagrade, znanstveni zapis, pi/e te
+// sqrt, abs, min, max, round, floor, ceil i mod.
 class Arithmetic {
 public:
 	static double evaluate(const std::string& expression);

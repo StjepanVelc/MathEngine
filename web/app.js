@@ -182,28 +182,6 @@ function setupLogic(module) {
     tableBtn.addEventListener("click", renderTruthTable);
 }
 
-function setupArithmetic(module) {
-    const input = document.getElementById("arith-input");
-    const button = document.getElementById("arith-eval");
-    const result = document.getElementById("arith-result");
-
-    function evaluate() {
-        const expr = input.value.trim();
-        if (!expr) {
-            result.textContent = "—";
-            return;
-        }
-        const text = module.evaluateArithmetic(expr);
-        result.textContent = text;
-        result.classList.toggle("error", text.startsWith("GRESKA:"));
-    }
-
-    button.addEventListener("click", evaluate);
-    input.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") evaluate();
-    });
-}
-
 async function init() {
     const status = document.getElementById("status");
     if (typeof createAksiomatModule !== "function") {

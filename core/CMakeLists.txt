@@ -9,7 +9,14 @@ add_library(aksiomat_core STATIC
 	src/PredicateExpression.cpp
 	src/PredicateParser.cpp
 	src/Interpretation.cpp
+	src/ArithmeticExpression.cpp
+	src/ArithmeticParser.cpp
+	src/ArithmeticEvaluator.cpp
 	src/Arithmetic.cpp
+	src/Rational.cpp
+	src/Percentages.cpp
+	src/NumberTheory.cpp
+	src/NumeralSystems.cpp
 )
 
 target_include_directories(aksiomat_core PUBLIC

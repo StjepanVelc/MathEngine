@@ -19,6 +19,10 @@ add_executable(core_tests
 	test_normal_forms.cpp
 	test_predicate_logic.cpp
 	test_arithmetic.cpp
+	test_rational.cpp
+	test_percentages.cpp
+	test_number_theory.cpp
+	test_numeral_systems.cpp
 )
 
 target_link_libraries(core_tests PRIVATE

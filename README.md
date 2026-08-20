@@ -7,7 +7,7 @@ MathEngine je edukacijska matematička web-aplikacija čija se jezgra izvodi u C
 - iskazna logika: parsiranje, evaluacija, tablice istinitosti i ekvivalencija
 - predikatna logika: predikati, `∀`/`∃`, slobodne varijable i konačne interpretacije
 - formalizacija hrvatskih rečenica kroz zadatke po težinama
-- aritmetički izrazi s prioritetom operacija, zagradama i decimalnim brojevima
+- modularna aritmetika: napredni kalkulator, točni razlomci, postotci, teorija brojeva i brojevni sustavi
 - lokalno spremanje napretka formalizacijskih zadataka u `localStorage`
 
 ## Arhitektura
@@ -87,6 +87,51 @@ Isti predikat mora u cijeloj formuli imati jednaku arnost. Konačna domena mora 
 ## Formalizacijski zadaci
 
 Zadaci se nalaze u `web/data/formalization-exercises.json`. Svaki zadatak ima jedinstveni `id`, rečenicu, legendu, rješenje i objašnjenje. Napredak se čuva lokalno po težini.
+
+## Aritmetika
+
+Aritmetička jezgra podijeljena je na neovisne module:
+
+- `ArithmeticExpression`, `ArithmeticParser`, `ArithmeticEvaluator` — napredni kalkulator
+- `Rational` — točni razlomci
+- `Percentages` — postotni izračuni
+- `NumberTheory` — prostost, djelitelji, faktorizacija, NZD i NZV
+- `NumeralSystems` — pretvorbe između baza 2–36
+
+`Arithmetic` ostaje kompatibilna fasada koja parsira i evaluira izraz.
+
+### Sintaksa kalkulatora
+
+Podržani su operatori `+`, `-`, `*`, `/`, `%`, `^` i postfiksni faktorijel `!`. Potenciranje je desno asocijativno, a standardna matematička konvencija daje `-2^2 = -4`.
+
+Konstante:
+
+- `pi`
+- `e`
+
+Funkcije:
+
+- `sqrt(x)`, `abs(x)`
+- `min(x,y)`, `max(x,y)`, `mod(x,y)`
+- `round(x)`, `floor(x)`, `ceil(x)`
+
+Podržan je znanstveni zapis, primjerice `1.5e6`. Primjer složenijeg izraza: `-2^2 + sqrt(16) * 3!`.
+
+### Razlomci
+
+Razlomci koriste 64-bitne cijele brojeve, automatski se skraćuju i čuvaju točan rezultat. Web prikazuje obični razlomak, mješoviti broj i decimalnu aproksimaciju. Decimalni zapis može se pretvoriti u točan razlomak.
+
+### Postotci
+
+Podržani su postotak vrijednosti, povećanje/smanjenje, omjer u postocima te izračun početne vrijednosti prije postotne promjene.
+
+### Teorija brojeva
+
+Podržani su provjera prostosti, sortirani djelitelji, rastav na proste faktore, najveći zajednički djelitelj i najmanji zajednički višekratnik.
+
+### Brojevni sustavi
+
+Potpisani 64-bitni cijeli brojevi mogu se pretvarati između baza 2–36. Izlaz koristi znamenke `0-9` i velika slova `A-Z`.
 
 ## Testovi i CI
 
