@@ -22,6 +22,7 @@ TEST(Arithmetic, PowerIsRightAssociativeAndPrecedesUnaryMinus) {
 TEST(Arithmetic, FactorialAndModulo) {
 	EXPECT_DOUBLE_EQ(Arithmetic::evaluate("5!"), 120.0);
 	EXPECT_DOUBLE_EQ(Arithmetic::evaluate("3!^2"), 36.0);
+	EXPECT_DOUBLE_EQ(Arithmetic::evaluate("3!-2"), 4.0);
 	EXPECT_DOUBLE_EQ(Arithmetic::evaluate("17%5"), 2.0);
 	EXPECT_DOUBLE_EQ(Arithmetic::evaluate("mod(17,5)"), 2.0);
 }

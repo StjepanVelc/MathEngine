@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 
+#include <limits>
 #include <stdexcept>
 
 #include "aksiomat/arithmetic/NumberTheory.hpp"
@@ -12,6 +13,11 @@ TEST(NumberTheory, DetectsPrimes) {
 	EXPECT_TRUE(NumberTheory::isPrime(2));
 	EXPECT_TRUE(NumberTheory::isPrime(97));
 	EXPECT_FALSE(NumberTheory::isPrime(100));
+}
+
+TEST(NumberTheory, DetectsLcmUint64Overflow) {
+	const auto maximum = std::numeric_limits<std::uint64_t>::max();
+	EXPECT_THROW(NumberTheory::lcm(maximum, 2), std::overflow_error);
 }
 
 TEST(NumberTheory, ListsSortedDivisors) {

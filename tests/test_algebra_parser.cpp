@@ -18,7 +18,7 @@ TEST(AlgebraParser, ParsesImplicitMultiplication) {
 	const auto coefficient = AlgebraParser::parse("2x");
 	EXPECT_EQ(coefficient->op(), AlgebraOp::Multiply);
 
-	const auto parenthesized = AlgebraParser::parse("3(x+1)");
+	const auto parenthesized = AlgebraParser::parse("2(x+1)");
 	EXPECT_EQ(parenthesized->op(), AlgebraOp::Multiply);
 	EXPECT_EQ(parenthesized->rhs()->op(), AlgebraOp::Add);
 

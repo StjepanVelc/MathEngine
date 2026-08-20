@@ -43,6 +43,7 @@ TEST(Polynomial, EvaluatesAndDifferentiates) {
 TEST(Polynomial, FindsLinearAndQuadraticRealRoots) {
 	EXPECT_EQ(Polynomial::parse("2x - 4").realRoots(), std::vector<double>({2.0}));
 	EXPECT_EQ(Polynomial::parse("x^2 - 5x + 6").realRoots(), std::vector<double>({2.0, 3.0}));
+	EXPECT_EQ(Polynomial::parse("x^2 - 4x + 4").realRoots(), std::vector<double>({2.0}));
 	EXPECT_TRUE(Polynomial::parse("x^2 + 1").realRoots().empty());
 }
 

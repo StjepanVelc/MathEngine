@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 
+#include <limits>
 #include <stdexcept>
 
 #include "aksiomat/arithmetic/Rational.hpp"
@@ -10,6 +11,12 @@ TEST(Rational, NormalizesSignsAndReduces) {
 	EXPECT_EQ(Rational(6, 8).toString(), "3/4");
 	EXPECT_EQ(Rational(1, -2).toString(), "-1/2");
 	EXPECT_EQ(Rational(-2, -4).toString(), "1/2");
+}
+
+TEST(Rational, DetectsInt64Overflow) {
+	const auto maximum = std::numeric_limits<std::int64_t>::max();
+	EXPECT_THROW(Rational(maximum) + Rational(1), std::overflow_error);
+	EXPECT_THROW(Rational(maximum) * Rational(2), std::overflow_error);
 }
 
 TEST(Rational, PerformsExactOperations) {
