@@ -4,6 +4,74 @@
     --accent: #89b4fa;
 }
 
+.number-line {
+    margin: 1rem 0 0;
+    padding: 0.8rem;
+    background: #181825;
+    border: 1px solid #45475a;
+    border-radius: 8px;
+}
+
+.number-line figcaption {
+    margin-bottom: 0.4rem;
+    color: #a6adc8;
+    font-weight: 600;
+}
+
+.number-line svg {
+    display: block;
+    width: 100%;
+    max-height: 120px;
+    overflow: visible;
+}
+
+.number-line text {
+    fill: #cdd6f4;
+    font: 15px ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+
+.number-line-axis {
+    stroke: #6c7086;
+    stroke-width: 4;
+    stroke-linecap: round;
+}
+
+.number-line-solution {
+    stroke: #89b4fa;
+    stroke-width: 8;
+    stroke-linecap: round;
+}
+
+.number-line-arrow,
+.number-line-point.closed {
+    fill: #89b4fa;
+    stroke: #89b4fa;
+}
+
+.number-line-point.open {
+    fill: #181825;
+    stroke: #89b4fa;
+    stroke-width: 5;
+}
+
+.method-card {
+    margin-top: 0.7rem;
+    padding: 0.65rem 0.8rem;
+    background: #27283a;
+    border: 1px solid #45475a;
+    border-radius: 6px;
+}
+
+.method-card summary {
+    color: #a6e3a1;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.method-card[open] summary {
+    margin-bottom: 0.6rem;
+}
+
 #form-reset-current,
 #form-reset-all {
     padding: 0.5rem 1rem;
@@ -211,6 +279,7 @@ output.error {
 
 .subchapter-nav,
 .arithmetic-nav,
+.algebra-nav,
 .difficulty-nav,
 .form-actions {
     display: flex;
@@ -221,6 +290,7 @@ output.error {
 
 .subchapter-toggle,
 .arithmetic-toggle,
+.algebra-toggle,
 .difficulty-btn,
 #truth-table-btn,
 #pred-eval,
@@ -236,6 +306,7 @@ output.error {
 
 .subchapter-toggle:hover,
 .arithmetic-toggle:hover,
+.algebra-toggle:hover,
 .difficulty-btn:hover,
 #truth-table-btn:hover,
 #pred-eval:hover,
@@ -246,6 +317,7 @@ output.error {
 
 .subchapter-toggle.active,
 .arithmetic-toggle.active,
+.algebra-toggle.active,
 .difficulty-btn.active {
     background: var(--accent);
     color: var(--bg);
@@ -253,6 +325,220 @@ output.error {
 
 .arithmetic-panel {
     margin-top: 1rem;
+}
+
+.algebra-panel {
+    margin-top: 1rem;
+}
+
+.tool-description {
+    margin: -0.25rem 0 0.8rem;
+    color: #bac2de;
+    font-size: 1rem;
+    line-height: 1.55;
+}
+
+.formula-card {
+    display: grid;
+    gap: 0.45rem;
+    margin: 0.8rem 0 1rem;
+    padding: 0.8rem 1rem;
+    background: linear-gradient(135deg, #27283a, #24273a);
+    border: 1px solid #45475a;
+    border-left: 4px solid #a6e3a1;
+    border-radius: 6px;
+}
+
+.formula-card strong {
+    color: #a6e3a1;
+}
+
+.formula-card code {
+    width: fit-content;
+    max-width: 100%;
+    padding: 0.3rem 0.5rem;
+    overflow-wrap: anywhere;
+    color: #f9e2af;
+    background: #181825;
+    border-radius: 4px;
+    font-size: 0.95rem;
+}
+
+.formula-card span {
+    color: #a6adc8;
+    line-height: 1.45;
+}
+
+.result-grid {
+    display: grid;
+    gap: 0.55rem;
+    margin: 1rem 0;
+}
+
+.inline-result {
+    display: inline-grid;
+    min-width: 14rem;
+    vertical-align: middle;
+}
+
+.result-row {
+    display: grid;
+    grid-template-columns: minmax(8rem, auto) minmax(0, 1fr);
+    gap: 1rem;
+    align-items: start;
+    padding: 0.7rem 0.85rem;
+    background: #27283a;
+    border: 1px solid #45475a;
+    border-radius: 6px;
+}
+
+.result-row > span {
+    color: #a6adc8;
+    font-weight: 600;
+}
+
+.result-row > output,
+.result-row > strong {
+    min-width: 0;
+    color: #cdd6f4;
+    overflow-wrap: anywhere;
+    font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+
+.result-primary {
+    background: #263346;
+    border-color: #89b4fa;
+}
+
+.result-primary > span,
+.result-primary > output,
+.result-primary > strong {
+    color: #89b4fa;
+}
+
+.result-summary {
+    display: block;
+    padding: 0.7rem 0.85rem;
+    color: #89b4fa;
+    background: #263346;
+    border: 1px solid #89b4fa;
+    border-radius: 6px;
+    overflow-wrap: anywhere;
+}
+
+.algebra-panel > button,
+.graph-expression-row button {
+    padding: 0.55rem 1rem;
+    background: var(--accent);
+    color: var(--bg);
+    border: 0;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.solution-steps {
+    margin-bottom: 0;
+    padding-left: 1.4rem;
+}
+
+.solution-steps li {
+    margin: 0.45rem 0;
+    font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+
+.graph-expression-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.graph-expression-row .formula-input {
+    flex: 1 1 20rem;
+    margin: 0;
+}
+
+.parameter-controls {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(10rem, 1fr));
+    gap: 0.8rem;
+    margin: 1rem 0;
+}
+
+.parameter-controls label {
+    display: grid;
+    grid-template-columns: auto 1fr 3rem;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem;
+    background: #27283a;
+    border-radius: 6px;
+}
+
+.graph-shell {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background: #181825;
+    border: 1px solid #45475a;
+    border-radius: 8px;
+}
+
+#algebra-graph {
+    display: block;
+    width: 100%;
+    min-height: 280px;
+    cursor: crosshair;
+    touch-action: none;
+}
+
+#algebra-graph:active {
+    cursor: grabbing;
+}
+
+.graph-coordinates {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    padding: 0.35rem 0.55rem;
+    background: rgb(24 24 37 / 85%);
+    border-radius: 4px;
+    font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+    pointer-events: none;
+}
+
+.graph-help {
+    color: #a6adc8;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 700px) {
+    main {
+        padding: 1rem;
+    }
+
+    .parameter-controls {
+        grid-template-columns: 1fr;
+    }
+
+    .formula-input {
+        width: 100%;
+    }
+
+    .result-row {
+        grid-template-columns: 1fr;
+        gap: 0.25rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
 }
 
 .compact-input,

@@ -1,4 +1,4 @@
-#include "aksiomat/PredicateParser.hpp"
+#include "aksiomat/predicate/PredicateParser.hpp"
 
 #include <cctype>
 #include <stdexcept>

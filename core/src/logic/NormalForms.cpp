@@ -1,8 +1,8 @@
-#include "aksiomat/NormalForms.hpp"
+#include "aksiomat/logic/NormalForms.hpp"
 
 #include <stdexcept>
 
-#include "aksiomat/TruthTable.hpp"
+#include "aksiomat/logic/TruthTable.hpp"
 
 namespace aksiomat {
 namespace {

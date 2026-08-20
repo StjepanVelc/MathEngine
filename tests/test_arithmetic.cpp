@@ -2,7 +2,7 @@
 
 #include <stdexcept>
 
-#include "aksiomat/Arithmetic.hpp"
+#include "aksiomat/arithmetic/Arithmetic.hpp"
 
 using aksiomat::Arithmetic;
 

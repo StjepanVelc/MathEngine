@@ -23,6 +23,13 @@ add_executable(core_tests
 	test_percentages.cpp
 	test_number_theory.cpp
 	test_numeral_systems.cpp
+	test_algebra_parser.cpp
+	test_algebra_simplifier.cpp
+	test_equation_solver.cpp
+	test_inequality_solver.cpp
+	test_linear_system_solver.cpp
+	test_polynomial.cpp
+	test_function_analyzer.cpp
 )
 
 target_link_libraries(core_tests PRIVATE

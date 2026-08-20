@@ -1,4 +1,4 @@
-#include "aksiomat/PredicateExpression.hpp"
+#include "aksiomat/predicate/PredicateExpression.hpp"
 
 #include <stdexcept>
 #include <utility>

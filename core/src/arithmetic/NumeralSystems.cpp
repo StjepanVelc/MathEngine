@@ -1,4 +1,4 @@
-#include "aksiomat/NumeralSystems.hpp"
+#include "aksiomat/arithmetic/NumeralSystems.hpp"
 
 #include <algorithm>
 #include <limits>

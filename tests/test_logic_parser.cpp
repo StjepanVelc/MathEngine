@@ -2,7 +2,7 @@
 
 #include <stdexcept>
 
-#include "aksiomat/LogicParser.hpp"
+#include "aksiomat/logic/LogicParser.hpp"
 
 using aksiomat::LogicParser;
 

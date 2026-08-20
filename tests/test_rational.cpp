@@ -2,7 +2,7 @@
 
 #include <stdexcept>
 
-#include "aksiomat/Rational.hpp"
+#include "aksiomat/arithmetic/Rational.hpp"
 
 using aksiomat::Rational;
 

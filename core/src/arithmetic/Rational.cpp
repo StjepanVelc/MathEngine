@@ -1,4 +1,4 @@
-#include "aksiomat/Rational.hpp"
+#include "aksiomat/arithmetic/Rational.hpp"
 
 #include <charconv>
 #include <compare>

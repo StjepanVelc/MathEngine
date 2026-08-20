@@ -1,9 +1,9 @@
-#include "aksiomat/TruthTable.hpp"
+#include "aksiomat/logic/TruthTable.hpp"
 
 #include <set>
 #include <stdexcept>
 
-#include "aksiomat/LogicParser.hpp"
+#include "aksiomat/logic/LogicParser.hpp"
 
 namespace aksiomat {
 

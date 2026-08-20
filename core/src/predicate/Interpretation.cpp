@@ -1,6 +1,6 @@
-#include "aksiomat/Interpretation.hpp"
+#include "aksiomat/predicate/Interpretation.hpp"
 
-#include "aksiomat/PredicateParser.hpp"
+#include "aksiomat/predicate/PredicateParser.hpp"
 
 #include <algorithm>
 #include <optional>

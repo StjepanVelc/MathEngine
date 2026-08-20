@@ -1,4 +1,4 @@
-// MathEngine web frontend — poglavlja (Logika, Aritmetika) pogonjena WASM jezgrom.
+// MathEngine web frontend — poglavlja pogonjena WASM jezgrom.
 //
 // Baza podataka: SQLite u browseru (sql.js / službeni SQLite WASM) — planirano.
 
@@ -200,6 +200,7 @@ async function init() {
     setupPredicates(module);
     setupFormalization(module);
     setupArithmetic(module);
+    setupAlgebra(module);
 }
 
 init();

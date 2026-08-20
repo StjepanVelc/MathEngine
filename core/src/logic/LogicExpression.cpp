@@ -1,4 +1,4 @@
-#include "aksiomat/LogicExpression.hpp"
+#include "aksiomat/logic/LogicExpression.hpp"
 
 #include <stdexcept>
 #include <utility>

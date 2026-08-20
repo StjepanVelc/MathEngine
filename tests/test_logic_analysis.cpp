@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
-#include "aksiomat/LogicAnalysis.hpp"
-#include "aksiomat/LogicParser.hpp"
+#include "aksiomat/logic/LogicAnalysis.hpp"
+#include "aksiomat/logic/LogicParser.hpp"
 
 using aksiomat::LogicAnalysis;
 using aksiomat::LogicParser;

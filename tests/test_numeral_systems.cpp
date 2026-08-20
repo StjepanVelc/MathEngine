@@ -3,7 +3,7 @@
 #include <limits>
 #include <stdexcept>
 
-#include "aksiomat/NumeralSystems.hpp"
+#include "aksiomat/arithmetic/NumeralSystems.hpp"
 
 using aksiomat::NumeralSystems;
 

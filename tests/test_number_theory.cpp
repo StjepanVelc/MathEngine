@@ -2,7 +2,7 @@
 
 #include <stdexcept>
 
-#include "aksiomat/NumberTheory.hpp"
+#include "aksiomat/arithmetic/NumberTheory.hpp"
 
 using aksiomat::NumberTheory;
 

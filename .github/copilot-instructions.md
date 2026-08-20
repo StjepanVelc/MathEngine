@@ -7,3 +7,4 @@
 
 ## Project Structure
 - Maintain a professional modular architecture: keep parsers, AST, evaluators, and various mathematical areas in separate .hpp/.cpp files, avoiding large monolithic source files.
+- Implement Algebra as a fully independent module containing symbolic expression simplification, linear equations and inequalities, systems of linear equations, polynomials, and functions/graphs. Ensure that graphs are visually engaging, animated, interactive, and designed to make learning intuitive.

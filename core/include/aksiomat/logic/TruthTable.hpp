@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-#include "aksiomat/LogicExpression.hpp"
+#include "aksiomat/logic/LogicExpression.hpp"
 
 namespace aksiomat {
 

@@ -2,7 +2,7 @@
 
 #include <stdexcept>
 
-#include "aksiomat/Percentages.hpp"
+#include "aksiomat/arithmetic/Percentages.hpp"
 
 using aksiomat::Percentages;
 

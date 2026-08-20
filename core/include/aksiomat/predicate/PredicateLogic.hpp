@@ -1,5 +1,5 @@
 #pragma once
 
-#include "aksiomat/Interpretation.hpp"
-#include "aksiomat/PredicateExpression.hpp"
-#include "aksiomat/PredicateParser.hpp"
+#include "aksiomat/predicate/Interpretation.hpp"
+#include "aksiomat/predicate/PredicateExpression.hpp"
+#include "aksiomat/predicate/PredicateParser.hpp"

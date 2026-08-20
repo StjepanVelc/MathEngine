@@ -1,4 +1,4 @@
-#include "aksiomat/ArithmeticExpression.hpp"
+#include "aksiomat/arithmetic/ArithmeticExpression.hpp"
 
 #include <utility>
 

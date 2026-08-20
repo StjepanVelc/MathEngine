@@ -8,17 +8,22 @@ MathEngine je edukacijska matematička web-aplikacija čija se jezgra izvodi u C
 - predikatna logika: predikati, `∀`/`∃`, slobodne varijable i konačne interpretacije
 - formalizacija hrvatskih rečenica kroz zadatke po težinama
 - modularna aritmetika: napredni kalkulator, točni razlomci, postotci, teorija brojeva i brojevni sustavi
+- modularna algebra: simbolički izrazi, jednadžbe, nejednadžbe, sustavi, polinomi i interaktivni grafovi
 - lokalno spremanje napretka formalizacijskih zadataka u `localStorage`
 
 ## Arhitektura
 
-- `core/include/aksiomat` — javni C++ ugovori
-- `core/src` — implementacija matematičke jezgre i Emscripten bindings
+- `core/include/aksiomat/arithmetic` — aritmetički javni C++ ugovori
+- `core/include/aksiomat/algebra` — algebarski javni C++ ugovori
+- `core/include/aksiomat/logic` — ugovori iskazne logike
+- `core/include/aksiomat/predicate` — ugovori predikatne logike
+- `core/src/{arithmetic,algebra,logic,predicate}` — implementacije po domenama
+- `core/src/wasm_bindings.cpp` — zajednički Emscripten adapter svih domena
 - `app` — mala native CLI demonstracija
 - `tests` — GoogleTest testovi
 - `web` — HTML/CSS/JavaScript frontend i generirani WASM artefakti
 
-Predikatna logika razdvojena je na `PredicateExpression`, `PredicateParser` i `Interpretation`. `PredicateLogic.hpp` ostaje kompatibilni umbrella header.
+Svaka matematička domena ima vlastitu include i source mapu. Predikatna logika razdvojena je na `PredicateExpression`, `PredicateParser` i `Interpretation`, dok `PredicateLogic.hpp` ostaje umbrella header unutar `predicate/` mape.
 
 ## Zahtjevi
 
@@ -133,13 +138,30 @@ Podržani su provjera prostosti, sortirani djelitelji, rastav na proste faktore,
 
 Potpisani 64-bitni cijeli brojevi mogu se pretvarati između baza 2–36. Izlaz koristi znamenke `0-9` i velika slova `A-Z`.
 
+## Algebra
+
+Algebra je zaseban podsustav u `core/include/aksiomat/algebra` i `core/src/algebra`. Ne proširuje numerički parser iz `arithmetic/`, nego koristi vlastite module `AlgebraExpression`, `AlgebraParser`, `AlgebraSimplifier`, solvere, `Polynomial` i `FunctionAnalyzer`.
+
+Podržano je:
+
+- parsiranje brojeva, identifikatora, `+`, `-`, `*`, `/`, `^`, zagrada i implicitnog množenja (`2x`, `3(x+1)`)
+- pojednostavljivanje konstanti, predznaka, neutralnih elemenata i kompatibilnih članova
+- linearne jednadžbe s jednom varijablom i prikazom postupka
+- linearne nejednadžbe `<`, `<=`, `>` i `>=` s intervalnim zapisom
+- sustavi dviju linearnih jednadžbi s varijablama `x` i `y`
+- polinomske operacije, evaluacija, derivacija i realne nultočke do drugog stupnja
+- analiza linearnih, kvadratnih i polinomnih funkcija
+
+Web graf koristi Canvas i omogućuje pomicanje, zumiranje, prikaz koordinata, označavanje nultočaka, sjecišta s y-osi i vrha parabole. Parametri `a`, `b` i `c` mogu se mijenjati klizačima, uz glatku animaciju transformacije funkcije i podršku za `prefers-reduced-motion`.
+
 ## Testovi i CI
 
-GoogleTest pokriva AST, parsere, tablice istinitosti, ekvivalenciju, arnost predikata, zasjenjivanje varijabli, interpretaciju i aritmetiku. GitHub Actions workflow `.github/workflows/ci.yml` pokreće native testove i zaseban Emscripten build.
+GoogleTest pokriva AST, parsere, tablice istinitosti, ekvivalenciju, arnost predikata, zasjenjivanje varijabli, interpretaciju, aritmetiku i algebru. GitHub Actions workflow `.github/workflows/ci.yml` pokreće native testove i zaseban Emscripten build.
 
 ## Trenutna ograničenja
 
 - tablica istinitosti ograničena je na šest varijabli
-- predikatna logika nema funkcijske simbole ni jednakost
+- predikatna logika nema funkcijske simbole
+- algebra rješava linearne jednadžbe/nejednadžbe i sustave 2×2; automatske realne nultočke ograničene su na polinome do drugog stupnja
 - napredak se čuva samo u trenutnom pregledniku
 - SQLite/WASM još nije potreban; uvodi se tek kada model podataka preraste `localStorage`

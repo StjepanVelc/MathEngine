@@ -2,9 +2,9 @@
 
 #include <set>
 
-#include "aksiomat/LogicParser.hpp"
-#include "aksiomat/NormalForms.hpp"
-#include "aksiomat/TruthTable.hpp"
+#include "aksiomat/logic/LogicParser.hpp"
+#include "aksiomat/logic/NormalForms.hpp"
+#include "aksiomat/logic/TruthTable.hpp"
 
 using aksiomat::LogicExpression;
 using aksiomat::LogicOp;

@@ -28,6 +28,7 @@
                 <!-- Podpoglavlje: Iskazna logika -->
                 <div id="panel-propositional" class="subchapter-panel" hidden>
                     <h2>Iskazna logika</h2>
+                    <p class="tool-description">Provjerava strukturu i istinitost logičkih formula te izrađuje tablicu istinitosti i normalne forme.</p>
                     <p>Podržani operatori: ¬ (negacija), ∧ (konjunkcija), ∨ (disjunkcija), → (implikacija), ↔ (ekvivalencija), zagrade i varijable.<br>
                        Možeš tipkati i ASCII: <code>! &amp; | -&gt; &lt;-&gt;</code></p>
                     <div class="symbol-palette" data-target="logic-input">
@@ -61,6 +62,7 @@
                 <!-- Podpoglavlje: Predikatna logika -->
                 <div id="panel-predicate" class="subchapter-panel" hidden>
                     <h2>Predikatna logika</h2>
+                    <p class="tool-description">Evaluira predikate i kvantifikatore nad konačnom domenom koju sam zadaješ.</p>
                     <p>Kvantifikatori: ∀ (za svaki), ∃ (postoji); predikati kao <code>P(x)</code>, <code>Manji(x, y)</code>; veznici kao u iskaznoj logici.<br>
                        Jednakost: <code>x = y</code>; nejednakost: <code>x ≠ y</code> ili <code>x != y</code>.<br>
                        ASCII: <code>forall x</code>, <code>exists x</code></p>
@@ -94,6 +96,7 @@
                 <!-- Podpoglavlje: Formalizacija rečenica -->
                 <div id="panel-formalization" class="subchapter-panel" hidden>
                     <h2>Formalizacija rečenica</h2>
+                    <p class="tool-description">Vježba prevođenje rečenica iz svakodnevnog jezika u precizne logičke formule.</p>
                     <p>Prevedi rečenicu na jezik logike. Prihvaća se svaka logički ekvivalentna formula.</p>
                     <div class="difficulty-nav">
                         <button type="button" class="difficulty-btn" data-difficulty="pocetna">Početna</button>
@@ -143,7 +146,8 @@
 
                 <div id="arith-calculator" class="arithmetic-panel" hidden>
                     <h2>Kalkulator</h2>
-                    <p>Podržano: +, −, ×, ÷, %, ^, !, pi, e, sqrt, abs, min, max, round, floor, ceil i mod.</p>
+                    <p class="tool-description">Računa brojčane izraze uz pravilan prioritet operacija, funkcije i matematičke konstante.</p>
+                    <aside class="formula-card"><strong>Kako se računa</strong><code>Zagrade → faktorijel/potencije → množenje/dijeljenje → zbrajanje/oduzimanje</code><span>Podržano: +, −, ×, ÷, %, ^, !, pi, e, sqrt, abs, min, max, round, floor, ceil i mod.</span></aside>
                     <div class="symbol-palette" data-target="arith-input">
                         <button type="button" data-symbol="^">xʸ</button><button type="button" data-symbol="!">!</button>
                         <button type="button" data-symbol="sqrt(">√</button><button type="button" data-symbol="pi">π</button>
@@ -151,24 +155,29 @@
                     </div>
                     <input type="text" id="arith-input" class="formula-input" placeholder="npr. -2^2 + sqrt(16) * 3!" autocomplete="off">
                     <button id="arith-eval">Izračunaj</button>
-                    <p>Rezultat: <output id="arith-result">—</output></p>
+                    <div class="result-grid"><div class="result-row result-primary"><span>Rezultat</span><output id="arith-result">—</output></div></div>
                 </div>
 
                 <div id="arith-fractions" class="arithmetic-panel" hidden>
                     <h2>Razlomci</h2>
+                    <p class="tool-description">Izvodi točne operacije s razlomcima, automatski ih skraćuje i prikazuje u više oblika.</p>
+                    <aside class="formula-card"><strong>Pravila</strong><code>a/b + c/d = (ad + bc) / bd</code><code>a/b · c/d = ac / bd</code><span>Rezultat se uvijek skraćuje najvećim zajedničkim djeliteljem.</span></aside>
                     <input id="fraction-left" class="compact-input" placeholder="1/2">
                     <select id="fraction-operation"><option>+</option><option>-</option><option>*</option><option>/</option></select>
                     <input id="fraction-right" class="compact-input" placeholder="1/3">
                     <button id="fraction-eval">Izračunaj</button>
-                    <div id="fraction-result"></div>
+                    <div id="fraction-result" class="result-grid"></div>
                     <h3>Decimalni broj u razlomak</h3>
+                    <p class="tool-description">Pretvara konačni decimalni zapis u točan, skraćeni razlomak.</p>
                     <input id="decimal-fraction-input" class="compact-input" placeholder="1.25">
                     <button id="decimal-fraction-eval">Pretvori</button>
-                    <output id="decimal-fraction-result">—</output>
+                    <div class="result-grid inline-result"><div class="result-row"><span>Razlomak</span><output id="decimal-fraction-result">—</output></div></div>
                 </div>
 
                 <div id="arith-percentages" class="arithmetic-panel" hidden>
                     <h2>Postotci</h2>
+                    <p class="tool-description">Računa postotak vrijednosti, postotnu promjenu, omjer i početnu vrijednost.</p>
+                    <aside class="formula-card"><strong>Osnovna formula</strong><code>p% od V = (p / 100) · V</code><span>Za povećanje koristi se V · (1 + p/100), a za smanjenje V · (1 − p/100).</span></aside>
                     <select id="percentage-operation">
                         <option value="of">Koliko je A% od B?</option><option value="increase">Povećaj A za B%</option>
                         <option value="decrease">Smanji A za B%</option><option value="ratio">A je koliko % od B?</option>
@@ -178,28 +187,115 @@
                     <input id="percentage-first" type="number" step="any" class="compact-input" placeholder="A">
                     <input id="percentage-second" type="number" step="any" class="compact-input" placeholder="B">
                     <button id="percentage-eval">Izračunaj</button>
-                    <p>Rezultat: <output id="percentage-result">—</output></p>
+                    <div class="result-grid"><div class="result-row result-primary"><span>Rezultat</span><output id="percentage-result">—</output></div></div>
                 </div>
 
                 <div id="arith-number-theory" class="arithmetic-panel" hidden>
                     <h2>Teorija brojeva</h2>
+                    <p class="tool-description">Analizira broj: prost ili složen, njegove djelitelje, prostu faktorizaciju, NZD i NZV.</p>
+                    <aside class="formula-card"><strong>Kako se koristi</strong><code>n = p₁ᵃ · p₂ᵇ · …</code><span>Prost broj ima točno dva pozitivna djelitelja: 1 i samoga sebe. NZD traži najveći zajednički faktor, a NZV najmanji zajednički višekratnik.</span></aside>
                     <input id="number-theory-input" class="compact-input" type="number" min="1" step="1" placeholder="npr. 360">
                     <button id="number-theory-eval">Analiziraj</button>
-                    <div id="number-theory-result"></div>
+                    <div id="number-theory-result" class="result-grid"></div>
                     <h3>NZD i NZV</h3>
                     <input id="gcd-left" class="compact-input" type="number" min="0" step="1" placeholder="48">
                     <input id="gcd-right" class="compact-input" type="number" min="0" step="1" placeholder="18">
                     <button id="gcd-eval">Izračunaj</button>
-                    <output id="gcd-result">—</output>
+                    <div id="gcd-result" class="result-grid"></div>
                 </div>
 
                 <div id="arith-numeral-systems" class="arithmetic-panel" hidden>
                     <h2>Brojevni sustavi</h2>
+                    <p class="tool-description">Pretvara broj iz jedne baze u drugu. Dozvoljene baze: 2–36.</p>
+                    <aside class="formula-card"><strong>Pozicijski zapis</strong><code>(dₙ…d₁d₀)ᵦ = Σ dᵢ · bⁱ</code><span>Primjer: FF₁₆ = 15·16¹ + 15·16⁰ = 255₁₀.</span></aside>
                     <input id="numeral-input" class="compact-input" placeholder="npr. FF">
                     <label>Iz baze <input id="numeral-from" type="number" min="2" max="36" value="16"></label>
                     <label>U bazu <input id="numeral-to" type="number" min="2" max="36" value="10"></label>
                     <button id="numeral-eval">Pretvori</button>
-                    <p>Rezultat: <output id="numeral-result">—</output></p>
+                    <div class="result-grid"><div class="result-row result-primary"><span>Rezultat</span><output id="numeral-result">—</output></div></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Poglavlje: Algebra -->
+        <section class="chapter" hidden>
+            <button class="chapter-toggle" aria-expanded="false">Algebra ▸</button>
+            <div class="chapter-body">
+                <div class="algebra-nav">
+                    <button type="button" class="algebra-toggle" data-panel="algebra-expressions">Izrazi</button>
+                    <button type="button" class="algebra-toggle" data-panel="algebra-equations">Jednadžbe</button>
+                    <button type="button" class="algebra-toggle" data-panel="algebra-inequalities">Nejednadžbe</button>
+                    <button type="button" class="algebra-toggle" data-panel="algebra-systems">Sustavi</button>
+                    <button type="button" class="algebra-toggle" data-panel="algebra-polynomials">Polinomi</button>
+                    <button type="button" class="algebra-toggle" data-panel="algebra-functions">Funkcije i grafovi</button>
+                </div>
+
+                <div id="algebra-expressions" class="algebra-panel" hidden>
+                    <h2>Sređivanje izraza</h2>
+                    <p class="tool-description">Spaja istovrsne članove i uklanja suvišne operacije kako bi izraz bio kraći i pregledniji.</p>
+                    <aside class="formula-card"><strong>Pravilo</strong><code>ax + bx = (a + b)x</code><span>Podržani su brojevi, varijabla x, zagrade, potencije i implicitno množenje poput 2x.</span></aside>
+                    <input id="algebra-expression-input" class="formula-input" value="2x + 3x - x + 5 - 2">
+                    <button id="algebra-simplify">Pojednostavi</button>
+                    <div id="algebra-expression-result" class="analysis-box"></div>
+                </div>
+
+                <div id="algebra-equations" class="algebra-panel" hidden>
+                    <h2>Linearne jednadžbe</h2>
+                    <p class="tool-description">Rješava linearnu jednadžbu s jednom nepoznanicom i prikazuje svaki korak postupka.</p>
+                    <aside class="formula-card"><strong>Opći oblik</strong><code>ax + b = c  ⇒  x = (c − b) / a</code><span>Ista operacija mora se napraviti na obje strane jednadžbe.</span></aside>
+                    <input id="algebra-equation-input" class="formula-input" value="3(x - 1) = x + 5">
+                    <button id="algebra-equation-solve">Riješi korak po korak</button>
+                    <div id="algebra-equation-result" class="analysis-box"></div>
+                </div>
+
+                <div id="algebra-inequalities" class="algebra-panel" hidden>
+                    <h2>Linearne nejednadžbe</h2>
+                    <p class="tool-description">Rješava linearnu nejednadžbu i zapisuje skup rješenja kao interval.</p>
+                    <aside class="formula-card"><strong>Važno pravilo</strong><code>−2x &lt; 6  ⇒  x &gt; −3</code><span>Pri množenju ili dijeljenju negativnim brojem znak nejednakosti se obrće.</span></aside>
+                    <input id="algebra-inequality-input" class="formula-input" value="-2x + 1 <= 5">
+                    <button id="algebra-inequality-solve">Riješi i prikaži interval</button>
+                    <div id="algebra-inequality-result" class="analysis-box"></div>
+                </div>
+
+                <div id="algebra-systems" class="algebra-panel" hidden>
+                    <h2>Sustavi 2×2</h2>
+                    <p class="tool-description">Istodobno rješava dvije linearne jednadžbe s nepoznanicama x i y.</p>
+                    <aside class="formula-card"><strong>Cramerovo pravilo</strong><code>x = Dₓ / D,  y = Dᵧ / D</code><span>Determinanta pokazuje ima li sustav jedno, nijedno ili beskonačno mnogo rješenja.</span></aside>
+                    <input id="algebra-system-first" class="formula-input" value="x + y = 5">
+                    <input id="algebra-system-second" class="formula-input" value="2x - y = 1">
+                    <button id="algebra-system-solve">Riješi sustav</button>
+                    <div id="algebra-system-result" class="analysis-box"></div>
+                </div>
+
+                <div id="algebra-polynomials" class="algebra-panel" hidden>
+                    <h2>Polinomi</h2>
+                    <p class="tool-description">Sređuje polinom, određuje stupanj, derivaciju i podržane realne nultočke.</p>
+                    <aside class="formula-card"><strong>Kvadratna jednadžba</strong><code>x = (−b ± √(b² − 4ac)) / 2a</code><span>Diskriminanta Δ = b² − 4ac određuje broj realnih nultočaka.</span></aside>
+                    <input id="algebra-polynomial-input" class="formula-input" value="x^2 - 5x + 6">
+                    <button id="algebra-polynomial-analyze">Analiziraj</button>
+                    <div id="algebra-polynomial-result" class="analysis-box"></div>
+                </div>
+
+                <div id="algebra-functions" class="algebra-panel" hidden>
+                    <h2>Funkcije i živi grafovi</h2>
+                    <p class="tool-description">Vizualizira funkciju i pokazuje kako parametri mijenjaju položaj i oblik njezina grafa.</p>
+                    <aside class="formula-card"><strong>Kvadratna funkcija</strong><code>f(x) = ax² + bx + c</code><span>a mijenja otvor i širinu parabole, b položaj vrha, a c sjecište s y-osi.</span></aside>
+                    <div class="graph-expression-row">
+                        <input id="graph-expression" class="formula-input" value="a*x^2 + b*x + c" aria-label="Funkcija">
+                        <button id="graph-draw">Nacrtaj</button>
+                        <button id="graph-reset-view">Vrati pogled</button>
+                    </div>
+                    <div class="parameter-controls">
+                        <label>a <input id="graph-a" type="range" min="-5" max="5" step="0.1" value="1"><output id="graph-a-value">1</output></label>
+                        <label>b <input id="graph-b" type="range" min="-10" max="10" step="0.1" value="0"><output id="graph-b-value">0</output></label>
+                        <label>c <input id="graph-c" type="range" min="-10" max="10" step="0.1" value="0"><output id="graph-c-value">0</output></label>
+                    </div>
+                    <div id="graph-analysis" class="analysis-box"></div>
+                    <div class="graph-shell">
+                        <canvas id="algebra-graph" aria-label="Interaktivni graf funkcije"></canvas>
+                        <output id="graph-coordinates" class="graph-coordinates">x: —, y: —</output>
+                    </div>
+                    <p class="graph-help">Povuci graf za pomicanje, koristi kotačić za zumiranje i pomiči klizače za animiranu transformaciju.</p>
                 </div>
             </div>
         </section>
@@ -209,6 +305,8 @@
     <script src="formalization.js"></script>
     <script src="predicates.js"></script>
     <script src="arithmetic.js"></script>
+    <script src="graph.js"></script>
+    <script src="algebra.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

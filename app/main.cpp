@@ -1,7 +1,7 @@
 // CLI demo aplikacija — brzi način za isprobavanje jezgre bez browsera.
 #include <iostream>
 
-#include "aksiomat/LogicExpression.hpp"
+#include "aksiomat/logic/LogicExpression.hpp"
 
 int main() {
 	using aksiomat::LogicExpression;

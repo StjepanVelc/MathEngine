@@ -1,4 +1,4 @@
-#include "aksiomat/NumberTheory.hpp"
+#include "aksiomat/arithmetic/NumberTheory.hpp"
 
 #include <algorithm>
 #include <limits>

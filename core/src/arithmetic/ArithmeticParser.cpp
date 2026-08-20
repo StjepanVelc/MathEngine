@@ -1,4 +1,4 @@
-#include "aksiomat/ArithmeticParser.hpp"
+#include "aksiomat/arithmetic/ArithmeticParser.hpp"
 
 #include <cctype>
 #include <stdexcept>

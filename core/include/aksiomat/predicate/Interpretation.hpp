@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-#include "aksiomat/PredicateExpression.hpp"
+#include "aksiomat/predicate/PredicateExpression.hpp"
 
 namespace aksiomat {
 

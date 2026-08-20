@@ -2,8 +2,8 @@
 
 #include <stdexcept>
 
-#include "aksiomat/LogicParser.hpp"
-#include "aksiomat/TruthTable.hpp"
+#include "aksiomat/logic/LogicParser.hpp"
+#include "aksiomat/logic/TruthTable.hpp"
 
 using aksiomat::LogicParser;
 using aksiomat::TruthTable;

@@ -1,4 +1,4 @@
-#include "aksiomat/LogicParser.hpp"
+#include "aksiomat/logic/LogicParser.hpp"
 
 #include <cctype>
 #include <stdexcept>

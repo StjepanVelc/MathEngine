@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "aksiomat/LogicExpression.hpp"
+#include "aksiomat/logic/LogicExpression.hpp"
 
 using aksiomat::LogicExpression;
 

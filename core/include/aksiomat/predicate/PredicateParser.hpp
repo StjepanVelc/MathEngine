@@ -4,7 +4,7 @@
 #include <set>
 #include <string>
 
-#include "aksiomat/PredicateExpression.hpp"
+#include "aksiomat/predicate/PredicateExpression.hpp"
 
 namespace aksiomat {
 

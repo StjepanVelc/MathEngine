@@ -2,7 +2,7 @@
 
 #include <cstddef>
 
-#include "aksiomat/LogicExpression.hpp"
+#include "aksiomat/logic/LogicExpression.hpp"
 
 namespace aksiomat {
 

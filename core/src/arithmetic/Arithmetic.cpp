@@ -1,7 +1,7 @@
-#include "aksiomat/Arithmetic.hpp"
+#include "aksiomat/arithmetic/Arithmetic.hpp"
 
-#include "aksiomat/ArithmeticEvaluator.hpp"
-#include "aksiomat/ArithmeticParser.hpp"
+#include "aksiomat/arithmetic/ArithmeticEvaluator.hpp"
+#include "aksiomat/arithmetic/ArithmeticParser.hpp"
 
 namespace aksiomat {
 

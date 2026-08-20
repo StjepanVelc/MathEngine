@@ -1,6 +1,6 @@
-#include "aksiomat/LogicAnalysis.hpp"
+#include "aksiomat/logic/LogicAnalysis.hpp"
 
-#include "aksiomat/TruthTable.hpp"
+#include "aksiomat/logic/TruthTable.hpp"
 
 namespace aksiomat {
 

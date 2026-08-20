@@ -1,22 +1,32 @@
 # core : matematička jezgra (aksiomat_core)
 
 add_library(aksiomat_core STATIC
-	src/LogicExpression.cpp
-	src/LogicParser.cpp
-	src/TruthTable.cpp
-	src/LogicAnalysis.cpp
-	src/NormalForms.cpp
-	src/PredicateExpression.cpp
-	src/PredicateParser.cpp
-	src/Interpretation.cpp
-	src/ArithmeticExpression.cpp
-	src/ArithmeticParser.cpp
-	src/ArithmeticEvaluator.cpp
-	src/Arithmetic.cpp
-	src/Rational.cpp
-	src/Percentages.cpp
-	src/NumberTheory.cpp
-	src/NumeralSystems.cpp
+	src/arithmetic/ArithmeticExpression.cpp
+	src/arithmetic/ArithmeticParser.cpp
+	src/arithmetic/ArithmeticEvaluator.cpp
+	src/arithmetic/Arithmetic.cpp
+	src/arithmetic/Rational.cpp
+	src/arithmetic/Percentages.cpp
+	src/arithmetic/NumberTheory.cpp
+	src/arithmetic/NumeralSystems.cpp
+	src/algebra/AlgebraExpression.cpp
+	src/algebra/AlgebraParser.cpp
+	src/algebra/AlgebraFormatter.cpp
+	src/algebra/AlgebraSimplifier.cpp
+	src/algebra/LinearForm.cpp
+	src/algebra/EquationSolver.cpp
+	src/algebra/InequalitySolver.cpp
+	src/algebra/LinearSystemSolver.cpp
+	src/algebra/Polynomial.cpp
+	src/algebra/FunctionAnalyzer.cpp
+	src/logic/LogicExpression.cpp
+	src/logic/LogicParser.cpp
+	src/logic/TruthTable.cpp
+	src/logic/LogicAnalysis.cpp
+	src/logic/NormalForms.cpp
+	src/predicate/PredicateExpression.cpp
+	src/predicate/PredicateParser.cpp
+	src/predicate/Interpretation.cpp
 )
 
 target_include_directories(aksiomat_core PUBLIC

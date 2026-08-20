@@ -4,18 +4,26 @@
 
 #include <emscripten/bind.h>
 
-#include "aksiomat/Arithmetic.hpp"
-#include "aksiomat/NumberTheory.hpp"
-#include "aksiomat/NumeralSystems.hpp"
-#include "aksiomat/Percentages.hpp"
-#include "aksiomat/Rational.hpp"
-#include "aksiomat/LogicExpression.hpp"
-#include "aksiomat/LogicAnalysis.hpp"
-#include "aksiomat/LogicParser.hpp"
-#include "aksiomat/NormalForms.hpp"
-#include "aksiomat/Interpretation.hpp"
-#include "aksiomat/PredicateParser.hpp"
-#include "aksiomat/TruthTable.hpp"
+#include "aksiomat/arithmetic/Arithmetic.hpp"
+#include "aksiomat/arithmetic/NumberTheory.hpp"
+#include "aksiomat/arithmetic/NumeralSystems.hpp"
+#include "aksiomat/arithmetic/Percentages.hpp"
+#include "aksiomat/arithmetic/Rational.hpp"
+#include "aksiomat/logic/LogicExpression.hpp"
+#include "aksiomat/logic/LogicAnalysis.hpp"
+#include "aksiomat/logic/LogicParser.hpp"
+#include "aksiomat/logic/NormalForms.hpp"
+#include "aksiomat/predicate/Interpretation.hpp"
+#include "aksiomat/predicate/PredicateParser.hpp"
+#include "aksiomat/logic/TruthTable.hpp"
+#include "aksiomat/algebra/AlgebraFormatter.hpp"
+#include "aksiomat/algebra/AlgebraParser.hpp"
+#include "aksiomat/algebra/AlgebraSimplifier.hpp"
+#include "aksiomat/algebra/EquationSolver.hpp"
+#include "aksiomat/algebra/FunctionAnalyzer.hpp"
+#include "aksiomat/algebra/InequalitySolver.hpp"
+#include "aksiomat/algebra/LinearSystemSolver.hpp"
+#include "aksiomat/algebra/Polynomial.hpp"
 
 namespace {
 
@@ -26,10 +34,135 @@ std::string formatDouble(double value) {
 	return text;
 }
 
+std::string jsonString(const std::string& value) {
+	std::string result = "\"";
+	for (const char character : value) {
+		if (character == '"' || character == '\\') result += '\\';
+		if (character == '\n') result += "\\n";
+		else if (character != '\r') result += character;
+	}
+	return result + '"';
+}
+
+std::string jsonSteps(const std::vector<std::string>& steps) {
+	std::string result = "[";
+	for (std::size_t index = 0; index < steps.size(); ++index) {
+		if (index) result += ',';
+		result += jsonString(steps[index]);
+	}
+	return result + ']';
+}
+
 // Parsira formulu i vraća njen normalizirani prikaz ili "GRESKA: ...".
 std::string logicToString(std::string formula) {
 	try {
 		return aksiomat::LogicParser::parse(formula)->toString();
+	} catch (const std::exception& e) {
+		return std::string("GRESKA: ") + e.what();
+	}
+}
+
+std::string algebraSimplify(std::string expression) {
+	try {
+		const auto result = aksiomat::algebra::AlgebraSimplifier::simplify(
+			aksiomat::algebra::AlgebraParser::parse(expression));
+		return "{\"result\":" + jsonString(aksiomat::algebra::AlgebraFormatter::format(result.expression)) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) {
+		return std::string("GRESKA: ") + e.what();
+	}
+}
+
+std::string algebraSolveEquation(std::string equation) {
+	try {
+		const auto result = aksiomat::algebra::EquationSolver::solve(equation);
+		const char* type = result.type == aksiomat::algebra::EquationSolutionType::Unique ? "unique" :
+			result.type == aksiomat::algebra::EquationSolutionType::Infinite ? "infinite" : "none";
+		return std::string("{\"type\":\"") + type + "\",\"value\":" + formatDouble(result.value) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) {
+		return std::string("GRESKA: ") + e.what();
+	}
+}
+
+std::string algebraSolveInequality(std::string inequality) {
+	try {
+		const auto result = aksiomat::algebra::InequalitySolver::solve(inequality);
+		const char* type = result.type == aksiomat::algebra::InequalitySolutionType::Interval ? "interval" :
+			result.type == aksiomat::algebra::InequalitySolutionType::AllReal ? "all" : "empty";
+		return std::string("{\"type\":\"") + type + "\",\"boundary\":" + formatDouble(result.boundary) +
+			",\"relation\":" + jsonString(result.relation) + ",\"interval\":" + jsonString(result.interval) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) {
+		return std::string("GRESKA: ") + e.what();
+	}
+}
+
+std::string algebraSolveSystem(std::string first, std::string second) {
+	try {
+		const auto result = aksiomat::algebra::LinearSystemSolver::solve(first, second);
+		const char* type = result.type == aksiomat::algebra::LinearSystemSolutionType::Unique ? "unique" :
+			result.type == aksiomat::algebra::LinearSystemSolutionType::Infinite ? "infinite" : "none";
+		return std::string("{\"type\":\"") + type + "\",\"x\":" + formatDouble(result.x) +
+			",\"y\":" + formatDouble(result.y) + ",\"steps\":" + jsonSteps(result.steps) +
+			",\"methods\":{\"cramer\":" + jsonSteps(result.cramerSteps) +
+			",\"substitution\":" + jsonSteps(result.substitutionSteps) +
+			",\"elimination\":" + jsonSteps(result.eliminationSteps) + "}}";
+	} catch (const std::exception& e) {
+		return std::string("GRESKA: ") + e.what();
+	}
+}
+
+std::string algebraAnalyzePolynomial(std::string expression) {
+	try {
+		const auto polynomial = aksiomat::algebra::Polynomial::parse(expression);
+		std::string roots = "[";
+		if (polynomial.degree() <= 2) {
+			const auto values = polynomial.realRoots();
+			for (std::size_t index = 0; index < values.size(); ++index) {
+				if (index) roots += ',';
+				roots += formatDouble(values[index]);
+			}
+		}
+		std::string discriminant = "null";
+		if (const auto value = polynomial.discriminant()) discriminant = formatDouble(*value);
+		std::string vertex = "null";
+		if (const auto point = polynomial.vertex()) {
+			vertex = "{\"x\":" + formatDouble(point->x) + ",\"y\":" + formatDouble(point->y) + '}';
+		}
+		std::string factorized = "null";
+		if (const auto value = polynomial.factorizedForm()) factorized = jsonString(*value);
+		return "{\"normalized\":" + jsonString(polynomial.toString()) + ",\"degree\":" +
+			std::to_string(polynomial.degree()) + ",\"derivative\":" + jsonString(polynomial.derivative().toString()) +
+			",\"roots\":" + roots + "],\"discriminant\":" + discriminant +
+			",\"vertex\":" + vertex + ",\"factorized\":" + factorized + '}';
+	} catch (const std::exception& e) {
+		return std::string("GRESKA: ") + e.what();
+	}
+}
+
+std::string algebraAnalyzeFunction(std::string expression, double minX, double maxX, unsigned sampleCount) {
+	try {
+		const auto analysis = aksiomat::algebra::FunctionAnalyzer::analyze(expression, minX, maxX, sampleCount);
+		std::string result = "{\"normalized\":" + jsonString(analysis.normalized) + ",\"domain\":" +
+			jsonString(analysis.domain) + ",\"degree\":" + std::to_string(analysis.degree) +
+			",\"behavior\":" + jsonString(analysis.behavior) + ",\"yIntercept\":{" +
+			"\"x\":" + formatDouble(analysis.yIntercept.x) + ",\"y\":" + formatDouble(analysis.yIntercept.y) +
+			"},\"xIntercepts\":[";
+		for (std::size_t index = 0; index < analysis.xIntercepts.size(); ++index) {
+			if (index) result += ',';
+			result += "{\"x\":" + formatDouble(analysis.xIntercepts[index].x) + ",\"y\":0}";
+		}
+		result += "],\"vertex\":";
+		if (analysis.vertex) result += "{\"x\":" + formatDouble(analysis.vertex->x) +
+			",\"y\":" + formatDouble(analysis.vertex->y) + '}';
+		else result += "null";
+		result += ",\"samples\":[";
+		for (std::size_t index = 0; index < analysis.samples.size(); ++index) {
+			if (index) result += ',';
+			result += "[" + formatDouble(analysis.samples[index].x) + ',' + formatDouble(analysis.samples[index].y) + ']';
+		}
+		return result + "]}";
 	} catch (const std::exception& e) {
 		return std::string("GRESKA: ") + e.what();
 	}
@@ -349,6 +482,12 @@ EMSCRIPTEN_BINDINGS(aksiomat_module) {
 	emscripten::function("numberTheoryAnalyze", &numberTheoryAnalyze);
 	emscripten::function("numberTheoryGcdLcm", &numberTheoryGcdLcm);
 	emscripten::function("convertNumeralSystem", &convertNumeralSystem);
+	emscripten::function("algebraSimplify", &algebraSimplify);
+	emscripten::function("algebraSolveEquation", &algebraSolveEquation);
+	emscripten::function("algebraSolveInequality", &algebraSolveInequality);
+	emscripten::function("algebraSolveSystem", &algebraSolveSystem);
+	emscripten::function("algebraAnalyzePolynomial", &algebraAnalyzePolynomial);
+	emscripten::function("algebraAnalyzeFunction", &algebraAnalyzeFunction);
 }
 
 #endif // __EMSCRIPTEN__

@@ -1,4 +1,4 @@
-#include "aksiomat/Percentages.hpp"
+#include "aksiomat/arithmetic/Percentages.hpp"
 
 #include <cmath>
 #include <stdexcept>

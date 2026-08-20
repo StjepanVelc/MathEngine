@@ -2,9 +2,9 @@
 
 #include <stdexcept>
 
-#include "aksiomat/Interpretation.hpp"
-#include "aksiomat/PredicateExpression.hpp"
-#include "aksiomat/PredicateParser.hpp"
+#include "aksiomat/predicate/Interpretation.hpp"
+#include "aksiomat/predicate/PredicateExpression.hpp"
+#include "aksiomat/predicate/PredicateParser.hpp"
 
 using aksiomat::Interpretation;
 using aksiomat::PredicateParser;
