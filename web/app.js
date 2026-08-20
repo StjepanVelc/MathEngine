@@ -55,6 +55,8 @@ function setupLogic(module) {
     const result = document.getElementById("logic-result");
     const tableBtn = document.getElementById("truth-table-btn");
     const tableBox = document.getElementById("truth-table-box");
+    const classificationBox = document.getElementById("logic-classification");
+    const formsBox = document.getElementById("normal-forms-box");
     const values = new Map();
 
     setupPalette(document.querySelector('.symbol-palette[data-target="logic-input"]'), () => update());
@@ -74,6 +76,8 @@ function setupLogic(module) {
             varsBox.innerHTML = "";
             result.textContent = "—";
             result.classList.remove("error");
+            classificationBox.textContent = "";
+            formsBox.hidden = true;
             return;
         }
 
@@ -83,10 +87,35 @@ function setupLogic(module) {
             parsed.classList.add("error");
             varsBox.innerHTML = "";
             result.textContent = "—";
+            classificationBox.textContent = "";
+            formsBox.hidden = true;
             return;
         }
         parsed.textContent = "Formula: " + pretty;
         parsed.classList.remove("error");
+
+        const classificationText = module.logicClassification(formula);
+        const formsText = module.logicNormalForms(formula);
+        if (!classificationText.startsWith("GRESKA:")) {
+            const classification = JSON.parse(classificationText);
+            classificationBox.textContent = classification.tautology
+                ? "Klasifikacija: tautologija (uvijek istinita)."
+                : classification.contradiction
+                    ? "Klasifikacija: kontradikcija (uvijek neistinita)."
+                    : "Klasifikacija: zadovoljiva i kontingentna formula.";
+        }
+        if (!formsText.startsWith("GRESKA:")) {
+            const forms = JSON.parse(formsText);
+            document.getElementById("logic-nnf").textContent = forms.nnf;
+            document.getElementById("logic-cnf").textContent = forms.transformedCnf;
+            document.getElementById("logic-canonical-cnf").textContent = forms.canonicalCnf;
+            document.getElementById("logic-dnf").textContent = forms.transformedDnf;
+            document.getElementById("logic-canonical-dnf").textContent = forms.canonicalDnf;
+            formsBox.hidden = false;
+        } else {
+            formsBox.hidden = true;
+            classificationBox.textContent += ` Normalne forme nisu dostupne: ${formsText}`;
+        }
 
         // Dinamički checkboxovi za varijable (čuvaj postojeće vrijednosti).
         const names = module.logicVariables(formula).split(",").filter(Boolean);

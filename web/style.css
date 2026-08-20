@@ -4,6 +4,72 @@
     --accent: #89b4fa;
 }
 
+#form-reset-current,
+#form-reset-all {
+    padding: 0.5rem 1rem;
+    background: #313244;
+    color: #f9e2af;
+    border: 1px solid #45475a;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#form-reset-current:hover,
+#form-reset-all:hover {
+    background: #45475a;
+}
+
+.predicate-highlight {
+    padding: 0.6rem;
+    background: #27283a;
+    border-radius: 4px;
+    font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+
+.free-variable {
+    color: #f9e2af;
+    font-weight: 700;
+}
+
+.bound-variable {
+    color: #a6e3a1;
+    font-weight: 700;
+}
+
+.analysis-box {
+    margin: 0.8rem 0;
+    padding: 0.7rem;
+    background: #27283a;
+    border: 1px solid #45475a;
+    border-radius: 6px;
+}
+
+.analysis-box:empty {
+    display: none;
+}
+
+.analysis-box summary {
+    color: var(--accent);
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.analysis-box dl {
+    margin-bottom: 0;
+}
+
+.analysis-box dt {
+    margin-top: 0.7rem;
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.analysis-box dd {
+    margin: 0.2rem 0 0;
+    overflow-wrap: anywhere;
+    font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -19,7 +85,7 @@ body {
 }
 
 main {
-    max-width: 640px;
+    width: min(900px, 100%);
     padding: 2rem;
 }
 
@@ -223,4 +289,63 @@ output.error {
 .parsed.correct {
     color: #a6e3a1;
     opacity: 1;
+}
+
+.predicate-editor {
+    margin: 0.8rem 0;
+    padding: 0.8rem;
+    border: 1px solid #45475a;
+    border-radius: 6px;
+}
+
+.predicate-editor legend {
+    padding: 0 0.4rem;
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.tuple-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+    gap: 0.45rem;
+}
+
+.tuple-grid label {
+    padding: 0.35rem;
+    background: #313244;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.tuple-grid.binary {
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+}
+
+.progress {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.explanation {
+    padding: 0.7rem;
+    color: #a6e3a1;
+    background: #273646;
+    border-left: 3px solid #a6e3a1;
+    border-radius: 4px;
+}
+
+@media (max-width: 600px) {
+    main {
+        padding: 1rem;
+    }
+
+    .formula-input,
+    #logic-input,
+    #arith-input {
+        width: 100%;
+    }
+
+    .symbol-palette {
+        flex-wrap: wrap;
+    }
 }

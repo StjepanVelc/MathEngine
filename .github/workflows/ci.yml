@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  native:
+    name: Native C++ tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake -S . -B out/build/ci-native -G Ninja -DCMAKE_BUILD_TYPE=Release
+      - name: Build
+        run: cmake --build out/build/ci-native
+      - name: Test
+        run: ctest --test-dir out/build/ci-native --output-on-failure
+
+  wasm:
+    name: WebAssembly build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: mymindstorm/setup-emsdk@v14
+        with:
+          version: 4.0.15
+          actions-cache-folder: emsdk-cache
+      - name: Configure
+        run: emcmake cmake -S . -B out/build/ci-wasm -G Ninja -DCMAKE_BUILD_TYPE=Release
+      - name: Build
+        run: cmake --build out/build/ci-wasm
+      - name: Verify artifacts
+        run: test -f web/aksiomat.js && test -f web/aksiomat.wasm

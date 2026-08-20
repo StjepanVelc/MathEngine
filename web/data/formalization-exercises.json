@@ -1,0 +1,32 @@
+{
+  "pocetna": [
+    { "id": "p1", "sentence": "Pada kiša i puše vjetar.", "legend": "k = pada kiša, v = puše vjetar", "solution": "k & v", "explanation": "Riječ 'i' prevodi se konjunkcijom ∧." },
+    { "id": "p2", "sentence": "Ne pada kiša.", "legend": "k = pada kiša", "solution": "!k", "explanation": "Riječ 'ne' označava negaciju ¬." },
+    { "id": "p3", "sentence": "Učit ću ili ću spavati.", "legend": "u = učit ću, s = spavat ću", "solution": "u | s", "explanation": "Obično 'ili' označava uključivu disjunkciju ∨." },
+    { "id": "p4", "sentence": "Ako pada kiša, onda je cesta mokra.", "legend": "k = pada kiša, m = cesta je mokra", "solution": "k -> m", "explanation": "Oblik 'ako ..., onda ...' prevodi se implikacijom →." },
+    { "id": "p5", "sentence": "Sunce sja, ali je hladno.", "legend": "s = sunce sja, h = hladno je", "solution": "s & h", "explanation": "U logici se 'ali' formalizira konjunkcijom ∧." },
+    { "id": "p6", "sentence": "Film nije dug ili nije dosadan.", "legend": "d = film je dug, z = film je dosadan", "solution": "!d | !z", "explanation": "Svaka negirana tvrdnja čini jedan član disjunkcije." },
+    { "id": "p7", "sentence": "Položit ću ispit ako učim.", "legend": "p = položit ću ispit, u = učim", "solution": "u -> p", "explanation": "'A ako B' znači: ako B, onda A." },
+    { "id": "p8", "sentence": "Vrata su otvorena ako i samo ako je ključ okrenut.", "legend": "v = vrata su otvorena, k = ključ je okrenut", "solution": "v <-> k", "explanation": "'Ako i samo ako' označava ekvivalenciju." }
+  ],
+  "srednja": [
+    { "id": "s1", "sentence": "Ako pada kiša i nemam kišobran, onda ću pokisnuti.", "legend": "k = pada kiša, o = imam kišobran, p = pokisnut ću", "solution": "(k & !o) -> p", "explanation": "Antecedens implikacije je konjunkcija k ∧ ¬o." },
+    { "id": "s2", "sentence": "Idem na izlet ako i samo ako je sunčano.", "legend": "i = idem na izlet, s = sunčano je", "solution": "i <-> s", "explanation": "'Ako i samo ako' označava ekvivalenciju ↔." },
+    { "id": "s3", "sentence": "Nije istina da su i Ana i Marko položili ispit.", "legend": "a = Ana je položila, m = Marko je položio", "solution": "!(a & m)", "explanation": "Negira se cijela konjunkcija, zato su zagrade važne." },
+    { "id": "s4", "sentence": "Ako ne učim, neću položiti ispit.", "legend": "u = učim, p = položit ću ispit", "solution": "!u -> !p", "explanation": "I antecedens i konsekvens sadrže negaciju." },
+    { "id": "s5", "sentence": "Ići ću trčati samo ako ne pada kiša.", "legend": "t = ići ću trčati, k = pada kiša", "solution": "t -> !k", "explanation": "'A samo ako B' formalizira se kao A → B." },
+    { "id": "s6", "sentence": "Ako server radi, korisnici se ne žale, ali baza može biti spora.", "legend": "s = server radi, z = korisnici se žale, b = baza je spora", "solution": "s -> (!z & b)", "explanation": "Konsekvens implikacije je konjunkcija dviju tvrdnji." },
+    { "id": "s7", "sentence": "Ana ili Marko dolaze, ali Ana i Marko ne dolaze zajedno.", "legend": "a = Ana dolazi, m = Marko dolazi", "solution": "(a | m) & !(a & m)", "explanation": "Ovo je isključiva disjunkcija: barem jedno, ali ne oboje." },
+    { "id": "s8", "sentence": "Ako je zadatak lagan, riješit ću ga; ako nije lagan, tražit ću pomoć.", "legend": "l = zadatak je lagan, r = riješit ću ga, p = tražit ću pomoć", "solution": "(l -> r) & (!l -> p)", "explanation": "Dvije uvjetne rečenice povezuju se konjunkcijom." }
+  ],
+  "napredna": [
+    { "id": "n1", "sentence": "Ako je sustav preopterećen ili je nestalo struje, server ne radi, a ako server ne radi, korisnici se žale.", "legend": "p = sustav je preopterećen, s = nestalo je struje, r = server radi, z = korisnici se žale", "solution": "((p | s) -> !r) & (!r -> z)", "explanation": "Rečenica spaja dvije implikacije konjunkcijom." },
+    { "id": "n2", "sentence": "Doći ću na sastanak samo ako završim posao, a ako dođem, neću ostati dugo.", "legend": "d = doći ću na sastanak, z = završit ću posao, o = ostat ću dugo", "solution": "(d -> z) & (d -> !o)", "explanation": "'A samo ako B' znači A → B; zatim se dvije tvrdnje spajaju s ∧." },
+    { "id": "n3", "sentence": "Barem jedno od dvoje: ili je lift pokvaren ili se penjemo stepenicama, ali nikako oboje.", "legend": "l = lift je pokvaren, s = penjemo se stepenicama", "solution": "(l | s) & !(l & s)", "explanation": "Isključivo ili traži da barem jedno vrijedi i da ne vrijede oba." },
+    { "id": "n4", "sentence": "Ako projekt nije završen, nećemo ga objaviti, osim ako uprava odobri iznimku.", "legend": "z = projekt je završen, o = objavit ćemo projekt, i = uprava odobrava iznimku", "solution": "(!z & !i) -> !o", "explanation": "Iznimka uklanja posljedicu; bez završetka i bez iznimke slijedi neobjavljivanje." },
+    { "id": "n5", "sentence": "Sustav je siguran samo ako su autentikacija i autorizacija ispravne.", "legend": "s = sustav je siguran, a = autentikacija je ispravna, u = autorizacija je ispravna", "solution": "s -> (a & u)", "explanation": "Sigurnost povlači oba nužna uvjeta." },
+    { "id": "n6", "sentence": "Ako barem jedan servis ne radi, aplikacija je nedostupna; dostupna je upravo onda kada svi servisi rade.", "legend": "p = prvi servis radi, d = drugi servis radi, a = aplikacija je dostupna", "solution": "((!p | !d) -> !a) & (a <-> (p & d))", "explanation": "Prvi dio opisuje kvar, a drugi potpunu ekvivalenciju dostupnosti i rada oba servisa." },
+    { "id": "n7", "sentence": "Nije moguće da je zahtjev i prihvaćen i odbijen, a mora biti jedno od toga.", "legend": "p = zahtjev je prihvaćen, o = zahtjev je odbijen", "solution": "!(p & o) & (p | o)", "explanation": "Traži se točno jedna od dviju mogućnosti." },
+    { "id": "n8", "sentence": "Ako korisnik ima administratorska prava, može mijenjati postavke; ako ih nema, može ih mijenjati samo ako dobije privremenu dozvolu.", "legend": "a = korisnik je administrator, m = može mijenjati postavke, d = ima privremenu dozvolu", "solution": "(a -> m) & ((!a & d) -> m) & ((!a & !d) -> !m)", "explanation": "Tri implikacije pokrivaju administratora i oba slučaja korisnika bez administratorskih prava." }
+  ]
+}

@@ -6,8 +6,11 @@
 
 #include "aksiomat/Arithmetic.hpp"
 #include "aksiomat/LogicExpression.hpp"
+#include "aksiomat/LogicAnalysis.hpp"
 #include "aksiomat/LogicParser.hpp"
-#include "aksiomat/PredicateLogic.hpp"
+#include "aksiomat/NormalForms.hpp"
+#include "aksiomat/Interpretation.hpp"
+#include "aksiomat/PredicateParser.hpp"
 #include "aksiomat/TruthTable.hpp"
 
 namespace {
@@ -16,6 +19,31 @@ namespace {
 std::string logicToString(std::string formula) {
 	try {
 		return aksiomat::LogicParser::parse(formula)->toString();
+	} catch (const std::exception& e) {
+		return std::string("GRESKA: ") + e.what();
+	}
+}
+
+std::string logicClassification(std::string formula) {
+	try {
+		const auto result = aksiomat::LogicAnalysis::classify(aksiomat::LogicParser::parse(formula));
+		return std::string("{\"tautology\":") + (result.tautology ? "true" : "false") +
+			   ",\"contradiction\":" + (result.contradiction ? "true" : "false") +
+			   ",\"satisfiable\":" + (result.satisfiable ? "true" : "false") +
+			   ",\"contingent\":" + (result.contingent ? "true" : "false") + "}";
+	} catch (const std::exception& e) {
+		return std::string("GRESKA: ") + e.what();
+	}
+}
+
+std::string logicNormalForms(std::string formula) {
+	try {
+		auto expression = aksiomat::LogicParser::parse(formula);
+		return "{\"nnf\":\"" + aksiomat::NormalForms::toNnf(expression)->toString() +
+			   "\",\"transformedCnf\":\"" + aksiomat::NormalForms::toCnf(expression)->toString() +
+			   "\",\"transformedDnf\":\"" + aksiomat::NormalForms::toDnf(expression)->toString() +
+			   "\",\"canonicalCnf\":\"" + aksiomat::NormalForms::toCanonicalCnf(expression)->toString() +
+			   "\",\"canonicalDnf\":\"" + aksiomat::NormalForms::toCanonicalDnf(expression)->toString() + "\"}";
 	} catch (const std::exception& e) {
 		return std::string("GRESKA: ") + e.what();
 	}
@@ -129,16 +157,32 @@ std::string predicateToString(std::string formula) {
 	}
 }
 
-// Vraća predikate formule kao "P/1,Q/2" (ime/mjesnost) ili "GRESKA: ...".
+// Vraća strukturirani opis predikata i slobodnih varijabli kao JSON.
 std::string predicatePredicates(std::string formula) {
 	try {
 		auto expr = aksiomat::PredicateParser::parse(formula);
-		std::string result;
+		std::string result = "{\"predicates\":[";
+		bool first = true;
 		for (const auto& [name, arity] : aksiomat::PredicateParser::collectPredicates(expr)) {
-			if (!result.empty()) result += ',';
-			result += name + '/' + std::to_string(arity);
+			if (!first) result += ',';
+			first = false;
+			result += "{\"name\":\"" + name + "\",\"arity\":" + std::to_string(arity) + '}';
 		}
-		return result;
+		result += "],\"freeVariables\":[";
+		first = true;
+		for (const auto& name : aksiomat::PredicateParser::collectFreeVariables(expr)) {
+			if (!first) result += ',';
+			first = false;
+			result += '"' + name + '"';
+		}
+		result += "],\"boundVariables\":[";
+		first = true;
+		for (const auto& name : aksiomat::PredicateParser::collectBoundVariables(expr)) {
+			if (!first) result += ',';
+			first = false;
+			result += '"' + name + '"';
+		}
+		return result + "]}";
 	} catch (const std::exception& e) {
 		return std::string("GRESKA: ") + e.what();
 	}
@@ -155,10 +199,12 @@ std::string predicateEvaluate(std::string formula, std::string domain, std::stri
 		aksiomat::Interpretation interp;
 		std::vector<std::string> elements;
 		std::size_t pos = 0;
-		while (pos <= domain.size() && !domain.empty()) {
+		while (pos <= domain.size()) {
 			std::size_t end = domain.find(',', pos);
 			if (end == std::string::npos) end = domain.size();
-			if (end > pos) elements.push_back(domain.substr(pos, end - pos));
+			if (end == pos) throw std::invalid_argument("Domena sadrzi prazan element");
+			elements.push_back(domain.substr(pos, end - pos));
+			if (end == domain.size()) break;
 			pos = end + 1;
 		}
 		interp.setDomain(std::move(elements));
@@ -171,16 +217,18 @@ std::string predicateEvaluate(std::string formula, std::string domain, std::stri
 			pos = end + 1;
 			const std::size_t open = fact.find('(');
 			const std::size_t close = fact.rfind(')');
-			if (open == std::string::npos || close == std::string::npos || close < open) {
-				continue;
+			if (open == std::string::npos || close != fact.size() - 1 || close <= open + 1) {
+				throw std::invalid_argument("Neispravna cinjenica '" + fact + "'");
 			}
 			const std::string name = fact.substr(0, open);
+			if (name.empty()) throw std::invalid_argument("Cinjenica nema ime predikata");
 			std::vector<std::string> args;
 			std::size_t argPos = open + 1;
 			while (argPos < close) {
 				std::size_t argEnd = fact.find(',', argPos);
 				if (argEnd == std::string::npos || argEnd > close) argEnd = close;
-				if (argEnd > argPos) args.push_back(fact.substr(argPos, argEnd - argPos));
+				if (argEnd == argPos) throw std::invalid_argument("Cinjenica sadrzi prazan argument");
+				args.push_back(fact.substr(argPos, argEnd - argPos));
 				argPos = argEnd + 1;
 			}
 			interp.addFact(name, std::move(args));
@@ -200,6 +248,8 @@ EMSCRIPTEN_BINDINGS(aksiomat_module) {
 	emscripten::function("logicEvaluate", &logicEvaluate);
 	emscripten::function("truthTable", &truthTable);
 	emscripten::function("logicEquivalent", &logicEquivalent);
+	emscripten::function("logicClassification", &logicClassification);
+	emscripten::function("logicNormalForms", &logicNormalForms);
 	emscripten::function("predicateToString", &predicateToString);
 	emscripten::function("predicatePredicates", &predicatePredicates);
 	emscripten::function("predicateEvaluate", &predicateEvaluate);

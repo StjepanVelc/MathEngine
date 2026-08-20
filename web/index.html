@@ -43,6 +43,17 @@
                     <p id="logic-parsed" class="parsed"></p>
                     <div id="logic-vars"></div>
                     <p>Rezultat: <output id="logic-result">—</output></p>
+                    <div id="logic-classification" class="analysis-box"></div>
+                    <details id="normal-forms-box" class="analysis-box" hidden>
+                        <summary>Normalne forme</summary>
+                        <dl>
+                            <dt>NNF</dt><dd id="logic-nnf"></dd>
+                            <dt>Transformirani CNF</dt><dd id="logic-cnf"></dd>
+                            <dt>Kanonski CNF</dt><dd id="logic-canonical-cnf"></dd>
+                            <dt>Transformirani DNF</dt><dd id="logic-dnf"></dd>
+                            <dt>Kanonski DNF</dt><dd id="logic-canonical-dnf"></dd>
+                        </dl>
+                    </details>
                     <button type="button" id="truth-table-btn">Tablica istinitosti</button>
                     <div id="truth-table-box"></div>
                 </div>
@@ -51,6 +62,7 @@
                 <div id="panel-predicate" class="subchapter-panel" hidden>
                     <h2>Predikatna logika</h2>
                     <p>Kvantifikatori: ∀ (za svaki), ∃ (postoji); predikati kao <code>P(x)</code>, <code>Manji(x, y)</code>; veznici kao u iskaznoj logici.<br>
+                       Jednakost: <code>x = y</code>; nejednakost: <code>x ≠ y</code> ili <code>x != y</code>.<br>
                        ASCII: <code>forall x</code>, <code>exists x</code></p>
                     <div class="symbol-palette" data-target="pred-input">
                         <button type="button" data-symbol="∀">∀</button>
@@ -60,18 +72,21 @@
                         <button type="button" data-symbol="∨">∨</button>
                         <button type="button" data-symbol="→">→</button>
                         <button type="button" data-symbol="↔">↔</button>
+                        <button type="button" data-symbol="=">=</button>
+                        <button type="button" data-symbol="≠">≠</button>
                         <button type="button" data-symbol="(">(</button>
                         <button type="button" data-symbol=")">)</button>
                     </div>
                     <input type="text" id="pred-input" class="formula-input" placeholder="npr. ∀x ∃y Manji(x, y)" autocomplete="off">
                     <p id="pred-parsed" class="parsed"></p>
+                    <p id="pred-highlighted" class="predicate-highlight" aria-label="Označene varijable"></p>
                     <h3>Interpretacija (konačna domena)</h3>
                     <label>Domena (elementi odvojeni zarezom):<br>
                         <input type="text" id="pred-domain" class="formula-input" placeholder="npr. 1,2,3" autocomplete="off">
                     </label>
-                    <label>Činjenice — n-torke za koje su predikati istiniti, odvojene točka-zarezom:<br>
-                        <input type="text" id="pred-facts" class="formula-input" placeholder="npr. Paran(2);Manji(1,2);Manji(2,3)" autocomplete="off">
-                    </label>
+                    <p id="pred-free-vars" class="parsed"></p>
+                    <p id="pred-bound-vars" class="parsed"></p>
+                    <div id="pred-interpretation" class="parsed"></div>
                     <button type="button" id="pred-eval">Evaluiraj</button>
                     <p>Rezultat: <output id="pred-result">—</output></p>
                 </div>
@@ -84,6 +99,11 @@
                         <button type="button" class="difficulty-btn" data-difficulty="pocetna">Početna</button>
                         <button type="button" class="difficulty-btn" data-difficulty="srednja">Srednja</button>
                         <button type="button" class="difficulty-btn" data-difficulty="napredna">Napredna</button>
+                    </div>
+                    <p id="form-progress" class="progress"></p>
+                    <div class="form-actions">
+                        <button type="button" id="form-reset-current">Resetiraj odabranu težinu</button>
+                        <button type="button" id="form-reset-all">Resetiraj sve</button>
                     </div>
                     <div id="form-exercise" hidden>
                         <p id="form-sentence" class="sentence"></p>
@@ -103,6 +123,7 @@
                             <button type="button" id="form-next">Sljedeći zadatak</button>
                         </div>
                         <p id="form-feedback" class="parsed"></p>
+                        <p id="form-explanation" class="explanation" hidden></p>
                     </div>
                 </div>
             </div>

@@ -4,7 +4,11 @@ add_library(aksiomat_core STATIC
 	src/LogicExpression.cpp
 	src/LogicParser.cpp
 	src/TruthTable.cpp
-	src/PredicateLogic.cpp
+	src/LogicAnalysis.cpp
+	src/NormalForms.cpp
+	src/PredicateExpression.cpp
+	src/PredicateParser.cpp
+	src/Interpretation.cpp
 	src/Arithmetic.cpp
 )
 

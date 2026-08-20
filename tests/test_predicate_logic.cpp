@@ -2,7 +2,9 @@
 
 #include <stdexcept>
 
-#include "aksiomat/PredicateLogic.hpp"
+#include "aksiomat/Interpretation.hpp"
+#include "aksiomat/PredicateExpression.hpp"
+#include "aksiomat/PredicateParser.hpp"
 
 using aksiomat::Interpretation;
 using aksiomat::PredicateParser;
@@ -19,11 +21,99 @@ Interpretation makeInterpretation() {
 	return interp;
 }
 
+TEST(PredicateParser, ParsesEqualityAndInequality) {
+	EXPECT_EQ(PredicateParser::parse("x = y")->toString(), "x = y");
+	EXPECT_EQ(PredicateParser::parse("x != y")->toString(), "x \u2260 y");
+	EXPECT_EQ(PredicateParser::parse("x \u2260 y")->toString(), "x \u2260 y");
+}
+
+TEST(PredicateParser, EqualityIsAnAtomicFormula) {
+	auto expression = PredicateParser::parse("forall x (x = x | P(x))");
+	EXPECT_EQ(expression->toString(), "\u2200x (x = x \u2228 P(x))");
+}
+
+TEST(PredicateParser, CollectsFreeAndBoundVariablesFromEquality) {
+	auto expression = PredicateParser::parse("forall x (x = y & exists z z != x)");
+	EXPECT_EQ(PredicateParser::collectFreeVariables(expression), (std::set<std::string>{"y"}));
+	EXPECT_EQ(PredicateParser::collectBoundVariables(expression),
+			  (std::set<std::string>{"x", "z"}));
+}
+
+TEST(PredicateParser, RejectsConflictingPredicateArities) {
+	EXPECT_THROW(PredicateParser::parse("P(x) & P(x, y)"), std::invalid_argument);
+}
+
+TEST(Interpretation, EvaluatesEqualityAndInequality) {
+	Interpretation interpretation;
+	interpretation.setDomain({"1", "2"});
+	EXPECT_TRUE(interpretation.evaluate(PredicateParser::parse("1 = 1")));
+	EXPECT_FALSE(interpretation.evaluate(PredicateParser::parse("1 = 2")));
+	EXPECT_TRUE(interpretation.evaluate(PredicateParser::parse("1 != 2")));
+	EXPECT_TRUE(interpretation.evaluate(PredicateParser::parse("forall x x = x")));
+	EXPECT_TRUE(interpretation.evaluate(PredicateParser::parse("forall x exists y x = y")));
+}
+
+TEST(Interpretation, EqualityRejectsUnknownFreeTerm) {
+	Interpretation interpretation;
+	interpretation.setDomain({"1", "2"});
+	EXPECT_THROW(interpretation.evaluate(PredicateParser::parse("x = 1")),
+				 std::invalid_argument);
+}
+
+TEST(PredicateParser, HandlesShadowedVariables) {
+	auto expression = PredicateParser::parse("forall x (P(x) & exists x Q(x))");
+	EXPECT_TRUE(PredicateParser::collectFreeVariables(expression).empty());
+	EXPECT_EQ(expression->toString(), "\u2200x (P(x) \u2227 \u2203x Q(x))");
+}
+
 } // namespace
 
 TEST(PredicateParser, ParsesUnicodeQuantifiers) {
 	auto expr = PredicateParser::parse("\u2200x \u2203y Manji(x, y)");
 	EXPECT_EQ(expr->toString(), "\u2200x \u2203y Manji(x, y)");
+}
+
+TEST(Interpretation, RejectsEmptyDomain) {
+	Interpretation interpretation;
+	EXPECT_THROW(interpretation.setDomain({}), std::invalid_argument);
+}
+
+TEST(Interpretation, RejectsDuplicateDomainElements) {
+	Interpretation interpretation;
+	EXPECT_THROW(interpretation.setDomain({"1", "1"}), std::invalid_argument);
+}
+
+TEST(Interpretation, RejectsFactOutsideDomain) {
+	Interpretation interpretation;
+	interpretation.setDomain({"1", "2"});
+	EXPECT_THROW(interpretation.addFact("P", {"3"}), std::invalid_argument);
+}
+
+TEST(Interpretation, IgnoresUnrelatedPredicateFact) {
+	Interpretation interpretation;
+	interpretation.setDomain({"1", "2"});
+	interpretation.addFact("Q", {"1"});
+	EXPECT_FALSE(interpretation.evaluate(PredicateParser::parse("exists x P(x)")));
+}
+
+TEST(Interpretation, RejectsFactWithWrongArity) {
+	Interpretation interpretation;
+	interpretation.setDomain({"1", "2"});
+	interpretation.addFact("P", {"1", "2"});
+	EXPECT_THROW(interpretation.evaluate(PredicateParser::parse("exists x P(x)")),
+				 std::invalid_argument);
+}
+
+TEST(Interpretation, RejectsMixedFactAritiesForSamePredicate) {
+	Interpretation interpretation;
+	interpretation.setDomain({"1", "2"});
+	interpretation.addFact("P", {"1"});
+	EXPECT_THROW(interpretation.addFact("P", {"1", "2"}), std::invalid_argument);
+}
+
+TEST(Interpretation, RejectsEvaluationBeforeDomainIsSet) {
+	Interpretation interpretation;
+	EXPECT_THROW(interpretation.evaluate(PredicateParser::parse("P(x)")), std::logic_error);
 }
 
 TEST(PredicateParser, ParsesAsciiKeywords) {
