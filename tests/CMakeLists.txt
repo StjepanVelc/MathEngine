@@ -30,6 +30,10 @@ add_executable(core_tests
 	test_linear_system_solver.cpp
 	test_polynomial.cpp
 	test_function_analyzer.cpp
+	test_geometry_unit_conversion.cpp
+	test_geometry_plane_shapes.cpp
+	test_geometry_triangles.cpp
+	test_geometry_solids_coordinates.cpp
 )
 
 target_link_libraries(core_tests PRIVATE

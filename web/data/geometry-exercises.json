@@ -1,0 +1,30 @@
+{
+  "lagano": [
+    {"id":"g-l-01","topic":"Opseg","title":"Ograda oko vrta","question":"Kvadratni vrt ima stranicu 6 m. Koliko metara ograde treba za cijeli vrt?","answer":24,"unit":"m","tolerance":0.001,"hint":"Kvadrat ima četiri jednake stranice.","explanation":"Opseg kvadrata je O = 4a = 4 · 6 = 24 m."},
+    {"id":"g-l-02","topic":"Površina","title":"Tepih za sobu","question":"Pravokutna soba duga je 5 m i široka 4 m. Kolika je površina poda?","answer":20,"unit":"m²","tolerance":0.001,"hint":"Pomnoži duljinu i širinu.","explanation":"P = a · b = 5 · 4 = 20 m²."},
+    {"id":"g-l-03","topic":"Mjere","title":"Metri u centimetre","question":"Pretvori 3,5 m u centimetre.","answer":350,"unit":"cm","tolerance":0.001,"hint":"Jedan metar ima 100 centimetara.","explanation":"3,5 · 100 = 350 cm."},
+    {"id":"g-l-04","topic":"Kutovi","title":"Treći kut","question":"Dva kuta trokuta iznose 50° i 60°. Koliki je treći kut?","answer":70,"unit":"°","tolerance":0.001,"hint":"Zbroj kutova trokuta je 180°.","explanation":"γ = 180° − 50° − 60° = 70°."},
+    {"id":"g-l-05","topic":"Kocka","title":"Mala kocka","question":"Kocka ima brid 3 cm. Koliki je njezin obujam?","answer":27,"unit":"cm³","tolerance":0.001,"hint":"Obujam kocke je a³.","explanation":"V = 3 · 3 · 3 = 27 cm³."},
+    {"id":"g-l-06","topic":"Koordinate","title":"Točka između","question":"Točke A(0, 0) i B(6, 4) imaju polovište S. Kolika je x-koordinata točke S?","answer":3,"unit":"","tolerance":0.001,"hint":"Zbroji x-koordinate i podijeli s 2.","explanation":"xₛ = (0 + 6) / 2 = 3."},
+    {"id":"g-l-07","topic":"Krug","title":"Polumjer i promjer","question":"Krug ima polumjer 7 cm. Koliki je njegov promjer?","answer":14,"unit":"cm","tolerance":0.001,"hint":"Promjer je dvostruki polumjer.","explanation":"d = 2r = 2 · 7 = 14 cm."},
+    {"id":"g-l-08","topic":"Kapacitet","title":"Boca vode","question":"Koliko mililitara ima 2 litre vode?","answer":2000,"unit":"ml","tolerance":0.001,"hint":"Jedna litra ima 1000 mililitara.","explanation":"2 · 1000 = 2000 ml."}
+  ],
+  "srednje": [
+    {"id":"g-s-01","topic":"Pitagora","title":"Ljestve uz zid","question":"Ljestve su udaljene 6 m od zida, a dodiruju zid na visini 8 m. Koliko su duge?","answer":10,"unit":"m","tolerance":0.001,"hint":"Ljestve su hipotenuza pravokutnog trokuta.","explanation":"c = √(6² + 8²) = √100 = 10 m."},
+    {"id":"g-s-02","topic":"Trapez","title":"Površina trapeza","question":"Trapez ima osnovice 10 cm i 6 cm te visinu 4 cm. Kolika mu je površina?","answer":32,"unit":"cm²","tolerance":0.001,"hint":"Zbroj osnovica pomnoži visinom pa podijeli s 2.","explanation":"P = (10 + 6) · 4 / 2 = 32 cm²."},
+    {"id":"g-s-03","topic":"Kvadar","title":"Kutija za igračke","question":"Kutija je duga 5 dm, široka 3 dm i visoka 2 dm. Koliki je njezin obujam?","answer":30,"unit":"dm³","tolerance":0.001,"hint":"Pomnoži sve tri dimenzije.","explanation":"V = 5 · 3 · 2 = 30 dm³."},
+    {"id":"g-s-04","topic":"Površina","title":"Nedostaje stranica","question":"Pravokutnik ima površinu 48 cm² i duljinu 8 cm. Kolika mu je širina?","answer":6,"unit":"cm","tolerance":0.001,"hint":"Širina je površina podijeljena duljinom.","explanation":"b = P / a = 48 / 8 = 6 cm."},
+    {"id":"g-s-05","topic":"Mjere","title":"Kvadratni metri","question":"Pretvori 25000 cm² u m².","answer":2.5,"unit":"m²","tolerance":0.001,"hint":"Jedan m² ima 10000 cm².","explanation":"25000 / 10000 = 2,5 m²."},
+    {"id":"g-s-06","topic":"Koordinate","title":"Udaljenost točaka","question":"Kolika je udaljenost između A(1, 2) i B(4, 6)?","answer":5,"unit":"","tolerance":0.001,"hint":"Razlike koordinata su 3 i 4.","explanation":"d = √((4−1)² + (6−2)²) = √25 = 5."},
+    {"id":"g-s-07","topic":"Trokut","title":"Opseg jednakokračnog trokuta","question":"Jednakokračni trokut ima krakove 7 cm i osnovicu 10 cm. Koliki je opseg?","answer":24,"unit":"cm","tolerance":0.001,"hint":"Zbroji sva tri brida.","explanation":"O = 7 + 7 + 10 = 24 cm."},
+    {"id":"g-s-08","topic":"Valjak","title":"Obujam valjka","question":"Valjak ima polumjer 2 cm i visinu 5 cm. Izračunaj obujam koristeći π ≈ 3,14.","answer":62.8,"unit":"cm³","tolerance":0.01,"hint":"V = πr²h.","explanation":"V ≈ 3,14 · 2² · 5 = 62,8 cm³."}
+  ],
+  "izazov": [
+    {"id":"g-i-01","topic":"Složena površina","title":"Staza oko vrta","question":"Pravokutni vrt 8 m × 5 m okružen je stazom širokom 1 m. Kolika je površina same staze?","answer":30,"unit":"m²","tolerance":0.001,"hint":"Vanjski pravokutnik ima dimenzije 10 m × 7 m.","explanation":"P(staze) = 10 · 7 − 8 · 5 = 70 − 40 = 30 m²."},
+    {"id":"g-i-02","topic":"Pitagora","title":"Nepoznata kateta","question":"Hipotenuza pravokutnog trokuta duga je 13 cm, a jedna kateta 5 cm. Kolika je druga kateta?","answer":12,"unit":"cm","tolerance":0.001,"hint":"Oduzmi kvadrat poznate katete od kvadrata hipotenuze.","explanation":"a = √(13² − 5²) = √144 = 12 cm."},
+    {"id":"g-i-03","topic":"Oplošje","title":"Papir za kutiju","question":"Zatvorena kutija dimenzija 4 dm × 3 dm × 2 dm prekriva se papirom. Koliko dm² papira treba bez preklapanja?","answer":52,"unit":"dm²","tolerance":0.001,"hint":"Kvadar ima po dvije plohe svake vrste.","explanation":"O = 2(4·3 + 4·2 + 3·2) = 2·26 = 52 dm²."},
+    {"id":"g-i-04","topic":"Krug","title":"Kružna staza","question":"Kružna staza ima polumjer 5 m. Koliki je njezin opseg uz π ≈ 3,14?","answer":31.4,"unit":"m","tolerance":0.01,"hint":"O = 2πr.","explanation":"O ≈ 2 · 3,14 · 5 = 31,4 m."},
+    {"id":"g-i-05","topic":"Prizma","title":"Trokutasta prizma","question":"Prizma ima površinu baze 12 cm² i visinu 9 cm. Koliki joj je obujam?","answer":108,"unit":"cm³","tolerance":0.001,"hint":"Obujam prizme je površina baze puta visina.","explanation":"V = B · h = 12 · 9 = 108 cm³."},
+    {"id":"g-i-06","topic":"Mjerilo","title":"Plan učionice","question":"Na planu u mjerilu 1:100 zid je dug 7,5 cm. Koliko je zid dug u stvarnosti, izraženo u metrima?","answer":7.5,"unit":"m","tolerance":0.001,"hint":"Pomnoži centimetre sa 100 pa pretvori u metre.","explanation":"7,5 cm · 100 = 750 cm = 7,5 m."}
+  ]
+}

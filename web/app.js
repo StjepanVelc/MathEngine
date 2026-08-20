@@ -2,6 +2,91 @@
 //
 // Baza podataka: SQLite u browseru (sql.js / službeni SQLite WASM) — planirano.
 
+const learningLevels = {
+    primary: "Osnovna škola",
+    secondary: "Srednja škola",
+    advanced: "Napredno i fakultet"
+};
+
+function supportsLevel(element, level) {
+    return !element.dataset.levels || element.dataset.levels.split(/\s+/).includes(level);
+}
+
+function setupLearningLevels() {
+    const section = document.getElementById("learning-levels");
+    const cards = [...document.querySelectorAll(".level-card")];
+    const activeLabel = document.getElementById("active-level-label");
+    const changeButton = document.getElementById("change-learning-level");
+    const currentLevel = document.getElementById("current-learning-level");
+
+    function closeElement(element) {
+        element.hidden = true;
+        element.classList.remove("active");
+        if (element.matches(".chapter")) {
+            const toggle = element.querySelector(":scope > .chapter-toggle");
+            const body = element.querySelector(":scope > .chapter-body");
+            body.hidden = true;
+            toggle.setAttribute("aria-expanded", "false");
+            toggle.textContent = toggle.textContent.replace("▾", "▸");
+        }
+    }
+
+    function hideLearningContent() {
+        document.querySelectorAll(".chapter").forEach(closeElement);
+    }
+
+    function showLevelSelector() {
+        hideLearningContent();
+        section.hidden = false;
+        changeButton.hidden = true;
+        currentLevel.hidden = true;
+        const savedLevel = localStorage.getItem("mathengine-learning-level");
+        activeLabel.textContent = learningLevels[savedLevel] || "Nije odabrano";
+        cards.forEach((card) => {
+            const active = card.dataset.level === savedLevel;
+            card.classList.toggle("active", active);
+            card.setAttribute("aria-pressed", String(active));
+        });
+        section.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function selectLevel(level) {
+        if (!learningLevels[level]) return;
+        localStorage.setItem("mathengine-learning-level", level);
+        activeLabel.textContent = learningLevels[level];
+        cards.forEach((card) => {
+            const active = card.dataset.level === level;
+            card.classList.toggle("active", active);
+            card.setAttribute("aria-pressed", String(active));
+        });
+
+        document.querySelectorAll(".chapter").forEach((chapter) => {
+            if (supportsLevel(chapter, level)) chapter.hidden = false;
+            else closeElement(chapter);
+        });
+        document.querySelectorAll(".subchapter-toggle, .arithmetic-toggle, .algebra-toggle, .geometry-toggle").forEach((button) => {
+            const available = supportsLevel(button, level);
+            button.hidden = !available;
+            if (!available) button.classList.remove("active");
+        });
+        document.querySelectorAll(".subchapter-panel, .arithmetic-panel, .algebra-panel, .geometry-panel").forEach((panel) => {
+            if (!supportsLevel(panel, level)) closeElement(panel);
+        });
+        document.body.dataset.learningLevel = level;
+        section.hidden = true;
+        changeButton.hidden = false;
+        currentLevel.textContent = `Razina: ${learningLevels[level]}`;
+        currentLevel.hidden = false;
+    }
+
+    cards.forEach((card) => card.addEventListener("click", () => selectLevel(card.dataset.level)));
+    changeButton.addEventListener("click", showLevelSelector);
+
+    const savedLevel = localStorage.getItem("mathengine-learning-level");
+    if (learningLevels[savedLevel]) selectLevel(savedLevel);
+    else showLevelSelector();
+}
+
 function setupChapters() {
     document.querySelectorAll(".chapter-toggle").forEach((btn) => {
         btn.addEventListener("click", () => {
@@ -192,14 +277,15 @@ async function init() {
     const module = await createAksiomatModule();
 
     status.hidden = true;
-    document.querySelectorAll(".chapter").forEach((s) => (s.hidden = false));
 
+    setupLearningLevels();
     setupChapters();
     setupSubchapters();
     setupLogic(module);
     setupPredicates(module);
     setupFormalization(module);
     setupArithmetic(module);
+    setupGeometry(module);
     setupAlgebra(module);
 }
 

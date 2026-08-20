@@ -19,6 +19,11 @@ add_library(aksiomat_core STATIC
 	src/algebra/LinearSystemSolver.cpp
 	src/algebra/Polynomial.cpp
 	src/algebra/FunctionAnalyzer.cpp
+	src/geometry/UnitConversion.cpp
+	src/geometry/PlaneShapes.cpp
+	src/geometry/Triangles.cpp
+	src/geometry/Solids.cpp
+	src/geometry/Coordinates.cpp
 	src/logic/LogicExpression.cpp
 	src/logic/LogicParser.cpp
 	src/logic/TruthTable.cpp

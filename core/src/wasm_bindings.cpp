@@ -24,6 +24,11 @@
 #include "aksiomat/algebra/InequalitySolver.hpp"
 #include "aksiomat/algebra/LinearSystemSolver.hpp"
 #include "aksiomat/algebra/Polynomial.hpp"
+#include "aksiomat/geometry/Coordinates.hpp"
+#include "aksiomat/geometry/PlaneShapes.hpp"
+#include "aksiomat/geometry/Solids.hpp"
+#include "aksiomat/geometry/Triangles.hpp"
+#include "aksiomat/geometry/UnitConversion.hpp"
 
 namespace {
 
@@ -32,6 +37,96 @@ std::string formatDouble(double value) {
 	text.erase(text.find_last_not_of('0') + 1);
 	if (!text.empty() && text.back() == '.') text.pop_back();
 	return text;
+}
+
+std::string jsonString(const std::string& value);
+
+std::string geometryConvert(std::string category, double value, unsigned from, unsigned to) {
+	try {
+		double result = 0.0;
+		if (category == "length") {
+			result = aksiomat::geometry::UnitConversion::length(value,
+				static_cast<aksiomat::geometry::LengthUnit>(from), static_cast<aksiomat::geometry::LengthUnit>(to));
+		} else if (category == "area") {
+			result = aksiomat::geometry::UnitConversion::area(value,
+				static_cast<aksiomat::geometry::AreaUnit>(from), static_cast<aksiomat::geometry::AreaUnit>(to));
+		} else if (category == "volume") {
+			result = aksiomat::geometry::UnitConversion::volume(value,
+				static_cast<aksiomat::geometry::VolumeUnit>(from), static_cast<aksiomat::geometry::VolumeUnit>(to));
+		} else {
+			throw std::invalid_argument("Nepoznata vrsta mjere");
+		}
+		return "{\"value\":" + formatDouble(result) + '}';
+	} catch (const std::exception& e) {
+		return std::string("GRESKA: ") + e.what();
+	}
+}
+
+std::string geometryPlaneShape(std::string shape, double a, double b, double c, double d, double height) {
+	try {
+		auto result = aksiomat::geometry::PlaneShapeResult{};
+		if (shape == "square") result = aksiomat::geometry::PlaneShapes::square(a);
+		else if (shape == "rectangle") result = aksiomat::geometry::PlaneShapes::rectangle(a, b);
+		else if (shape == "triangle") result = aksiomat::geometry::PlaneShapes::triangle(a, b, c);
+		else if (shape == "parallelogram") result = aksiomat::geometry::PlaneShapes::parallelogram(a, b, height);
+		else if (shape == "trapezoid") result = aksiomat::geometry::PlaneShapes::trapezoid(a, b, c, d, height);
+		else if (shape == "circle") result = aksiomat::geometry::PlaneShapes::circle(a);
+		else throw std::invalid_argument("Nepoznat ravninski lik");
+		return "{\"perimeter\":" + formatDouble(result.perimeter) +
+			",\"area\":" + formatDouble(result.area) + '}';
+	} catch (const std::exception& e) {
+		return std::string("GRESKA: ") + e.what();
+	}
+}
+
+std::string geometryTriangle(std::string operation, double a, double b, double c) {
+	try {
+		if (operation == "classify") {
+			const auto result = aksiomat::geometry::Triangles::classify(a, b, c);
+			return "{\"bySides\":" + jsonString(result.bySides) +
+				",\"byAngles\":" + jsonString(result.byAngles) + '}';
+		}
+		double value = 0.0;
+		if (operation == "thirdAngle") value = aksiomat::geometry::Triangles::thirdAngle(a, b);
+		else if (operation == "hypotenuse") value = aksiomat::geometry::Triangles::hypotenuse(a, b);
+		else if (operation == "leg") value = aksiomat::geometry::Triangles::leg(a, b);
+		else throw std::invalid_argument("Nepoznata operacija s trokutom");
+		return "{\"value\":" + formatDouble(value) + '}';
+	} catch (const std::exception& e) {
+		return std::string("GRESKA: ") + e.what();
+	}
+}
+
+std::string geometrySolid(std::string solid, double a, double b, double c) {
+	try {
+		auto result = aksiomat::geometry::SolidResult{};
+		if (solid == "cube") result = aksiomat::geometry::Solids::cube(a);
+		else if (solid == "cuboid") result = aksiomat::geometry::Solids::cuboid(a, b, c);
+		else if (solid == "prism") result = aksiomat::geometry::Solids::prism(a, b, c);
+		else if (solid == "cylinder") result = aksiomat::geometry::Solids::cylinder(a, b);
+		else throw std::invalid_argument("Nepoznato geometrijsko tijelo");
+		return "{\"surfaceArea\":" + formatDouble(result.surfaceArea) +
+			",\"volume\":" + formatDouble(result.volume) + '}';
+	} catch (const std::exception& e) {
+		return std::string("GRESKA: ") + e.what();
+	}
+}
+
+std::string geometryCoordinates(std::string operation, double x1, double y1, double x2, double y2) {
+	try {
+		const aksiomat::geometry::Point first{x1, y1};
+		const aksiomat::geometry::Point second{x2, y2};
+		if (operation == "distance") {
+			return "{\"distance\":" + formatDouble(aksiomat::geometry::Coordinates::distance(first, second)) + '}';
+		}
+		if (operation == "midpoint") {
+			const auto result = aksiomat::geometry::Coordinates::midpoint(first, second);
+			return "{\"x\":" + formatDouble(result.x) + ",\"y\":" + formatDouble(result.y) + '}';
+		}
+		throw std::invalid_argument("Nepoznata koordinatna operacija");
+	} catch (const std::exception& e) {
+		return std::string("GRESKA: ") + e.what();
+	}
 }
 
 std::string jsonString(const std::string& value) {
@@ -482,6 +577,11 @@ EMSCRIPTEN_BINDINGS(aksiomat_module) {
 	emscripten::function("numberTheoryAnalyze", &numberTheoryAnalyze);
 	emscripten::function("numberTheoryGcdLcm", &numberTheoryGcdLcm);
 	emscripten::function("convertNumeralSystem", &convertNumeralSystem);
+	emscripten::function("geometryConvert", &geometryConvert);
+	emscripten::function("geometryPlaneShape", &geometryPlaneShape);
+	emscripten::function("geometryTriangle", &geometryTriangle);
+	emscripten::function("geometrySolid", &geometrySolid);
+	emscripten::function("geometryCoordinates", &geometryCoordinates);
 	emscripten::function("algebraSimplify", &algebraSimplify);
 	emscripten::function("algebraSolveEquation", &algebraSolveEquation);
 	emscripten::function("algebraSolveInequality", &algebraSolveInequality);

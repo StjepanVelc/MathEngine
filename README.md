@@ -2,6 +2,21 @@
 
 MathEngine je edukacijska matematička web-aplikacija čija se jezgra izvodi u C++20, prevodi u WebAssembly i koristi iz statičkog web sučelja.
 
+## Dokumentacija
+
+Potpuna tehnička dokumentacija nalazi se u [`docs/`](docs/README.md):
+
+- [arhitektura i tok podataka](docs/architecture.md)
+- [C++ matematičke domene](docs/core-domains.md)
+- [WebAssembly API](docs/wasm-api.md)
+- [web frontend](docs/web-frontend.md)
+- [zadaci i lokalna pohrana](docs/exercises-and-storage.md)
+- [build i pokretanje](docs/build-and-run.md)
+- [testiranje i CI](docs/testing-and-ci.md)
+- [vodič za proširivanje](docs/extending-mathengine.md)
+
+Ovaj README ostaje sažeti pregled projekta; `/docs` je izvor detaljne razvojne dokumentacije.
+
 ## Mogućnosti
 
 - iskazna logika: parsiranje, evaluacija, tablice istinitosti i ekvivalencija
@@ -9,7 +24,9 @@ MathEngine je edukacijska matematička web-aplikacija čija se jezgra izvodi u C
 - formalizacija hrvatskih rečenica kroz zadatke po težinama
 - modularna aritmetika: napredni kalkulator, točni razlomci, postotci, teorija brojeva i brojevni sustavi
 - modularna algebra: simbolički izrazi, jednadžbe, nejednadžbe, sustavi, polinomi i interaktivni grafovi
-- lokalno spremanje napretka formalizacijskih zadataka u `localStorage`
+- geometrija: mjerne jedinice, ravninski likovi, trokuti, Pitagorin poučak, tijela i koordinate
+- interaktivni SVG crteži i osnovnoškolska vježbaonica s 22 zadatka
+- lokalno spremanje napretka formalizacijskih i geometrijskih zadataka u `localStorage`
 
 ## Arhitektura
 
@@ -17,13 +34,53 @@ MathEngine je edukacijska matematička web-aplikacija čija se jezgra izvodi u C
 - `core/include/aksiomat/algebra` — algebarski javni C++ ugovori
 - `core/include/aksiomat/logic` — ugovori iskazne logike
 - `core/include/aksiomat/predicate` — ugovori predikatne logike
-- `core/src/{arithmetic,algebra,logic,predicate}` — implementacije po domenama
+- `core/include/aksiomat/geometry` — javni ugovori geometrije
+- `core/src/{arithmetic,algebra,logic,predicate,geometry}` — implementacije po domenama
 - `core/src/wasm_bindings.cpp` — zajednički Emscripten adapter svih domena
 - `app` — mala native CLI demonstracija
 - `tests` — GoogleTest testovi
 - `web` — HTML/CSS/JavaScript frontend i generirani WASM artefakti
 
 Svaka matematička domena ima vlastitu include i source mapu. Predikatna logika razdvojena je na `PredicateExpression`, `PredicateParser` i `Interpretation`, dok `PredicateLogic.hpp` ostaje umbrella header unutar `predicate/` mape.
+
+Obrazovna razina pripada web prezentacijskom sloju, a ne C++ domeni. Isti parser ili solver zato se ne duplicira za osnovnu, srednju i naprednu razinu; frontend samo bira dostupne alate, primjere i količinu objašnjenja.
+
+## Razine učenja
+
+Početni ekran nudi tri razine. Odabir se sprema u `localStorage` i može se promijeniti bez ponovnog učitavanja aplikacije.
+
+### Osnovna škola
+
+- Aritmetika: kalkulator, razlomci, postotci, osnove teorije brojeva i brojevni sustavi
+- Osnove algebre: sređivanje izraza, linearne jednadžbe i jednostavne nejednadžbe
+- Geometrija: mjere, opseg i površina, trokuti i Pitagora, tijela, koordinate i vježbaonica
+
+### Srednja škola
+
+- Algebra: izrazi, jednadžbe, nejednadžbe, sustavi 2×2, polinomi, funkcije i grafovi
+- Logika: iskazna logika i formalizacija rečenica
+
+### Napredno i fakultet
+
+- Matematička logika: iskazna i predikatna logika, normalne forme i interpretacije
+- Formalizacija rečenica
+- buduće domene: linearna algebra, matematička analiza, diskretna matematika i kompleksni brojevi
+
+Jedan alat može pripadati više razina preko HTML atributa `data-levels`, ali njegova C++ implementacija uvijek ostaje jedinstvena.
+
+## Planirane backend domene
+
+Za budući razvoj pripremljene su dokumentirane mape u `core/include/aksiomat/` i `core/src/`:
+
+- `trigonometry` — kutovi, funkcije, identiteti i trokuti
+- `sequences` — aritmetički/geometrijski nizovi, sume i rekurzije
+- `probability_statistics` — vjerojatnost, kombinatorika i statistika
+- `linear_algebra` — vektori, matrice, determinante i vektorski prostori
+- `mathematical_analysis` — limesi, derivacije, integrali i redovi
+- `discrete_math` — skupovi, relacije, grafovi i kombinatorika
+- `complex_numbers` — algebarski, trigonometrijski i eksponencijalni oblik
+
+Te mape zasad sadrže samo README ugovore. Ne ulaze u CMake dok ne dobiju stvarne C++20 implementacije i GoogleTest testove. Geometrija je već aktivna domena i zato nije na ovom popisu.
 
 ## Zahtjevi
 
@@ -93,6 +150,18 @@ Isti predikat mora u cijeloj formuli imati jednaku arnost. Konačna domena mora 
 
 Zadaci se nalaze u `web/data/formalization-exercises.json`. Svaki zadatak ima jedinstveni `id`, rečenicu, legendu, rješenje i objašnjenje. Napredak se čuva lokalno po težini.
 
+## Geometrija
+
+Geometrijska jezgra podijeljena je na module `UnitConversion`, `PlaneShapes`, `Triangles`, `Solids` i `Coordinates`. Podržava:
+
+- pretvorbe duljine, površine, obujma i kapaciteta
+- opseg i površinu kvadrata, pravokutnika, trokuta, paralelograma, trapeza i kruga
+- klasifikaciju trokuta, treći kut i Pitagorin poučak
+- oplošje i obujam kocke, kvadra, prizme i valjka
+- udaljenost i polovište dviju točaka
+
+Web poglavlje koristi SVG crteže koji se mijenjaju s korisničkim unosom. Vježbaonica učitava 22 zadatka iz `web/data/geometry-exercises.json`, raspoređena na težine `lagano`, `srednje` i `izazov`, te u `localStorage` sprema bodove, točnost, niz i broj rješavanja pojedinih zadataka.
+
 ## Aritmetika
 
 Aritmetička jezgra podijeljena je na neovisne module:
@@ -156,7 +225,7 @@ Web graf koristi Canvas i omogućuje pomicanje, zumiranje, prikaz koordinata, oz
 
 ## Testovi i CI
 
-GoogleTest pokriva AST, parsere, tablice istinitosti, ekvivalenciju, arnost predikata, zasjenjivanje varijabli, interpretaciju, aritmetiku i algebru. GitHub Actions workflow `.github/workflows/ci.yml` pokreće native testove i zaseban Emscripten build.
+GoogleTest pokriva AST, parsere, tablice istinitosti, ekvivalenciju, arnost predikata, zasjenjivanje varijabli, interpretaciju, aritmetiku, algebru i geometriju. GitHub Actions workflow `.github/workflows/ci.yml` pokreće native testove i zaseban Emscripten build.
 
 ## Trenutna ograničenja
 

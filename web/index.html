@@ -8,25 +8,58 @@
 </head>
 <body>
     <main>
-        <h1>MathEngine</h1>
-        <p class="subtitle">C++ matematička jezgra → WebAssembly → web-aplikacija</p>
+        <header class="app-header">
+            <div>
+                <h1>MathEngine</h1>
+                <p class="subtitle">C++ matematička jezgra → WebAssembly → web-aplikacija</p>
+                <p id="current-learning-level" class="current-learning-level" hidden></p>
+            </div>
+            <button type="button" id="change-learning-level" class="change-level-button" hidden>Izbor škole</button>
+        </header>
 
         <section id="status">
             <p>Učitavam WASM modul…</p>
         </section>
 
+        <section id="learning-levels" class="learning-levels" hidden aria-labelledby="learning-level-title">
+            <div class="level-heading">
+                <div>
+                    <h2 id="learning-level-title">Odaberi razinu učenja</h2>
+                    <p>Prikazat ćemo alate i objašnjenja primjerene odabranoj razini. Razinu možeš promijeniti bilo kada.</p>
+                </div>
+                <span id="active-level-label" class="level-badge">Nije odabrano</span>
+            </div>
+            <div class="level-grid">
+                <button type="button" class="level-card" data-level="primary" aria-pressed="false">
+                    <span class="level-card-icon" aria-hidden="true">1</span>
+                    <strong>Osnovna škola</strong>
+                    <span>Temeljno računanje, razlomci, postotci i prvi koraci u algebri.</span>
+                </button>
+                <button type="button" class="level-card" data-level="secondary" aria-pressed="false">
+                    <span class="level-card-icon" aria-hidden="true">2</span>
+                    <strong>Srednja škola</strong>
+                    <span>Jednadžbe, funkcije, polinomi, grafovi i osnove logike.</span>
+                </button>
+                <button type="button" class="level-card" data-level="advanced" aria-pressed="false">
+                    <span class="level-card-icon" aria-hidden="true">3</span>
+                    <strong>Napredno i fakultet</strong>
+                    <span>Matematička logika i priprema za buduću analizu, linearnu algebru i diskretnu matematiku.</span>
+                </button>
+            </div>
+        </section>
+
         <!-- Poglavlje: Logika -->
-        <section class="chapter" hidden>
+        <section class="chapter" data-levels="secondary advanced" hidden>
             <button class="chapter-toggle" aria-expanded="false">Logika ▸</button>
             <div class="chapter-body" hidden>
                 <div class="subchapter-nav">
-                    <button type="button" class="subchapter-toggle" data-panel="panel-propositional">Iskazna logika</button>
-                    <button type="button" class="subchapter-toggle" data-panel="panel-predicate">Predikatna logika</button>
-                    <button type="button" class="subchapter-toggle" data-panel="panel-formalization">Formalizacija rečenica</button>
+                    <button type="button" class="subchapter-toggle" data-panel="panel-propositional" data-levels="secondary advanced">Iskazna logika</button>
+                    <button type="button" class="subchapter-toggle" data-panel="panel-predicate" data-levels="advanced">Predikatna logika</button>
+                    <button type="button" class="subchapter-toggle" data-panel="panel-formalization" data-levels="secondary advanced">Formalizacija rečenica</button>
                 </div>
 
                 <!-- Podpoglavlje: Iskazna logika -->
-                <div id="panel-propositional" class="subchapter-panel" hidden>
+                <div id="panel-propositional" class="subchapter-panel" data-levels="secondary advanced" hidden>
                     <h2>Iskazna logika</h2>
                     <p class="tool-description">Provjerava strukturu i istinitost logičkih formula te izrađuje tablicu istinitosti i normalne forme.</p>
                     <p>Podržani operatori: ¬ (negacija), ∧ (konjunkcija), ∨ (disjunkcija), → (implikacija), ↔ (ekvivalencija), zagrade i varijable.<br>
@@ -60,7 +93,7 @@
                 </div>
 
                 <!-- Podpoglavlje: Predikatna logika -->
-                <div id="panel-predicate" class="subchapter-panel" hidden>
+                <div id="panel-predicate" class="subchapter-panel" data-levels="advanced" hidden>
                     <h2>Predikatna logika</h2>
                     <p class="tool-description">Evaluira predikate i kvantifikatore nad konačnom domenom koju sam zadaješ.</p>
                     <p>Kvantifikatori: ∀ (za svaki), ∃ (postoji); predikati kao <code>P(x)</code>, <code>Manji(x, y)</code>; veznici kao u iskaznoj logici.<br>
@@ -94,7 +127,7 @@
                 </div>
 
                 <!-- Podpoglavlje: Formalizacija rečenica -->
-                <div id="panel-formalization" class="subchapter-panel" hidden>
+                <div id="panel-formalization" class="subchapter-panel" data-levels="secondary advanced" hidden>
                     <h2>Formalizacija rečenica</h2>
                     <p class="tool-description">Vježba prevođenje rečenica iz svakodnevnog jezika u precizne logičke formule.</p>
                     <p>Prevedi rečenicu na jezik logike. Prihvaća se svaka logički ekvivalentna formula.</p>
@@ -133,18 +166,18 @@
         </section>
 
         <!-- Poglavlje: Aritmetika -->
-        <section class="chapter" hidden>
+        <section class="chapter" data-levels="primary" hidden>
             <button class="chapter-toggle" aria-expanded="false">Aritmetika ▸</button>
             <div class="chapter-body" hidden>
                 <div class="arithmetic-nav">
-                    <button type="button" class="arithmetic-toggle" data-panel="arith-calculator">Kalkulator</button>
-                    <button type="button" class="arithmetic-toggle" data-panel="arith-fractions">Razlomci</button>
-                    <button type="button" class="arithmetic-toggle" data-panel="arith-percentages">Postotci</button>
-                    <button type="button" class="arithmetic-toggle" data-panel="arith-number-theory">Teorija brojeva</button>
-                    <button type="button" class="arithmetic-toggle" data-panel="arith-numeral-systems">Brojevni sustavi</button>
+                    <button type="button" class="arithmetic-toggle" data-panel="arith-calculator" data-levels="primary">Kalkulator</button>
+                    <button type="button" class="arithmetic-toggle" data-panel="arith-fractions" data-levels="primary">Razlomci</button>
+                    <button type="button" class="arithmetic-toggle" data-panel="arith-percentages" data-levels="primary">Postotci</button>
+                    <button type="button" class="arithmetic-toggle" data-panel="arith-number-theory" data-levels="primary">Teorija brojeva</button>
+                    <button type="button" class="arithmetic-toggle" data-panel="arith-numeral-systems" data-levels="primary">Brojevni sustavi</button>
                 </div>
 
-                <div id="arith-calculator" class="arithmetic-panel" hidden>
+                <div id="arith-calculator" class="arithmetic-panel" data-levels="primary" hidden>
                     <h2>Kalkulator</h2>
                     <p class="tool-description">Računa brojčane izraze uz pravilan prioritet operacija, funkcije i matematičke konstante.</p>
                     <aside class="formula-card"><strong>Kako se računa</strong><code>Zagrade → faktorijel/potencije → množenje/dijeljenje → zbrajanje/oduzimanje</code><span>Podržano: +, −, ×, ÷, %, ^, !, pi, e, sqrt, abs, min, max, round, floor, ceil i mod.</span></aside>
@@ -158,7 +191,7 @@
                     <div class="result-grid"><div class="result-row result-primary"><span>Rezultat</span><output id="arith-result">—</output></div></div>
                 </div>
 
-                <div id="arith-fractions" class="arithmetic-panel" hidden>
+                <div id="arith-fractions" class="arithmetic-panel" data-levels="primary" hidden>
                     <h2>Razlomci</h2>
                     <p class="tool-description">Izvodi točne operacije s razlomcima, automatski ih skraćuje i prikazuje u više oblika.</p>
                     <aside class="formula-card"><strong>Pravila</strong><code>a/b + c/d = (ad + bc) / bd</code><code>a/b · c/d = ac / bd</code><span>Rezultat se uvijek skraćuje najvećim zajedničkim djeliteljem.</span></aside>
@@ -174,7 +207,7 @@
                     <div class="result-grid inline-result"><div class="result-row"><span>Razlomak</span><output id="decimal-fraction-result">—</output></div></div>
                 </div>
 
-                <div id="arith-percentages" class="arithmetic-panel" hidden>
+                <div id="arith-percentages" class="arithmetic-panel" data-levels="primary" hidden>
                     <h2>Postotci</h2>
                     <p class="tool-description">Računa postotak vrijednosti, postotnu promjenu, omjer i početnu vrijednost.</p>
                     <aside class="formula-card"><strong>Osnovna formula</strong><code>p% od V = (p / 100) · V</code><span>Za povećanje koristi se V · (1 + p/100), a za smanjenje V · (1 − p/100).</span></aside>
@@ -190,7 +223,7 @@
                     <div class="result-grid"><div class="result-row result-primary"><span>Rezultat</span><output id="percentage-result">—</output></div></div>
                 </div>
 
-                <div id="arith-number-theory" class="arithmetic-panel" hidden>
+                <div id="arith-number-theory" class="arithmetic-panel" data-levels="primary" hidden>
                     <h2>Teorija brojeva</h2>
                     <p class="tool-description">Analizira broj: prost ili složen, njegove djelitelje, prostu faktorizaciju, NZD i NZV.</p>
                     <aside class="formula-card"><strong>Kako se koristi</strong><code>n = p₁ᵃ · p₂ᵇ · …</code><span>Prost broj ima točno dva pozitivna djelitelja: 1 i samoga sebe. NZD traži najveći zajednički faktor, a NZV najmanji zajednički višekratnik.</span></aside>
@@ -204,7 +237,7 @@
                     <div id="gcd-result" class="result-grid"></div>
                 </div>
 
-                <div id="arith-numeral-systems" class="arithmetic-panel" hidden>
+                <div id="arith-numeral-systems" class="arithmetic-panel" data-levels="primary" hidden>
                     <h2>Brojevni sustavi</h2>
                     <p class="tool-description">Pretvara broj iz jedne baze u drugu. Dozvoljene baze: 2–36.</p>
                     <aside class="formula-card"><strong>Pozicijski zapis</strong><code>(dₙ…d₁d₀)ᵦ = Σ dᵢ · bⁱ</code><span>Primjer: FF₁₆ = 15·16¹ + 15·16⁰ = 255₁₀.</span></aside>
@@ -217,20 +250,109 @@
             </div>
         </section>
 
+        <!-- Poglavlje: Geometrija -->
+        <section class="chapter geometry-chapter" data-levels="primary" hidden>
+            <button class="chapter-toggle" aria-expanded="false">Geometrija ▸</button>
+            <div class="chapter-body" hidden>
+                <div class="geometry-hero">
+                    <div>
+                        <span class="geometry-kicker">Matematika koju možeš vidjeti</span>
+                        <h2>Geometrijski laboratorij</h2>
+                        <p>Mijenjaj mjere, istražuj formule i promatraj kako se likovi mijenjaju pred tobom.</p>
+                    </div>
+                    <div class="geometry-hero-shapes" aria-hidden="true"><span></span><span></span><span></span></div>
+                </div>
+                <div class="geometry-nav">
+                    <button type="button" class="geometry-toggle" data-panel="geometry-units" data-levels="primary">Mjere</button>
+                    <button type="button" class="geometry-toggle" data-panel="geometry-shapes" data-levels="primary">Ravninski likovi</button>
+                    <button type="button" class="geometry-toggle" data-panel="geometry-triangles" data-levels="primary">Trokuti i Pitagora</button>
+                    <button type="button" class="geometry-toggle" data-panel="geometry-solids" data-levels="primary">Geometrijska tijela</button>
+                    <button type="button" class="geometry-toggle" data-panel="geometry-coordinates" data-levels="primary">Koordinate</button>
+                    <button type="button" class="geometry-toggle geometry-practice-toggle" data-panel="geometry-practice" data-levels="primary">Vježbaonica</button>
+                </div>
+
+                <div id="geometry-units" class="geometry-panel" data-levels="primary" hidden>
+                    <div class="geometry-tool-layout"><div>
+                        <span class="lesson-chip">Mjerenje</span><h2>Pretvaranje mjernih jedinica</h2>
+                        <p class="tool-description">Pretvori duljinu, površinu ili obujam i odmah vidi odnos između jedinica.</p>
+                        <aside class="formula-card"><strong>Zapamti ljestvicu</strong><code>1 m = 10 dm = 100 cm = 1000 mm</code><span>Kod površine svaki korak vrijedi ×100, a kod obujma ×1000.</span></aside>
+                        <div class="geometry-form-grid">
+                            <label>Vrsta mjere<select id="geometry-unit-category"><option value="length">Duljina</option><option value="area">Površina</option><option value="volume">Obujam i kapacitet</option></select></label>
+                            <label>Vrijednost<input id="geometry-unit-value" type="number" min="0" step="any" value="2.5"></label>
+                            <label>Iz jedinice<select id="geometry-unit-from"></select></label>
+                            <label>U jedinicu<select id="geometry-unit-to"></select></label>
+                        </div>
+                        <button type="button" id="geometry-unit-calculate">Pretvori mjeru</button>
+                        <div id="geometry-unit-result" class="result-grid"></div>
+                    </div><div id="geometry-unit-visual" class="geometry-visual" aria-label="Vizualni odnos mjernih jedinica"></div></div>
+                </div>
+
+                <div id="geometry-shapes" class="geometry-panel" data-levels="primary" hidden>
+                    <div class="geometry-tool-layout"><div>
+                        <span class="lesson-chip">Likovi oko nas</span><h2>Opseg i površina</h2>
+                        <p class="tool-description">Odaberi lik, upiši njegove mjere i usporedi prostor unutar ruba s duljinom njegova ruba.</p>
+                        <label>Ravninski lik<select id="geometry-shape"><option value="square">Kvadrat</option><option value="rectangle">Pravokutnik</option><option value="triangle">Trokut</option><option value="parallelogram">Paralelogram</option><option value="trapezoid">Trapez</option><option value="circle">Krug</option></select></label>
+                        <div id="geometry-shape-inputs" class="geometry-form-grid"></div>
+                        <aside id="geometry-shape-formula" class="formula-card"></aside>
+                        <button type="button" id="geometry-shape-calculate">Izračunaj lik</button>
+                        <div id="geometry-shape-result" class="result-grid"></div>
+                    </div><div id="geometry-shape-visual" class="geometry-visual" aria-label="Crtež odabranog ravninskog lika"></div></div>
+                </div>
+
+                <div id="geometry-triangles" class="geometry-panel" data-levels="primary" hidden>
+                    <div class="geometry-tool-layout"><div>
+                        <span class="lesson-chip">Trokutni izazov</span><h2>Trokuti i Pitagorin poučak</h2>
+                        <p class="tool-description">Otkrij vrstu trokuta, treći kut ili nepoznatu stranicu pravokutnog trokuta.</p>
+                        <label>Što želiš pronaći?<select id="geometry-triangle-operation"><option value="classify">Vrstu trokuta iz stranica</option><option value="thirdAngle">Treći kut</option><option value="hypotenuse">Hipotenuzu</option><option value="leg">Nepoznatu katetu</option></select></label>
+                        <div id="geometry-triangle-inputs" class="geometry-form-grid"></div>
+                        <aside id="geometry-triangle-formula" class="formula-card"></aside>
+                        <button type="button" id="geometry-triangle-calculate">Istraži trokut</button>
+                        <div id="geometry-triangle-result" class="result-grid"></div>
+                    </div><div id="geometry-triangle-visual" class="geometry-visual" aria-label="Crtež trokuta"></div></div>
+                </div>
+
+                <div id="geometry-solids" class="geometry-panel" data-levels="primary" hidden>
+                    <div class="geometry-tool-layout"><div>
+                        <span class="lesson-chip">Geometrija u 3D</span><h2>Oplošje i obujam tijela</h2>
+                        <p class="tool-description">Istraži koliko materijala prekriva tijelo i koliko prostora stane u njega.</p>
+                        <label>Geometrijsko tijelo<select id="geometry-solid"><option value="cube">Kocka</option><option value="cuboid">Kvadar</option><option value="prism">Prizma</option><option value="cylinder">Valjak</option></select></label>
+                        <div id="geometry-solid-inputs" class="geometry-form-grid"></div>
+                        <aside id="geometry-solid-formula" class="formula-card"></aside>
+                        <button type="button" id="geometry-solid-calculate">Izračunaj tijelo</button>
+                        <div id="geometry-solid-result" class="result-grid"></div>
+                    </div><div id="geometry-solid-visual" class="geometry-visual" aria-label="Crtež geometrijskog tijela"></div></div>
+                </div>
+
+                <div id="geometry-coordinates" class="geometry-panel" data-levels="primary" hidden>
+                    <div class="geometry-tool-layout"><div>
+                        <span class="lesson-chip">Karta točaka</span><h2>Koordinatni sustav</h2>
+                        <p class="tool-description">Postavi dvije točke i pronađi njihovu udaljenost ili točku koja se nalazi točno između njih.</p>
+                        <div class="geometry-form-grid"><label>Aₓ<input id="geometry-x1" type="number" step="any" value="-2"></label><label>Aᵧ<input id="geometry-y1" type="number" step="any" value="4"></label><label>Bₓ<input id="geometry-x2" type="number" step="any" value="6"></label><label>Bᵧ<input id="geometry-y2" type="number" step="any" value="-2"></label></div>
+                        <div class="geometry-action-row"><button type="button" id="geometry-distance-calculate">Udaljenost</button><button type="button" id="geometry-midpoint-calculate">Polovište</button></div>
+                        <div id="geometry-coordinate-result" class="result-grid"></div>
+                    </div><div id="geometry-coordinate-visual" class="geometry-visual geometry-coordinate-visual" aria-label="Koordinatni sustav s točkama"></div></div>
+                </div>
+
+                <div id="geometry-practice" class="geometry-panel" data-levels="primary" hidden>
+                    <div id="geometry-practice-root" class="geometry-practice"></div>
+                </div>
+            </div>
+        </section>
+
         <!-- Poglavlje: Algebra -->
-        <section class="chapter" hidden>
+        <section class="chapter" data-levels="primary secondary" hidden>
             <button class="chapter-toggle" aria-expanded="false">Algebra ▸</button>
             <div class="chapter-body">
                 <div class="algebra-nav">
-                    <button type="button" class="algebra-toggle" data-panel="algebra-expressions">Izrazi</button>
-                    <button type="button" class="algebra-toggle" data-panel="algebra-equations">Jednadžbe</button>
-                    <button type="button" class="algebra-toggle" data-panel="algebra-inequalities">Nejednadžbe</button>
-                    <button type="button" class="algebra-toggle" data-panel="algebra-systems">Sustavi</button>
-                    <button type="button" class="algebra-toggle" data-panel="algebra-polynomials">Polinomi</button>
-                    <button type="button" class="algebra-toggle" data-panel="algebra-functions">Funkcije i grafovi</button>
+                    <button type="button" class="algebra-toggle" data-panel="algebra-expressions" data-levels="primary secondary">Izrazi</button>
+                    <button type="button" class="algebra-toggle" data-panel="algebra-equations" data-levels="primary secondary">Jednadžbe</button>
+                    <button type="button" class="algebra-toggle" data-panel="algebra-inequalities" data-levels="primary secondary">Nejednadžbe</button>
+                    <button type="button" class="algebra-toggle" data-panel="algebra-systems" data-levels="secondary">Sustavi</button>
+                    <button type="button" class="algebra-toggle" data-panel="algebra-polynomials" data-levels="secondary">Polinomi</button>
+                    <button type="button" class="algebra-toggle" data-panel="algebra-functions" data-levels="secondary">Funkcije i grafovi</button>
                 </div>
 
-                <div id="algebra-expressions" class="algebra-panel" hidden>
+                <div id="algebra-expressions" class="algebra-panel" data-levels="primary secondary" hidden>
                     <h2>Sređivanje izraza</h2>
                     <p class="tool-description">Spaja istovrsne članove i uklanja suvišne operacije kako bi izraz bio kraći i pregledniji.</p>
                     <aside class="formula-card"><strong>Pravilo</strong><code>ax + bx = (a + b)x</code><span>Podržani su brojevi, varijabla x, zagrade, potencije i implicitno množenje poput 2x.</span></aside>
@@ -239,7 +361,7 @@
                     <div id="algebra-expression-result" class="analysis-box"></div>
                 </div>
 
-                <div id="algebra-equations" class="algebra-panel" hidden>
+                <div id="algebra-equations" class="algebra-panel" data-levels="primary secondary" hidden>
                     <h2>Linearne jednadžbe</h2>
                     <p class="tool-description">Rješava linearnu jednadžbu s jednom nepoznanicom i prikazuje svaki korak postupka.</p>
                     <aside class="formula-card"><strong>Opći oblik</strong><code>ax + b = c  ⇒  x = (c − b) / a</code><span>Ista operacija mora se napraviti na obje strane jednadžbe.</span></aside>
@@ -248,7 +370,7 @@
                     <div id="algebra-equation-result" class="analysis-box"></div>
                 </div>
 
-                <div id="algebra-inequalities" class="algebra-panel" hidden>
+                <div id="algebra-inequalities" class="algebra-panel" data-levels="primary secondary" hidden>
                     <h2>Linearne nejednadžbe</h2>
                     <p class="tool-description">Rješava linearnu nejednadžbu i zapisuje skup rješenja kao interval.</p>
                     <aside class="formula-card"><strong>Važno pravilo</strong><code>−2x &lt; 6  ⇒  x &gt; −3</code><span>Pri množenju ili dijeljenju negativnim brojem znak nejednakosti se obrće.</span></aside>
@@ -257,7 +379,7 @@
                     <div id="algebra-inequality-result" class="analysis-box"></div>
                 </div>
 
-                <div id="algebra-systems" class="algebra-panel" hidden>
+                <div id="algebra-systems" class="algebra-panel" data-levels="secondary" hidden>
                     <h2>Sustavi 2×2</h2>
                     <p class="tool-description">Istodobno rješava dvije linearne jednadžbe s nepoznanicama x i y.</p>
                     <aside class="formula-card"><strong>Cramerovo pravilo</strong><code>x = Dₓ / D,  y = Dᵧ / D</code><span>Determinanta pokazuje ima li sustav jedno, nijedno ili beskonačno mnogo rješenja.</span></aside>
@@ -267,7 +389,7 @@
                     <div id="algebra-system-result" class="analysis-box"></div>
                 </div>
 
-                <div id="algebra-polynomials" class="algebra-panel" hidden>
+                <div id="algebra-polynomials" class="algebra-panel" data-levels="secondary" hidden>
                     <h2>Polinomi</h2>
                     <p class="tool-description">Sređuje polinom, određuje stupanj, derivaciju i podržane realne nultočke.</p>
                     <aside class="formula-card"><strong>Kvadratna jednadžba</strong><code>x = (−b ± √(b² − 4ac)) / 2a</code><span>Diskriminanta Δ = b² − 4ac određuje broj realnih nultočaka.</span></aside>
@@ -276,7 +398,7 @@
                     <div id="algebra-polynomial-result" class="analysis-box"></div>
                 </div>
 
-                <div id="algebra-functions" class="algebra-panel" hidden>
+                <div id="algebra-functions" class="algebra-panel" data-levels="secondary" hidden>
                     <h2>Funkcije i živi grafovi</h2>
                     <p class="tool-description">Vizualizira funkciju i pokazuje kako parametri mijenjaju položaj i oblik njezina grafa.</p>
                     <aside class="formula-card"><strong>Kvadratna funkcija</strong><code>f(x) = ax² + bx + c</code><span>a mijenja otvor i širinu parabole, b položaj vrha, a c sjecište s y-osi.</span></aside>
@@ -305,6 +427,9 @@
     <script src="formalization.js"></script>
     <script src="predicates.js"></script>
     <script src="arithmetic.js"></script>
+    <script src="geometry-visuals.js"></script>
+    <script src="geometry-practice.js"></script>
+    <script src="geometry.js"></script>
     <script src="graph.js"></script>
     <script src="algebra.js"></script>
     <script src="app.js"></script>
