@@ -34,6 +34,11 @@ add_executable(core_tests
 	test_geometry_plane_shapes.cpp
 	test_geometry_triangles.cpp
 	test_geometry_solids_coordinates.cpp
+	test_trigonometry_angles.cpp
+	test_trigonometry_functions.cpp
+	test_trigonometry_right_triangle.cpp
+	test_trigonometry_general_triangle.cpp
+	test_trigonometry_identities_equations.cpp
 )
 
 target_link_libraries(core_tests PRIVATE

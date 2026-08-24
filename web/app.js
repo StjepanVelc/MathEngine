@@ -64,12 +64,12 @@ function setupLearningLevels() {
             if (supportsLevel(chapter, level)) chapter.hidden = false;
             else closeElement(chapter);
         });
-        document.querySelectorAll(".subchapter-toggle, .arithmetic-toggle, .algebra-toggle, .geometry-toggle").forEach((button) => {
+        document.querySelectorAll(".subchapter-toggle, .arithmetic-toggle, .algebra-toggle, .geometry-toggle, .trigonometry-toggle").forEach((button) => {
             const available = supportsLevel(button, level);
             button.hidden = !available;
             if (!available) button.classList.remove("active");
         });
-        document.querySelectorAll(".subchapter-panel, .arithmetic-panel, .algebra-panel, .geometry-panel").forEach((panel) => {
+        document.querySelectorAll(".subchapter-panel, .arithmetic-panel, .algebra-panel, .geometry-panel, .trigonometry-panel").forEach((panel) => {
             if (!supportsLevel(panel, level)) closeElement(panel);
         });
         document.body.dataset.learningLevel = level;
@@ -286,6 +286,7 @@ async function init() {
     setupFormalization(module);
     setupArithmetic(module);
     setupGeometry(module);
+    setupTrigonometry(module);
     setupAlgebra(module);
 }
 

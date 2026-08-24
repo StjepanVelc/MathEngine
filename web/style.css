@@ -4,6 +4,107 @@
     --accent: #89b4fa;
 }
 
+.trigonometry-chapter {
+    --trig-sine: #f38ba8;
+    --trig-cosine: #89dceb;
+    --trig-tangent: #f9e2af;
+    --trig-violet: #cba6f7;
+}
+
+.trigonometry-hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.35rem 1.5rem;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    background: radial-gradient(circle at 85% 20%, #f38ba82a, transparent 27%), linear-gradient(135deg, #202946, #302748 60%, #432d48);
+    border: 1px solid #585b70;
+    border-radius: 20px;
+}
+
+.trigonometry-hero h2 { margin: 0.25rem 0 0.4rem; color: #fff; font-size: clamp(1.5rem, 4vw, 2.2rem); }
+.trigonometry-hero p { max-width: 38rem; margin: 0; color: #bac2de; }
+.trigonometry-kicker, .trigonometry-chip { display: inline-flex; width: fit-content; padding: 0.28rem 0.68rem; color: #181825; background: var(--trig-tangent); border-radius: 999px; font-size: 0.76rem; font-weight: 850; letter-spacing: 0.045em; text-transform: uppercase; }
+.trigonometry-hero-wave { position: relative; flex: 0 0 9rem; height: 6rem; }
+.trigonometry-hero-wave span { position: absolute; left: 0; right: 0; height: 2px; background: var(--trig-cosine); border-radius: 50%; transform-origin: center; }
+.trigonometry-hero-wave span:nth-child(1) { top: 22%; transform: rotate(12deg) scaleY(12); opacity: 0.75; }
+.trigonometry-hero-wave span:nth-child(2) { top: 50%; background: var(--trig-sine); transform: rotate(-12deg) scaleY(14); opacity: 0.7; }
+.trigonometry-hero-wave span:nth-child(3) { top: 75%; background: var(--trig-tangent); transform: rotate(5deg) scaleY(7); opacity: 0.65; }
+
+.trigonometry-nav { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: 0.55rem; margin-bottom: 1rem; }
+.trigonometry-nav button, .trigonometry-panel button { padding: 0.68rem 0.9rem; color: #181825; background: var(--trig-cosine); border: 0; border-radius: 10px; font-weight: 760; cursor: pointer; transition: transform 160ms ease, filter 160ms ease, box-shadow 160ms ease; }
+.trigonometry-nav button:hover, .trigonometry-panel button:hover { transform: translateY(-2px); filter: brightness(1.08); }
+.trigonometry-nav button.active, .trigonometry-mode-switch button.active { background: var(--trig-violet); box-shadow: 0 0 0 2px #cba6f744, 0 8px 22px #11111b55; }
+.trigonometry-nav .trigonometry-practice-toggle { background: var(--trig-tangent); }
+.trigonometry-panel { margin-top: 0.8rem; padding: clamp(1rem, 3vw, 1.4rem); background: linear-gradient(145deg, #222438, #1d2033); border: 1px solid #45475a; border-radius: 17px; box-shadow: 0 15px 38px #11111b35; }
+.trigonometry-panel h2 { margin: 0.45rem 0 0.25rem; }
+.trigonometry-tool-layout { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(18rem, 0.95fr); gap: 1.35rem; align-items: start; }
+.trigonometry-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.65rem; margin: 0.75rem 0; }
+.trigonometry-panel label { display: grid; gap: 0.32rem; margin: 0.55rem 0; color: #bac2de; font-size: 0.88rem; font-weight: 680; }
+.trigonometry-panel input, .trigonometry-panel select { width: 100%; min-width: 0; padding: 0.62rem 0.72rem; color: var(--fg); background: #181825; border: 1px solid #585b70; border-radius: 9px; font: inherit; }
+.trigonometry-panel input[type="range"] { padding: 0; accent-color: var(--trig-sine); }
+.trigonometry-panel input:focus, .trigonometry-panel select:focus { outline: 2px solid #f38ba866; border-color: var(--trig-sine); }
+.trigonometry-panel .result-grid { margin-top: 0.85rem; }
+.trigonometry-panel .result-grid.error { padding: 0.75rem; color: #f38ba8; background: #3b2634; border: 1px solid #f38ba877; border-radius: 9px; }
+.trigonometry-visual { display: grid; place-items: center; min-height: 21rem; overflow: hidden; background: radial-gradient(circle at 60% 25%, #cba6f716, transparent 36%), linear-gradient(145deg, #151522, #20233a); border: 1px solid #45475a; border-radius: 16px; }
+.trigonometry-svg { display: block; width: 100%; height: auto; max-height: 24rem; padding: 0.4rem; }
+.trigonometry-steps { display: grid; gap: 0.55rem; margin-top: 0.8rem; }
+.trigonometry-step { display: grid; grid-template-columns: 2rem 1fr; align-items: center; gap: 0.65rem; padding: 0.58rem 0.7rem; background: #181825aa; border: 1px solid #45475a; border-radius: 10px; }
+.trigonometry-step span { display: grid; place-items: center; width: 1.75rem; height: 1.75rem; color: #181825; background: var(--trig-tangent); border-radius: 50%; font-weight: 850; }
+.trigonometry-step p { margin: 0; color: #d5dbef; }
+.trigonometry-mode-switch { display: flex; gap: 0.55rem; margin: 0.8rem 0; }
+.trigonometry-mode-switch button { flex: 1; color: #cdd6f4; background: #45475a; }
+.trigonometry-special-angles { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.35rem; margin-top: 0.65rem; padding: 0.7rem; background: #181825; border: 1px solid #45475a; border-radius: 12px; text-align: center; }
+.trigonometry-special-angles strong, .trigonometry-special-angles small { grid-column: 1 / -1; color: var(--trig-tangent); }
+.trigonometry-special-angles span { padding: 0.32rem; color: #181825; background: linear-gradient(135deg, var(--trig-cosine), var(--trig-violet)); border-radius: 999px; font-weight: 800; }
+.trigonometry-special-angles small { color: #a6adc8; line-height: 1.4; }
+.trigonometry-draw { animation: trigonometry-draw-in 420ms ease both; }
+.trigonometry-pop { transform-box: fill-box; transform-origin: center; animation: trigonometry-pop-in 340ms cubic-bezier(.2,.8,.2,1.25) both; }
+@keyframes trigonometry-draw-in { from { opacity: 0; transform: scale(.96); transform-origin: center; } to { opacity: 1; transform: scale(1); } }
+@keyframes trigonometry-pop-in { from { opacity: 0; transform: scale(.5); } to { opacity: 1; transform: scale(1); } }
+
+@media (max-width: 850px) { .trigonometry-tool-layout { grid-template-columns: 1fr; } }
+@media (max-width: 600px) {
+    .trigonometry-hero-wave { display: none; }
+    .trigonometry-form-grid { grid-template-columns: 1fr; }
+    .trigonometry-visual { min-height: 17rem; }
+    .trigonometry-mode-switch { flex-direction: column; }
+}
+@media (prefers-reduced-motion: reduce) { .trigonometry-draw, .trigonometry-pop { animation: none; } }
+
+.trig-practice-heading { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+.trig-practice-heading h2 { margin-bottom: .15rem; }
+.trig-practice-heading p { margin-top: 0; color: #a6adc8; }
+.trig-practice-level { display: grid; place-items: center; flex: 0 0 6rem; aspect-ratio: 1; color: #181825; background: radial-gradient(circle at 35% 25%, var(--trig-tangent), var(--trig-sine)); border-radius: 50%; box-shadow: 0 8px 24px #11111b66; }
+.trig-practice-level span { font-size: .7rem; font-weight: 800; text-transform: uppercase; }
+.trig-practice-level strong { font-size: 1.6rem; line-height: 1; }
+.trig-practice-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: .65rem; margin: 1rem 0; }
+.trig-practice-stats div { display: grid; gap: .15rem; padding: .75rem; text-align: center; background: #181825; border: 1px solid #45475a; border-radius: 11px; }
+.trig-practice-stats span { color: #a6adc8; font-size: .76rem; }
+.trig-practice-stats strong { color: var(--trig-cosine); font-size: 1.2rem; }
+.trig-practice-difficulties { display: flex; gap: .5rem; margin-bottom: .85rem; }
+.trig-practice-difficulties button { flex: 1; color: #cdd6f4; background: #313244; border: 1px solid #585b70; }
+.trig-practice-difficulties button.active { color: #181825; background: var(--trig-tangent); }
+.trig-practice-card { padding: clamp(1rem, 4vw, 1.5rem); background: linear-gradient(145deg, #302b47, #24263a); border: 1px solid #585b70; border-radius: 16px; }
+.trig-practice-meta { display: flex; justify-content: space-between; color: #a6adc8; font-size: .82rem; }
+#trig-practice-topic { color: var(--trig-tangent); font-weight: 850; letter-spacing: .04em; text-transform: uppercase; }
+.trig-practice-card h3 { margin: .65rem 0 .35rem; color: #fff; font-size: 1.35rem; }
+#trig-practice-question { min-height: 3rem; color: #d9e0ee; font-size: 1.05rem; line-height: 1.55; }
+.trig-practice-answer { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: .65rem; max-width: 25rem; }
+.trig-practice-answer strong { color: var(--trig-cosine); }
+.trig-practice-actions { display: flex; flex-wrap: wrap; gap: .55rem; margin-top: .8rem; }
+.trig-practice-actions .secondary, .trig-practice-reset { color: #cdd6f4; background: #45475a; }
+.trig-practice-feedback { min-height: 1.5rem; font-weight: 760; }
+.trig-practice-feedback.correct { color: #a6e3a1; }
+.trig-practice-feedback.incorrect { color: var(--trig-sine); }
+.trig-practice-note { margin-top: .75rem; padding: .75rem; background: #181825aa; border-left: 4px solid var(--trig-tangent); border-radius: 8px; }
+.trig-practice-note.solution { border-left-color: #a6e3a1; }
+.trig-practice-note p { margin-bottom: 0; }
+.trig-practice-reset { margin-top: .8rem; font-size: .8rem; }
+@media (max-width: 600px) { .trig-practice-stats { grid-template-columns: 1fr; } .trig-practice-difficulties { flex-direction: column; } .trig-practice-level { flex-basis: 4.7rem; } }
+
 .practice-heading {
     display: flex;
     justify-content: space-between;

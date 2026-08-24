@@ -13,6 +13,7 @@ flowchart LR
 	CORE --> LO[Logic]
 	CORE --> PR[Predicate]
 	CORE --> GE[Geometry]
+	CORE --> TR[Trigonometry]
 	WB -->|string ili JSON| UI
 ```
 

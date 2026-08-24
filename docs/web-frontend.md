@@ -16,8 +16,9 @@ Relevantni redoslijed skripti:
 6. `geometry-practice.js`
 7. `geometry.js`
 8. `graph.js`
-9. `algebra.js`
-10. `app.js`
+9. `trigonometry-visuals.js`, `trigonometry-practice.js`, `trigonometry.js`
+10. `algebra.js`
+11. `app.js`
 
 Domenski moduli definiraju globalne setup funkcije prije nego što `app.js` pozove `init()`.
 
@@ -263,6 +264,10 @@ Nakon stvaranja elemenata modul:
 - sprema stanje
 
 Detaljan model opisan je u [Zadaci i lokalna pohrana](exercises-and-storage.md).
+
+## Trigonometrijski frontend
+
+`trigonometry.js` upravlja srednjoškolskim panelima, dinamičkim obrascima i WASM rezultatima. `trigonometry-visuals.js` povezuje isti kut s jediničnom kružnicom, projekcijama sin/cos, valnim grafom i označenim trokutima. `trigonometry-practice.js` dinamički stvara vježbaonicu i učitava 24 zadatka iz `web/data/trigonometry-exercises.json`.
 
 ## `web/style.css`
 

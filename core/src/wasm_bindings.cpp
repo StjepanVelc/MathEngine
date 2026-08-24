@@ -29,6 +29,11 @@
 #include "aksiomat/geometry/Solids.hpp"
 #include "aksiomat/geometry/Triangles.hpp"
 #include "aksiomat/geometry/UnitConversion.hpp"
+#include "aksiomat/trigonometry/Angles.hpp"
+#include "aksiomat/trigonometry/GeneralTriangle.hpp"
+#include "aksiomat/trigonometry/IdentitiesEquations.hpp"
+#include "aksiomat/trigonometry/RightTriangle.hpp"
+#include "aksiomat/trigonometry/TrigFunctions.hpp"
 
 namespace {
 
@@ -40,6 +45,125 @@ std::string formatDouble(double value) {
 }
 
 std::string jsonString(const std::string& value);
+std::string jsonSteps(const std::vector<std::string>& steps);
+
+aksiomat::trigonometry::AngleUnit trigAngleUnit(const std::string& unit) {
+	if (unit == "degrees") return aksiomat::trigonometry::AngleUnit::Degrees;
+	if (unit == "radians") return aksiomat::trigonometry::AngleUnit::Radians;
+	throw std::invalid_argument("Nepoznata jedinica kuta");
+}
+
+aksiomat::trigonometry::TrigFunction trigFunction(const std::string& function) {
+	if (function == "sin") return aksiomat::trigonometry::TrigFunction::Sine;
+	if (function == "cos") return aksiomat::trigonometry::TrigFunction::Cosine;
+	if (function == "tan") return aksiomat::trigonometry::TrigFunction::Tangent;
+	throw std::invalid_argument("Nepoznata trigonometrijska funkcija");
+}
+
+aksiomat::trigonometry::KnownSide trigSide(const std::string& side) {
+	if (side == "opposite") return aksiomat::trigonometry::KnownSide::Opposite;
+	if (side == "adjacent") return aksiomat::trigonometry::KnownSide::Adjacent;
+	if (side == "hypotenuse") return aksiomat::trigonometry::KnownSide::Hypotenuse;
+	throw std::invalid_argument("Nepoznata vrsta stranice");
+}
+
+std::string trigonometryAngle(double angle, std::string unit) {
+	try {
+		const auto point = aksiomat::trigonometry::Angles::unitCircle(angle, trigAngleUnit(unit));
+		return "{\"degrees\":" + formatDouble(point.degrees) + ",\"radians\":" + formatDouble(point.radians) +
+			",\"x\":" + formatDouble(point.x) + ",\"y\":" + formatDouble(point.y) +
+			",\"quadrant\":" + std::to_string(point.quadrant) +
+			",\"referenceDegrees\":" + formatDouble(point.referenceDegrees) + '}';
+	} catch (const std::exception& e) {
+		return std::string("GRESKA: ") + e.what();
+	}
+}
+
+std::string trigonometryFunction(std::string function, double value, std::string unit, bool inverse) {
+	try {
+		const auto type = trigFunction(function);
+		const auto angleUnit = trigAngleUnit(unit);
+		if (inverse) {
+			return "{\"value\":" + formatDouble(aksiomat::trigonometry::TrigFunctions::inverse(type, value, angleUnit)) + '}';
+		}
+		const auto result = aksiomat::trigonometry::TrigFunctions::evaluate(type, value, angleUnit);
+		return "{\"value\":" + formatDouble(result.value) + ",\"exact\":" + jsonString(result.exact) +
+			",\"hasExactForm\":" + (result.hasExactForm ? "true" : "false") + '}';
+	} catch (const std::exception& e) {
+		return std::string("GRESKA: ") + e.what();
+	}
+}
+
+std::string rightTriangleJson(const aksiomat::trigonometry::RightTriangleSolution& result) {
+	return "{\"opposite\":" + formatDouble(result.opposite) + ",\"adjacent\":" + formatDouble(result.adjacent) +
+		",\"hypotenuse\":" + formatDouble(result.hypotenuse) + ",\"angleDegrees\":" + formatDouble(result.angleDegrees) +
+		",\"complementaryAngleDegrees\":" + formatDouble(result.complementaryAngleDegrees) +
+		",\"steps\":" + jsonSteps(result.steps) + '}';
+}
+
+std::string trigonometryRightTriangle(std::string mode, double first, double second, std::string sideType) {
+	try {
+		if (mode == "legs") return rightTriangleJson(aksiomat::trigonometry::RightTriangle::fromLegs(first, second));
+		if (mode == "legHypotenuse") return rightTriangleJson(
+			aksiomat::trigonometry::RightTriangle::fromLegAndHypotenuse(first, second, trigSide(sideType)));
+		if (mode == "sideAngle") return rightTriangleJson(
+			aksiomat::trigonometry::RightTriangle::fromSideAndAngle(first, trigSide(sideType), second));
+		throw std::invalid_argument("Nepoznat nacin zadavanja pravokutnog trokuta");
+	} catch (const std::exception& e) {
+		return std::string("GRESKA: ") + e.what();
+	}
+}
+
+std::string generalTriangleJson(const aksiomat::trigonometry::GeneralTriangleSolution& result) {
+	return "{\"sideA\":" + formatDouble(result.sideA) + ",\"sideB\":" + formatDouble(result.sideB) +
+		",\"sideC\":" + formatDouble(result.sideC) + ",\"angleA\":" + formatDouble(result.angleA) +
+		",\"angleB\":" + formatDouble(result.angleB) + ",\"angleC\":" + formatDouble(result.angleC) +
+		",\"area\":" + formatDouble(result.area) + ",\"steps\":" + jsonSteps(result.steps) + '}';
+}
+
+std::string trigonometryGeneralTriangle(std::string mode, double first, double second, double third) {
+	try {
+		if (mode == "sss") return generalTriangleJson(aksiomat::trigonometry::GeneralTriangle::fromSides(first, second, third));
+		if (mode == "sas") return generalTriangleJson(
+			aksiomat::trigonometry::GeneralTriangle::fromTwoSidesAndIncludedAngle(first, second, third));
+		if (mode == "aas") return generalTriangleJson(
+			aksiomat::trigonometry::GeneralTriangle::fromSideAndTwoAngles(first, second, third));
+		throw std::invalid_argument("Nepoznat nacin zadavanja opceg trokuta");
+	} catch (const std::exception& e) {
+		return std::string("GRESKA: ") + e.what();
+	}
+}
+
+std::string trigonometryIdentity(std::string identity, double angleDegrees) {
+	try {
+		auto type = aksiomat::trigonometry::TrigIdentity::Pythagorean;
+		if (identity == "pythagorean") type = aksiomat::trigonometry::TrigIdentity::Pythagorean;
+		else if (identity == "tangentRatio") type = aksiomat::trigonometry::TrigIdentity::TangentRatio;
+		else if (identity == "doubleSine") type = aksiomat::trigonometry::TrigIdentity::DoubleAngleSine;
+		else if (identity == "doubleCosine") type = aksiomat::trigonometry::TrigIdentity::DoubleAngleCosine;
+		else throw std::invalid_argument("Nepoznat trigonometrijski identitet");
+		const auto result = aksiomat::trigonometry::IdentitiesEquations::check(type, angleDegrees);
+		return std::string("{\"holds\":") + (result.holds ? "true" : "false") +
+			",\"left\":" + formatDouble(result.left) + ",\"right\":" + formatDouble(result.right) +
+			",\"formula\":" + jsonString(result.formula) + '}';
+	} catch (const std::exception& e) {
+		return std::string("GRESKA: ") + e.what();
+	}
+}
+
+std::string trigonometryEquation(std::string function, double value, double minimum, double maximum) {
+	try {
+		const auto solutions = aksiomat::trigonometry::IdentitiesEquations::solve(trigFunction(function), value, minimum, maximum);
+		std::string json = "{\"solutions\":[";
+		for (std::size_t index = 0; index < solutions.size(); ++index) {
+			if (index) json += ',';
+			json += formatDouble(solutions[index]);
+		}
+		return json + "]}";
+	} catch (const std::exception& e) {
+		return std::string("GRESKA: ") + e.what();
+	}
+}
 
 std::string geometryConvert(std::string category, double value, unsigned from, unsigned to) {
 	try {
@@ -582,6 +706,12 @@ EMSCRIPTEN_BINDINGS(aksiomat_module) {
 	emscripten::function("geometryTriangle", &geometryTriangle);
 	emscripten::function("geometrySolid", &geometrySolid);
 	emscripten::function("geometryCoordinates", &geometryCoordinates);
+	emscripten::function("trigonometryAngle", &trigonometryAngle);
+	emscripten::function("trigonometryFunction", &trigonometryFunction);
+	emscripten::function("trigonometryRightTriangle", &trigonometryRightTriangle);
+	emscripten::function("trigonometryGeneralTriangle", &trigonometryGeneralTriangle);
+	emscripten::function("trigonometryIdentity", &trigonometryIdentity);
+	emscripten::function("trigonometryEquation", &trigonometryEquation);
 	emscripten::function("algebraSimplify", &algebraSimplify);
 	emscripten::function("algebraSolveEquation", &algebraSolveEquation);
 	emscripten::function("algebraSolveInequality", &algebraSolveInequality);

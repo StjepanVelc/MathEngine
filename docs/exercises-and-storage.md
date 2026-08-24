@@ -8,6 +8,9 @@ Trenutačno postoje dvije banke:
 
 - `web/data/formalization-exercises.json`
 - `web/data/geometry-exercises.json`
+- `web/data/trigonometry-exercises.json`
+
+Trigonometrijska banka ima razine `temelji`, `primjena` i `izazov`, ukupno 24 zadatka. Koristi isti brojčani model odgovora i tolerancije kao geometrija, a stanje sprema pod ključem `mathengine-trigonometry-practice-v1`.
 
 Obje se učitavaju preko `fetch`, pa aplikaciju treba pokretati preko HTTP servera, ne izravno protokolom `file://`.
 

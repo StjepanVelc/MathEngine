@@ -24,6 +24,11 @@ add_library(aksiomat_core STATIC
 	src/geometry/Triangles.cpp
 	src/geometry/Solids.cpp
 	src/geometry/Coordinates.cpp
+	src/trigonometry/Angles.cpp
+	src/trigonometry/TrigFunctions.cpp
+	src/trigonometry/RightTriangle.cpp
+	src/trigonometry/GeneralTriangle.cpp
+	src/trigonometry/IdentitiesEquations.cpp
 	src/logic/LogicExpression.cpp
 	src/logic/LogicParser.cpp
 	src/logic/TruthTable.cpp

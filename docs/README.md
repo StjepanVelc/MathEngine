@@ -24,12 +24,12 @@ Ova mapa sadrži tehničku dokumentaciju aktualne implementacije MathEnginea. Do
 - `logic`
 - `predicate`
 - `geometry`
+- `trigonometry`
 
 Aktivne domene imaju javna C++ zaglavlja, implementacije, CMake registraciju, testove i prema potrebi WASM adaptere.
 
 ### Planirane domene
 
-- `trigonometry`
 - `sequences`
 - `probability_statistics`
 - `linear_algebra`

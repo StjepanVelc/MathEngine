@@ -294,6 +294,12 @@ Sve linearne ili izvedene ulazne mjere moraju biti konačne i pozitivne.
 
 ## Pravila grešaka u jezgri
 
+## Trigonometrija
+
+Namespace `aksiomat::trigonometry` razdvaja kutove, funkcije, trokute i jednadžbe. `Angles` pretvara stupnjeve/radijane te vraća normalizirani kut, kvadrant, referentni kut i točku `(cos α, sin α)`. `TrigFunctions` računa sin, cos i tan, glavne vrijednosti inverznih funkcija te točne školske zapise karakterističnih kutova.
+
+`RightTriangle` rješava slučajeve dvije katete, kateta+hipotenuza i stranica+oštri kut. `GeneralTriangle` podržava jednoznačne SSS, SAS i ASA/AAS slučajeve zakonom sinusa/kosinusa i Heronovom formulom. Dvosmisleni SSA nije prikriven kao jednoznačan slučaj. `IdentitiesEquations` provjerava temeljne identitete i pronalazi sva sin/cos/tan rješenja na zadanom stupanjskom intervalu.
+
 Domene koriste standardne iznimke:
 
 - `std::invalid_argument` za neispravan matematički ili sintaksni ulaz

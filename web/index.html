@@ -339,6 +339,102 @@
             </div>
         </section>
 
+        <!-- Poglavlje: Trigonometrija -->
+        <section class="chapter trigonometry-chapter" data-levels="secondary" hidden>
+            <button class="chapter-toggle" aria-expanded="false">Trigonometrija ▸</button>
+            <div class="chapter-body" hidden>
+                <div class="trigonometry-hero">
+                    <div>
+                        <span class="trigonometry-kicker">Kut postaje koordinata, omjer i val</span>
+                        <h2>Trigonometrijski laboratorij</h2>
+                        <p>Pomakni kut i promatraj kako se ista ideja pojavljuje na kružnici, u trokutu i na grafu.</p>
+                    </div>
+                    <div class="trigonometry-hero-wave" aria-hidden="true"><span></span><span></span><span></span></div>
+                </div>
+                <div class="trigonometry-nav">
+                    <button type="button" class="trigonometry-toggle" data-panel="trigonometry-circle" data-levels="secondary">Jedinična kružnica</button>
+                    <button type="button" class="trigonometry-toggle" data-panel="trigonometry-functions" data-levels="secondary">Sin, cos i tan</button>
+                    <button type="button" class="trigonometry-toggle" data-panel="trigonometry-right-triangle" data-levels="secondary">Pravokutni trokut</button>
+                    <button type="button" class="trigonometry-toggle" data-panel="trigonometry-general-triangle" data-levels="secondary">Opći trokut</button>
+                    <button type="button" class="trigonometry-toggle" data-panel="trigonometry-identities" data-levels="secondary">Identiteti i jednadžbe</button>
+                    <button type="button" class="trigonometry-toggle trigonometry-practice-toggle" data-panel="trigonometry-practice" data-levels="secondary">Vježbaonica</button>
+                </div>
+
+                <div id="trigonometry-circle" class="trigonometry-panel" data-levels="secondary" hidden>
+                    <div class="trigonometry-tool-layout"><div>
+                        <span class="trigonometry-chip">Početna ideja</span><h2>Jedinična kružnica</h2>
+                        <p class="tool-description">Točka na kružnici ima koordinate <strong>(cos α, sin α)</strong>. Zato sinus i kosinus nisu nasumične formule.</p>
+                        <label>Kutna jedinica<select id="trigonometry-angle-unit"><option value="degrees">Stupnjevi</option><option value="radians">Radijani</option></select></label>
+                        <label>Kut α<input id="trigonometry-angle" type="range" min="-360" max="720" step="1" value="30"><output id="trigonometry-angle-value">30°</output></label>
+                        <input id="trigonometry-angle-number" type="number" step="any" value="30" aria-label="Brojčana vrijednost kuta">
+                        <button type="button" id="trigonometry-angle-analyze">Analiziraj kut</button>
+                        <div id="trigonometry-angle-result" class="result-grid"></div>
+                    </div><div id="trigonometry-circle-visual" class="trigonometry-visual" aria-label="Interaktivna jedinična kružnica"></div></div>
+                </div>
+
+                <div id="trigonometry-functions" class="trigonometry-panel" data-levels="secondary" hidden>
+                    <div class="trigonometry-tool-layout"><div>
+                        <span class="trigonometry-chip">Tri pogleda na kut</span><h2>Sinus, kosinus i tangens</h2>
+                        <p class="tool-description">Izračunaj vrijednost ili pronađi glavni kut inverznom funkcijom. Karakteristični kutovi prikazuju se i u točnom obliku.</p>
+                        <div class="trigonometry-form-grid">
+                            <label>Funkcija<select id="trigonometry-function"><option value="sin">sin</option><option value="cos">cos</option><option value="tan">tan</option></select></label>
+                            <label>Način<select id="trigonometry-function-mode"><option value="direct">Vrijednost iz kuta</option><option value="inverse">Kut iz vrijednosti</option></select></label>
+                            <label>Jedinica rezultata/kuta<select id="trigonometry-function-unit"><option value="degrees">Stupnjevi</option><option value="radians">Radijani</option></select></label>
+                            <label>Vrijednost<input id="trigonometry-function-input" type="number" step="any" value="30"></label>
+                        </div>
+                        <aside class="formula-card"><strong>Na kružnici</strong><code>cos α = x, sin α = y</code><code>tan α = sin α / cos α</code><span>Tangens nije definiran kada je cos α = 0.</span></aside>
+                        <button type="button" id="trigonometry-function-calculate">Izračunaj i prikaži</button>
+                        <div id="trigonometry-function-result" class="result-grid"></div>
+                    </div><div><div id="trigonometry-wave-visual" class="trigonometry-visual" aria-label="Povezani graf trigonometrijske funkcije"></div><div class="trigonometry-special-angles"><strong>Karakteristični kutovi</strong><span>0°</span><span>30°</span><span>45°</span><span>60°</span><span>90°</span><small>Točne vrijednosti dolaze iz kružnice i posebnih trokuta 30°–60°–90° i 45°–45°–90°.</small></div></div></div>
+                </div>
+
+                <div id="trigonometry-right-triangle" class="trigonometry-panel" data-levels="secondary" hidden>
+                    <div class="trigonometry-tool-layout"><div>
+                        <span class="trigonometry-chip">Omjeri stranica</span><h2>Riješi pravokutni trokut</h2>
+                        <p class="tool-description">Odaberi poznate podatke. Kalkulator pronalazi sve stranice i kutove te pokazuje koji omjer koristi.</p>
+                        <label>Poznati podaci<select id="trigonometry-right-mode"><option value="legs">Obje katete</option><option value="legHypotenuse">Kateta i hipotenuza</option><option value="sideAngle">Stranica i oštri kut</option></select></label>
+                        <div id="trigonometry-right-inputs" class="trigonometry-form-grid"></div>
+                        <button type="button" id="trigonometry-right-calculate">Riješi trokut korak po korak</button>
+                        <div id="trigonometry-right-result" class="result-grid"></div>
+                        <div id="trigonometry-right-steps" class="trigonometry-steps"></div>
+                    </div><div id="trigonometry-right-visual" class="trigonometry-visual" aria-label="Pravokutni trokut s označenim stranicama i kutom"></div></div>
+                </div>
+
+                <div id="trigonometry-general-triangle" class="trigonometry-panel" data-levels="secondary" hidden>
+                    <div class="trigonometry-tool-layout"><div>
+                        <span class="trigonometry-chip">Kad nema pravog kuta</span><h2>Sinusni i kosinusni poučak</h2>
+                        <p class="tool-description">Riješi jednoznačne SSS, SAS i ASA/AAS slučajeve. Dvosmisleni SSA slučaj namjerno nije skriven iza kalkulatora.</p>
+                        <label>Poznati podaci<select id="trigonometry-general-mode"><option value="sss">Tri stranice (SSS)</option><option value="sas">Dvije stranice i kut između njih (SAS)</option><option value="aas">Stranica i dva kuta (ASA/AAS)</option></select></label>
+                        <div id="trigonometry-general-inputs" class="trigonometry-form-grid"></div>
+                        <button type="button" id="trigonometry-general-calculate">Riješi opći trokut</button>
+                        <div id="trigonometry-general-result" class="result-grid"></div>
+                        <div id="trigonometry-general-steps" class="trigonometry-steps"></div>
+                    </div><div id="trigonometry-general-visual" class="trigonometry-visual" aria-label="Opći trokut s označenim stranicama i kutovima"></div></div>
+                </div>
+
+                <div id="trigonometry-identities" class="trigonometry-panel" data-levels="secondary" hidden>
+                    <div class="trigonometry-tool-layout"><div>
+                        <span class="trigonometry-chip">Jednakosti koje uvijek vrijede</span><h2>Identiteti i jednadžbe</h2>
+                        <div class="trigonometry-mode-switch"><button type="button" id="trigonometry-show-identity" class="active">Provjeri identitet</button><button type="button" id="trigonometry-show-equation">Riješi jednadžbu</button></div>
+                        <div id="trigonometry-identity-form">
+                            <label>Identitet<select id="trigonometry-identity"><option value="pythagorean">sin²x + cos²x = 1</option><option value="tangentRatio">tan x = sin x / cos x</option><option value="doubleSine">sin 2x = 2 sin x cos x</option><option value="doubleCosine">cos 2x = cos²x − sin²x</option></select></label>
+                            <label>Kut x<input id="trigonometry-identity-angle" type="number" step="any" value="37"></label>
+                            <button type="button" id="trigonometry-identity-check">Provjeri obje strane</button>
+                        </div>
+                        <div id="trigonometry-equation-form" hidden>
+                            <div class="trigonometry-form-grid"><label>Funkcija<select id="trigonometry-equation-function"><option value="sin">sin x</option><option value="cos">cos x</option><option value="tan">tan x</option></select></label><label>Jednako<input id="trigonometry-equation-value" type="number" step="any" value="0.5"></label><label>Od<input id="trigonometry-equation-min" type="number" step="any" value="0"></label><label>Do<input id="trigonometry-equation-max" type="number" step="any" value="360"></label></div>
+                            <button type="button" id="trigonometry-equation-solve">Pronađi sva rješenja</button>
+                        </div>
+                        <div id="trigonometry-identity-result" class="result-grid"></div>
+                    </div><div id="trigonometry-identity-visual" class="trigonometry-visual" aria-label="Vizualno objašnjenje identiteta ili rješenja jednadžbe"></div></div>
+                </div>
+
+                <div id="trigonometry-practice" class="trigonometry-panel" data-levels="secondary" hidden>
+                    <div id="trigonometry-practice-root"></div>
+                </div>
+            </div>
+        </section>
+
         <!-- Poglavlje: Algebra -->
         <section class="chapter" data-levels="primary secondary" hidden>
             <button class="chapter-toggle" aria-expanded="false">Algebra ▸</button>
@@ -430,6 +526,9 @@
     <script src="geometry-visuals.js"></script>
     <script src="geometry-practice.js"></script>
     <script src="geometry.js"></script>
+    <script src="trigonometry-visuals.js"></script>
+    <script src="trigonometry-practice.js"></script>
+    <script src="trigonometry.js"></script>
     <script src="graph.js"></script>
     <script src="algebra.js"></script>
     <script src="app.js"></script>

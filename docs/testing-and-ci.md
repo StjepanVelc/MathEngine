@@ -72,6 +72,10 @@ Pokrivaju parser/formatter, transformacije, klasifikaciju rješenja, metode sust
 
 Pokrivaju sve podržane izračune i neispravne mjere, nemoguće trokute, nevaljane enum vrijednosti i nekonačne koordinate.
 
+### Trigonometrija
+
+Testovi pokrivaju kutove i kružnicu, funkcije i točne zapise, pravokutne/opće trokute, identitete te jednadžbe na intervalu. Posljednje validirano stanje nakon aktivacije domene je 166 testova.
+
 Posljednje potvrđeno stanje je 141/141 uspješnih testova. Broj je informativan i treba se povećavati kada raste funkcionalnost.
 
 ## Pokretanje svih native testova
