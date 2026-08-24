@@ -294,6 +294,14 @@ Sve linearne ili izvedene ulazne mjere moraju biti konačne i pozitivne.
 
 ## Pravila grešaka u jezgri
 
+## Nizovi i redovi
+
+Namespace `aksiomat::sequences` razdvaja pet odgovornosti. `SequenceAnalysis` konačnom popisu članova pridružuje indekse od 1, računa uzastopne razlike i klasificira ga kao strogo rastući/padajući, nepadajući/nerastući, konstantan ili nemonoton. `ArithmeticSequence` i `GeometricSequence` daju opći član, parcijalnu sumu, ograničeno generiranje i pronalaženje indeksa zadane vrijednosti.
+
+`GeometricSequence::infiniteSum` ne prikriva divergenciju iznimkom: vraća strukturirani rezultat koji konvergira samo za `|q| < 1`. `Recurrences` podržava sigurne aritmetičke i geometrijske rekurzije, generalizirani Fibonacci te usporedbu eksplicitnog i rekurzivnog zapisa. `Applications` modelira jednostavne/složene kamate, populacijski rast, ponavljane postotne promjene i standardni anuitetni raspored otplate.
+
+Indeksi počinju od 1, generiranje je ograničeno na 10.000 članova/razdoblja, a svi javni ulazi i rezultati provjeravaju konačnost.
+
 ## Trigonometrija
 
 Namespace `aksiomat::trigonometry` razdvaja kutove, funkcije, trokute i jednadžbe. `Angles` pretvara stupnjeve/radijane te vraća normalizirani kut, kvadrant, referentni kut i točku `(cos α, sin α)`. `TrigFunctions` računa sin, cos i tan, glavne vrijednosti inverznih funkcija te točne školske zapise karakterističnih kutova.

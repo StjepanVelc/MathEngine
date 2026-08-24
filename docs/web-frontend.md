@@ -15,10 +15,11 @@ Relevantni redoslijed skripti:
 5. `geometry-visuals.js`
 6. `geometry-practice.js`
 7. `geometry.js`
-8. `graph.js`
-9. `trigonometry-visuals.js`, `trigonometry-practice.js`, `trigonometry.js`
-10. `algebra.js`
-11. `app.js`
+8. `trigonometry-visuals.js`, `trigonometry-practice.js`, `trigonometry.js`
+9. `sequences-visuals.js`, `sequences-practice.js`, `sequences.js`
+10. `graph.js`
+11. `algebra.js`
+12. `app.js`
 
 Domenski moduli definiraju globalne setup funkcije prije nego što `app.js` pozove `init()`.
 
@@ -75,6 +76,8 @@ Svaka domena ima vlastitu klasu gumba i panela:
 - `.arithmetic-toggle` / `.arithmetic-panel`
 - `.algebra-toggle` / `.algebra-panel`
 - `.geometry-toggle` / `.geometry-panel`
+- `.trigonometry-toggle` / `.trigonometry-panel`
+- `.sequences-toggle` / `.sequences-panel`
 
 Gumb preko `data-panel` pokazuje na `id` pripadajućeg panela.
 
@@ -112,6 +115,10 @@ Važno: filtriranje ne mijenja C++ API niti stvara zasebne matematičke implemen
 `setupSubchapters()` osigurava da je unutar logike otvoren najviše jedan panel.
 
 Aritmetika, algebra i geometrija imaju istu logiku u vlastitim setup funkcijama jer upravljaju domenski specifičnim klasama.
+
+## Frontend nizova i redova
+
+`sequences.js` upravlja sa šest srednjoškolskih panela, formatira WASM JSON, gradi tablice članova i obrazovne korake. `sequences-visuals.js` crta diskretne SVG točke, parcijalne sume, granicu konvergentnog reda, rekurzivne veze i razvoj vrijednosti kroz vrijeme. `sequences-practice.js` dinamički stvara vježbaonicu i učitava 24 zadatka iz `web/data/sequences-exercises.json`.
 
 ### Palete simbola
 

@@ -26,8 +26,9 @@ Ovaj README ostaje sažeti pregled projekta; `/docs` je izvor detaljne razvojne 
 - modularna algebra: simbolički izrazi, jednadžbe, nejednadžbe, sustavi, polinomi i interaktivni grafovi
 - geometrija: mjerne jedinice, ravninski likovi, trokuti, Pitagorin poučak, tijela i koordinate
 - trigonometrija: jedinična kružnica, funkcije, trokuti, identiteti i jednadžbe
-- interaktivni SVG crteži i osnovnoškolska vježbaonica s 22 zadatka
-- lokalno spremanje napretka formalizacijskih i geometrijskih zadataka u `localStorage`
+- nizovi i redovi: monotonost, aritmetički/geometrijski nizovi, rekurzije, Fibonacci i primjene
+- interaktivni SVG crteži te geometrijske, trigonometrijske i sekvencijske vježbaonice
+- lokalno spremanje obrazovne razine i napretka vježbaonica u `localStorage`
 
 ## Arhitektura
 
@@ -37,7 +38,8 @@ Ovaj README ostaje sažeti pregled projekta; `/docs` je izvor detaljne razvojne 
 - `core/include/aksiomat/predicate` — ugovori predikatne logike
 - `core/include/aksiomat/geometry` — javni ugovori geometrije
 - `core/include/aksiomat/trigonometry` — javni ugovori trigonometrije
-- `core/src/{arithmetic,algebra,logic,predicate,geometry,trigonometry}` — implementacije po domenama
+- `core/include/aksiomat/sequences` — javni ugovori nizova i redova
+- `core/src/{arithmetic,algebra,logic,predicate,geometry,trigonometry,sequences}` — implementacije po domenama
 - `core/src/wasm_bindings.cpp` — zajednički Emscripten adapter svih domena
 - `app` — mala native CLI demonstracija
 - `tests` — GoogleTest testovi
@@ -61,6 +63,7 @@ Početni ekran nudi tri razine. Odabir se sprema u `localStorage` i može se pro
 
 - Algebra: izrazi, jednadžbe, nejednadžbe, sustavi 2×2, polinomi, funkcije i grafovi
 - Trigonometrija: kružnica, sin/cos/tan, pravokutni i opći trokuti, identiteti, jednadžbe i vježbe
+- Nizovi i redovi: članovi i grafovi, sume, rekurzije, Fibonacci, kamate, rast i vježbe
 - Logika: iskazna logika i formalizacija rečenica
 
 ### Napredno i fakultet
@@ -75,14 +78,13 @@ Jedan alat može pripadati više razina preko HTML atributa `data-levels`, ali n
 
 Za budući razvoj pripremljene su dokumentirane mape u `core/include/aksiomat/` i `core/src/`:
 
-- `sequences` — aritmetički/geometrijski nizovi, sume i rekurzije
 - `probability_statistics` — vjerojatnost, kombinatorika i statistika
 - `linear_algebra` — vektori, matrice, determinante i vektorski prostori
 - `mathematical_analysis` — limesi, derivacije, integrali i redovi
 - `discrete_math` — skupovi, relacije, grafovi i kombinatorika
 - `complex_numbers` — algebarski, trigonometrijski i eksponencijalni oblik
 
-Te mape zasad sadrže samo README ugovore. Ne ulaze u CMake dok ne dobiju stvarne C++20 implementacije i GoogleTest testove. Geometrija i trigonometrija već su aktivne domene i zato nisu na ovom popisu.
+Te mape zasad sadrže samo README ugovore. Ne ulaze u CMake dok ne dobiju stvarne C++20 implementacije i GoogleTest testove. Geometrija, trigonometrija i nizovi već su aktivne domene i zato nisu na ovom popisu.
 
 ## Zahtjevi
 

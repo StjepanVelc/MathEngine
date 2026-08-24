@@ -435,6 +435,66 @@
             </div>
         </section>
 
+        <!-- Poglavlje: Nizovi i redovi -->
+        <section class="chapter sequences-chapter" data-levels="secondary" hidden>
+            <button class="chapter-toggle" aria-expanded="false">Nizovi i redovi ▸</button>
+            <div class="chapter-body" hidden>
+                <header class="sequences-hero">
+                    <div><span class="sequences-kicker">Od uzorka do formule</span><h2>Laboratorij nizova i redova</h2><p>Promatraj članove kao diskretne točke, otkrij pravilo promjene i prati kako se zbrajanjem gradi red.</p></div>
+                    <div class="sequences-hero-points" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+                </header>
+                <nav class="sequences-nav" aria-label="Područja nizova i redova">
+                    <button type="button" class="sequences-toggle" data-panel="sequences-introduction">Uvod u nizove</button>
+                    <button type="button" class="sequences-toggle" data-panel="sequences-arithmetic">Aritmetički niz</button>
+                    <button type="button" class="sequences-toggle" data-panel="sequences-geometric">Geometrijski niz</button>
+                    <button type="button" class="sequences-toggle" data-panel="sequences-recurrences">Rekurzije i Fibonacci</button>
+                    <button type="button" class="sequences-toggle" data-panel="sequences-applications">Primjene</button>
+                    <button type="button" class="sequences-toggle sequences-practice-toggle" data-panel="sequences-practice">Vježbaonica</button>
+                </nav>
+
+                <div id="sequences-introduction" class="sequences-panel" hidden>
+                    <div class="sequences-tool-layout"><div><span class="sequences-chip">Član + indeks</span><h2>Kako čitamo niz?</h2><p class="tool-description">Upiši konačan dio niza. Svaki član aₙ dobiva indeks n, a razlike otkrivaju raste li, pada ili mijenja smjer.</p>
+                        <label>Članovi odvojeni zarezom<input id="sequences-intro-terms" value="2, 5, 8, 11, 14"></label>
+                        <button type="button" id="sequences-intro-analyze">Analiziraj niz</button><div id="sequences-intro-result" class="result-grid"></div><div id="sequences-intro-table" class="sequences-table-shell"></div>
+                    </div><div id="sequences-intro-visual" class="sequences-visual" aria-label="Diskretni graf članova niza"></div></div>
+                </div>
+
+                <div id="sequences-arithmetic" class="sequences-panel" hidden>
+                    <div class="sequences-tool-layout"><div><span class="sequences-chip">Stalna razlika</span><h2>Aritmetički niz</h2><p class="tool-description">Svaki sljedeći član nastaje dodavanjem iste diferencije d.</p>
+                        <aside class="sequences-formula"><code>aₙ = a₁ + (n − 1)d</code><code>Sₙ = n(a₁ + aₙ) / 2</code></aside>
+                        <div class="sequences-form-grid"><label>Prvi član a₁<input id="sequences-arithmetic-first" type="number" step="any" value="3"></label><label>Diferencija d<input id="sequences-arithmetic-difference" type="number" step="any" value="4"></label><label>Broj članova n<input id="sequences-arithmetic-count" type="number" min="1" max="100" value="8"></label><label>Traženi član<input id="sequences-arithmetic-search" type="number" step="any" value="23"></label></div>
+                        <button type="button" id="sequences-arithmetic-calculate">Izračunaj i prikaži</button><div id="sequences-arithmetic-result" class="result-grid"></div><div id="sequences-arithmetic-steps" class="sequences-steps"></div>
+                    </div><div id="sequences-arithmetic-visual" class="sequences-visual" aria-label="Graf aritmetičkog niza i parcijalnih suma"></div></div>
+                </div>
+
+                <div id="sequences-geometric" class="sequences-panel" hidden>
+                    <div class="sequences-tool-layout"><div><span class="sequences-chip">Stalni kvocijent</span><h2>Geometrijski niz i red</h2><p class="tool-description">Svaki član nastaje množenjem s q. Beskonačni red ima sumu samo kada je |q| &lt; 1.</p>
+                        <aside class="sequences-formula"><code>aₙ = a₁qⁿ⁻¹</code><code>S∞ = a₁ / (1 − q), |q| &lt; 1</code></aside>
+                        <div class="sequences-form-grid"><label>Prvi član a₁<input id="sequences-geometric-first" type="number" step="any" value="8"></label><label>Kvocijent q<input id="sequences-geometric-ratio" type="number" step="any" value="0.5"></label><label>Broj članova n<input id="sequences-geometric-count" type="number" min="1" max="100" value="8"></label><label>Traženi član<input id="sequences-geometric-search" type="number" step="any" value="1"></label></div>
+                        <button type="button" id="sequences-geometric-calculate">Istraži niz i red</button><div id="sequences-geometric-result" class="result-grid"></div><div id="sequences-geometric-steps" class="sequences-steps"></div>
+                    </div><div id="sequences-geometric-visual" class="sequences-visual" aria-label="Graf geometrijskog niza i konvergencije reda"></div></div>
+                </div>
+
+                <div id="sequences-recurrences" class="sequences-panel" hidden>
+                    <div class="sequences-tool-layout"><div><span class="sequences-chip">Sljedeći iz prethodnih</span><h2>Rekurzivni nizovi</h2><p class="tool-description">U rekurzivnom zapisu novi član računa se iz već poznatih članova. Fibonacci zbraja prethodna dva.</p>
+                        <label>Vrsta rekurzije<select id="sequences-recurrence-type"><option value="fibonacci">Fibonacci: aₙ = aₙ₋₁ + aₙ₋₂</option><option value="arithmetic">Aritmetička: aₙ = aₙ₋₁ + d</option><option value="geometric">Geometrijska: aₙ = q · aₙ₋₁</option></select></label>
+                        <div class="sequences-form-grid"><label id="sequences-recurrence-first-label">Prvi član<input id="sequences-recurrence-first" type="number" step="any" value="1"></label><label id="sequences-recurrence-second-label">Drugi član<input id="sequences-recurrence-second" type="number" step="any" value="1"></label><label>Broj članova<input id="sequences-recurrence-count" type="number" min="1" max="50" value="10"></label></div>
+                        <button type="button" id="sequences-recurrence-calculate">Razvij rekurziju</button><div id="sequences-recurrence-result" class="result-grid"></div><div id="sequences-recurrence-steps" class="sequences-steps"></div>
+                    </div><div id="sequences-recurrence-visual" class="sequences-visual" aria-label="Vizualni prikaz rekurzije i Fibonacci niza"></div></div>
+                </div>
+
+                <div id="sequences-applications" class="sequences-panel" hidden>
+                    <div class="sequences-tool-layout"><div><span class="sequences-chip">Matematika kroz vrijeme</span><h2>Kamate, rast i amortizacija</h2><p class="tool-description">Ista ideja ponavljane promjene opisuje štednju, populaciju, pad vrijednosti i otplatu kredita.</p>
+                        <label>Model<select id="sequences-application-type"><option value="simpleInterest">Jednostavna kamata</option><option value="compoundInterest">Složena kamata</option><option value="population">Rast populacije</option><option value="percentage">Ponavljana postotna promjena</option><option value="amortization">Amortizacija zajma</option></select></label>
+                        <div class="sequences-form-grid"><label id="sequences-application-principal-label">Početna vrijednost<input id="sequences-application-principal" type="number" step="any" value="1000"></label><label>Godišnja/promjena stopa (%)<input id="sequences-application-rate" type="number" step="any" value="5"></label><label>Godine / razdoblja<input id="sequences-application-periods" type="number" min="1" max="100" value="5"></label><label id="sequences-application-frequency-label">Obračuna godišnje<input id="sequences-application-frequency" type="number" min="1" max="365" value="12"></label></div>
+                        <button type="button" id="sequences-application-calculate">Izračunaj razvoj</button><div id="sequences-application-result" class="result-grid"></div><div id="sequences-application-steps" class="sequences-steps"></div>
+                    </div><div id="sequences-application-visual" class="sequences-visual" aria-label="Graf financijskog ili populacijskog razvoja"></div></div>
+                </div>
+
+                <div id="sequences-practice" class="sequences-panel" hidden><div id="sequences-practice-root"></div></div>
+            </div>
+        </section>
+
         <!-- Poglavlje: Algebra -->
         <section class="chapter" data-levels="primary secondary" hidden>
             <button class="chapter-toggle" aria-expanded="false">Algebra ▸</button>
@@ -529,6 +589,9 @@
     <script src="trigonometry-visuals.js"></script>
     <script src="trigonometry-practice.js"></script>
     <script src="trigonometry.js"></script>
+    <script src="sequences-visuals.js"></script>
+    <script src="sequences-practice.js"></script>
+    <script src="sequences.js"></script>
     <script src="graph.js"></script>
     <script src="algebra.js"></script>
     <script src="app.js"></script>

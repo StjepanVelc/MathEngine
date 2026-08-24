@@ -4,15 +4,18 @@
 
 Tekst zadatka, trag, objašnjenje i razina težine pedagoški su sadržaj. Smješteni su u JSON kako bi se mogli mijenjati bez C++ rekompilacije i WASM builda. C++ jezgra i dalje provodi formalnu matematičku provjeru kada je potrebna.
 
-Trenutačno postoje dvije banke:
+Trenutačno postoje četiri banke:
 
 - `web/data/formalization-exercises.json`
 - `web/data/geometry-exercises.json`
 - `web/data/trigonometry-exercises.json`
+- `web/data/sequences-exercises.json`
 
 Trigonometrijska banka ima razine `temelji`, `primjena` i `izazov`, ukupno 24 zadatka. Koristi isti brojčani model odgovora i tolerancije kao geometrija, a stanje sprema pod ključem `mathengine-trigonometry-practice-v1`.
 
-Obje se učitavaju preko `fetch`, pa aplikaciju treba pokretati preko HTTP servera, ne izravno protokolom `file://`.
+Banka nizova također ima 24 zadatka kroz `temelji`, `primjena` i `izazov`. Pokriva članove, sume, rekurzije, Fibonacci, kamate, populaciju, amortizaciju i ponavljane postotke. Napredak sprema pod `mathengine-sequences-practice-v1`.
+
+Banke se učitavaju preko `fetch`, pa aplikaciju treba pokretati preko HTTP servera, ne izravno protokolom `file://`.
 
 ## Formalizacijski zadaci
 

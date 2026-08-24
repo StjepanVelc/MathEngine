@@ -7,7 +7,7 @@ Ova mapa sadrži tehničku dokumentaciju aktualne implementacije MathEnginea. Do
 | Dokument | Sadržaj |
 |---|---|
 | [Arhitektura](architecture.md) | Slojevi sustava, tok podataka, struktura repozitorija i dizajnerske odluke |
-| [C++ matematičke domene](core-domains.md) | Aritmetika, algebra, logika, predikatna logika i geometrija |
+| [C++ matematičke domene](core-domains.md) | Aritmetika, algebra, logika, geometrija, trigonometrija te nizovi i redovi |
 | [WebAssembly API](wasm-api.md) | Embind izvozi, JSON ugovori, greške i generirani artefakti |
 | [Web frontend](web-frontend.md) | Bootstrap, obrazovne razine, UI moduli, grafovi i SVG vizualizacije |
 | [Zadaci i lokalna pohrana](exercises-and-storage.md) | JSON banke, provjera odgovora, napredak i `localStorage` |
@@ -25,12 +25,12 @@ Ova mapa sadrži tehničku dokumentaciju aktualne implementacije MathEnginea. Do
 - `predicate`
 - `geometry`
 - `trigonometry`
+- `sequences`
 
 Aktivne domene imaju javna C++ zaglavlja, implementacije, CMake registraciju, testove i prema potrebi WASM adaptere.
 
 ### Planirane domene
 
-- `sequences`
 - `probability_statistics`
 - `linear_algebra`
 - `mathematical_analysis`

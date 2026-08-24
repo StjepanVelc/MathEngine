@@ -74,9 +74,15 @@ Pokrivaju sve podržane izračune i neispravne mjere, nemoguće trokute, nevalja
 
 ### Trigonometrija
 
-Testovi pokrivaju kutove i kružnicu, funkcije i točne zapise, pravokutne/opće trokute, identitete te jednadžbe na intervalu. Posljednje validirano stanje nakon aktivacije domene je 166 testova.
+Testovi pokrivaju kutove i kružnicu, funkcije i točne zapise, pravokutne/opće trokute, identitete te jednadžbe na intervalu.
 
-Posljednje potvrđeno stanje je 141/141 uspješnih testova. Broj je informativan i treba se povećavati kada raste funkcionalnost.
+### Nizovi i redovi
+
+- `test_sequences_analysis_arithmetic.cpp`
+- `test_sequences_geometric.cpp`
+- `test_sequences_recurrences_applications.cpp`
+
+Testovi pokrivaju svih šest klasifikacija monotonosti, članove/sume/indekse, posebne kvocijente i divergenciju, rekurzije/Fibonacci te kamate, rast i amortizaciju. Posljednje potvrđeno stanje je 177/177 uspješnih testova.
 
 ## Pokretanje svih native testova
 

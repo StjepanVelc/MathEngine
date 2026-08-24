@@ -34,6 +34,26 @@ if (text.startsWith("GRESKA:")) {
 
 `formatDouble` uklanja završne nule iz decimalnog zapisa, a `jsonString` escapira tekst prije umetanja u JSON.
 
+## Nizovi i redovi
+
+### `sequenceAnalyze(terms)`
+
+Prima članove odvojene zarezom i vraća `terms`, `differences`, `partialSums`, `monotonicity`, `minimum` i `maximum`.
+
+### `sequenceArithmetic(firstTerm, difference, termCount, searchedValue)`
+
+### `sequenceGeometric(firstTerm, ratio, termCount, searchedValue)`
+
+Oba adaptera vraćaju generirane članove, parcijalne sume, zadnji član, konačnu sumu i pronađeni indeks ili `null`. Geometrijski rezultat dodatno sadrži `converges` i `infiniteSum`.
+
+### `sequenceRecurrence(type, first, second, termCount)`
+
+`type` je `arithmetic`, `geometric` ili `fibonacci`. Za prva dva rezultat potvrđuje podudaranje rekurzivnog i eksplicitnog zapisa.
+
+### `sequenceApplication(type, principal, rate, periods, frequency)`
+
+Podržava `simpleInterest`, `compoundInterest`, `population`, `percentage` i `amortization`. Rezultat vraća razvoj vrijednosti kroz razdoblja; amortizacija dodatno vraća ratu, ukupno plaćeno i ukupnu kamatu.
+
 ## Iskazna logika
 
 ### `logicToString(formula)`

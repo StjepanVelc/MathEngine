@@ -11,12 +11,12 @@ for (const name of scriptFiles) {
     new vm.Script(source, { filename: name });
 }
 
-for (const name of ["formalization-exercises.json", "geometry-exercises.json", "trigonometry-exercises.json"]) {
+for (const name of ["formalization-exercises.json", "geometry-exercises.json", "trigonometry-exercises.json", "sequences-exercises.json"]) {
     JSON.parse(fs.readFileSync(path.join(web, "data", name), "utf8"));
 }
 
 const html = fs.readFileSync(path.join(web, "index.html"), "utf8");
-const dynamicHtml = fs.readFileSync(path.join(web, "geometry-practice.js"), "utf8") + fs.readFileSync(path.join(web, "trigonometry-practice.js"), "utf8");
+const dynamicHtml = fs.readFileSync(path.join(web, "geometry-practice.js"), "utf8") + fs.readFileSync(path.join(web, "trigonometry-practice.js"), "utf8") + fs.readFileSync(path.join(web, "sequences-practice.js"), "utf8");
 const allMarkup = `${html}\n${dynamicHtml}`;
 const staticIds = [...html.matchAll(/\bid="([^"]+)"/g)].map((match) => match[1]);
 const duplicates = staticIds.filter((id, index) => staticIds.indexOf(id) !== index);
@@ -25,7 +25,7 @@ if (duplicates.length) {
 }
 
 const referencedIds = new Set();
-for (const name of ["geometry.js", "geometry-practice.js", "geometry-visuals.js", "trigonometry.js", "trigonometry-practice.js", "trigonometry-visuals.js"]) {
+for (const name of ["geometry.js", "geometry-practice.js", "geometry-visuals.js", "trigonometry.js", "trigonometry-practice.js", "trigonometry-visuals.js", "sequences.js", "sequences-practice.js", "sequences-visuals.js"]) {
     const source = fs.readFileSync(path.join(web, name), "utf8");
     for (const match of source.matchAll(/getElementById\("([^"]+)"\)/g)) referencedIds.add(match[1]);
 }
@@ -52,4 +52,14 @@ const allTrigonometryExercises = ["temelji", "primjena", "izazov"].flatMap((leve
 if (allTrigonometryExercises.length !== 24) throw new Error(`Expected 24 Trigonometry exercises, found ${allTrigonometryExercises.length}`);
 if (new Set(allTrigonometryExercises.map((exercise) => exercise.id)).size !== allTrigonometryExercises.length) throw new Error("Trigonometry exercise IDs must be unique");
 
-console.log(`${scriptFiles.length} JavaScript files, 3 JSON banks, ${staticIds.length} static IDs, ${referencedIds.size} domain references, 22 Geometry and 24 Trigonometry exercises valid.`);
+const sequencesExercises = JSON.parse(fs.readFileSync(path.join(web, "data", "sequences-exercises.json"), "utf8"));
+const allSequencesExercises = ["temelji", "primjena", "izazov"].flatMap((level) => sequencesExercises[level] || []);
+if (allSequencesExercises.length !== 24) throw new Error(`Expected 24 Sequences exercises, found ${allSequencesExercises.length}`);
+if (new Set(allSequencesExercises.map((exercise) => exercise.id)).size !== allSequencesExercises.length) throw new Error("Sequences exercise IDs must be unique");
+const requiredExerciseFields = ["id", "topic", "title", "question", "answer", "unit", "tolerance", "hint", "explanation"];
+for (const exercise of allSequencesExercises) {
+    for (const field of requiredExerciseFields) if (!(field in exercise)) throw new Error(`Sequences exercise ${exercise.id || "<unknown>"} is missing ${field}`);
+    if (!Number.isFinite(exercise.answer) || !Number.isFinite(exercise.tolerance) || exercise.tolerance < 0) throw new Error(`Sequences exercise ${exercise.id} has invalid numeric validation`);
+}
+
+console.log(`${scriptFiles.length} JavaScript files, 4 JSON banks, ${staticIds.length} static IDs, ${referencedIds.size} domain references, 22 Geometry, 24 Trigonometry and 24 Sequences exercises valid.`);

@@ -39,6 +39,9 @@ add_executable(core_tests
 	test_trigonometry_right_triangle.cpp
 	test_trigonometry_general_triangle.cpp
 	test_trigonometry_identities_equations.cpp
+	test_sequences_analysis_arithmetic.cpp
+	test_sequences_geometric.cpp
+	test_sequences_recurrences_applications.cpp
 )
 
 target_link_libraries(core_tests PRIVATE

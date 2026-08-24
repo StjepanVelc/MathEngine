@@ -34,6 +34,11 @@
 #include "aksiomat/trigonometry/IdentitiesEquations.hpp"
 #include "aksiomat/trigonometry/RightTriangle.hpp"
 #include "aksiomat/trigonometry/TrigFunctions.hpp"
+#include "aksiomat/sequences/Applications.hpp"
+#include "aksiomat/sequences/ArithmeticSequence.hpp"
+#include "aksiomat/sequences/GeometricSequence.hpp"
+#include "aksiomat/sequences/Recurrences.hpp"
+#include "aksiomat/sequences/SequenceAnalysis.hpp"
 
 namespace {
 
@@ -270,6 +275,141 @@ std::string jsonSteps(const std::vector<std::string>& steps) {
 		result += jsonString(steps[index]);
 	}
 	return result + ']';
+}
+
+std::string jsonNumbers(const std::vector<double>& values) {
+	std::string result = "[";
+	for (std::size_t index = 0; index < values.size(); ++index) {
+		if (index) result += ',';
+		result += formatDouble(values[index]);
+	}
+	return result + ']';
+}
+
+std::string jsonPartialSums(const std::vector<double>& values) {
+	std::vector<double> sums;
+	sums.reserve(values.size());
+	double sum = 0.0;
+	for (const double value : values) {
+		sum += value;
+		sums.push_back(sum);
+	}
+	return jsonNumbers(sums);
+}
+
+std::vector<double> parseNumbers(const std::string& text) {
+	std::vector<double> values;
+	std::size_t position = 0;
+	while (position <= text.size()) {
+		const std::size_t end = text.find(',', position);
+		const std::string token = text.substr(position, end == std::string::npos ? end : end - position);
+		if (token.empty()) throw std::invalid_argument("Popis clanova sadrzi praznu vrijednost");
+		std::size_t parsed = 0;
+		const double value = std::stod(token, &parsed);
+		if (parsed != token.size()) throw std::invalid_argument("Neispravan clan niza");
+		values.push_back(value);
+		if (end == std::string::npos) break;
+		position = end + 1;
+	}
+	return values;
+}
+
+std::string sequenceAnalyze(std::string terms) {
+	try {
+		const auto values = parseNumbers(terms);
+		const auto result = aksiomat::sequences::SequenceAnalysis::analyze(values);
+		const char* monotonicity = result.monotonicity == aksiomat::sequences::Monotonicity::StrictlyIncreasing ? "strictlyIncreasing" :
+			result.monotonicity == aksiomat::sequences::Monotonicity::NonDecreasing ? "nonDecreasing" :
+			result.monotonicity == aksiomat::sequences::Monotonicity::Constant ? "constant" :
+			result.monotonicity == aksiomat::sequences::Monotonicity::NonIncreasing ? "nonIncreasing" :
+			result.monotonicity == aksiomat::sequences::Monotonicity::StrictlyDecreasing ? "strictlyDecreasing" : "notMonotonic";
+		return std::string("{\"terms\":") + jsonNumbers(values) + ",\"differences\":" + jsonNumbers(result.differences) +
+			",\"partialSums\":" + jsonPartialSums(values) + ",\"monotonicity\":\"" + monotonicity +
+			"\",\"minimum\":" + formatDouble(result.minimum) + ",\"maximum\":" + formatDouble(result.maximum) + '}';
+	} catch (const std::exception& e) {
+		return std::string("GRESKA: ") + e.what();
+	}
+}
+
+std::string sequenceArithmetic(double firstTerm, double difference, int termCount, double searchedValue) {
+	try {
+		if (termCount <= 0) throw std::invalid_argument("Broj clanova mora biti pozitivan");
+		const aksiomat::sequences::ArithmeticSequence sequence(firstTerm, difference);
+		const auto terms = sequence.generate(static_cast<std::size_t>(termCount));
+		const auto index = sequence.indexOf(searchedValue);
+		return std::string("{\"terms\":") + jsonNumbers(terms) + ",\"partialSums\":" + jsonPartialSums(terms) +
+			",\"lastTerm\":" + formatDouble(terms.back()) + ",\"sum\":" + formatDouble(sequence.partialSum(terms.size())) +
+			",\"foundIndex\":" + (index ? std::to_string(*index) : "null") + '}';
+	} catch (const std::exception& e) {
+		return std::string("GRESKA: ") + e.what();
+	}
+}
+
+std::string sequenceGeometric(double firstTerm, double ratio, int termCount, double searchedValue) {
+	try {
+		if (termCount <= 0) throw std::invalid_argument("Broj clanova mora biti pozitivan");
+		const aksiomat::sequences::GeometricSequence sequence(firstTerm, ratio);
+		const auto terms = sequence.generate(static_cast<std::size_t>(termCount));
+		const auto index = sequence.indexOf(searchedValue);
+		const auto infinite = sequence.infiniteSum();
+		return std::string("{\"terms\":") + jsonNumbers(terms) + ",\"partialSums\":" + jsonPartialSums(terms) +
+			",\"lastTerm\":" + formatDouble(terms.back()) + ",\"sum\":" + formatDouble(sequence.partialSum(terms.size())) +
+			",\"foundIndex\":" + (index ? std::to_string(*index) : "null") +
+			",\"converges\":" + (infinite.converges ? "true" : "false") +
+			",\"infiniteSum\":" + (infinite.sum ? formatDouble(*infinite.sum) : "null") + '}';
+	} catch (const std::exception& e) {
+		return std::string("GRESKA: ") + e.what();
+	}
+}
+
+std::string sequenceRecurrence(std::string type, double first, double second, int termCount) {
+	try {
+		if (termCount <= 0) throw std::invalid_argument("Broj clanova mora biti pozitivan");
+		const auto count = static_cast<std::size_t>(termCount);
+		std::vector<double> terms;
+		bool equivalent = true;
+		if (type == "arithmetic") {
+			const auto result = aksiomat::sequences::Recurrences::compareArithmetic(first, second, count);
+			terms = result.recursiveTerms;
+			equivalent = result.equivalent;
+		} else if (type == "geometric") {
+			const auto result = aksiomat::sequences::Recurrences::compareGeometric(first, second, count);
+			terms = result.recursiveTerms;
+			equivalent = result.equivalent;
+		} else if (type == "fibonacci") {
+			terms = aksiomat::sequences::Recurrences::fibonacci(first, second, count);
+		} else throw std::invalid_argument("Nepoznata rekurzija");
+		return std::string("{\"terms\":") + jsonNumbers(terms) + ",\"partialSums\":" + jsonPartialSums(terms) +
+			",\"equivalent\":" + (equivalent ? "true" : "false") + '}';
+	} catch (const std::exception& e) {
+		return std::string("GRESKA: ") + e.what();
+	}
+}
+
+std::string sequenceApplication(std::string type, double principal, double rate, int periods, int frequency) {
+	try {
+		if (periods <= 0 || frequency <= 0) throw std::invalid_argument("Razdoblja i ucestalost moraju biti pozitivni");
+		if (type == "amortization") {
+			const auto result = aksiomat::sequences::Applications::amortization(principal, rate,
+				static_cast<std::size_t>(periods), static_cast<std::size_t>(frequency));
+			std::vector<double> balances{principal};
+			for (const auto& payment : result.schedule) balances.push_back(payment.remainingBalance);
+			return std::string("{\"periodicPayment\":") + formatDouble(result.periodicPayment) +
+				",\"totalPaid\":" + formatDouble(result.totalPaid) + ",\"totalInterest\":" + formatDouble(result.totalInterest) +
+				",\"values\":" + jsonNumbers(balances) + '}';
+		}
+		aksiomat::sequences::GrowthResult result;
+		if (type == "simpleInterest") result = aksiomat::sequences::Applications::simpleInterest(principal, rate, periods);
+		else if (type == "compoundInterest") result = aksiomat::sequences::Applications::compoundInterest(principal, rate, periods, frequency);
+		else if (type == "population") result = aksiomat::sequences::Applications::populationGrowth(principal, rate, periods);
+		else if (type == "percentage") result = aksiomat::sequences::Applications::repeatedPercentage(principal, rate, periods);
+		else throw std::invalid_argument("Nepoznata primjena niza");
+		return std::string("{\"initialValue\":") + formatDouble(result.initialValue) +
+			",\"finalValue\":" + formatDouble(result.finalValue) + ",\"totalChange\":" + formatDouble(result.totalChange) +
+			",\"values\":" + jsonNumbers(result.values) + '}';
+	} catch (const std::exception& e) {
+		return std::string("GRESKA: ") + e.what();
+	}
 }
 
 // Parsira formulu i vraća njen normalizirani prikaz ili "GRESKA: ...".
@@ -712,6 +852,11 @@ EMSCRIPTEN_BINDINGS(aksiomat_module) {
 	emscripten::function("trigonometryGeneralTriangle", &trigonometryGeneralTriangle);
 	emscripten::function("trigonometryIdentity", &trigonometryIdentity);
 	emscripten::function("trigonometryEquation", &trigonometryEquation);
+	emscripten::function("sequenceAnalyze", &sequenceAnalyze);
+	emscripten::function("sequenceArithmetic", &sequenceArithmetic);
+	emscripten::function("sequenceGeometric", &sequenceGeometric);
+	emscripten::function("sequenceRecurrence", &sequenceRecurrence);
+	emscripten::function("sequenceApplication", &sequenceApplication);
 	emscripten::function("algebraSimplify", &algebraSimplify);
 	emscripten::function("algebraSolveEquation", &algebraSolveEquation);
 	emscripten::function("algebraSolveInequality", &algebraSolveInequality);
