@@ -1,0 +1,32 @@
+{
+  "temelji": [
+    {"id":"ag-t-01","topic":"Vektori","title":"Vektor između točaka","question":"Odredi x-komponentu vektora AB ako je A(2,1), B(7,4).","answer":5,"unit":"","tolerance":0.000001,"hint":"Oduzmi x-koordinate: Bₓ−Aₓ.","explanation":"AB=(7−2,4−1)=(5,3), pa je x-komponenta 5."},
+    {"id":"ag-t-02","topic":"Vektori","title":"Duljina vektora","question":"Kolika je duljina vektora u=(3,4)?","answer":5,"unit":"","tolerance":0.000001,"hint":"Koristi √(uₓ²+uᵧ²).","explanation":"|u|=√(3²+4²)=√25=5."},
+    {"id":"ag-t-03","topic":"Skalarni produkt","title":"Pomnoži komponente","question":"Izračunaj (2,3)·(4,−1).","answer":5,"unit":"","tolerance":0.000001,"hint":"Pomnoži odgovarajuće komponente i zbroji.","explanation":"2·4+3·(−1)=8−3=5."},
+    {"id":"ag-t-04","topic":"Udaljenost","title":"Dvije točke","question":"Kolika je udaljenost između A(0,0) i B(6,8)?","answer":10,"unit":"","tolerance":0.000001,"hint":"Primijeni Pitagorin poučak na razlike koordinata.","explanation":"d=√(6²+8²)=√100=10."},
+    {"id":"ag-t-05","topic":"Pravac","title":"Nagib pravca","question":"Koliki je nagib pravca kroz (1,2) i (3,6)?","answer":2,"unit":"","tolerance":0.000001,"hint":"k=(y₂−y₁)/(x₂−x₁).","explanation":"k=(6−2)/(3−1)=4/2=2."},
+    {"id":"ag-t-06","topic":"Kružnica","title":"Očitaj polumjer","question":"Koliki je polumjer kružnice (x−2)²+(y+1)²=25?","answer":5,"unit":"","tolerance":0.000001,"hint":"Desna strana jednaka je r².","explanation":"r²=25, pa je pozitivan polumjer r=5."},
+    {"id":"ag-t-07","topic":"Kružnica","title":"Središte kružnice","question":"Koja je x-koordinata središta kružnice (x+3)²+(y−2)²=16?","answer":-3,"unit":"","tolerance":0.000001,"hint":"Standardni oblik je (x−h)²+(y−k)²=r².","explanation":"x+3=x−(−3), pa je h=−3."},
+    {"id":"ag-t-08","topic":"Parabola","title":"Fokus parabole","question":"Za parabolu x²=8y vrijedi x²=4py. Kolika je y-koordinata fokusa?","answer":2,"unit":"","tolerance":0.000001,"hint":"Izjednači 4p=8.","explanation":"p=2, vrh je u ishodištu, pa je fokus F(0,2)."}
+  ],
+  "primjena": [
+    {"id":"ag-p-01","topic":"Kut vektora","title":"Okomiti vektori","question":"Koliki je kut u stupnjevima između (1,0) i (0,5)?","answer":90,"unit":"°","tolerance":0.000001,"hint":"Njihov skalarni produkt je nula.","explanation":"u·v=0, oba vektora su nenulta, zato su okomiti i kut je 90°."},
+    {"id":"ag-p-02","topic":"Determinanta","title":"Površina paralelograma","question":"Kolika je površina paralelograma razapetog vektorima (3,0) i (1,4)?","answer":12,"unit":"","tolerance":0.000001,"hint":"Površina je apsolutna vrijednost determinante.","explanation":"|det|=|3·4−0·1|=12."},
+    {"id":"ag-p-03","topic":"Pravac","title":"Sjecište s y-osi","question":"Pravac y=3x−7 siječe y-os u kojoj y-koordinati?","answer":-7,"unit":"","tolerance":0.000001,"hint":"Na y-osi je x=0.","explanation":"Uvrsti x=0: y=−7."},
+    {"id":"ag-p-04","topic":"Presjek pravaca","title":"Riješi dvije jednadžbe","question":"Pravci y=x i y=−x+6 sijeku se u točki S. Kolika je x-koordinata S?","answer":3,"unit":"","tolerance":0.000001,"hint":"Izjednači desne strane.","explanation":"x=−x+6, pa 2x=6 i x=3."},
+    {"id":"ag-p-05","topic":"Udaljenost od pravca","title":"Točka iznad osi","question":"Kolika je udaljenost točke P(4,7) od pravca y=2?","answer":5,"unit":"","tolerance":0.000001,"hint":"Pravac je vodoravan; usporedi y-koordinate.","explanation":"|7−2|=5."},
+    {"id":"ag-p-06","topic":"Opća jednadžba kružnice","title":"Dovrši kvadrate","question":"Koliki je polumjer kružnice x²+y²−6x+8y=0?","answer":5,"unit":"","tolerance":0.000001,"hint":"Središte je (3,−4).","explanation":"(x−3)²+(y+4)²=25, pa je r=5."},
+    {"id":"ag-p-07","topic":"Elipsa","title":"Fokalna udaljenost","question":"Elipsa ima poluosi a=5 i b=3. Kolika je fokalna udaljenost c?","answer":4,"unit":"","tolerance":0.000001,"hint":"Za elipsu vrijedi c²=a²−b².","explanation":"c=√(25−9)=√16=4."},
+    {"id":"ag-p-08","topic":"Hiperbola","title":"Fokalna udaljenost","question":"Hiperbola ima poluosi a=3 i b=4. Kolika je fokalna udaljenost c?","answer":5,"unit":"","tolerance":0.000001,"hint":"Za hiperbolu vrijedi c²=a²+b².","explanation":"c=√(9+16)=5."}
+  ],
+  "izazov": [
+    {"id":"ag-i-01","topic":"Vektori","title":"Nepoznati parametar","question":"Za koji t su vektori (2,t) i (3,−6) okomiti?","answer":1,"unit":"","tolerance":0.000001,"hint":"Postavi skalarni produkt jednak nuli.","explanation":"2·3+t·(−6)=0, pa 6−6t=0 i t=1."},
+    {"id":"ag-i-02","topic":"Kolinearnost","title":"Determinanta nula","question":"Za koji t su vektori (2,4) i (t,10) kolinearni?","answer":5,"unit":"","tolerance":0.000001,"hint":"Postavi determinantu na nulu.","explanation":"2·10−4t=0, pa 20=4t i t=5."},
+    {"id":"ag-i-03","topic":"Pravac","title":"Paralelni pravci","question":"Pravac 2x−3y+4=0 paralelan je pravcu 2x−3y+C=0 kroz P(3,2). Koliko je C?","answer":0,"unit":"","tolerance":0.000001,"hint":"Uvrsti koordinate P u drugi pravac.","explanation":"2·3−3·2+C=0, pa C=0."},
+    {"id":"ag-i-04","topic":"Udaljenost od pravca","title":"Opći oblik","question":"Kolika je udaljenost P(1,2) od pravca 3x+4y−15=0?","answer":0.8,"unit":"","tolerance":0.000001,"hint":"Koristi |Ax₀+By₀+C|/√(A²+B²).","explanation":"|3+8−15|/5=4/5=0,8."},
+    {"id":"ag-i-05","topic":"Kružnica kroz tri točke","title":"Polumjer opisane kružnice","question":"Kružnica prolazi kroz (5,0), (0,5) i (−5,0). Koliki joj je polumjer?","answer":5,"unit":"","tolerance":0.000001,"hint":"Simetrija pokazuje da je središte u ishodištu.","explanation":"Sve tri točke udaljene su 5 od ishodišta, pa je r=5."},
+    {"id":"ag-i-06","topic":"Položaj točke","title":"Unutra ili izvana","question":"Za kružnicu x²+y²=25 i točku P(3,4), kolika je razlika udaljenosti |OP|−r?","answer":0,"unit":"","tolerance":0.000001,"hint":"Izračunaj √(3²+4²).","explanation":"|OP|=5 i r=5, pa je razlika 0; točka je na kružnici."},
+    {"id":"ag-i-07","topic":"Elipsa","title":"Ekscentricitet","question":"Elipsa ima a=10 i b=8. Koliki je ekscentricitet e?","answer":0.6,"unit":"","tolerance":0.000001,"hint":"Najprije c=√(a²−b²), zatim e=c/a.","explanation":"c=√(100−64)=6, pa je e=6/10=0,6."},
+    {"id":"ag-i-08","topic":"Hiperbola","title":"Ekscentricitet","question":"Hiperbola ima a=4 i b=3. Koliki je ekscentricitet e?","answer":1.25,"unit":"","tolerance":0.000001,"hint":"c=√(a²+b²), zatim e=c/a.","explanation":"c=√(16+9)=5, pa je e=5/4=1,25."}
+  ]
+}

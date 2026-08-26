@@ -36,6 +36,46 @@ if (text.startsWith("GRESKA:")) {
 
 ## Nizovi i redovi
 
+## Analitička geometrija
+
+### `analyticGeometryVectors(ax, ay, bx, by)`
+
+Vraća duljine, skalarni produkt, determinantu, kut i zbroj dvaju vektora.
+
+### `analyticGeometryLines(x1, y1, x2, y2, x3, y3, x4, y4, px, py)`
+
+Konstruira dva pravca iz parova točaka i vraća njihove koeficijente, odnos, kut, mogući presjek te udaljenost testne točke od prvog pravca.
+
+### `analyticGeometryCircle(mode, first, second, third, fourth, fifth, sixth, px, py)`
+
+`mode` je `centerRadius`, `general` ili `threePoints`. Rezultat uključuje središte, polumjer, opseg, površinu, položaj testne točke i uzorke kružnice.
+
+### `analyticGeometryConic(type, centerX, centerY, first, second, horizontal)`
+
+`type` je `parabola`, `ellipse` ili `hyperbola`. Vraća karakteristične elemente i jednu ili dvije grane uzoraka za SVG prikaz.
+
+## Eksponencijalne i logaritamske funkcije
+
+### `exponentialLogPowersRoots(mode, base, exponent, degree)`
+
+`mode` je `power` ili `root`. Vraća izračunatu vrijednost potencije ili n-tog korijena.
+
+### `exponentialLogFunction(initialValue, base, xMin, xMax, sampleCount)`
+
+Vraća `isGrowth`, `growthRatePercent` i uzorke `{x, y}` funkcije `f(x) = initialValue·baseˣ` na zadanom intervalu.
+
+### `exponentialLogLogarithm(base, xMin, xMax, sampleCount)`
+
+Vraća uzorke `{x, y}` funkcije `f(x) = log_base(x)`. `xMin` mora biti pozitivan.
+
+### `exponentialLogEquation(kind, base, coefficient, target)`
+
+`kind` je `exponential` ili `logarithmic`. Rješava jednostavnu jednadžbu i vraća `solution`.
+
+### `exponentialLogApplication(kind, first, second, third)`
+
+`kind` je `radioactiveDecay`, `phLevel`, `richterMagnitude` ili `soundIntensityDecibels`. Vraća izračunatu vrijednost primjene.
+
 ### `sequenceAnalyze(terms)`
 
 Prima članove odvojene zarezom i vraća `terms`, `differences`, `partialSums`, `monotonicity`, `minimum` i `maximum`.

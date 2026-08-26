@@ -14,6 +14,7 @@ Potpuna tehnička dokumentacija nalazi se u [`docs/`](docs/README.md):
 - [build i pokretanje](docs/build-and-run.md)
 - [testiranje i CI](docs/testing-and-ci.md)
 - [vodič za proširivanje](docs/extending-mathengine.md)
+- [obrazovni roadmap i planirani moduli](docs/roadmap.md)
 
 Ovaj README ostaje sažeti pregled projekta; `/docs` je izvor detaljne razvojne dokumentacije.
 
@@ -27,7 +28,8 @@ Ovaj README ostaje sažeti pregled projekta; `/docs` je izvor detaljne razvojne 
 - geometrija: mjerne jedinice, ravninski likovi, trokuti, Pitagorin poučak, tijela i koordinate
 - trigonometrija: jedinična kružnica, funkcije, trokuti, identiteti i jednadžbe
 - nizovi i redovi: monotonost, aritmetički/geometrijski nizovi, rekurzije, Fibonacci i primjene
-- interaktivni SVG crteži te geometrijske, trigonometrijske i sekvencijske vježbaonice
+- analitička geometrija: vektori, pravci, udaljenosti, kružnice, parabole, elipse i hiperbole
+- interaktivni SVG crteži te vježbaonice aktivnih školskih domena
 - lokalno spremanje obrazovne razine i napretka vježbaonica u `localStorage`
 
 ## Arhitektura
@@ -39,7 +41,9 @@ Ovaj README ostaje sažeti pregled projekta; `/docs` je izvor detaljne razvojne 
 - `core/include/aksiomat/geometry` — javni ugovori geometrije
 - `core/include/aksiomat/trigonometry` — javni ugovori trigonometrije
 - `core/include/aksiomat/sequences` — javni ugovori nizova i redova
-- `core/src/{arithmetic,algebra,logic,predicate,geometry,trigonometry,sequences}` — implementacije po domenama
+- `core/include/aksiomat/analytic_geometry` — javni ugovori analitičke geometrije
+- `core/include/aksiomat/exponential_logarithmic` — javni ugovori eksponencijalnih i logaritamskih funkcija
+- `core/src/{arithmetic,algebra,logic,predicate,geometry,trigonometry,sequences,analytic_geometry,exponential_logarithmic}` — implementacije po domenama
 - `core/src/wasm_bindings.cpp` — zajednički Emscripten adapter svih domena
 - `app` — mala native CLI demonstracija
 - `tests` — GoogleTest testovi
@@ -64,6 +68,8 @@ Početni ekran nudi tri razine. Odabir se sprema u `localStorage` i može se pro
 - Algebra: izrazi, jednadžbe, nejednadžbe, sustavi 2×2, polinomi, funkcije i grafovi
 - Trigonometrija: kružnica, sin/cos/tan, pravokutni i opći trokuti, identiteti, jednadžbe i vježbe
 - Nizovi i redovi: članovi i grafovi, sume, rekurzije, Fibonacci, kamate, rast i vježbe
+- Analitička geometrija: točke, vektori, pravci, udaljenosti, kružnice, konike i vježbe
+- Eksponencijalne i logaritamske funkcije: potencije, korijeni, rast/pad, logaritmi, jednadžbe, grafovi i primjene
 - Logika: iskazna logika i formalizacija rečenica
 
 ### Napredno i fakultet
@@ -84,7 +90,7 @@ Za budući razvoj pripremljene su dokumentirane mape u `core/include/aksiomat/` 
 - `discrete_math` — skupovi, relacije, grafovi i kombinatorika
 - `complex_numbers` — algebarski, trigonometrijski i eksponencijalni oblik
 
-Te mape zasad sadrže samo README ugovore. Ne ulaze u CMake dok ne dobiju stvarne C++20 implementacije i GoogleTest testove. Geometrija, trigonometrija i nizovi već su aktivne domene i zato nisu na ovom popisu.
+Te mape zasad sadrže samo README ugovore. Ne ulaze u CMake dok ne dobiju stvarne C++20 implementacije i GoogleTest testove. Geometrija, trigonometrija, nizovi, analitička geometrija i eksponencijalne/logaritamske funkcije već su aktivne domene i zato nisu na ovom popisu.
 
 ## Zahtjevi
 

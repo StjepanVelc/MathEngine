@@ -39,6 +39,15 @@
 #include "aksiomat/sequences/GeometricSequence.hpp"
 #include "aksiomat/sequences/Recurrences.hpp"
 #include "aksiomat/sequences/SequenceAnalysis.hpp"
+#include "aksiomat/analytic_geometry/Circles.hpp"
+#include "aksiomat/analytic_geometry/Conics.hpp"
+#include "aksiomat/analytic_geometry/LinesDistances.hpp"
+#include "aksiomat/analytic_geometry/PointsVectors.hpp"
+#include "aksiomat/exponential_logarithmic/PowersRoots.hpp"
+#include "aksiomat/exponential_logarithmic/ExponentialFunctions.hpp"
+#include "aksiomat/exponential_logarithmic/Logarithms.hpp"
+#include "aksiomat/exponential_logarithmic/EquationSolvers.hpp"
+#include "aksiomat/exponential_logarithmic/Applications.hpp"
 
 namespace {
 
@@ -275,6 +284,164 @@ std::string jsonSteps(const std::vector<std::string>& steps) {
 		result += jsonString(steps[index]);
 	}
 	return result + ']';
+}
+
+std::string analyticPointJson(aksiomat::analytic_geometry::Point2D point) {
+	return "{\"x\":" + formatDouble(point.x) + ",\"y\":" + formatDouble(point.y) + '}';
+}
+
+std::string analyticPointsJson(const std::vector<aksiomat::analytic_geometry::Point2D>& points) {
+	std::string result = "[";
+	for (std::size_t index = 0; index < points.size(); ++index) {
+		if (index) result += ',';
+		result += analyticPointJson(points[index]);
+	}
+	return result + ']';
+}
+
+std::string analyticGeometryVectors(double ax, double ay, double bx, double by) {
+	try {
+		using namespace aksiomat::analytic_geometry;
+		const Vector2D first{ax, ay}, second{bx, by};
+		const auto sum = PointsVectors::add(first, second);
+		return "{\"firstMagnitude\":" + formatDouble(PointsVectors::magnitude(first)) +
+			",\"secondMagnitude\":" + formatDouble(PointsVectors::magnitude(second)) +
+			",\"dot\":" + formatDouble(PointsVectors::dot(first, second)) +
+			",\"determinant\":" + formatDouble(PointsVectors::determinant(first, second)) +
+			",\"angleDegrees\":" + formatDouble(PointsVectors::angleDegrees(first, second)) +
+			",\"sum\":" + analyticPointJson({sum.x, sum.y}) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string analyticGeometryLines(double x1, double y1, double x2, double y2,
+	double x3, double y3, double x4, double y4, double px, double py) {
+	try {
+		using namespace aksiomat::analytic_geometry;
+		const auto first = LinesDistances::throughPoints({x1, y1}, {x2, y2});
+		const auto second = LinesDistances::throughPoints({x3, y3}, {x4, y4});
+		const auto firstAnalysis = LinesDistances::analyze(first);
+		const auto relation = LinesDistances::relation(first, second);
+		const char* relationName = relation.relation == LineRelation::Parallel ? "parallel" :
+			relation.relation == LineRelation::Coincident ? "coincident" :
+			relation.relation == LineRelation::Perpendicular ? "perpendicular" : "intersecting";
+		return "{\"first\":{\"a\":" + formatDouble(first.a) + ",\"b\":" + formatDouble(first.b) + ",\"c\":" + formatDouble(first.c) +
+			",\"vertical\":" + (firstAnalysis.vertical ? "true" : "false") + ",\"slope\":" + (firstAnalysis.slope ? formatDouble(*firstAnalysis.slope) : "null") +
+			"},\"second\":{\"a\":" + formatDouble(second.a) + ",\"b\":" + formatDouble(second.b) + ",\"c\":" + formatDouble(second.c) +
+			"},\"relation\":\"" + relationName + "\",\"angleDegrees\":" + formatDouble(relation.acuteAngleDegrees) +
+			",\"intersection\":" + (relation.intersection ? analyticPointJson(*relation.intersection) : "null") +
+			",\"pointDistance\":" + formatDouble(LinesDistances::pointToLineDistance({px, py}, first)) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string analyticGeometryCircle(std::string mode, double first, double second, double third,
+	double fourth, double fifth, double sixth, double px, double py) {
+	try {
+		using namespace aksiomat::analytic_geometry;
+		Circle circle;
+		if (mode == "centerRadius") circle = Circles::fromCenterRadius({first, second}, third);
+		else if (mode == "general") circle = Circles::fromGeneralEquation(first, second, third);
+		else if (mode == "threePoints") circle = Circles::throughThreePoints({first, second}, {third, fourth}, {fifth, sixth});
+		else throw std::invalid_argument("Nepoznat nacin zadavanja kruznice");
+		const auto result = Circles::analyze(circle);
+		const auto position = Circles::classify({px, py}, circle);
+		const char* positionName = position == PointCirclePosition::Inside ? "inside" : position == PointCirclePosition::On ? "on" : "outside";
+		return "{\"center\":" + analyticPointJson(circle.center) + ",\"radius\":" + formatDouble(circle.radius) +
+			",\"circumference\":" + formatDouble(result.circumference) + ",\"area\":" + formatDouble(result.area) +
+			",\"pointPosition\":\"" + positionName + "\",\"samples\":" + analyticPointsJson(result.samples) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string analyticGeometryConic(std::string type, double centerX, double centerY,
+	double first, double second, bool horizontal) {
+	try {
+		using namespace aksiomat::analytic_geometry;
+		if (type == "parabola") {
+			const auto result = Conics::analyze(Parabola{{centerX, centerY}, first,
+				horizontal ? ParabolaOrientation::Horizontal : ParabolaOrientation::Vertical});
+			return "{\"type\":\"parabola\",\"focus\":" + analyticPointJson(result.focus) +
+				",\"directrix\":" + formatDouble(result.directrix) + ",\"samples\":" + analyticPointsJson(result.samples) + '}';
+		}
+		if (type == "ellipse") {
+			const auto result = Conics::analyze(Ellipse{{centerX, centerY}, first, second, horizontal});
+			return "{\"type\":\"ellipse\",\"focalDistance\":" + formatDouble(result.focalDistance) +
+				",\"eccentricity\":" + formatDouble(result.eccentricity) + ",\"focus1\":" + analyticPointJson(result.focus1) +
+				",\"focus2\":" + analyticPointJson(result.focus2) + ",\"samples\":" + analyticPointsJson(result.samples) + '}';
+		}
+		if (type == "hyperbola") {
+			const auto result = Conics::analyze(Hyperbola{{centerX, centerY}, first, second, horizontal});
+			return "{\"type\":\"hyperbola\",\"focalDistance\":" + formatDouble(result.focalDistance) +
+				",\"eccentricity\":" + formatDouble(result.eccentricity) + ",\"focus1\":" + analyticPointJson(result.focus1) +
+				",\"focus2\":" + analyticPointJson(result.focus2) + ",\"branch1\":" + analyticPointsJson(result.branch1) +
+				",\"branch2\":" + analyticPointsJson(result.branch2) + '}';
+		}
+		throw std::invalid_argument("Nepoznata konika");
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string exponentialLogPowersRoots(std::string mode, double base, double exponent, double degree) {
+	try {
+		using namespace aksiomat::exponential_logarithmic;
+		if (mode == "power") {
+			const auto result = PowersRoots::power(base, exponent);
+			return "{\"mode\":\"power\",\"value\":" + formatDouble(result.value) + '}';
+		}
+		if (mode == "root") {
+			const auto result = PowersRoots::root(base, degree);
+			return "{\"mode\":\"root\",\"value\":" + formatDouble(result.value) + '}';
+		}
+		throw std::invalid_argument("Nepoznat nacin racunanja potencije/korijena");
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string exponentialLogFunction(double initialValue, double base, double xMin, double xMax, int sampleCount) {
+	try {
+		using namespace aksiomat::exponential_logarithmic;
+		const auto analysis = ExponentialFunctions::analyze({initialValue, base}, xMin, xMax, static_cast<std::size_t>(sampleCount));
+		std::string samples = "[";
+		for (std::size_t index = 0; index < analysis.samples.size(); ++index) {
+			if (index) samples += ',';
+			samples += "{\"x\":" + formatDouble(analysis.samples[index].x) + ",\"y\":" + formatDouble(analysis.samples[index].y) + '}';
+		}
+		samples += ']';
+		return "{\"isGrowth\":" + std::string(analysis.isGrowth ? "true" : "false") +
+			",\"growthRatePercent\":" + formatDouble(analysis.growthRatePercent) +
+			",\"samples\":" + samples + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string exponentialLogLogarithm(double base, double xMin, double xMax, int sampleCount) {
+	try {
+		using namespace aksiomat::exponential_logarithmic;
+		const auto analysis = Logarithms::analyze({base}, xMin, xMax, static_cast<std::size_t>(sampleCount));
+		std::string samples = "[";
+		for (std::size_t index = 0; index < analysis.samples.size(); ++index) {
+			if (index) samples += ',';
+			samples += "{\"x\":" + formatDouble(analysis.samples[index].x) + ",\"y\":" + formatDouble(analysis.samples[index].y) + '}';
+		}
+		samples += ']';
+		return "{\"samples\":" + samples + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string exponentialLogEquation(std::string kind, double base, double coefficient, double target) {
+	try {
+		using namespace aksiomat::exponential_logarithmic;
+		const auto solution = kind == "exponential"
+			? EquationSolvers::solveExponential(base, coefficient, target)
+			: EquationSolvers::solveLogarithmic(base, coefficient, target);
+		return "{\"solution\":" + formatDouble(solution.solution) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string exponentialLogApplication(std::string kind, double first, double second, double third) {
+	try {
+		using namespace aksiomat::exponential_logarithmic;
+		if (kind == "radioactiveDecay") return "{\"value\":" + formatDouble(Applications::radioactiveDecay(first, second, third).value) + '}';
+		if (kind == "phLevel") return "{\"value\":" + formatDouble(Applications::phLevel(first).value) + '}';
+		if (kind == "richterMagnitude") return "{\"value\":" + formatDouble(Applications::richterMagnitude(first).value) + '}';
+		if (kind == "soundIntensityDecibels") return "{\"value\":" + formatDouble(Applications::soundIntensityDecibels(first, second).value) + '}';
+		throw std::invalid_argument("Nepoznata primjena");
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
 }
 
 std::string jsonNumbers(const std::vector<double>& values) {
@@ -857,6 +1024,15 @@ EMSCRIPTEN_BINDINGS(aksiomat_module) {
 	emscripten::function("sequenceGeometric", &sequenceGeometric);
 	emscripten::function("sequenceRecurrence", &sequenceRecurrence);
 	emscripten::function("sequenceApplication", &sequenceApplication);
+	emscripten::function("analyticGeometryVectors", &analyticGeometryVectors);
+	emscripten::function("analyticGeometryLines", &analyticGeometryLines);
+	emscripten::function("analyticGeometryCircle", &analyticGeometryCircle);
+	emscripten::function("analyticGeometryConic", &analyticGeometryConic);
+	emscripten::function("exponentialLogPowersRoots", &exponentialLogPowersRoots);
+	emscripten::function("exponentialLogFunction", &exponentialLogFunction);
+	emscripten::function("exponentialLogLogarithm", &exponentialLogLogarithm);
+	emscripten::function("exponentialLogEquation", &exponentialLogEquation);
+	emscripten::function("exponentialLogApplication", &exponentialLogApplication);
 	emscripten::function("algebraSimplify", &algebraSimplify);
 	emscripten::function("algebraSolveEquation", &algebraSolveEquation);
 	emscripten::function("algebraSolveInequality", &algebraSolveInequality);

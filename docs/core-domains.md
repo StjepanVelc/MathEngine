@@ -294,7 +294,21 @@ Sve linearne ili izvedene ulazne mjere moraju biti konačne i pozitivne.
 
 ## Pravila grešaka u jezgri
 
-## Nizovi i redovi
+## Analitička geometrija
+
+Namespace `aksiomat::analytic_geometry` odvojen je od osnovnoškolske domene `geometry`. `PointsVectors` računa pomake, zbroj/razliku, skaliranje, duljinu, skalarni produkt, determinantu i kut vektora. `LinesDistances` koristi normalizirani opći oblik `Ax + By + C = 0`, zbog čega bez posebnog slučaja podržava i vertikalne pravce. Vraća nagib kada postoji, presjeke s osima, odnos dvaju pravaca, jedinstveni presjek te udaljenosti.
+
+`Circles` konstruira kružnicu iz središta i polumjera, opće jednadžbe ili tri nekolinearne točke. `Conics` analizira parabolu, elipsu i hiperbolu u standardnom položaju te vraća fokus/direktrisu, fokuse, fokalnu udaljenost, ekscentricitet i kontrolirane uzorke za crtanje. Rotirane opće konike i 3D ravnine ostaju fakultetsko proširenje.
+
+## Eksponencijalne i logaritamske funkcije
+
+Namespace `aksiomat::exponential_logarithmic` razdvaja pet odgovornosti. `PowersRoots` računa potencije (uz provjeru negativne baze s neintegerskim eksponentom i nule na negativan eksponent), n-te korijene (uz podršku neparnih korijena negativnih brojeva), racionalne potencije i test savršenog kvadrata. `ExponentialFunctions` modelira funkciju `f(x) = a·bˣ`, generira uzorke za graf, klasificira rast/pad, te računa poluživot i vrijeme udvostručenja.
+
+`Logarithms` podržava proizvoljnu bazu, prirodni/dekadski/binarni logaritam, promjenu baze i generiranje uzoraka funkcije `f(x) = log_b(x)` (uz obveznu provjeru `x > 0`). `EquationSolvers` rješava jednostavne eksponencijalne (`baza^x·koeficijent=cilj`) i logaritamske (`koeficijent·log_baza(x)=cilj`) jednadžbe. `Applications` modelira radioaktivni raspad, pH ljestvicu, Richterovu magnitudu i razinu zvuka u decibelima.
+
+Baza logaritma i eksponencijalne funkcije mora biti pozitivna i različita od 1; argument logaritma mora biti pozitivan. Sve funkcije provjeravaju konačnost ulaza i rezultata.
+
+
 
 Namespace `aksiomat::sequences` razdvaja pet odgovornosti. `SequenceAnalysis` konačnom popisu članova pridružuje indekse od 1, računa uzastopne razlike i klasificira ga kao strogo rastući/padajući, nepadajući/nerastući, konstantan ili nemonoton. `ArithmeticSequence` i `GeometricSequence` daju opći član, parcijalnu sumu, ograničeno generiranje i pronalaženje indeksa zadane vrijednosti.
 

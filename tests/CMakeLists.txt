@@ -42,6 +42,12 @@ add_executable(core_tests
 	test_sequences_analysis_arithmetic.cpp
 	test_sequences_geometric.cpp
 	test_sequences_recurrences_applications.cpp
+	test_analytic_geometry_points_lines.cpp
+	test_analytic_geometry_circles_conics.cpp
+	test_exponential_logarithmic_powers_roots.cpp
+	test_exponential_logarithmic_exponential_functions.cpp
+	test_exponential_logarithmic_logarithms.cpp
+	test_exponential_logarithmic_equations_applications.cpp
 )
 
 target_link_libraries(core_tests PRIVATE

@@ -15,6 +15,8 @@ flowchart LR
 	CORE --> GE[Geometry]
 	CORE --> TR[Trigonometry]
 	CORE --> SEQ[Sequences]
+	CORE --> AG[Analytic geometry]
+	CORE --> EL[Exponential/Logarithmic]
 	WB -->|string ili JSON| UI
 ```
 

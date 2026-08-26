@@ -1,0 +1,32 @@
+{
+  "temelji": [
+    {"id":"el-t-01","topic":"Potencije","title":"Cjelobrojni eksponent","question":"Izračunaj 2^5.","answer":32,"unit":"","tolerance":0.000001,"hint":"Pomnoži 2 sa samim sobom pet puta.","explanation":"2^5=2·2·2·2·2=32."},
+    {"id":"el-t-02","topic":"Potencije","title":"Negativan eksponent","question":"Izračunaj 2^(-3).","answer":0.125,"unit":"","tolerance":0.000001,"hint":"a^(-n)=1/a^n.","explanation":"2^(-3)=1/2^3=1/8=0,125."},
+    {"id":"el-t-03","topic":"Korijeni","title":"Kvadratni korijen","question":"Izračunaj √81.","answer":9,"unit":"","tolerance":0.000001,"hint":"Traži broj koji pomnožen sam sa sobom daje 81.","explanation":"9·9=81, pa je √81=9."},
+    {"id":"el-t-04","topic":"Korijeni","title":"Treći korijen","question":"Izračunaj ³√(-27).","answer":-3,"unit":"","tolerance":0.000001,"hint":"Neparni korijen negativnog broja je negativan.","explanation":"(-3)³=-27, pa je ³√(-27)=-3."},
+    {"id":"el-t-05","topic":"Logaritmi","title":"Osnovni logaritam","question":"Izračunaj log₂8.","answer":3,"unit":"","tolerance":0.000001,"hint":"Pitaj se: 2 na koju potenciju daje 8?","explanation":"2³=8, pa je log₂8=3."},
+    {"id":"el-t-06","topic":"Logaritmi","title":"Dekadski logaritam","question":"Izračunaj log(1000).","answer":3,"unit":"","tolerance":0.000001,"hint":"log je log₁₀.","explanation":"10³=1000, pa je log(1000)=3."},
+    {"id":"el-t-07","topic":"Logaritmi","title":"Prirodni logaritam jedinice","question":"Izračunaj ln(1).","answer":0,"unit":"","tolerance":0.000001,"hint":"Bilo koja baza na nultu potenciju daje 1.","explanation":"e⁰=1, pa je ln(1)=0."},
+    {"id":"el-t-08","topic":"Eksponencijalna funkcija","title":"Vrijednost funkcije","question":"Za f(x)=2·3^x, kolika je f(2)?","answer":18,"unit":"","tolerance":0.000001,"hint":"Uvrsti x=2 pa pomnoži s početnom vrijednosti.","explanation":"f(2)=2·3²=2·9=18."}
+  ],
+  "primjena": [
+    {"id":"el-p-01","topic":"Eksponencijalni rast","title":"Rast populacije","question":"Populacija od 100 raste 20% godišnje. Kolika je populacija nakon 2 godine?","answer":144,"unit":"","tolerance":0.01,"hint":"Pomnoži početnu vrijednost s (1+r)^t.","explanation":"100·(1,2)²=100·1,44=144."},
+    {"id":"el-p-02","topic":"Eksponencijalni pad","title":"Radioaktivni raspad","question":"Uzorak od 80 g ima poluživot 5 godina. Koliko grama ostaje nakon 10 godina?","answer":20,"unit":"g","tolerance":0.01,"hint":"Nakon svakog poluživota količina se prepolovi.","explanation":"Nakon 10 godina prošla su 2 poluživota: 80→40→20 g."},
+    {"id":"el-p-03","topic":"Jednadžbe","title":"Eksponencijalna jednadžba","question":"Riješi jednadžbu 2^x=32 po x.","answer":5,"unit":"","tolerance":0.000001,"hint":"Zapiši 32 kao potenciju broja 2.","explanation":"32=2⁵, pa je x=5."},
+    {"id":"el-p-04","topic":"Jednadžbe","title":"Logaritamska jednadžba","question":"Riješi jednadžbu log₃(x)=4 po x.","answer":81,"unit":"","tolerance":0.01,"hint":"Prebaci u eksponencijalni oblik 3⁴=x.","explanation":"x=3⁴=81."},
+    {"id":"el-p-05","topic":"pH ljestvica","title":"Izračun pH","question":"Otopina ima koncentraciju vodikovih iona 1·10⁻³ mol/L. Koliki je pH?","answer":3,"unit":"","tolerance":0.01,"hint":"pH=-log[H⁺].","explanation":"pH=-log(10⁻³)=3."},
+    {"id":"el-p-06","topic":"Richterova skala","title":"Magnituda potresa","question":"Amplituda vala potresa je 10000 puta veća od referentne. Kolika je Richterova magnituda?","answer":4,"unit":"","tolerance":0.01,"hint":"M=log₁₀(omjer amplituda).","explanation":"M=log₁₀(10000)=4."},
+    {"id":"el-p-07","topic":"Promjena baze","title":"Prebacivanje baze logaritma","question":"Izračunaj log₄(16) koristeći log₂ kao pomoćnu bazu.","answer":2,"unit":"","tolerance":0.000001,"hint":"log₄(16)=log₂(16)/log₂(4).","explanation":"log₂16=4, log₂4=2, pa je 4/2=2."},
+    {"id":"el-p-08","topic":"Udvostručenje","title":"Vrijeme udvostručenja","question":"Kapital raste uz godišnju stopu od 100%. Za koliko se godina udvostruči?","answer":1,"unit":"god","tolerance":0.01,"hint":"Koristi formulu vremena udvostručenja t=ln2/ln(1+r).","explanation":"ln2/ln2=1 godina."}
+  ],
+  "izazov": [
+    {"id":"el-i-01","topic":"Racionalne potencije","title":"Razlomljeni eksponent","question":"Izračunaj 27^(2/3).","answer":9,"unit":"","tolerance":0.000001,"hint":"Prvo korjenuj s nazivnikom, zatim potenciraj s brojnikom.","explanation":"27^(1/3)=3, 3²=9."},
+    {"id":"el-i-02","topic":"Jednadžbe s koeficijentom","title":"Eksponencijalna jednadžba s koeficijentom","question":"Riješi 3·2^x=96 po x.","answer":5,"unit":"","tolerance":0.000001,"hint":"Prvo podijeli obje strane s 3.","explanation":"2^x=32=2⁵, pa je x=5."},
+    {"id":"el-i-03","topic":"Logaritamske jednadžbe","title":"Logaritamska jednadžba s koeficijentom","question":"Riješi 2·log₂(x)=6 po x.","answer":8,"unit":"","tolerance":0.01,"hint":"Prvo podijeli obje strane s 2, zatim prebaci u eksponencijalni oblik.","explanation":"log₂(x)=3, pa je x=2³=8."},
+    {"id":"el-i-04","topic":"Radioaktivni raspad","title":"Preostala frakcija","question":"Poluživot je 3 godine. Koliko posto početne količine ostaje nakon 6 godina?","answer":25,"unit":"%","tolerance":0.5,"hint":"Nakon dva poluživota ostaje četvrtina.","explanation":"100%→50%→25% nakon dva poluživota (6/3=2)."},
+    {"id":"el-i-05","topic":"Decibeli","title":"Razina zvuka","question":"Intenzitet zvuka je 10⁻⁶ W/m², a referentni intenzitet 10⁻¹² W/m². Kolika je razina u decibelima?","answer":60,"unit":"dB","tolerance":0.5,"hint":"L=10·log₁₀(I/I₀).","explanation":"10·log₁₀(10⁻⁶/10⁻¹²)=10·log₁₀(10⁶)=10·6=60 dB."},
+    {"id":"el-i-06","topic":"Richterova skala","title":"Usporedba magnituda","question":"Potres magnitude 6 ima koliko puta veću amplitudu od potresa magnitude 4?","answer":100,"unit":"","tolerance":0.5,"hint":"Razlika magnituda odgovara potenciji baze 10.","explanation":"10^(6-4)=10²=100 puta veća amplituda."},
+    {"id":"el-i-07","topic":"Kombinirani rast","title":"Više razdoblja rasta","question":"Ulog od 500 raste 10% godišnje. Kolika je vrijednost nakon 3 godine (zaokruženo na cijeli broj)?","answer":666,"unit":"","tolerance":1,"hint":"Pomnoži s (1,1)³.","explanation":"500·1,1³≈500·1,331=665,5≈666."},
+    {"id":"el-i-08","topic":"Logaritamski identiteti","title":"Zbroj logaritama","question":"Izračunaj log₂(4)+log₂(8).","answer":5,"unit":"","tolerance":0.000001,"hint":"log(a)+log(b)=log(a·b).","explanation":"log₂(4)+log₂(8)=log₂(32)=5."}
+  ]
+}

@@ -82,7 +82,23 @@ Testovi pokrivaju kutove i kružnicu, funkcije i točne zapise, pravokutne/opće
 - `test_sequences_geometric.cpp`
 - `test_sequences_recurrences_applications.cpp`
 
-Testovi pokrivaju svih šest klasifikacija monotonosti, članove/sume/indekse, posebne kvocijente i divergenciju, rekurzije/Fibonacci te kamate, rast i amortizaciju. Posljednje potvrđeno stanje je 177/177 uspješnih testova.
+Testovi pokrivaju svih šest klasifikacija monotonosti, članove/sume/indekse, posebne kvocijente i divergenciju, rekurzije/Fibonacci te kamate, rast i amortizaciju.
+
+### Analitička geometrija
+
+- `test_analytic_geometry_points_lines.cpp`
+- `test_analytic_geometry_circles_conics.cpp`
+
+Pokriveni su vektori, vertikalni i opći pravci, odnosi/presjeci, udaljenosti, tri konstrukcije kružnice, položaj točke te standardne parabole, elipse i hiperbole.
+
+### Eksponencijalne i logaritamske funkcije
+
+- `test_exponential_logarithmic_powers_roots.cpp`
+- `test_exponential_logarithmic_exponential_functions.cpp`
+- `test_exponential_logarithmic_logarithms.cpp`
+- `test_exponential_logarithmic_equations_applications.cpp`
+
+Pokrivene su potencije i korijeni (uključujući negativne baze i neparne korijene), eksponencijalni rast/pad, logaritmi s proizvoljnom bazom i domenskom validacijom, jednadžbe te primjene (radioaktivni raspad, pH, Richterova magnituda, decibeli). Posljednje potvrđeno stanje je 199/199 uspješnih testova.
 
 ## Pokretanje svih native testova
 

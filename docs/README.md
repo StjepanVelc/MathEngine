@@ -14,6 +14,7 @@ Ova mapa sadrži tehničku dokumentaciju aktualne implementacije MathEnginea. Do
 | [Build i pokretanje](build-and-run.md) | CMake preseti, native/WASM build i lokalni web server |
 | [Testiranje i CI](testing-and-ci.md) | GoogleTest, smoke testovi, web validacija i GitHub Actions |
 | [Proširivanje sustava](extending-mathengine.md) | Postupak dodavanja nove domene, API-ja, UI-ja i testova |
+| [Obrazovni roadmap](roadmap.md) | Redoslijed razvoja, statusi te odvajanje srednjoškolskih i fakultetskih modula |
 
 ## Status domena
 
@@ -26,6 +27,8 @@ Ova mapa sadrži tehničku dokumentaciju aktualne implementacije MathEnginea. Do
 - `geometry`
 - `trigonometry`
 - `sequences`
+- `analytic_geometry`
+- `exponential_logarithmic`
 
 Aktivne domene imaju javna C++ zaglavlja, implementacije, CMake registraciju, testove i prema potrebi WASM adaptere.
 

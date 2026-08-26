@@ -34,6 +34,15 @@ add_library(aksiomat_core STATIC
 	src/sequences/GeometricSequence.cpp
 	src/sequences/Recurrences.cpp
 	src/sequences/Applications.cpp
+	src/analytic_geometry/PointsVectors.cpp
+	src/analytic_geometry/LinesDistances.cpp
+	src/analytic_geometry/Circles.cpp
+	src/analytic_geometry/Conics.cpp
+	src/exponential_logarithmic/PowersRoots.cpp
+	src/exponential_logarithmic/ExponentialFunctions.cpp
+	src/exponential_logarithmic/Logarithms.cpp
+	src/exponential_logarithmic/EquationSolvers.cpp
+	src/exponential_logarithmic/Applications.cpp
 	src/logic/LogicExpression.cpp
 	src/logic/LogicParser.cpp
 	src/logic/TruthTable.cpp

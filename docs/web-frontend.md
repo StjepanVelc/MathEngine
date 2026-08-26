@@ -17,9 +17,11 @@ Relevantni redoslijed skripti:
 7. `geometry.js`
 8. `trigonometry-visuals.js`, `trigonometry-practice.js`, `trigonometry.js`
 9. `sequences-visuals.js`, `sequences-practice.js`, `sequences.js`
-10. `graph.js`
-11. `algebra.js`
-12. `app.js`
+10. `analytic-geometry-visuals.js`, `analytic-geometry-practice.js`, `analytic-geometry.js`
+11. `exponential-logarithmic-visuals.js`, `exponential-logarithmic-practice.js`, `exponential-logarithmic.js`
+12. `graph.js`
+13. `algebra.js`
+14. `app.js`
 
 Domenski moduli definiraju globalne setup funkcije prije nego što `app.js` pozove `init()`.
 
@@ -78,6 +80,8 @@ Svaka domena ima vlastitu klasu gumba i panela:
 - `.geometry-toggle` / `.geometry-panel`
 - `.trigonometry-toggle` / `.trigonometry-panel`
 - `.sequences-toggle` / `.sequences-panel`
+- `.analytic-geometry-toggle` / `.analytic-geometry-panel`
+- `.exponential-logarithmic-toggle` / `.exponential-logarithmic-panel`
 
 Gumb preko `data-panel` pokazuje na `id` pripadajućeg panela.
 
@@ -119,6 +123,14 @@ Aritmetika, algebra i geometrija imaju istu logiku u vlastitim setup funkcijama 
 ## Frontend nizova i redova
 
 `sequences.js` upravlja sa šest srednjoškolskih panela, formatira WASM JSON, gradi tablice članova i obrazovne korake. `sequences-visuals.js` crta diskretne SVG točke, parcijalne sume, granicu konvergentnog reda, rekurzivne veze i razvoj vrijednosti kroz vrijeme. `sequences-practice.js` dinamički stvara vježbaonicu i učitava 24 zadatka iz `web/data/sequences-exercises.json`.
+
+## Frontend analitičke geometrije
+
+`analytic-geometry.js` upravlja panelima vektora, pravaca, kružnice, konika i vježbaonice. Dinamički prilagođava polja načinu zadavanja kružnice i vrsti konike. `analytic-geometry-visuals.js` koristi jednako skaliranje x/y osi kako ne bi izobličio kružnice i konike te prikazuje vektore, presjeke, okomite projekcije, fokuse i direktrisu. Vježbaonica učitava `web/data/analytic-geometry-exercises.json`.
+
+## Frontend eksponencijalnih i logaritamskih funkcija
+
+`exponential-logarithmic.js` upravlja panelima potencija/korijena, eksponencijalne funkcije, logaritamske funkcije, jednadžbi, primjena i vježbaonice. Dinamički prilagođava polja načinu računanja (potencija/korijen) i vrsti primjene. `exponential-logarithmic-visuals.js` crta graf eksponencijalne funkcije s horizontalnom asimptotom te graf logaritamske funkcije s vertikalnom asimptotom. Vježbaonica učitava `web/data/exponential-logarithmic-exercises.json`.
 
 ### Palete simbola
 

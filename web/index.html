@@ -495,7 +495,59 @@
             </div>
         </section>
 
-        <!-- Poglavlje: Algebra -->
+        <!-- Poglavlje: Analitička geometrija -->
+        <section class="chapter analytic-geometry-chapter" data-levels="secondary" hidden>
+            <button class="chapter-toggle" aria-expanded="false">Analitička geometrija ▸</button>
+            <div class="chapter-body" hidden>
+                <header class="analytic-geometry-hero"><div><span class="analytic-geometry-kicker">Algebra susreće geometriju</span><h2>Koordinatni laboratorij</h2><p>Svaka jednadžba postaje crtež, a svaka geometrijska veza dobiva brojčani dokaz.</p></div><div class="analytic-geometry-hero-grid" aria-hidden="true"><span></span><i></i><b></b></div></header>
+                <nav class="analytic-geometry-nav" aria-label="Područja analitičke geometrije">
+                    <button type="button" class="analytic-geometry-toggle" data-panel="analytic-vectors">Točke i vektori</button>
+                    <button type="button" class="analytic-geometry-toggle" data-panel="analytic-lines">Pravci i udaljenosti</button>
+                    <button type="button" class="analytic-geometry-toggle" data-panel="analytic-circle">Kružnica</button>
+                    <button type="button" class="analytic-geometry-toggle" data-panel="analytic-conics">Konike</button>
+                    <button type="button" class="analytic-geometry-toggle analytic-geometry-practice-toggle" data-panel="analytic-practice">Vježbaonica</button>
+                </nav>
+
+                <div id="analytic-vectors" class="analytic-geometry-panel" hidden><div class="analytic-geometry-layout"><div><span class="analytic-geometry-chip">Smjer + duljina</span><h2>Točke i vektori</h2><p class="tool-description">Vektori opisuju pomak. Skalarni produkt otkriva kut, a determinanta orijentaciju i površinu.</p><div class="analytic-geometry-form-grid"><label>uₓ<input id="analytic-vector-ax" type="number" step="any" value="3"></label><label>uᵧ<input id="analytic-vector-ay" type="number" step="any" value="4"></label><label>vₓ<input id="analytic-vector-bx" type="number" step="any" value="-2"></label><label>vᵧ<input id="analytic-vector-by" type="number" step="any" value="1"></label></div><aside class="analytic-geometry-formula"><code>u · v = |u||v| cos φ</code><code>det(u,v) = uₓvᵧ − uᵧvₓ</code></aside><button id="analytic-vector-calculate" type="button">Analiziraj vektore</button><div id="analytic-vector-result" class="result-grid"></div><div id="analytic-vector-steps" class="analytic-geometry-steps"></div></div><div id="analytic-vector-visual" class="analytic-geometry-visual" aria-label="Vektori u koordinatnom sustavu"></div></div></div>
+
+                <div id="analytic-lines" class="analytic-geometry-panel" hidden><div class="analytic-geometry-layout"><div><span class="analytic-geometry-chip">Ax + By + C = 0</span><h2>Pravci i udaljenosti</h2><p class="tool-description">Svaki pravac zadajemo dvjema točkama. Presjek, kut i udaljenost tada slijede iz koeficijenata općeg oblika.</p><div class="analytic-geometry-form-grid"><label>Aₓ<input id="analytic-line-x1" type="number" step="any" value="-4"></label><label>Aᵧ<input id="analytic-line-y1" type="number" step="any" value="-2"></label><label>Bₓ<input id="analytic-line-x2" type="number" step="any" value="4"></label><label>Bᵧ<input id="analytic-line-y2" type="number" step="any" value="4"></label><label>Cₓ<input id="analytic-line-x3" type="number" step="any" value="-4"></label><label>Cᵧ<input id="analytic-line-y3" type="number" step="any" value="4"></label><label>Dₓ<input id="analytic-line-x4" type="number" step="any" value="4"></label><label>Dᵧ<input id="analytic-line-y4" type="number" step="any" value="-2"></label><label>Pₓ<input id="analytic-line-px" type="number" step="any" value="0"></label><label>Pᵧ<input id="analytic-line-py" type="number" step="any" value="5"></label></div><button id="analytic-line-calculate" type="button">Usporedi pravce</button><div id="analytic-line-result" class="result-grid"></div><div id="analytic-line-steps" class="analytic-geometry-steps"></div></div><div id="analytic-line-visual" class="analytic-geometry-visual" aria-label="Pravci, presjek i udaljenost točke"></div></div></div>
+
+                <div id="analytic-circle" class="analytic-geometry-panel" hidden><div class="analytic-geometry-layout"><div><span class="analytic-geometry-chip">Središte + polumjer</span><h2>Kružnica</h2><p class="tool-description">Istraži standardni oblik, pretvori opću jednadžbu ili pronađi jedinu kružnicu kroz tri nekolinearne točke.</p><label>Način zadavanja<select id="analytic-circle-mode"><option value="centerRadius">Središte i polumjer</option><option value="general">Opća jednadžba x²+y²+Dx+Ey+F=0</option><option value="threePoints">Tri točke</option></select></label><div id="analytic-circle-fields" class="analytic-geometry-form-grid"></div><div class="analytic-geometry-form-grid"><label>Testna točka Pₓ<input id="analytic-circle-px" type="number" step="any" value="3"></label><label>Testna točka Pᵧ<input id="analytic-circle-py" type="number" step="any" value="4"></label></div><button id="analytic-circle-calculate" type="button">Analiziraj kružnicu</button><div id="analytic-circle-result" class="result-grid"></div><div id="analytic-circle-steps" class="analytic-geometry-steps"></div></div><div id="analytic-circle-visual" class="analytic-geometry-visual" aria-label="Kružnica sa središtem i testnom točkom"></div></div></div>
+
+                <div id="analytic-conics" class="analytic-geometry-panel" hidden><div class="analytic-geometry-layout"><div><span class="analytic-geometry-chip">Presjek stošca</span><h2>Parabola, elipsa i hiperbola</h2><p class="tool-description">Promijeni parametre i usporedi fokus, direktrisu i ekscentricitet triju osnovnih konika.</p><label>Konika<select id="analytic-conic-type"><option value="parabola">Parabola</option><option value="ellipse">Elipsa</option><option value="hyperbola">Hiperbola</option></select></label><div class="analytic-geometry-form-grid"><label>Središte/vrh h<input id="analytic-conic-x" type="number" step="any" value="0"></label><label>Središte/vrh k<input id="analytic-conic-y" type="number" step="any" value="0"></label><label id="analytic-conic-first-label">Parametar p<input id="analytic-conic-first" type="number" step="any" value="2"></label><label id="analytic-conic-second-label">Druga poluos<input id="analytic-conic-second" type="number" step="any" value="3"></label></div><label>Glavna os / otvaranje<select id="analytic-conic-horizontal"><option value="false">Okomito</option><option value="true">Vodoravno</option></select></label><aside id="analytic-conic-formula" class="analytic-geometry-formula"></aside><button id="analytic-conic-calculate" type="button">Nacrtaj i analiziraj</button><div id="analytic-conic-result" class="result-grid"></div><div id="analytic-conic-steps" class="analytic-geometry-steps"></div></div><div id="analytic-conic-visual" class="analytic-geometry-visual" aria-label="Odabrana konika s fokusima"></div></div></div>
+
+                <div id="analytic-practice" class="analytic-geometry-panel" hidden><div id="analytic-geometry-practice-root"></div></div>
+            </div>
+        </section>
+
+        <!-- Poglavlje: Eksponencijalne i logaritamske funkcije -->
+        <section class="chapter exponential-logarithmic-chapter" data-levels="secondary" hidden>
+            <button class="chapter-toggle" aria-expanded="false">Eksponencijalne i logaritamske funkcije ▸</button>
+            <div class="chapter-body" hidden>
+                <header class="exponential-logarithmic-hero"><div><span class="exponential-logarithmic-kicker">Rast, pad i skale</span><h2>Eksponenti i logaritmi</h2><p>Od potencija i korijena do jednadžbi, grafova i stvarnih primjena poput pH i Richterove skale.</p></div></header>
+                <nav class="exponential-logarithmic-nav" aria-label="Područja eksponencijalnih i logaritamskih funkcija">
+                    <button type="button" class="exponential-logarithmic-toggle" data-panel="explog-powers">Potencije i korijeni</button>
+                    <button type="button" class="exponential-logarithmic-toggle" data-panel="explog-exp">Eksponencijalna funkcija</button>
+                    <button type="button" class="exponential-logarithmic-toggle" data-panel="explog-log">Logaritamska funkcija</button>
+                    <button type="button" class="exponential-logarithmic-toggle" data-panel="explog-equations">Jednadžbe</button>
+                    <button type="button" class="exponential-logarithmic-toggle" data-panel="explog-applications">Primjene</button>
+                    <button type="button" class="exponential-logarithmic-toggle exponential-logarithmic-practice-toggle" data-panel="explog-practice">Vježbaonica</button>
+                </nav>
+
+                <div id="explog-powers" class="exponential-logarithmic-panel" hidden><div class="exponential-logarithmic-layout"><div><span class="exponential-logarithmic-chip">aⁿ i ⁿ√a</span><h2>Potencije i korijeni</h2><p class="tool-description">Izračunaj potenciju ili korijen i provjeri kada rezultat postoji u skupu realnih brojeva.</p><label>Način<select id="explog-powers-mode"><option value="power">Potencija</option><option value="root">Korijen</option></select></label><div id="explog-powers-fields" class="exponential-logarithmic-form-grid"></div><button id="explog-powers-calculate" type="button">Izračunaj</button><div id="explog-powers-result" class="result-grid"></div><div id="explog-powers-steps" class="exponential-logarithmic-steps"></div></div></div></div>
+
+                <div id="explog-exp" class="exponential-logarithmic-panel" hidden><div class="exponential-logarithmic-layout"><div><span class="exponential-logarithmic-chip">f(x) = a·bˣ</span><h2>Eksponencijalna funkcija</h2><p class="tool-description">Promijeni bazu i početnu vrijednost te promatraj rast ili pad funkcije.</p><div class="exponential-logarithmic-form-grid"><label>Početna vrijednost a<input id="explog-exp-initial" type="number" step="any" value="1"></label><label>Baza b<input id="explog-exp-base" type="number" step="any" value="2"></label><label>x min<input id="explog-exp-xmin" type="number" step="any" value="-4"></label><label>x max<input id="explog-exp-xmax" type="number" step="any" value="4"></label></div><button id="explog-exp-calculate" type="button">Nacrtaj graf</button><div id="explog-exp-result" class="result-grid"></div><div id="explog-exp-steps" class="exponential-logarithmic-steps"></div></div><div id="explog-exp-visual" class="exponential-logarithmic-visual" aria-label="Graf eksponencijalne funkcije"></div></div></div>
+
+                <div id="explog-log" class="exponential-logarithmic-panel" hidden><div class="exponential-logarithmic-layout"><div><span class="exponential-logarithmic-chip">f(x) = log_b(x)</span><h2>Logaritamska funkcija</h2><p class="tool-description">Logaritamska funkcija definirana je samo za pozitivne vrijednosti x.</p><div class="exponential-logarithmic-form-grid"><label>Baza b<input id="explog-log-base" type="number" step="any" value="2"></label><label>x min<input id="explog-log-xmin" type="number" step="any" value="0.25"></label><label>x max<input id="explog-log-xmax" type="number" step="any" value="16"></label></div><button id="explog-log-calculate" type="button">Nacrtaj graf</button><div id="explog-log-result" class="result-grid"></div><div id="explog-log-steps" class="exponential-logarithmic-steps"></div></div><div id="explog-log-visual" class="exponential-logarithmic-visual" aria-label="Graf logaritamske funkcije"></div></div></div>
+
+                <div id="explog-equations" class="exponential-logarithmic-panel" hidden><div class="exponential-logarithmic-layout"><div><span class="exponential-logarithmic-chip">Riješi po x</span><h2>Eksponencijalne i logaritamske jednadžbe</h2><p class="tool-description">Riješi jednadžbu oblika bazaˣ·koeficijent=cilj ili koeficijent·log_baza(x)=cilj.</p><label>Vrsta jednadžbe<select id="explog-equation-kind"><option value="exponential">Eksponencijalna</option><option value="logarithmic">Logaritamska</option></select></label><div class="exponential-logarithmic-form-grid"><label>Baza<input id="explog-equation-base" type="number" step="any" value="2"></label><label>Koeficijent<input id="explog-equation-coefficient" type="number" step="any" value="1"></label><label>Cilj<input id="explog-equation-target" type="number" step="any" value="8"></label></div><button id="explog-equation-calculate" type="button">Riješi jednadžbu</button><div id="explog-equation-result" class="result-grid"></div><div id="explog-equation-steps" class="exponential-logarithmic-steps"></div></div></div></div>
+
+                <div id="explog-applications" class="exponential-logarithmic-panel" hidden><div class="exponential-logarithmic-layout"><div><span class="exponential-logarithmic-chip">Iz stvarnog svijeta</span><h2>Primjene</h2><p class="tool-description">Radioaktivni raspad, pH ljestvica, Richterova skala i decibeli — sve su to eksponencijalni i logaritamski modeli.</p><label>Primjena<select id="explog-application-kind"><option value="radioactiveDecay">Radioaktivni raspad</option><option value="phLevel">pH vrijednost</option><option value="richterMagnitude">Richterova magnituda</option><option value="soundIntensityDecibels">Razina zvuka (dB)</option></select></label><div id="explog-application-fields" class="exponential-logarithmic-form-grid"></div><button id="explog-application-calculate" type="button">Izračunaj</button><div id="explog-application-result" class="result-grid"></div></div></div></div>
+
+                <div id="explog-practice" class="exponential-logarithmic-panel" hidden><div id="explog-practice-root"></div></div>
+            </div>
+        </section>
+
         <section class="chapter" data-levels="primary secondary" hidden>
             <button class="chapter-toggle" aria-expanded="false">Algebra ▸</button>
             <div class="chapter-body">
@@ -592,6 +644,12 @@
     <script src="sequences-visuals.js"></script>
     <script src="sequences-practice.js"></script>
     <script src="sequences.js"></script>
+    <script src="analytic-geometry-visuals.js"></script>
+    <script src="analytic-geometry-practice.js"></script>
+    <script src="analytic-geometry.js"></script>
+    <script src="exponential-logarithmic-visuals.js"></script>
+    <script src="exponential-logarithmic-practice.js"></script>
+    <script src="exponential-logarithmic.js"></script>
     <script src="graph.js"></script>
     <script src="algebra.js"></script>
     <script src="app.js"></script>

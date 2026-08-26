@@ -64,12 +64,12 @@ function setupLearningLevels() {
             if (supportsLevel(chapter, level)) chapter.hidden = false;
             else closeElement(chapter);
         });
-        document.querySelectorAll(".subchapter-toggle, .arithmetic-toggle, .algebra-toggle, .geometry-toggle, .trigonometry-toggle, .sequences-toggle").forEach((button) => {
+        document.querySelectorAll(".subchapter-toggle, .arithmetic-toggle, .algebra-toggle, .geometry-toggle, .trigonometry-toggle, .sequences-toggle, .analytic-geometry-toggle, .exponential-logarithmic-toggle").forEach((button) => {
             const available = supportsLevel(button, level);
             button.hidden = !available;
             if (!available) button.classList.remove("active");
         });
-        document.querySelectorAll(".subchapter-panel, .arithmetic-panel, .algebra-panel, .geometry-panel, .trigonometry-panel, .sequences-panel").forEach((panel) => {
+        document.querySelectorAll(".subchapter-panel, .arithmetic-panel, .algebra-panel, .geometry-panel, .trigonometry-panel, .sequences-panel, .analytic-geometry-panel, .exponential-logarithmic-panel").forEach((panel) => {
             if (!supportsLevel(panel, level)) closeElement(panel);
         });
         document.body.dataset.learningLevel = level;
@@ -288,6 +288,8 @@ async function init() {
     setupGeometry(module);
     setupTrigonometry(module);
     setupSequences(module);
+    setupAnalyticGeometry(module);
+    setupExponentialLogarithmic(module);
     setupAlgebra(module);
 }
 
