@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 
+#include <cmath>
 #include <stdexcept>
 
 #include "aksiomat/trigonometry/RightTriangle.hpp"
