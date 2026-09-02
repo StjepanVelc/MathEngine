@@ -291,6 +291,7 @@ async function init() {
     setupAnalyticGeometry(module);
     setupExponentialLogarithmic(module);
     setupCombinatoricsProbabilityStatistics(module);
+    setupCalculusBasics(module);
     setupAlgebra(module);
 }
 

@@ -100,6 +100,24 @@ Pokriveni su vektori, vertikalni i opći pravci, odnosi/presjeci, udaljenosti, t
 
 Pokrivene su potencije i korijeni (uključujući negativne baze i neparne korijene), eksponencijalni rast/pad, logaritmi s proizvoljnom bazom i domenskom validacijom, jednadžbe te primjene (radioaktivni raspad, pH, Richterova magnituda, decibeli). Posljednje potvrđeno stanje je 199/199 uspješnih testova.
 
+### Kombinatorika, vjerojatnost i statistika
+
+- `test_combinatorics_probability_statistics_counting.cpp`
+- `test_combinatorics_probability_statistics_probability.cpp`
+- `test_combinatorics_probability_statistics_descriptive_statistics.cpp`
+- `test_combinatorics_probability_statistics_data_visualization.cpp`
+
+Pokrivene su permutacije/kombinacije s ponavljanjem i bez, klasična/uvjetna/nezavisna vjerojatnost, sredina/medijan/mod/varijanca/standardna devijacija/kvartile te izgradnja histogramskih i stupčastih podataka.
+
+### Matematička analiza (srednjoškolske osnove)
+
+- `test_calculus_basics_limits.cpp`
+- `test_calculus_basics_derivatives.cpp`
+- `test_calculus_basics_derivative_applications.cpp`
+- `test_calculus_basics_definite_integral.cpp`
+
+Pokriveni su numerički limes s obje strane, derivacija i tangenta, prosječna/trenutna brzina promjene, monotonost i lokalni ekstremi te određeni integral s neovisnom Simpsonovom provjerom. Posljednje potvrđeno stanje nakon integracije je 229/229 uspješnih testova.
+
 ## Pokretanje svih native testova
 
 ```powershell
@@ -189,12 +207,12 @@ Smoke test nije zamjena za GoogleTest; on provjerava granicu, ne sve algoritamsk
 `scripts/validate_web.mjs` provjerava:
 
 - sintaksu svih JavaScript datoteka u `web/`
-- JSON sintaksu formalizacijske i geometrijske banke
+- JSON sintaksu svih banaka zadataka (formalizacija, geometrija, trigonometrija, nizovi, analitička geometrija, eksponencijalne/logaritamske funkcije, kombinatorika/vjerojatnost/statistika, matematička analiza)
 - duple statičke HTML ID-jeve
 - Geometry DOM reference
 - elemente stvorene statički i kroz dinamički template vježbaonice
-- 22 geometrijska zadatka
-- jedinstvenost geometrijskih ID-jeva
+- 22 geometrijska zadatka te po 24 zadatka za trigonometriju, nizove, analitičku geometriju, eksponencijalne/logaritamske funkcije, kombinatoriku/vjerojatnost/statistiku i matematičku analizu
+- jedinstvenost ID-jeva u svim bankama
 
 Pokretanje:
 

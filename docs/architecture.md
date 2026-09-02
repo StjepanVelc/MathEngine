@@ -17,6 +17,8 @@ flowchart LR
 	CORE --> SEQ[Sequences]
 	CORE --> AG[Analytic geometry]
 	CORE --> EL[Exponential/Logarithmic]
+	CORE --> CPS[Combinatorics/Probability/Statistics]
+	CORE --> CB[Calculus basics]
 	WB -->|string ili JSON| UI
 ```
 

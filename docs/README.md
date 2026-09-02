@@ -29,18 +29,18 @@ Ova mapa sadrži tehničku dokumentaciju aktualne implementacije MathEnginea. Do
 - `sequences`
 - `analytic_geometry`
 - `exponential_logarithmic`
+- `combinatorics_probability_statistics`
+- `calculus_basics`
 
 Aktivne domene imaju javna C++ zaglavlja, implementacije, CMake registraciju, testove i prema potrebi WASM adaptere.
 
 ### Planirane domene
 
-- `probability_statistics`
 - `linear_algebra`
-- `mathematical_analysis`
 - `discrete_math`
 - `complex_numbers`
 
-Planirane domene trenutačno imaju samo README ugovore u `core/include/aksiomat/` i `core/src/`. Ne ulaze u build dok ne dobiju stvarnu implementaciju i testove.
+Planirane domene trenutačno imaju samo README ugovore u `core/include/aksiomat/` i `core/src/`. Ne ulaze u build dok ne dobiju stvarnu implementaciju i testove. Fakultetska proširenja vjerojatnosti/statistike i matematičke analize ostaju u `docs/roadmap.md` kao kasnija faza istog naziva, odvojena od već implementiranih srednjoškolskih modula `combinatorics_probability_statistics` i `calculus_basics`.
 
 ## Konvencije dokumentacije
 

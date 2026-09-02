@@ -47,6 +47,10 @@ add_library(aksiomat_core STATIC
 	src/combinatorics_probability_statistics/ProbabilityBasics.cpp
 	src/combinatorics_probability_statistics/DescriptiveStatistics.cpp
 	src/combinatorics_probability_statistics/DataVisualization.cpp
+	src/calculus_basics/Limits.cpp
+	src/calculus_basics/Derivatives.cpp
+	src/calculus_basics/DerivativeApplications.cpp
+	src/calculus_basics/DefiniteIntegral.cpp
 	src/logic/LogicExpression.cpp
 	src/logic/LogicParser.cpp
 	src/logic/TruthTable.cpp

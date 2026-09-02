@@ -4,7 +4,7 @@
 
 Tekst zadatka, trag, objašnjenje i razina težine pedagoški su sadržaj. Smješteni su u JSON kako bi se mogli mijenjati bez C++ rekompilacije i WASM builda. C++ jezgra i dalje provodi formalnu matematičku provjeru kada je potrebna.
 
-Trenutačno postoji šest banaka:
+Trenutačno postoji osam banaka:
 
 - `web/data/formalization-exercises.json`
 - `web/data/geometry-exercises.json`
@@ -12,6 +12,8 @@ Trenutačno postoji šest banaka:
 - `web/data/sequences-exercises.json`
 - `web/data/analytic-geometry-exercises.json`
 - `web/data/exponential-logarithmic-exercises.json`
+- `web/data/combinatorics-probability-statistics-exercises.json`
+- `web/data/calculus-basics-exercises.json`
 
 Trigonometrijska banka ima razine `temelji`, `primjena` i `izazov`, ukupno 24 zadatka. Koristi isti brojčani model odgovora i tolerancije kao geometrija, a stanje sprema pod ključem `mathengine-trigonometry-practice-v1`.
 
@@ -20,6 +22,10 @@ Banka nizova također ima 24 zadatka kroz `temelji`, `primjena` i `izazov`. Pokr
 Banka Analitičke geometrije sadrži 24 zadatka iz vektora, pravaca, udaljenosti, kružnica i konika. Koristi isti brojčani model odgovora, a napredak sprema pod `mathengine-analytic-geometry-practice-v1`.
 
 Banka eksponencijalnih i logaritamskih funkcija sadrži 24 zadatka iz potencija, korijena, eksponencijalnog rasta/pada, logaritama, jednadžbi i primjena (pH, Richterova skala, radioaktivni raspad, decibeli). Koristi isti brojčani model odgovora, a napredak sprema pod `mathengine-exponential-logarithmic-practice-v1`.
+
+Banka kombinatorike, vjerojatnosti i statistike sadrži 24 zadatka kroz `temelji`, `primjena` i `izazov`, pokrivajući prebrojavanje, klasičnu/uvjetnu/nezavisnu vjerojatnost te deskriptivnu statistiku. Koristi isti brojčani model odgovora, a napredak sprema pod `mathengine-combinatorics-probability-statistics-practice-v1`.
+
+Banka matematičke analize (srednjoškolske osnove) sadrži 24 zadatka kroz `temelji`, `primjena` i `izazov`, pokrivajući limes, derivaciju, primjene derivacije (monotonost/ekstremi) i određeni integral. Koristi isti brojčani model odgovora, a napredak sprema pod `mathengine-calculus-basics-practice-v1`.
 
 Banke se učitavaju preko `fetch`, pa aplikaciju treba pokretati preko HTTP servera, ne izravno protokolom `file://`.
 

@@ -94,6 +94,63 @@ Oba adaptera vraćaju generirane članove, parcijalne sume, zadnji član, konač
 
 Podržava `simpleInterest`, `compoundInterest`, `population`, `percentage` i `amortization`. Rezultat vraća razvoj vrijednosti kroz razdoblja; amortizacija dodatno vraća ratu, ukupno plaćeno i ukupnu kamatu.
 
+## Kombinatorika, vjerojatnost i statistika
+
+### `combinatoricsCounting(mode, n, k)`
+
+`mode` je `factorial`, `permutations`, `permutationsWithRepetition`, `combinations` ili `combinationsWithRepetition`. Vraća `{ "value": ... }`.
+
+### `combinatoricsProbability(mode, first, second, third)`
+
+`mode` je `classical`, `complement`, `union`, `conditional` ili `independent`. Parametri se tumače prema odabranom načinu (npr. za `classical` su to broj povoljnih i ukupnih ishoda). Vraća `{ "value": ... }`.
+
+### `combinatoricsStatistics(dataset)`
+
+`dataset` je popis brojeva odvojenih zarezom. Vraća srednju vrijednost, medijan, mod (niz), varijancu, standardnu devijaciju i raspon; kada skup ima barem dvije vrijednosti, dodaje i kvartile (`q1`, `q2`, `q3`, `interquartileRange`).
+
+```json
+{
+  "mean": 4.5,
+  "median": 4.5,
+  "mode": [1, 2, 3, 4, 5, 6, 7, 8],
+  "variance": 5.25,
+  "standardDeviation": 2.29,
+  "range": 7,
+  "q1": 2.5,
+  "q2": 4.5,
+  "q3": 6.5,
+  "interquartileRange": 4
+}
+```
+
+### `combinatoricsVisualization(dataset, binCount)`
+
+Gradi histogramsku tablicu frekvencija za zadani broj razreda i vraća `{ "bins": [{ "lowerBound", "upperBound", "count" }, ...] }`.
+
+## Matematička analiza (srednjoškolske osnove)
+
+### `calculusLimit(expression, point, variable)`
+
+Vraća `expression`, `point`, `limitValue`, `existsFinite`, `leftSamples`/`rightSamples` (niz `{ "x", "value" }`) i `steps`.
+
+### `calculusDerivative(expression, point, variable)`
+
+Vraća `original`, `derivative`, `pointValue`, `slopeAtPoint`, `tangentLine` i `steps`.
+
+### `calculusRateOfChange(expression, a, b, variable)`
+
+Vraća `averageRate`, `instantaneousRate` i `steps`.
+
+### `calculusDerivativeApplications(expression, variable)`
+
+Vraća `expression`, `derivative`, `criticalPoints` (niz `{ "x", "y", "kind" }` gdje je `kind` `minimum`, `maksimum` ili `prijevojna tocka`), `increasingIntervals`, `decreasingIntervals` i `steps`.
+
+### `calculusDefiniteIntegral(expression, lowerBound, upperBound, variable)`
+
+Vraća `expression`, `antiderivative`, `lowerBound`, `upperBound`, `area`, `numericCheck` (Simpsonova provjera) i `steps`.
+
+Sve `calculus*` funkcije rade isključivo s polinomskim izrazima jedne varijable.
+
 ## Iskazna logika
 
 ### `logicToString(formula)`

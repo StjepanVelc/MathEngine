@@ -19,9 +19,11 @@ Relevantni redoslijed skripti:
 9. `sequences-visuals.js`, `sequences-practice.js`, `sequences.js`
 10. `analytic-geometry-visuals.js`, `analytic-geometry-practice.js`, `analytic-geometry.js`
 11. `exponential-logarithmic-visuals.js`, `exponential-logarithmic-practice.js`, `exponential-logarithmic.js`
-12. `graph.js`
-13. `algebra.js`
-14. `app.js`
+12. `combinatorics-probability-statistics-practice.js`, `combinatorics-probability-statistics.js`
+13. `calculus-basics-visuals.js`, `calculus-basics-practice.js`, `calculus-basics.js`
+14. `graph.js`
+15. `algebra.js`
+16. `app.js`
 
 Domenski moduli definiraju globalne setup funkcije prije nego što `app.js` pozove `init()`.
 
@@ -82,6 +84,8 @@ Svaka domena ima vlastitu klasu gumba i panela:
 - `.sequences-toggle` / `.sequences-panel`
 - `.analytic-geometry-toggle` / `.analytic-geometry-panel`
 - `.exponential-logarithmic-toggle` / `.exponential-logarithmic-panel`
+- `.cps-toggle` / `.cps-panel`
+- `.calculus-basics-toggle` / `.calculus-basics-panel`
 
 Gumb preko `data-panel` pokazuje na `id` pripadajućeg panela.
 
@@ -131,6 +135,14 @@ Aritmetika, algebra i geometrija imaju istu logiku u vlastitim setup funkcijama 
 ## Frontend eksponencijalnih i logaritamskih funkcija
 
 `exponential-logarithmic.js` upravlja panelima potencija/korijena, eksponencijalne funkcije, logaritamske funkcije, jednadžbi, primjena i vježbaonice. Dinamički prilagođava polja načinu računanja (potencija/korijen) i vrsti primjene. `exponential-logarithmic-visuals.js` crta graf eksponencijalne funkcije s horizontalnom asimptotom te graf logaritamske funkcije s vertikalnom asimptotom. Vježbaonica učitava `web/data/exponential-logarithmic-exercises.json`.
+
+## Frontend kombinatorike, vjerojatnosti i statistike
+
+`combinatorics-probability-statistics.js` upravlja panelima prebrojavanja, vjerojatnosti, deskriptivne statistike i vizualizacije podataka te vježbaonice. Odabir `mode` selecta prilagođava vidljiva polja (npr. broj `n`/`k` za prebrojavanje, tri parametra za vjerojatnost). Rezultati statistike i vizualizacije prikazuju se kao histogram/stupčasti dijagram preko SVG-a generiranog izravno u kontroleru. `combinatorics-probability-statistics-practice.js` učitava `web/data/combinatorics-probability-statistics-exercises.json`.
+
+## Frontend matematičke analize (srednjoškolske osnove)
+
+`calculus-basics.js` upravlja s pet panela: limes, derivacija (uključujući prosječnu/trenutnu brzinu promjene), primjene derivacije (monotonost i ekstremi), određeni integral te vježbaonica. `calculus-basics-visuals.js` crta SVG vizualizaciju približavanja limesu (`CalculusBasicsVisuals.limitApproach`). `calculus-basics-practice.js` uvačava `web/data/calculus-basics-exercises.json` i sprema napredak pod ključem `mathengine-calculus-basics-practice-v1`.
 
 ### Palete simbola
 

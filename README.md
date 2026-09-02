@@ -29,6 +29,9 @@ Ovaj README ostaje sažeti pregled projekta; `/docs` je izvor detaljne razvojne 
 - trigonometrija: jedinična kružnica, funkcije, trokuti, identiteti i jednadžbe
 - nizovi i redovi: monotonost, aritmetički/geometrijski nizovi, rekurzije, Fibonacci i primjene
 - analitička geometrija: vektori, pravci, udaljenosti, kružnice, parabole, elipse i hiperbole
+- eksponencijalne i logaritamske funkcije: potencije, korijeni, rast/pad, logaritmi, jednadžbe, grafovi i primjene
+- kombinatorika, vjerojatnost i statistika: prebrojavanje, vjerojatnost, deskriptivna statistika i vizualizacija podataka
+- matematička analiza (srednjoškolske osnove): intuitivni limes, derivacija, primjene derivacije i određeni integral kao površina
 - interaktivni SVG crteži te vježbaonice aktivnih školskih domena
 - lokalno spremanje obrazovne razine i napretka vježbaonica u `localStorage`
 
@@ -43,7 +46,9 @@ Ovaj README ostaje sažeti pregled projekta; `/docs` je izvor detaljne razvojne 
 - `core/include/aksiomat/sequences` — javni ugovori nizova i redova
 - `core/include/aksiomat/analytic_geometry` — javni ugovori analitičke geometrije
 - `core/include/aksiomat/exponential_logarithmic` — javni ugovori eksponencijalnih i logaritamskih funkcija
-- `core/src/{arithmetic,algebra,logic,predicate,geometry,trigonometry,sequences,analytic_geometry,exponential_logarithmic}` — implementacije po domenama
+- `core/include/aksiomat/combinatorics_probability_statistics` — javni ugovori kombinatorike, vjerojatnosti i statistike
+- `core/include/aksiomat/calculus_basics` — javni ugovori srednjoškolske matematičke analize (limes, derivacija, integral)
+- `core/src/{arithmetic,algebra,logic,predicate,geometry,trigonometry,sequences,analytic_geometry,exponential_logarithmic,combinatorics_probability_statistics,calculus_basics}` — implementacije po domenama
 - `core/src/wasm_bindings.cpp` — zajednički Emscripten adapter svih domena
 - `app` — mala native CLI demonstracija
 - `tests` — GoogleTest testovi
@@ -70,6 +75,8 @@ Početni ekran nudi tri razine. Odabir se sprema u `localStorage` i može se pro
 - Nizovi i redovi: članovi i grafovi, sume, rekurzije, Fibonacci, kamate, rast i vježbe
 - Analitička geometrija: točke, vektori, pravci, udaljenosti, kružnice, konike i vježbe
 - Eksponencijalne i logaritamske funkcije: potencije, korijeni, rast/pad, logaritmi, jednadžbe, grafovi i primjene
+- Kombinatorika, vjerojatnost i statistika: prebrojavanje, permutacije, kombinacije, vjerojatnost, deskriptivna statistika i vizualizacije podataka
+- Matematička analiza (srednjoškolske osnove): intuitivni limes, derivacija kao brzina promjene, osnovna pravila deriviranja, primjene derivacije i određeni integral kao površina
 - Logika: iskazna logika i formalizacija rečenica
 
 ### Napredno i fakultet
@@ -84,13 +91,11 @@ Jedan alat može pripadati više razina preko HTML atributa `data-levels`, ali n
 
 Za budući razvoj pripremljene su dokumentirane mape u `core/include/aksiomat/` i `core/src/`:
 
-- `probability_statistics` — vjerojatnost, kombinatorika i statistika
 - `linear_algebra` — vektori, matrice, determinante i vektorski prostori
-- `mathematical_analysis` — limesi, derivacije, integrali i redovi
-- `discrete_math` — skupovi, relacije, grafovi i kombinatorika
+- `discrete_math` — skupovi, relacije, grafovi i napredna kombinatorika
 - `complex_numbers` — algebarski, trigonometrijski i eksponencijalni oblik
 
-Te mape zasad sadrže samo README ugovore. Ne ulaze u CMake dok ne dobiju stvarne C++20 implementacije i GoogleTest testove. Geometrija, trigonometrija, nizovi, analitička geometrija i eksponencijalne/logaritamske funkcije već su aktivne domene i zato nisu na ovom popisu.
+Te mape zasad sadrže samo README ugovore. Ne ulaze u CMake dok ne dobiju stvarne C++20 implementacije i GoogleTest testove. Geometrija, trigonometrija, nizovi, analitička geometrija, eksponencijalne/logaritamske funkcije, kombinatorika/vjerojatnost/statistika i srednjoškolska matematička analiza već su aktivne domene i zato nisu na ovom popisu. Fakultetska proširenja istih tema (`probability_statistics`, `mathematical_analysis`) ostaju planirana za naprednu razinu.
 
 ## Zahtjevi
 
@@ -235,7 +240,7 @@ Web graf koristi Canvas i omogućuje pomicanje, zumiranje, prikaz koordinata, oz
 
 ## Testovi i CI
 
-GoogleTest pokriva AST, parsere, tablice istinitosti, ekvivalenciju, arnost predikata, zasjenjivanje varijabli, interpretaciju, aritmetiku, algebru i geometriju. GitHub Actions workflow `.github/workflows/ci.yml` pokreće native testove i zaseban Emscripten build.
+GoogleTest pokriva AST, parsere, tablice istinitosti, ekvivalenciju, arnost predikata, zasjenjivanje varijabli, interpretaciju, aritmetiku, algebru, geometriju, trigonometriju, nizove, analiticku geometriju, eksponencijalne/logaritamske funkcije, kombinatoriku/vjerojatnost/statistiku i srednjoskolsku matematicku analizu (limes, derivacija, integral). GitHub Actions workflow
 
 ## Trenutna ograničenja
 

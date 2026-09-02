@@ -52,6 +52,10 @@
 #include "aksiomat/combinatorics_probability_statistics/ProbabilityBasics.hpp"
 #include "aksiomat/combinatorics_probability_statistics/DescriptiveStatistics.hpp"
 #include "aksiomat/combinatorics_probability_statistics/DataVisualization.hpp"
+#include "aksiomat/calculus_basics/Limits.hpp"
+#include "aksiomat/calculus_basics/Derivatives.hpp"
+#include "aksiomat/calculus_basics/DerivativeApplications.hpp"
+#include "aksiomat/calculus_basics/DefiniteIntegral.hpp"
 
 namespace {
 
@@ -543,6 +547,104 @@ std::string combinatoricsVisualization(std::string dataset, int binCount) {
 		}
 		binsJson += ']';
 		return "{\"bins\":" + binsJson + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string calculusLimit(std::string expression, double point, std::string variable) {
+	try {
+		using namespace aksiomat::calculus_basics;
+		const auto result = Limits::evaluate(expression, point, variable);
+		std::string leftJson = "[";
+		for (std::size_t index = 0; index < result.leftSamples.size(); ++index) {
+			if (index) leftJson += ',';
+			leftJson += "{\"x\":" + formatDouble(result.leftSamples[index].x) +
+				",\"value\":" + formatDouble(result.leftSamples[index].value) + '}';
+		}
+		leftJson += ']';
+		std::string rightJson = "[";
+		for (std::size_t index = 0; index < result.rightSamples.size(); ++index) {
+			if (index) rightJson += ',';
+			rightJson += "{\"x\":" + formatDouble(result.rightSamples[index].x) +
+				",\"value\":" + formatDouble(result.rightSamples[index].value) + '}';
+		}
+		rightJson += ']';
+		return "{\"expression\":" + jsonString(result.expression) +
+			",\"point\":" + formatDouble(result.point) +
+			",\"limitValue\":" + formatDouble(result.limitValue) +
+			",\"existsFinite\":" + std::string(result.existsFinite ? "true" : "false") +
+			",\"leftSamples\":" + leftJson +
+			",\"rightSamples\":" + rightJson +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string calculusDerivative(std::string expression, double point, std::string variable) {
+	try {
+		using namespace aksiomat::calculus_basics;
+		const auto result = Derivatives::differentiate(expression, point, variable);
+		return "{\"original\":" + jsonString(result.original) +
+			",\"derivative\":" + jsonString(result.derivative) +
+			",\"pointValue\":" + formatDouble(result.pointValue) +
+			",\"slopeAtPoint\":" + formatDouble(result.slopeAtPoint) +
+			",\"tangentLine\":" + jsonString(result.tangentLine) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string calculusRateOfChange(std::string expression, double a, double b, std::string variable) {
+	try {
+		using namespace aksiomat::calculus_basics;
+		const auto result = Derivatives::rateOfChange(expression, a, b, variable);
+		return "{\"averageRate\":" + formatDouble(result.averageRate) +
+			",\"instantaneousRate\":" + formatDouble(result.instantaneousRate) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string calculusDerivativeApplications(std::string expression, std::string variable) {
+	try {
+		using namespace aksiomat::calculus_basics;
+		const auto result = DerivativeApplications::analyze(expression, variable);
+		std::string criticalJson = "[";
+		for (std::size_t index = 0; index < result.criticalPoints.size(); ++index) {
+			if (index) criticalJson += ',';
+			criticalJson += "{\"x\":" + formatDouble(result.criticalPoints[index].x) +
+				",\"y\":" + formatDouble(result.criticalPoints[index].y) +
+				",\"kind\":" + jsonString(result.criticalPoints[index].kind) + '}';
+		}
+		criticalJson += ']';
+		std::string increasingJson = "[";
+		for (std::size_t index = 0; index < result.increasingIntervals.size(); ++index) {
+			if (index) increasingJson += ',';
+			increasingJson += jsonString(result.increasingIntervals[index]);
+		}
+		increasingJson += ']';
+		std::string decreasingJson = "[";
+		for (std::size_t index = 0; index < result.decreasingIntervals.size(); ++index) {
+			if (index) decreasingJson += ',';
+			decreasingJson += jsonString(result.decreasingIntervals[index]);
+		}
+		decreasingJson += ']';
+		return "{\"expression\":" + jsonString(result.expression) +
+			",\"derivative\":" + jsonString(result.derivative) +
+			",\"criticalPoints\":" + criticalJson +
+			",\"increasingIntervals\":" + increasingJson +
+			",\"decreasingIntervals\":" + decreasingJson +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string calculusDefiniteIntegral(std::string expression, double lowerBound, double upperBound, std::string variable) {
+	try {
+		using namespace aksiomat::calculus_basics;
+		const auto result = DefiniteIntegral::evaluate(expression, lowerBound, upperBound, variable);
+		return "{\"expression\":" + jsonString(result.expression) +
+			",\"antiderivative\":" + jsonString(result.antiderivative) +
+			",\"lowerBound\":" + formatDouble(result.lowerBound) +
+			",\"upperBound\":" + formatDouble(result.upperBound) +
+			",\"area\":" + formatDouble(result.area) +
+			",\"numericCheck\":" + formatDouble(result.numericCheck) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
 	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
 }
 
@@ -1130,6 +1232,12 @@ EMSCRIPTEN_BINDINGS(aksiomat_module) {
 	emscripten::function("combinatoricsProbability", &combinatoricsProbability);
 	emscripten::function("combinatoricsStatistics", &combinatoricsStatistics);
 	emscripten::function("combinatoricsVisualization", &combinatoricsVisualization);
+
+	emscripten::function("calculusLimit", &calculusLimit);
+	emscripten::function("calculusDerivative", &calculusDerivative);
+	emscripten::function("calculusRateOfChange", &calculusRateOfChange);
+	emscripten::function("calculusDerivativeApplications", &calculusDerivativeApplications);
+	emscripten::function("calculusDefiniteIntegral", &calculusDefiniteIntegral);
 	emscripten::function("algebraSimplify", &algebraSimplify);
 	emscripten::function("algebraSolveEquation", &algebraSolveEquation);
 	emscripten::function("algebraSolveInequality", &algebraSolveInequality);

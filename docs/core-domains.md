@@ -322,6 +322,24 @@ Namespace `aksiomat::trigonometry` razdvaja kutove, funkcije, trokute i jednadž
 
 `RightTriangle` rješava slučajeve dvije katete, kateta+hipotenuza i stranica+oštri kut. `GeneralTriangle` podržava jednoznačne SSS, SAS i ASA/AAS slučajeve zakonom sinusa/kosinusa i Heronovom formulom. Dvosmisleni SSA nije prikriven kao jednoznačan slučaj. `IdentitiesEquations` provjerava temeljne identitete i pronalazi sva sin/cos/tan rješenja na zadanom stupanjskom intervalu.
 
+## Kombinatorika, vjerojatnost i statistika
+
+Namespace `aksiomat::combinatorics_probability_statistics` razdvaja četiri odgovornosti. `Counting` računa faktorijel, permutacije (s ponavljanjem i bez), te kombinacije (s ponavljanjem i bez) preko `long long` argumenata. `ProbabilityBasics` računa klasičnu vjerojatnost, komplement, uniju dva događaja, uvjetnu vjerojatnost (`ConditionalProbabilityInput`) i vjerojatnost nezavisnih događaja.
+
+`DescriptiveStatistics` nad `std::vector<double>` skupom podataka računa aritmetičku sredinu, medijan, mod (može vratiti više vrijednosti), varijancu i standardnu devijaciju (uzoraka ili populacije), raspon te kvartile (`Quartiles` s `q1`, `q2`, `q3` i interkvartilnim rasponom). `DataVisualization` gradi tablicu frekvencija (`FrequencyBin` s granicama i brojem) za histogram te podatke za stupčasti dijagram (`CategoryFrequency`).
+
+Ulazni skupovi podataka ne smiju biti prazni gdje statistika to zahtijeva, a sve vrijednosti moraju biti konačne.
+
+## Matematička analiza (srednjoškolske osnove)
+
+Namespace `aksiomat::calculus_basics` gradi na `aksiomat::algebra::Polynomial` i razdvaja četiri odgovornosti. `Limits` procjenjuje limes polinoma kada `x -> point` numeričkim približavanjem s obje strane te vraća `LimitResult` s vrijednošću, oznakom postoji li konačan limes, uzorcima približavanja (`LimitApproachSample`) i objašnjavajućim koracima.
+
+`Derivatives` derivira polinom i računa nagib tangente u zadanoj točki (`DerivativeResult` s izvedenim izrazom, jednadžbom tangente i koracima) te uspoređuje prosječnu brzinu promjene na `[a,b]` s trenutnom brzinom promjene u točki `a` (`RateOfChangeResult`). `DerivativeApplications` analizira monotonost i lokalne ekstreme polinoma do trećeg stupnja (izvod do drugog stupnja), vraćajući kritične točke (`CriticalPoint` s vrstom `minimum`, `maksimum` ili `prijevojna tocka`) te intervale rasta i pada.
+
+`DefiniteIntegral` računa određeni integral polinoma na `[a,b]` preko antiderivacije (obrnuto pravilo potencije) i uz to vraća neovisnu numeričku Simpsonovu provjeru rezultata (`DefiniteIntegralResult` s područjem, antiderivacijom i koracima).
+
+Sve funkcije rade isključivo s polinomskim izrazima jedne varijable; općenitiji izrazi (trigonometrijski, eksponencijalni) i formalne definicije limesa/kontinuiteta ostaju fakultetsko proširenje.
+
 Domene koriste standardne iznimke:
 
 - `std::invalid_argument` za neispravan matematički ili sintaksni ulaz

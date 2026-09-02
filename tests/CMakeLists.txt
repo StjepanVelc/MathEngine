@@ -52,6 +52,10 @@ add_executable(core_tests
 	test_combinatorics_probability_statistics_probability.cpp
 	test_combinatorics_probability_statistics_descriptive_statistics.cpp
 	test_combinatorics_probability_statistics_data_visualization.cpp
+	test_calculus_basics_limits.cpp
+	test_calculus_basics_derivatives.cpp
+	test_calculus_basics_derivative_applications.cpp
+	test_calculus_basics_definite_integral.cpp
 )
 
 target_link_libraries(core_tests PRIVATE

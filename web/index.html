@@ -654,6 +654,31 @@
                 <div id="cps-practice" class="combinatorics-probability-statistics-panel" hidden><div id="cps-practice-root"></div></div>
             </div>
         </section>
+
+        <!-- Poglavlje: Matematička analiza — srednjoškolske osnove -->
+        <section class="chapter calculus-basics-chapter" data-levels="secondary" hidden>
+            <button class="chapter-toggle" aria-expanded="false">Matematička analiza — srednjoškolske osnove ▸</button>
+            <div class="chapter-body" hidden>
+                <header class="calculus-basics-hero"><div><span class="calculus-basics-kicker">Limes, derivacija, integral</span><h2>Matematička analiza — srednjoškolske osnove</h2><p>Intuitivni limes, derivacija kao brzina promjene, primjene derivacije i određeni integral kao površina.</p></div></header>
+                <nav class="calculus-basics-nav" aria-label="Područja matematičke analize">
+                    <button type="button" class="calculus-basics-toggle" data-panel="calculus-limits">Limes</button>
+                    <button type="button" class="calculus-basics-toggle" data-panel="calculus-derivatives">Derivacija</button>
+                    <button type="button" class="calculus-basics-toggle" data-panel="calculus-applications">Primjene derivacije</button>
+                    <button type="button" class="calculus-basics-toggle" data-panel="calculus-integral">Određeni integral</button>
+                    <button type="button" class="calculus-basics-toggle calculus-basics-practice-toggle" data-panel="calculus-basics-practice">Vježbaonica</button>
+                </nav>
+
+                <div id="calculus-limits" class="calculus-basics-panel"><div class="calculus-basics-layout"><div><span class="calculus-basics-chip">lim f(x)</span><h2>Intuitivni limes</h2><p class="tool-description">Procijeni limes polinoma kada x teži zadanoj točki, numeričkim približavanjem s obje strane.</p><label>Izraz f(x)<input id="calculus-limit-expression" type="text" value="x^2+1"></label><label>Točka<input id="calculus-limit-point" type="number" step="any" value="2"></label><button id="calculus-limit-calculate" type="button">Izračunaj</button><div id="calculus-limit-result" class="result-grid"></div><div id="calculus-limit-steps" class="calculus-basics-steps"></div><div id="calculus-limit-visual" class="calculus-basics-visual"></div></div></div></div>
+
+                <div id="calculus-derivatives" class="calculus-basics-panel" hidden><div class="calculus-basics-layout"><div><span class="calculus-basics-chip">f'(x), tangenta</span><h2>Derivacija kao brzina promjene</h2><p class="tool-description">Izračunaj derivaciju polinoma, nagib tangente u točki te usporedi prosječnu i trenutnu brzinu promjene.</p><label>Izraz f(x)<input id="calculus-derivative-expression" type="text" value="x^3-2x^2+x"></label><label>Točka<input id="calculus-derivative-point" type="number" step="any" value="2"></label><button id="calculus-derivative-calculate" type="button">Izračunaj derivaciju</button><div id="calculus-derivative-result" class="result-grid"></div><div id="calculus-derivative-steps" class="calculus-basics-steps"></div><label>Izraz f(x) za brzinu promjene<input id="calculus-rate-expression" type="text" value="x^2"></label><label>Interval a<input id="calculus-rate-a" type="number" step="any" value="1"></label><label>Interval b<input id="calculus-rate-b" type="number" step="any" value="3"></label><button id="calculus-rate-calculate" type="button">Usporedi brzine promjene</button><div id="calculus-rate-result" class="result-grid"></div><div id="calculus-rate-steps" class="calculus-basics-steps"></div></div></div></div>
+
+                <div id="calculus-applications" class="calculus-basics-panel" hidden><div class="calculus-basics-layout"><div><span class="calculus-basics-chip">ekstremi, monotonost</span><h2>Primjene derivacije</h2><p class="tool-description">Analiziraj monotonost i lokalne ekstreme polinoma stupnja do 3 (izvod stupnja do 2).</p><label>Izraz f(x)<input id="calculus-applications-expression" type="text" value="x^3-3x"></label><button id="calculus-applications-calculate" type="button">Analiziraj</button><div id="calculus-applications-result" class="result-grid"></div><div id="calculus-applications-steps" class="calculus-basics-steps"></div></div></div></div>
+
+                <div id="calculus-integral" class="calculus-basics-panel" hidden><div class="calculus-basics-layout"><div><span class="calculus-basics-chip">∫ f(x) dx</span><h2>Određeni integral kao površina</h2><p class="tool-description">Izračunaj određeni integral polinoma na [a,b] pomoću antiderivacije, uz nezavisnu Simpsonovu numeričku provjeru.</p><label>Izraz f(x)<input id="calculus-integral-expression" type="text" value="x^2"></label><label>Donja granica a<input id="calculus-integral-lower" type="number" step="any" value="0"></label><label>Gornja granica b<input id="calculus-integral-upper" type="number" step="any" value="3"></label><button id="calculus-integral-calculate" type="button">Izračunaj integral</button><div id="calculus-integral-result" class="result-grid"></div><div id="calculus-integral-steps" class="calculus-basics-steps"></div></div></div></div>
+
+                <div id="calculus-basics-practice" class="calculus-basics-panel" hidden><div id="calculus-basics-practice-root"></div></div>
+            </div>
+        </section>
     </main>
 
     <script src="aksiomat.js"></script>
@@ -678,6 +703,9 @@
     <script src="combinatorics-probability-statistics-visuals.js"></script>
     <script src="combinatorics-probability-statistics-practice.js"></script>
     <script src="combinatorics-probability-statistics.js"></script>
+    <script src="calculus-basics-visuals.js"></script>
+    <script src="calculus-basics-practice.js"></script>
+    <script src="calculus-basics.js"></script>
     <script src="graph.js"></script>
     <script src="algebra.js"></script>
     <script src="app.js"></script>
