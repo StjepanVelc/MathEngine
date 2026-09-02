@@ -629,6 +629,31 @@
                 </div>
             </div>
         </section>
+
+        <!-- Poglavlje: Kombinatorika, vjerojatnost i statistika -->
+        <section class="chapter combinatorics-probability-statistics-chapter" data-levels="secondary" hidden>
+            <button class="chapter-toggle" aria-expanded="false">Kombinatorika, vjerojatnost i statistika ▸</button>
+            <div class="chapter-body" hidden>
+                <header class="combinatorics-probability-statistics-hero"><div><span class="combinatorics-probability-statistics-kicker">Prebrojavanje i podaci</span><h2>Kombinatorika, vjerojatnost i statistika</h2><p>Pravila prebrojavanja, vjerojatnost, deskriptivna statistika i vizualizacija podataka na jednom mjestu.</p></div></header>
+                <nav class="combinatorics-probability-statistics-nav" aria-label="Područja kombinatorike, vjerojatnosti i statistike">
+                    <button type="button" class="combinatorics-probability-statistics-toggle" data-panel="cps-counting">Prebrojavanje</button>
+                    <button type="button" class="combinatorics-probability-statistics-toggle" data-panel="cps-probability">Vjerojatnost</button>
+                    <button type="button" class="combinatorics-probability-statistics-toggle" data-panel="cps-statistics">Statistika</button>
+                    <button type="button" class="combinatorics-probability-statistics-toggle" data-panel="cps-visualization">Vizualizacija</button>
+                    <button type="button" class="combinatorics-probability-statistics-toggle combinatorics-probability-statistics-practice-toggle" data-panel="cps-practice">Vježbaonica</button>
+                </nav>
+
+                <div id="cps-counting" class="combinatorics-probability-statistics-panel" hidden><div class="combinatorics-probability-statistics-layout"><div><span class="combinatorics-probability-statistics-chip">n!, P(n,k), C(n,k)</span><h2>Pravila prebrojavanja</h2><p class="tool-description">Odaberi vrstu prebrojavanja i izračunaj broj mogućih rasporeda ili odabira.</p><label>Način<select id="cps-counting-mode"><option value="factorial">Faktorijela</option><option value="permutations">Permutacije (bez ponavljanja)</option><option value="permutationsWithRepetition">Permutacije (s ponavljanjem)</option><option value="combinations">Kombinacije (bez ponavljanja)</option><option value="combinationsWithRepetition">Kombinacije (s ponavljanjem)</option></select></label><div id="cps-counting-fields" class="combinatorics-probability-statistics-form-grid"></div><button id="cps-counting-calculate" type="button">Izračunaj</button><div id="cps-counting-result" class="result-grid"></div><div id="cps-counting-steps" class="combinatorics-probability-statistics-steps"></div></div></div></div>
+
+                <div id="cps-probability" class="combinatorics-probability-statistics-panel" hidden><div class="combinatorics-probability-statistics-layout"><div><span class="combinatorics-probability-statistics-chip">P(A), P(A∪B), P(A|B)</span><h2>Vjerojatnost</h2><p class="tool-description">Istraži klasičnu vjerojatnost, komplement, uniju, uvjetnu vjerojatnost i nezavisne događaje.</p><label>Način<select id="cps-probability-mode"><option value="classical">Klasična vjerojatnost</option><option value="complement">Komplement</option><option value="union">Unija</option><option value="conditional">Uvjetna vjerojatnost</option><option value="independent">Nezavisni događaji</option></select></label><div id="cps-probability-fields" class="combinatorics-probability-statistics-form-grid"></div><button id="cps-probability-calculate" type="button">Izračunaj</button><div id="cps-probability-result" class="result-grid"></div><div id="cps-probability-steps" class="combinatorics-probability-statistics-steps"></div></div></div></div>
+
+                <div id="cps-statistics" class="combinatorics-probability-statistics-panel" hidden><div class="combinatorics-probability-statistics-layout"><div><span class="combinatorics-probability-statistics-chip">Sredina, medijan, mod</span><h2>Deskriptivna statistika</h2><p class="tool-description">Upiši podatke odvojene zarezima i izračunaj mjere središnje vrijednosti i raspršenosti.</p><label>Podaci<input id="cps-statistics-dataset" type="text" value="2, 4, 4, 4, 5, 5, 7, 9"></label><button id="cps-statistics-calculate" type="button">Izračunaj</button><div id="cps-statistics-result" class="result-grid"></div><div id="cps-statistics-steps" class="combinatorics-probability-statistics-steps"></div></div></div></div>
+
+                <div id="cps-visualization" class="combinatorics-probability-statistics-panel" hidden><div class="combinatorics-probability-statistics-layout"><div><span class="combinatorics-probability-statistics-chip">Histogram</span><h2>Vizualizacija podataka</h2><p class="tool-description">Podijeli podatke u razrede i prikaži frekvencije histogramom.</p><label>Podaci<input id="cps-visualization-dataset" type="text" value="2, 4, 4, 4, 5, 5, 7, 9, 12, 15, 15, 18"></label><label>Broj razreda<input id="cps-visualization-bins" type="number" step="1" value="4"></label><button id="cps-visualization-calculate" type="button">Nacrtaj histogram</button><div id="cps-visualization-result" class="result-grid"></div><div id="cps-visualization-steps" class="combinatorics-probability-statistics-steps"></div></div><div id="cps-visualization-visual" class="combinatorics-probability-statistics-visual" aria-label="Histogram frekvencija"></div></div></div>
+
+                <div id="cps-practice" class="combinatorics-probability-statistics-panel" hidden><div id="cps-practice-root"></div></div>
+            </div>
+        </section>
     </main>
 
     <script src="aksiomat.js"></script>
@@ -650,6 +675,9 @@
     <script src="exponential-logarithmic-visuals.js"></script>
     <script src="exponential-logarithmic-practice.js"></script>
     <script src="exponential-logarithmic.js"></script>
+    <script src="combinatorics-probability-statistics-visuals.js"></script>
+    <script src="combinatorics-probability-statistics-practice.js"></script>
+    <script src="combinatorics-probability-statistics.js"></script>
     <script src="graph.js"></script>
     <script src="algebra.js"></script>
     <script src="app.js"></script>

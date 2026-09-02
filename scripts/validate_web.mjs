@@ -11,12 +11,12 @@ for (const name of scriptFiles) {
     new vm.Script(source, { filename: name });
 }
 
-for (const name of ["formalization-exercises.json", "geometry-exercises.json", "trigonometry-exercises.json", "sequences-exercises.json", "analytic-geometry-exercises.json", "exponential-logarithmic-exercises.json"]) {
+for (const name of ["formalization-exercises.json", "geometry-exercises.json", "trigonometry-exercises.json", "sequences-exercises.json", "analytic-geometry-exercises.json", "exponential-logarithmic-exercises.json", "combinatorics-probability-statistics-exercises.json"]) {
     JSON.parse(fs.readFileSync(path.join(web, "data", name), "utf8"));
 }
 
 const html = fs.readFileSync(path.join(web, "index.html"), "utf8");
-const dynamicHtml = fs.readFileSync(path.join(web, "geometry-practice.js"), "utf8") + fs.readFileSync(path.join(web, "trigonometry-practice.js"), "utf8") + fs.readFileSync(path.join(web, "sequences-practice.js"), "utf8") + fs.readFileSync(path.join(web, "analytic-geometry-practice.js"), "utf8") + fs.readFileSync(path.join(web, "exponential-logarithmic-practice.js"), "utf8");
+const dynamicHtml = fs.readFileSync(path.join(web, "geometry-practice.js"), "utf8") + fs.readFileSync(path.join(web, "trigonometry-practice.js"), "utf8") + fs.readFileSync(path.join(web, "sequences-practice.js"), "utf8") + fs.readFileSync(path.join(web, "analytic-geometry-practice.js"), "utf8") + fs.readFileSync(path.join(web, "exponential-logarithmic-practice.js"), "utf8") + fs.readFileSync(path.join(web, "combinatorics-probability-statistics-practice.js"), "utf8");
 const allMarkup = `${html}\n${dynamicHtml}`;
 const staticIds = [...html.matchAll(/\bid="([^"]+)"/g)].map((match) => match[1]);
 const duplicates = staticIds.filter((id, index) => staticIds.indexOf(id) !== index);
@@ -25,7 +25,7 @@ if (duplicates.length) {
 }
 
 const referencedIds = new Set();
-for (const name of ["geometry.js", "geometry-practice.js", "geometry-visuals.js", "trigonometry.js", "trigonometry-practice.js", "trigonometry-visuals.js", "sequences.js", "sequences-practice.js", "sequences-visuals.js", "analytic-geometry.js", "analytic-geometry-practice.js", "analytic-geometry-visuals.js", "exponential-logarithmic.js", "exponential-logarithmic-practice.js", "exponential-logarithmic-visuals.js"]) {
+for (const name of ["geometry.js", "geometry-practice.js", "geometry-visuals.js", "trigonometry.js", "trigonometry-practice.js", "trigonometry-visuals.js", "sequences.js", "sequences-practice.js", "sequences-visuals.js", "analytic-geometry.js", "analytic-geometry-practice.js", "analytic-geometry-visuals.js", "exponential-logarithmic.js", "exponential-logarithmic-practice.js", "exponential-logarithmic-visuals.js", "combinatorics-probability-statistics.js", "combinatorics-probability-statistics-practice.js", "combinatorics-probability-statistics-visuals.js"]) {
     const source = fs.readFileSync(path.join(web, name), "utf8");
     for (const match of source.matchAll(/getElementById\("([^"]+)"\)/g)) referencedIds.add(match[1]);
 }
@@ -39,7 +39,9 @@ const dynamicFieldIds = new Set([
     "analytic-circle-first", "analytic-circle-second", "analytic-circle-third",
     "analytic-circle-fourth", "analytic-circle-fifth", "analytic-circle-sixth",
     "explog-powers-exponent", "explog-powers-degree",
-    "explog-application-first", "explog-application-second", "explog-application-third"
+    "explog-application-first", "explog-application-second", "explog-application-third",
+    "cps-counting-n", "cps-counting-k",
+    "cps-probability-first", "cps-probability-second", "cps-probability-third"
 ]);
 const missing = [...referencedIds].filter((id) => !allMarkup.includes(`id="${id}"`) && !dynamicFieldIds.has(id));
 if (missing.length) throw new Error(`Missing domain DOM IDs: ${missing.join(", ")}`);
@@ -84,4 +86,13 @@ for (const exercise of allExplogExercises) {
     if (!Number.isFinite(exercise.answer) || !Number.isFinite(exercise.tolerance) || exercise.tolerance < 0) throw new Error(`Exponential/Logarithmic exercise ${exercise.id} has invalid numeric validation`);
 }
 
-console.log(`${scriptFiles.length} JavaScript files, 6 JSON banks, ${staticIds.length} static IDs, ${referencedIds.size} domain references, 22 Geometry and 24 exercises in each other secondary-school practice bank valid.`);
+const cpsExercises = JSON.parse(fs.readFileSync(path.join(web, "data", "combinatorics-probability-statistics-exercises.json"), "utf8"));
+const allCpsExercises = ["temelji", "primjena", "izazov"].flatMap((level) => cpsExercises[level] || []);
+if (allCpsExercises.length !== 24) throw new Error(`Expected 24 Combinatorics/Probability/Statistics exercises, found ${allCpsExercises.length}`);
+if (new Set(allCpsExercises.map((exercise) => exercise.id)).size !== allCpsExercises.length) throw new Error("Combinatorics/Probability/Statistics exercise IDs must be unique");
+for (const exercise of allCpsExercises) {
+    for (const field of requiredExerciseFields) if (!(field in exercise)) throw new Error(`Combinatorics/Probability/Statistics exercise ${exercise.id || "<unknown>"} is missing ${field}`);
+    if (!Number.isFinite(exercise.answer) || !Number.isFinite(exercise.tolerance) || exercise.tolerance < 0) throw new Error(`Combinatorics/Probability/Statistics exercise ${exercise.id} has invalid numeric validation`);
+}
+
+console.log(`${scriptFiles.length} JavaScript files, 7 JSON banks, ${staticIds.length} static IDs, ${referencedIds.size} domain references, 22 Geometry and 24 exercises in each other secondary-school practice bank valid.`);

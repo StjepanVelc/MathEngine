@@ -43,6 +43,10 @@ add_library(aksiomat_core STATIC
 	src/exponential_logarithmic/Logarithms.cpp
 	src/exponential_logarithmic/EquationSolvers.cpp
 	src/exponential_logarithmic/Applications.cpp
+	src/combinatorics_probability_statistics/Counting.cpp
+	src/combinatorics_probability_statistics/ProbabilityBasics.cpp
+	src/combinatorics_probability_statistics/DescriptiveStatistics.cpp
+	src/combinatorics_probability_statistics/DataVisualization.cpp
 	src/logic/LogicExpression.cpp
 	src/logic/LogicParser.cpp
 	src/logic/TruthTable.cpp

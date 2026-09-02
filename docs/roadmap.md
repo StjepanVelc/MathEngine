@@ -16,7 +16,7 @@ Ovaj dokument prati redoslijed razvoja matematičkih modula i njihovu primarnu o
 | 1 | Nizovi i redovi | **Riješeno** | Članovi i monotonost, aritmetički/geometrijski nizovi i redovi, rekurzije, Fibonacci, kamate, rast i amortizacija |
 | 2 | Analitička geometrija | **Riješeno** | Točke, vektori, pravci, udaljenosti, kružnica, parabola, elipsa i hiperbola u ravnini |
 | 3 | Eksponencijalne i logaritamske funkcije | **Riješeno** | Potencije i korijeni, eksponencijalni rast/pad, logaritmi, jednadžbe, grafovi i primjene |
-| 4 | Kombinatorika, vjerojatnost i statistika | **Planirano** | Pravila prebrojavanja, permutacije, varijacije, kombinacije, vjerojatnost, deskriptivna statistika i vizualizacije podataka |
+| 4 | Kombinatorika, vjerojatnost i statistika | **Riješeno** | Pravila prebrojavanja, permutacije, varijacije, kombinacije, vjerojatnost, deskriptivna statistika i vizualizacije podataka |
 | 5 | Matematička analiza — srednjoškolske osnove | **Planirano** | Intuitivni limes, derivacija kao brzina promjene, osnovna pravila deriviranja, primjene derivacije i određeni integral kao površina |
 
 ## Fakultet i napredno

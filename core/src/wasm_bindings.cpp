@@ -48,6 +48,10 @@
 #include "aksiomat/exponential_logarithmic/Logarithms.hpp"
 #include "aksiomat/exponential_logarithmic/EquationSolvers.hpp"
 #include "aksiomat/exponential_logarithmic/Applications.hpp"
+#include "aksiomat/combinatorics_probability_statistics/Counting.hpp"
+#include "aksiomat/combinatorics_probability_statistics/ProbabilityBasics.hpp"
+#include "aksiomat/combinatorics_probability_statistics/DescriptiveStatistics.hpp"
+#include "aksiomat/combinatorics_probability_statistics/DataVisualization.hpp"
 
 namespace {
 
@@ -451,6 +455,95 @@ std::string jsonNumbers(const std::vector<double>& values) {
 		result += formatDouble(values[index]);
 	}
 	return result + ']';
+}
+
+std::vector<double> splitNumbers(const std::string& text) {
+	std::vector<double> values;
+	std::size_t position = 0;
+	while (position <= text.size()) {
+		const std::size_t end = text.find(',', position);
+		const std::string token = text.substr(position, end == std::string::npos ? end : end - position);
+		if (token.empty()) throw std::invalid_argument("Popis podataka sadrzi praznu vrijednost");
+		std::size_t parsed = 0;
+		const double value = std::stod(token, &parsed);
+		if (parsed != token.size()) throw std::invalid_argument("Neispravan podatak");
+		values.push_back(value);
+		if (end == std::string::npos) break;
+		position = end + 1;
+	}
+	return values;
+}
+
+std::string combinatoricsCounting(std::string mode, long long n, long long k) {
+	try {
+		using namespace aksiomat::combinatorics_probability_statistics;
+		double value = 0.0;
+		if (mode == "factorial") value = Counting::factorial(n);
+		else if (mode == "permutations") value = Counting::permutations(n, k);
+		else if (mode == "permutationsWithRepetition") value = Counting::permutationsWithRepetition(n, k);
+		else if (mode == "combinations") value = Counting::combinations(n, k);
+		else if (mode == "combinationsWithRepetition") value = Counting::combinationsWithRepetition(n, k);
+		else throw std::invalid_argument("Nepoznat nacin prebrojavanja");
+		return "{\"value\":" + formatDouble(value) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string combinatoricsProbability(std::string mode, double first, double second, double third) {
+	try {
+		using namespace aksiomat::combinatorics_probability_statistics;
+		double value = 0.0;
+		if (mode == "classical") value = ProbabilityBasics::classicalProbability(first, second);
+		else if (mode == "complement") value = ProbabilityBasics::complementProbability(first);
+		else if (mode == "union") value = ProbabilityBasics::unionProbability(first, second, third);
+		else if (mode == "conditional") value = ProbabilityBasics::conditionalProbability({first, second});
+		else if (mode == "independent") value = ProbabilityBasics::independentEventsProbability(first, second);
+		else throw std::invalid_argument("Nepoznat nacin racunanja vjerojatnosti");
+		return "{\"value\":" + formatDouble(value) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string combinatoricsStatistics(std::string dataset) {
+	try {
+		using namespace aksiomat::combinatorics_probability_statistics;
+		const auto values = splitNumbers(dataset);
+		const double meanValue = DescriptiveStatistics::mean(values);
+		const double medianValue = DescriptiveStatistics::median(values);
+		const auto modeValues = DescriptiveStatistics::mode(values);
+		const double varianceValue = DescriptiveStatistics::variance(values, false);
+		const double standardDeviationValue = DescriptiveStatistics::standardDeviation(values, false);
+		const double rangeValue = DescriptiveStatistics::range(values);
+		std::string result = "{\"mean\":" + formatDouble(meanValue) +
+			",\"median\":" + formatDouble(medianValue) +
+			",\"mode\":" + jsonNumbers(modeValues) +
+			",\"variance\":" + formatDouble(varianceValue) +
+			",\"standardDeviation\":" + formatDouble(standardDeviationValue) +
+			",\"range\":" + formatDouble(rangeValue);
+		if (values.size() >= 2) {
+			const auto quartileValues = DescriptiveStatistics::quartiles(values);
+			result += ",\"q1\":" + formatDouble(quartileValues.q1) +
+				",\"q2\":" + formatDouble(quartileValues.q2) +
+				",\"q3\":" + formatDouble(quartileValues.q3) +
+				",\"interquartileRange\":" + formatDouble(quartileValues.interquartileRange);
+		}
+		return result + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string combinatoricsVisualization(std::string dataset, int binCount) {
+	try {
+		using namespace aksiomat::combinatorics_probability_statistics;
+		const auto values = splitNumbers(dataset);
+		const auto bins = DataVisualization::buildFrequencyTable(values, binCount);
+		std::string binsJson = "[";
+		for (std::size_t index = 0; index < bins.size(); ++index) {
+			if (index) binsJson += ',';
+			binsJson += "{\"lowerBound\":" + formatDouble(bins[index].lowerBound) +
+				",\"upperBound\":" + formatDouble(bins[index].upperBound) +
+				",\"count\":" + std::to_string(bins[index].count) + '}';
+		}
+		binsJson += ']';
+		return "{\"bins\":" + binsJson + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
 }
 
 std::string jsonPartialSums(const std::vector<double>& values) {
@@ -1033,6 +1126,10 @@ EMSCRIPTEN_BINDINGS(aksiomat_module) {
 	emscripten::function("exponentialLogLogarithm", &exponentialLogLogarithm);
 	emscripten::function("exponentialLogEquation", &exponentialLogEquation);
 	emscripten::function("exponentialLogApplication", &exponentialLogApplication);
+	emscripten::function("combinatoricsCounting", &combinatoricsCounting);
+	emscripten::function("combinatoricsProbability", &combinatoricsProbability);
+	emscripten::function("combinatoricsStatistics", &combinatoricsStatistics);
+	emscripten::function("combinatoricsVisualization", &combinatoricsVisualization);
 	emscripten::function("algebraSimplify", &algebraSimplify);
 	emscripten::function("algebraSolveEquation", &algebraSolveEquation);
 	emscripten::function("algebraSolveInequality", &algebraSolveInequality);

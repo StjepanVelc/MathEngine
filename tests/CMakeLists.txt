@@ -48,6 +48,10 @@ add_executable(core_tests
 	test_exponential_logarithmic_exponential_functions.cpp
 	test_exponential_logarithmic_logarithms.cpp
 	test_exponential_logarithmic_equations_applications.cpp
+	test_combinatorics_probability_statistics_counting.cpp
+	test_combinatorics_probability_statistics_probability.cpp
+	test_combinatorics_probability_statistics_descriptive_statistics.cpp
+	test_combinatorics_probability_statistics_data_visualization.cpp
 )
 
 target_link_libraries(core_tests PRIVATE

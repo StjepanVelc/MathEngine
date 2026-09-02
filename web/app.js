@@ -290,6 +290,7 @@ async function init() {
     setupSequences(module);
     setupAnalyticGeometry(module);
     setupExponentialLogarithmic(module);
+    setupCombinatoricsProbabilityStatistics(module);
     setupAlgebra(module);
 }
 
