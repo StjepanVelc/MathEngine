@@ -1,7 +1,8 @@
 function setupDiscreteMath(module) {
     const toggles = [...document.querySelectorAll(".discrete-math-toggle")];
+    const visuals = window.DiscreteMathVisuals;
     const format = (value) => new Intl.NumberFormat("hr-HR", { maximumFractionDigits: 6 }).format(value);
-    toggles.forEach((button) => button.addEventListener("click", () => { const panel = document.getElementById(button.dataset.panel); const open = panel.hidden; document.querySelectorAll(".discrete-math-panel").forEach((item) => (item.hidden = true)); toggles.forEach((item) => item.classList.remove("active")); if (open) { panel.hidden = false; button.classList.add("active"); } }));
+    toggles.forEach((button) => button.addEventListener("click", () => { const panel = document.getElementById(button.dataset.panel); const open = panel.hidden; document.querySelectorAll(".discrete-math-panel").forEach((item) => (item.hidden = true)); toggles.forEach((item) => item.classList.remove("active")); if (open) { panel.hidden = false; button.classList.add("active"); visuals?.refresh?.(panel.id); } }));
 
     function text(id) { const value = document.getElementById(id).value.trim(); if (!value) throw new Error("Upiši vrijednost."); return value; }
     function integer(id) { const input = document.getElementById(id); const value = Number(input.value); if (input.value.trim() === "" || !Number.isFinite(value) || !Number.isInteger(value)) throw new Error("Upiši ispravan cijeli broj."); return value; }
@@ -18,6 +19,7 @@ function setupDiscreteMath(module) {
             if (!result) return;
             render("dm-set-result", [["Rezultat", `{${result.result.join(", ")}}`, true]]);
             steps("dm-set-steps", result.steps);
+            visuals?.setOperation("dm-set-visual", a, b, mode);
         } catch (error) { fail("dm-set-result", error); }
     }
     document.getElementById("dm-set-calculate").addEventListener("click", calculateSetOperation);
@@ -36,6 +38,7 @@ function setupDiscreteMath(module) {
                 ["Parcijalni uredaj", result.isPartialOrder ? "da" : "ne"]
             ]);
             steps("dm-relation-steps", result.steps);
+            visuals?.relationGraph("dm-relation-visual", domain, pairs);
         } catch (error) { fail("dm-relation-result", error); }
     }
     document.getElementById("dm-relation-calculate").addEventListener("click", calculateRelation);
@@ -54,6 +57,7 @@ function setupDiscreteMath(module) {
                 ["Dvodjelan", result.bipartite ? "da" : "ne"]
             ]);
             steps("dm-graph-steps", result.steps);
+            visuals?.graphDiagram("dm-graph-visual", adjacency, directed);
         } catch (error) { fail("dm-graph-result", error); }
     }
     document.getElementById("dm-graph-calculate").addEventListener("click", calculateGraph);
@@ -70,6 +74,8 @@ function setupDiscreteMath(module) {
                 ["Put", result.reachable ? `[${result.path.join(", ")}]` : "—"]
             ]);
             steps("dm-path-steps", result.steps);
+            if (result.reachable) visuals?.pathDiagram("dm-path-visual", adjacency, result.path);
+            else { const box = document.getElementById("dm-path-visual"); if (box) box.innerHTML = ""; }
         } catch (error) { fail("dm-path-result", error); }
     }
     document.getElementById("dm-path-calculate").addEventListener("click", calculateShortestPath);
@@ -103,6 +109,7 @@ function setupDiscreteMath(module) {
             if (!result) return;
             render("dm-terms-result", [["Clanovi", `[${result.terms.map(format).join(", ")}]`, true]]);
             steps("dm-terms-steps", result.steps);
+            visuals?.termsChart("dm-terms-visual", result.terms);
         } catch (error) { fail("dm-terms-result", error); }
     }
     document.getElementById("dm-terms-calculate").addEventListener("click", calculateTerms);
@@ -115,6 +122,7 @@ function setupDiscreteMath(module) {
             if (!result) return;
             render("dm-combinatorics-result", [["|A ∪ B|", result.unionSize, true]]);
             steps("dm-combinatorics-steps", result.steps);
+            visuals?.inclusionExclusion("dm-incl-visual", a, b, ab);
         } catch (error) { fail("dm-combinatorics-result", error); }
     }
     document.getElementById("dm-incl-calculate").addEventListener("click", calculateInclusionExclusion);
