@@ -464,6 +464,134 @@ Vraća normalizirani polinom, stupanj, derivaciju, nultočke, diskriminantu, vrh
 
 Vraća analizu funkcije i uzorkovane točke za Canvas graf. `sampleCount` i interval validira C++ `FunctionAnalyzer`.
 
+## Linearna algebra
+
+### `linearAlgebraSpaceVectors(ax, ay, az, bx, by, bz)`
+
+Vraća magnitudu prvog vektora, skalarni i vektorski produkt te njihovu magnitudu za dva vektora u 3D prostoru.
+
+### `linearAlgebraPlaneFromPoints(x1, y1, z1, x2, y2, z2, x3, y3, z3)`
+
+Konstruira ravninu iz tri nekolinearne točke i vraća koeficijente normale i konstantu.
+
+### `linearAlgebraLineVsPlane(x0, y0, z0, dx, dy, dz, normalX, normalY, normalZ, constant)`
+
+Određuje odnos pravca (točka + smjer) i ravnine: leži li pravac na ravnini, je li paralelan te presječnu točku ako postoji.
+
+### `linearAlgebraClassifyQuadricParaboloid(a, b, c)` i `linearAlgebraClassifyQuadricCentral(a, b, c, d)`
+
+Klasificiraju kvadriku (paraboloid odnosno centralnu kvadriku poput elipsoida ili hiperboloida) iz koeficijenata.
+
+### `linearAlgebraMatrixDeterminant(matrixText)`
+
+Računa determinantu kvadratne matrice zapisane kao redci odvojeni s `;` i elementi zarezom.
+
+### `linearAlgebraMatrixInverse(matrixText)`
+
+Vraća invertibilnost, determinantu i inverznu matricu (ako postoji).
+
+### `linearAlgebraMatrixMultiply(leftText, rightText)`
+
+Množi dvije matrice kompatibilnih dimenzija.
+
+### `linearAlgebraMatrixTransform(matrixText, vectorText)`
+
+Primjenjuje matričnu transformaciju na vektor.
+
+### `linearAlgebraEigenSymmetric2x2(a11, a12, a22)` i `linearAlgebraEigenSymmetric3x3(matrixText)`
+
+Računaju svojstvene vrijednosti i pripadne svojstvene vektore simetrične matrice.
+
+### `linearAlgebraLinearIndependence(vectorsText)` i `linearAlgebraExtractBasis(vectorsText)`
+
+Provjeravaju linearnu nezavisnost skupa vektora (uz rang) odnosno izdvajaju bazu i dimenziju razapetog prostora.
+
+## Diskretna matematika
+
+### `discreteMathSetOperation(mode, setAText, setBText)`
+
+`mode` je `union`, `intersection`, `difference` ili `symmetricDifference`. Skupovi su zapisani kao cjelobrojne vrijednosti odvojene zarezom (npr. `"1,2,3"`).
+
+### `discreteMathRelationProperties(domainText, pairsText)`
+
+`domainText` je popis elemenata domene, `pairsText` su uređeni parovi oblika `"1-2;2-3"`. Vraća refleksivnost, simetričnost, antisimetričnost, tranzitivnost te je li relacija ekvivalencija ili parcijalni uređaj.
+
+### `discreteMathGraphAnalyze(adjacencyText, directed)`
+
+Graf je zapisan kao popis susjedstva po vrhu odvojen s `;` (npr. `"1,2;0,2;0,1"`, vrhovi indeksirani od 0). Vraća stupnjeve vrhova, povezanost, Eulerovost i bipartitnost.
+
+### `discreteMathShortestPath(adjacencyText, source, target)`
+
+BFS pretragom vraća dostupnost, udaljenost i put između dva vrha.
+
+### `discreteMathSolveRecurrence(p, q, a0, a1)` i `discreteMathRecurrenceTerms(p, q, a0, a1, count)`
+
+Rješavaju linearnu rekurenciju drugog reda `a(n) = p*a(n-1) + q*a(n-2)` zatvorenom formulom odnosno generiraju prvih `count` članova.
+
+### `discreteMathInclusionExclusionTwo(a, b, ab)` i `discreteMathInclusionExclusionThree(...)`
+
+Računaju veličinu unije skupova principom uključivanja-isključivanja za dva odnosno tri skupa.
+
+### `discreteMathPigeonhole(items, holes)`
+
+Vraća minimalni broj predmeta po pretincu prema Dirichletovom principu.
+
+### `discreteMathDerangements(n)`
+
+Vraća broj derangemana (permutacija bez fiksnih točaka) skupa od `n` elemenata.
+
+## Vjerojatnost i statistika (fakultet)
+
+### `probabilityStatisticsBinomial(trials, probability, successes)`
+
+Vraća vjerojatnost točnog broja uspjeha, očekivanje i varijancu binomne distribucije.
+
+### `probabilityStatisticsPoisson(lambda, occurrences)`
+
+Vraća vjerojatnost, očekivanje i varijancu Poissonove distribucije.
+
+### `probabilityStatisticsNormal(mean, standardDeviation, value)`
+
+Vraća gustoću, kumulativnu vjerojatnost i z-vrijednost normalne distribucije u točki `value`.
+
+### `probabilityStatisticsUniform(lowerBound, upperBound, value)`
+
+Vraća gustoću, kumulativnu vjerojatnost, očekivanje i varijancu uniformne distribucije.
+
+### `probabilityStatisticsConfidenceInterval(sampleText, confidenceLevel, populationStdDev)`
+
+`sampleText` je uzorak brojeva odvojenih zarezom. Vraća uzoročku sredinu, pogrešku procjene te donju/gornju granicu intervala pouzdanosti.
+
+### `probabilityStatisticsZTest(sampleText, hypothesizedMean, populationStdDev, significanceLevel)`
+
+Provodi z-test hipoteze o sredini i vraća testnu statistiku, kritičnu vrijednost i odluku o odbacivanju nulte hipoteze.
+
+### `probabilityStatisticsRegression(xText, yText)`
+
+Računa jednostavnu linearnu regresiju nad parovima `(x, y)` i vraća nagib, odsječak, korelaciju i koeficijent determinacije.
+
+## Kompleksni brojevi
+
+### `complexNumbersOperation(mode, aReal, aImag, bReal, bImag)`
+
+`mode` je `add`, `subtract`, `multiply` ili `divide`. Računa osnovnu operaciju nad dva kompleksna broja.
+
+### `complexNumbersConjugate(real, imaginary)`
+
+Vraća konjugat kompleksnog broja.
+
+### `complexNumbersToPolarForm(real, imaginary)` i `complexNumbersToAlgebraicForm(modulus, argumentDegrees)`
+
+Pretvaraju kompleksni broj između algebarskog i trigonometrijskog (polarnog) oblika.
+
+### `complexNumbersPower(real, imaginary, exponent)` i `complexNumbersNthRoots(real, imaginary, degree)`
+
+Računaju cjelobrojnu potenciju (De Moivre) odnosno sve n-te korijene kompleksnog broja.
+
+### `complexNumbersSolveQuadratic(a, b, c)`
+
+Rješava kvadratnu jednadžbu s realnim koeficijentima; kada je diskriminanta negativna, rješenja su kompleksna.
+
 ## Greške i sigurnost ugovora
 
 Svaki adapter slijedi obrazac:

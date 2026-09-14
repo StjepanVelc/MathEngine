@@ -32,16 +32,16 @@ Ova mapa sadrži tehničku dokumentaciju aktualne implementacije MathEnginea. Do
 - `combinatorics_probability_statistics`
 - `calculus_basics`
 - `mathematical_analysis`
+- `linear_algebra`
+- `discrete_math`
+- `probability_statistics`
+- `complex_numbers`
 
-Aktivne domene imaju javna C++ zaglavlja, implementacije, CMake registraciju, testove i prema potrebi WASM adaptere.
+Aktivne domene imaju javna C++ zaglavlja, implementacije, CMake registraciju, testove i prema potrebi WASM adaptere. `linear_algebra`, `discrete_math`, `probability_statistics` i `complex_numbers` su fakultetska proširenja: imaju vlastite WASM adaptere (`linearAlgebra*`, `discreteMath*`, `probabilityStatistics*`, `complexNumbers*` u `core/src/wasm_bindings.cpp`) i frontend module (`web/analytic-algebra.js`, `web/discrete-math.js`, `web/probability-statistics.js`, `web/complex-numbers.js`).
 
 ### Planirane domene
 
-- `linear_algebra`
-- `discrete_math`
-- `complex_numbers`
-
-Planirane domene trenutačno imaju samo README ugovore u `core/include/aksiomat/` i `core/src/`. Ne ulaze u build dok ne dobiju stvarnu implementaciju i testove. Fakultetsko proširenje matematičke analize (`mathematical_analysis`) je implementirano i aktivno, odvojeno od srednjoškolskog modula `calculus_basics`. Fakultetska proširenja vjerojatnosti/statistike ostaju u `docs/roadmap.md` kao kasnija faza istog naziva, odvojena od već implementiranog srednjoškolskog modula `combinatorics_probability_statistics`.
+Trenutačno nema domena bez implementacije. Fakultetsko proširenje matematičke analize (`mathematical_analysis`) je implementirano i aktivno, odvojeno od srednjoškolskog modula `calculus_basics`. Fakultetsko proširenje vjerojatnosti/statistike (`probability_statistics`) je implementirano i aktivno, odvojeno od već implementiranog srednjoškolskog modula `combinatorics_probability_statistics`.
 
 ## Konvencije dokumentacije
 

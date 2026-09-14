@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>O nama — MathEngine</title>
+    <title>O projektu — MathEngine</title>
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
@@ -20,21 +20,35 @@
             </div>
             <nav class="app-nav" aria-label="Glavna navigacija">
                 <a href="index.html">Početna</a>
-                <a href="about.html" class="active">O nama</a>
+                <a href="about.html" class="active">O projektu</a>
             </nav>
         </header>
 
         <section class="about-section">
-            <div class="about-card">
-                <span class="about-kicker">O nama</span>
-                <h2>Zašto MathEngine?</h2>
-                <p>MathEngine je projekt koji spaja brzinu i preciznost C++ matematičke jezgre s pristupačnošću web-aplikacije pokretane WebAssemblyjem. Cilj nam je da svatko, od učenika osnovne škole do studenta fakulteta, dobije jasne, korak-po-korak izračune i vizualna objašnjenja umjesto samo golog rezultata.</p>
-                <ul class="about-points">
-                    <li><strong>Točnost prije svega</strong> — svaki izračun dolazi iz testirane matematičke jezgre.</li>
-                    <li><strong>Objašnjenja, ne samo odgovori</strong> — svaki alat prikazuje korake rješavanja.</li>
-                    <li><strong>Otvoreni razvoj</strong> — kod je javno dostupan i stalno se nadograđuje.</li>
-                </ul>
-                <a href="https://github.com/StjepanVelc/MathEngine" class="about-link" target="_blank" rel="noopener">Pogledaj izvorni kod na GitHubu →</a>
+            <div class="about-decor" aria-hidden="true">
+                <span>∑</span>
+                <span>π</span>
+                <span>∞</span>
+                <span>√</span>
+                <span>∫</span>
+            </div>
+            <span class="about-kicker">O projektu</span>
+            <h2>Zašto MathEngine?</h2>
+            <p>MathEngine je samostalni projekt nastao s idejom da matematiku učini jasnijom, interaktivnijom i pristupačnijom — od osnovnih računskih operacija do naprednijih matematičkih tema.</p>
+            <p>U pozadini aplikacije nalazi se matematička jezgra napisana u C++-u, povezana s web-aplikacijom pomoću WebAssemblyja. Cilj je spojiti brzinu i preciznost C++-a s jednostavnošću i dostupnošću modernog web sučelja.</p>
+            <p>MathEngine nije zamišljen samo kao kalkulator koji prikazuje konačni rezultat. Ideja je prikazati postupak rješavanja, logiku iza rješenja i vizualna objašnjenja, kako bi korisnik mogao razumjeti ne samo koji je rezultat, nego i zašto je takav.</p>
+            <ul class="about-points">
+                <li><strong>Točnost prije svega</strong> — izračuni se izvršavaju kroz matematičku jezgru razvijenu u C++-u.</li>
+                <li><strong>Postupak, ne samo rezultat</strong> — alati prikazuju korake rješavanja gdje god je to moguće.</li>
+                <li><strong>Projekt koji raste</strong> — nove matematičke teme i alati dodavat će se postupno kako se MathEngine razvija.</li>
+            </ul>
+            <div class="about-actions">
+                <a href="https://github.com/StjepanVelc/MathEngine" class="about-github-button" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 16 16" class="about-github-icon" aria-hidden="true" focusable="false">
+                        <path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/>
+                    </svg>
+                    <span>Pogledaj izvorni kod na GitHubu</span>
+                </a>
                 <a href="index.html" class="hero-button hero-button-secondary about-back">← Natrag na početnu</a>
             </div>
         </section>

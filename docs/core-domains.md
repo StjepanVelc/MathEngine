@@ -358,6 +358,34 @@ Namespace `aksiomat::mathematical_analysis` proširuje `calculus_basics` formaln
 
 Budući da ne postoji opći parser izraza s više varijabli, funkcije više varijabli, redovi i diferencijalne jednadžbe koriste callback-based `std::function` sučelje umjesto parsiranja teksta; WASM adapter premošćuje to imenovanim katalogom poznatih funkcija (vidi [WebAssembly API](wasm-api.md)).
 
+## Linearna algebra (fakultet i napredno)
+
+Namespace `aksiomat::linear_algebra` nadopunjuje `analytic_geometry` fakultetskim sadržajem i razdvaja četiri odgovornosti. `SpaceVectorsPlanes` računa operacije nad vektorima u 3D prostoru i konstruira ravninu iz tri točke te odnos pravca i ravnine. `Quadrics` klasificira opće kvadrike i centralne kvadrike (paraboloide, elipsoide, hiperboloide) iz koeficijenata.
+
+`Matrices` računa determinantu, inverz, množenje matrica i primjenu matrične transformacije na vektor, uz provjeru dimenzija i regularnosti. `EigenAnalysis` računa svojstvene vrijednosti i vektore simetričnih matrica 2x2 i 3x3 zatvorenim formulama. `VectorSpaces` Gaussovom eliminacijom provjerava linearnu nezavisnost skupa vektora, računa rang i izdvaja bazu (`LinearIndependenceResult`, `RankResult`, `BasisResult`).
+
+Domena je aktivna: WASM adapteri `linearAlgebra*` nalaze se u `core/src/wasm_bindings.cpp`, a frontend modul je `web/analytic-algebra.js`.
+
+## Diskretna matematika (fakultet i napredno)
+
+Namespace `aksiomat::discrete_math` razdvaja četiri odgovornosti. `SetsRelations` računa standardne operacije nad skupovima (unija, presjek, razlika, simetrična razlika) i provjerava svojstva binarnih relacija (refleksivnost, simetričnost, tranzitivnost, antisimetričnost).
+
+`GraphTheory` prima graf kao listu susjedstva (`AdjacencyList`) i analizira stupnjeve vrhova, povezanost, Eulerovost i bipartitnost (`GraphAnalysisResult`), te BFS pretragom nalazi najkraći put između dva vrha (`ShortestPathResult`). `Recurrences` rješava linearne rekurencije drugog reda s konstantnim koeficijentima i generira članove niza.
+
+`AdvancedCombinatorics` računa princip uključivanja-isključivanja za dva i tri skupa, Dirichletov (pigeonhole) princip te broj derangemana. Domena je aktivna: WASM adapteri `discreteMath*` nalaze se u `core/src/wasm_bindings.cpp`, a frontend modul je `web/discrete-math.js`.
+
+## Vjerojatnost i statistika (fakultet i napredno)
+
+Namespace `aksiomat::probability_statistics` proširuje srednjoškolski modul `combinatorics_probability_statistics` formalnijim slučajnim varijablama i inferencijom, razdvajajući dvije odgovornosti. `Distributions` računa binomnu, Poissonovu, normalnu i uniformnu distribuciju, uključujući vjerojatnost, očekivanje, varijancu i (za normalnu) z-vrijednost i kumulativnu funkciju.
+
+`StatisticalInference` računa interval pouzdanosti za sredinu, jednostavni z-test hipoteze i jednostavnu linearnu regresiju nad parovima podataka. Domena je aktivna: WASM adapteri `probabilityStatistics*` nalaze se u `core/src/wasm_bindings.cpp`, a frontend modul je `web/probability-statistics.js`.
+
+## Kompleksni brojevi (fakultet i napredno)
+
+Namespace `aksiomat::complex_numbers` razdvaja dvije odgovornosti. `ComplexNumbers` računa osnovne operacije (zbrajanje, oduzimanje, množenje, dijeljenje), konjugaciju, pretvorbu između algebarskog i trigonometrijskog (polarnog) oblika, potenciranje (De Moivre) i n-te korijene.
+
+`ComplexApplications` rješava kvadratne jednadžbe s realnim koeficijentima i kompleksnim rješenjima kada je diskriminanta negativna. Domena je aktivna: WASM adapteri `complexNumbers*` nalaze se u `core/src/wasm_bindings.cpp`, a frontend modul je `web/complex-numbers.js`.
+
 Domene koriste standardne iznimke:
 
 - `std::invalid_argument` za neispravan matematički ili sintaksni ulaz

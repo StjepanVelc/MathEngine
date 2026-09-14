@@ -764,6 +764,7 @@ main > * {
 .app-nav {
     display: flex;
     gap: 1.5rem;
+    margin-left: auto;
 }
 
 .app-nav a {
@@ -805,16 +806,14 @@ main > * {
 
 .hero {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
+    flex-direction: column;
+    gap: 1rem;
     margin: 1.75rem 0 2rem;
-    padding: 1rem 0 2rem;
+    padding: 1rem 0 0;
 }
 
 .hero-copy {
-    flex: 1 1 22rem;
-    min-width: 0;
+    max-width: 42rem;
 }
 
 .hero-kicker {
@@ -900,9 +899,12 @@ main > * {
 
 .hero-visual {
     display: flex;
-    flex: 1 1 26rem;
     justify-content: center;
-    max-width: 40rem;
+    width: 100%;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 12%, #000 80%, transparent 100%), linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-image: linear-gradient(to bottom, transparent 0, #000 12%, #000 80%, transparent 100%), linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
+    mask-composite: intersect;
 }
 
 .hero-visual img {
@@ -913,14 +915,38 @@ main > * {
 }
 
 .about-section {
+    position: relative;
+    max-width: 46rem;
     margin: 2.5rem 0;
 }
 
-.about-card {
-    padding: clamp(1.25rem, 3vw, 2rem);
-    background: linear-gradient(145deg, #202030, #1b1c2a);
-    border: 1px solid #313244;
-    border-radius: 20px;
+.about-decor {
+    position: absolute;
+    top: 1rem;
+    left: calc(100% + 2rem);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    color: var(--fg);
+    font-size: 5rem;
+    font-weight: 700;
+    line-height: 1;
+    white-space: nowrap;
+    opacity: 0.05;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+}
+
+@media (max-width: 1100px) {
+    .about-decor {
+        display: none;
+    }
+}
+
+.about-section > *:not(.about-decor) {
+    position: relative;
+    z-index: 1;
 }
 
 .about-kicker {
@@ -936,33 +962,34 @@ main > * {
     text-transform: uppercase;
 }
 
-.about-card h2 {
-    margin: 0.2rem 0 0.75rem;
+.about-section h2 {
+    margin: 0.2rem 0 0.9rem;
     color: #fff;
 }
 
-.about-card p {
-    max-width: 46rem;
+.about-section p {
     margin: 0 0 1rem;
     color: #bac2de;
-    line-height: 1.6;
+    line-height: 1.65;
 }
 
 .about-points {
     display: grid;
     gap: 0.5rem;
-    max-width: 46rem;
     padding: 0;
-    margin: 0 0 1.25rem;
+    margin: 0.25rem 0 1.5rem;
     color: #d5dbef;
     list-style: none;
 }
 
 .about-points li {
-    padding: 0.6rem 0.8rem;
-    background: #181825aa;
-    border: 1px solid #45475a;
-    border-radius: 10px;
+    padding: 0;
+    line-height: 1.6;
+}
+
+.about-points li::before {
+    content: "— ";
+    color: var(--accent);
 }
 
 .about-link {
@@ -976,9 +1003,42 @@ main > * {
     text-decoration: underline;
 }
 
+.about-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 1.25rem;
+}
+
+.about-github-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.6rem 1.1rem;
+    color: var(--fg);
+    background: transparent;
+    border: 1px solid #45475a;
+    border-radius: 999px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform 160ms ease, border-color 160ms ease;
+}
+
+.about-github-button:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+}
+
+.about-github-icon {
+    width: 1.1rem;
+    height: 1.1rem;
+    flex: 0 0 auto;
+}
+
 .about-back {
     display: inline-flex;
-    margin-top: 1.25rem;
+    margin-top: 0;
     padding: 0.6rem 1.1rem;
 }
 
@@ -1496,8 +1556,11 @@ output.error {
     }
 
     .hero {
-        flex-direction: column-reverse;
         text-align: center;
+    }
+
+    .hero-copy {
+        max-width: none;
     }
 
     .hero-cta {
