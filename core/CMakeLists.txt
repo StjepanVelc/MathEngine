@@ -66,6 +66,8 @@ add_library(aksiomat_core STATIC
 	src/discrete_math/GraphTheory.cpp
 	src/discrete_math/Recurrences.cpp
 	src/discrete_math/AdvancedCombinatorics.cpp
+	src/probability_statistics/Distributions.cpp
+	src/probability_statistics/StatisticalInference.cpp
 	src/logic/LogicExpression.cpp
 	src/logic/LogicParser.cpp
 	src/logic/TruthTable.cpp

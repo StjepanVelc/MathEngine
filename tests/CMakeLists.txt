@@ -71,6 +71,8 @@ add_executable(core_tests
 	test_discrete_math_graph_theory.cpp
 	test_discrete_math_recurrences.cpp
 	test_discrete_math_advanced_combinatorics.cpp
+	test_probability_statistics_distributions.cpp
+	test_probability_statistics_inference.cpp
 )
 
 target_link_libraries(core_tests PRIVATE

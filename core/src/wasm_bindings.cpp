@@ -73,6 +73,8 @@
 #include "aksiomat/discrete_math/GraphTheory.hpp"
 #include "aksiomat/discrete_math/Recurrences.hpp"
 #include "aksiomat/discrete_math/AdvancedCombinatorics.hpp"
+#include "aksiomat/probability_statistics/Distributions.hpp"
+#include "aksiomat/probability_statistics/StatisticalInference.hpp"
 
 namespace {
 
@@ -1304,6 +1306,90 @@ std::string discreteMathDerangements(double n) {
 	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
 }
 
+std::string probabilityStatisticsBinomial(int trials, double probability, int successes) {
+	try {
+		using namespace aksiomat::probability_statistics;
+		const auto result = Distributions::binomial(trials, probability, successes);
+		return "{\"probability\":" + formatDouble(result.probability) +
+			",\"mean\":" + formatDouble(result.mean) +
+			",\"variance\":" + formatDouble(result.variance) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string probabilityStatisticsPoisson(double lambda, int occurrences) {
+	try {
+		using namespace aksiomat::probability_statistics;
+		const auto result = Distributions::poisson(lambda, occurrences);
+		return "{\"probability\":" + formatDouble(result.probability) +
+			",\"mean\":" + formatDouble(result.mean) +
+			",\"variance\":" + formatDouble(result.variance) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string probabilityStatisticsNormal(double mean, double standardDeviation, double value) {
+	try {
+		using namespace aksiomat::probability_statistics;
+		const auto result = Distributions::normal(mean, standardDeviation, value);
+		return "{\"density\":" + formatDouble(result.density) +
+			",\"cumulative\":" + formatDouble(result.cumulative) +
+			",\"zScore\":" + formatDouble(result.zScore) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string probabilityStatisticsUniform(double lowerBound, double upperBound, double value) {
+	try {
+		using namespace aksiomat::probability_statistics;
+		const auto result = Distributions::uniform(lowerBound, upperBound, value);
+		return "{\"density\":" + formatDouble(result.density) +
+			",\"cumulative\":" + formatDouble(result.cumulative) +
+			",\"mean\":" + formatDouble(result.mean) +
+			",\"variance\":" + formatDouble(result.variance) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string probabilityStatisticsConfidenceInterval(std::string sampleText, double confidenceLevel, double populationStdDev) {
+	try {
+		using namespace aksiomat::probability_statistics;
+		const auto sample = parseNumbers(sampleText);
+		const auto result = StatisticalInference::confidenceIntervalForMean(sample, confidenceLevel, populationStdDev);
+		return "{\"sampleMean\":" + formatDouble(result.sampleMean) +
+			",\"marginOfError\":" + formatDouble(result.marginOfError) +
+			",\"lowerBound\":" + formatDouble(result.lowerBound) +
+			",\"upperBound\":" + formatDouble(result.upperBound) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string probabilityStatisticsZTest(std::string sampleText, double hypothesizedMean, double populationStdDev, double significanceLevel) {
+	try {
+		using namespace aksiomat::probability_statistics;
+		const auto sample = parseNumbers(sampleText);
+		const auto result = StatisticalInference::zTestForMean(sample, hypothesizedMean, populationStdDev, significanceLevel);
+		return std::string("{\"testStatistic\":") + formatDouble(result.testStatistic) +
+			",\"criticalValue\":" + formatDouble(result.criticalValue) +
+			",\"rejectNull\":" + (result.rejectNull ? "true" : "false") +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string probabilityStatisticsRegression(std::string xText, std::string yText) {
+	try {
+		using namespace aksiomat::probability_statistics;
+		const auto x = parseNumbers(xText);
+		const auto y = parseNumbers(yText);
+		const auto result = StatisticalInference::simpleLinearRegression(x, y);
+		return "{\"slope\":" + formatDouble(result.slope) +
+			",\"intercept\":" + formatDouble(result.intercept) +
+			",\"correlation\":" + formatDouble(result.correlation) +
+			",\"rSquared\":" + formatDouble(result.rSquared) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
 std::string sequenceAnalyze(std::string terms) {
 	try {
 		const auto values = parseNumbers(terms);
@@ -1910,6 +1996,14 @@ EMSCRIPTEN_BINDINGS(aksiomat_module) {
 	emscripten::function("discreteMathInclusionExclusionThree", &discreteMathInclusionExclusionThree);
 	emscripten::function("discreteMathPigeonhole", &discreteMathPigeonhole);
 	emscripten::function("discreteMathDerangements", &discreteMathDerangements);
+
+	emscripten::function("probabilityStatisticsBinomial", &probabilityStatisticsBinomial);
+	emscripten::function("probabilityStatisticsPoisson", &probabilityStatisticsPoisson);
+	emscripten::function("probabilityStatisticsNormal", &probabilityStatisticsNormal);
+	emscripten::function("probabilityStatisticsUniform", &probabilityStatisticsUniform);
+	emscripten::function("probabilityStatisticsConfidenceInterval", &probabilityStatisticsConfidenceInterval);
+	emscripten::function("probabilityStatisticsZTest", &probabilityStatisticsZTest);
+	emscripten::function("probabilityStatisticsRegression", &probabilityStatisticsRegression);
 }
 
 #endif // __EMSCRIPTEN__

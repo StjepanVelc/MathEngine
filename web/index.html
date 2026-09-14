@@ -769,6 +769,22 @@
                 <div id="dm-practice" class="discrete-math-panel" hidden><div id="dm-practice-root"></div></div>
             </div>
         </section>
+
+        <!-- Poglavlje: Vjerojatnost i statistika — napredno i fakultet -->
+        <section class="chapter probability-statistics-chapter" data-levels="advanced" hidden>
+            <button class="chapter-toggle" aria-expanded="false">Vjerojatnost i statistika ▸</button>
+            <div class="chapter-body" hidden>
+                <header class="probability-statistics-hero"><div><span class="probability-statistics-kicker">Slucajne varijable</span><h2>Vjerojatnost i statistika</h2><p>Distribucije, ocekivanje i varijanca, intervali pouzdanosti, testiranje hipoteza i regresija.</p></div></header>
+                <nav class="probability-statistics-nav" aria-label="Podrucja vjerojatnosti i statistike">
+                    <button type="button" class="probability-statistics-toggle" data-panel="ps-distributions">Distribucije</button>
+                    <button type="button" class="probability-statistics-toggle" data-panel="ps-inference">Statisticko zakljucivanje</button>
+                </nav>
+
+                <div id="ps-distributions" class="probability-statistics-panel"><div class="probability-statistics-layout"><div><span class="probability-statistics-chip">B(n,p), Po(lambda)</span><h2>Binomna i Poissonova razdioba</h2><p class="tool-description">Izracunaj vjerojatnost tocno k uspjeha za binomnu razdiobu ili tocno k dogadaja za Poissonovu razdiobu, uz ocekivanje i varijancu.</p><label>Broj pokusa n<input id="ps-binomial-n" type="number" step="1" value="10"></label><label>Vjerojatnost uspjeha p<input id="ps-binomial-p" type="number" step="any" value="0.5"></label><label>Broj uspjeha k<input id="ps-binomial-k" type="number" step="1" value="5"></label><button id="ps-binomial-calculate" type="button">Izracunaj binomnu</button><div id="ps-binomial-result" class="result-grid"></div><div id="ps-binomial-steps" class="probability-statistics-steps"></div><label>Parametar lambda<input id="ps-poisson-lambda" type="number" step="any" value="4"></label><label>Broj dogadaja k<input id="ps-poisson-k" type="number" step="1" value="2"></label><button id="ps-poisson-calculate" type="button">Izracunaj Poissonovu</button><div id="ps-poisson-result" class="result-grid"></div><div id="ps-poisson-steps" class="probability-statistics-steps"></div></div><div><span class="probability-statistics-chip">N(mu,sigma), U(a,b)</span><h2>Normalna i uniformna razdioba</h2><p class="tool-description">Izracunaj gustocu i kumulativnu vjerojatnost za normalnu ili uniformnu razdiobu u zadanoj tocki.</p><label>Sredina mu<input id="ps-normal-mean" type="number" step="any" value="0"></label><label>Standardna devijacija sigma<input id="ps-normal-std" type="number" step="any" value="1"></label><label>Tocka x<input id="ps-normal-x" type="number" step="any" value="0"></label><button id="ps-normal-calculate" type="button">Izracunaj normalnu</button><div id="ps-normal-result" class="result-grid"></div><div id="ps-normal-steps" class="probability-statistics-steps"></div><div id="ps-normal-visual" class="probability-statistics-visual"></div><label>Donja granica a<input id="ps-uniform-a" type="number" step="any" value="0"></label><label>Gornja granica b<input id="ps-uniform-b" type="number" step="any" value="10"></label><label>Tocka x<input id="ps-uniform-x" type="number" step="any" value="5"></label><button id="ps-uniform-calculate" type="button">Izracunaj uniformnu</button><div id="ps-uniform-result" class="result-grid"></div><div id="ps-uniform-steps" class="probability-statistics-steps"></div></div></div></div>
+
+                <div id="ps-inference" class="probability-statistics-panel" hidden><div class="probability-statistics-layout"><div><span class="probability-statistics-chip">interval pouzdanosti, z-test</span><h2>Interval pouzdanosti i testiranje hipoteza</h2><p class="tool-description">Iz uzorka (vrijednosti odvojene zarezom) izracunaj interval pouzdanosti za sredinu i provedi z-test o hipotetskoj sredini uz poznatu standardnu devijaciju populacije.</p><label>Uzorak (odvojen zarezom)<input id="ps-sample" type="text" value="10,12,11,13,9,14,10,12"></label><label>Razina pouzdanosti<input id="ps-confidence-level" type="number" step="any" value="0.95"></label><label>Standardna devijacija populacije<input id="ps-population-std" type="number" step="any" value="2"></label><button id="ps-confidence-calculate" type="button">Izracunaj interval</button><div id="ps-confidence-result" class="result-grid"></div><div id="ps-confidence-steps" class="probability-statistics-steps"></div><label>Hipotetska sredina mu0<input id="ps-ztest-mean" type="number" step="any" value="10"></label><label>Razina znacajnosti alpha<input id="ps-ztest-alpha" type="number" step="any" value="0.05"></label><button id="ps-ztest-calculate" type="button">Provedi z-test</button><div id="ps-ztest-result" class="result-grid"></div><div id="ps-ztest-steps" class="probability-statistics-steps"></div></div><div><span class="probability-statistics-chip">y = bx + a</span><h2>Jednostavna linearna regresija</h2><p class="tool-description">Izracunaj regresijski pravac metodom najmanjih kvadrata za parove tocaka (x,y), uz koeficijent korelacije i determinacije.</p><label>Vrijednosti x (odvojene zarezom)<input id="ps-regression-x" type="text" value="1,2,3,4,5"></label><label>Vrijednosti y (odvojene zarezom)<input id="ps-regression-y" type="text" value="2,4,5,4,5"></label><button id="ps-regression-calculate" type="button">Izracunaj regresiju</button><div id="ps-regression-result" class="result-grid"></div><div id="ps-regression-steps" class="probability-statistics-steps"></div><div id="ps-regression-visual" class="probability-statistics-visual"></div></div></div></div>
+            </div>
+        </section>
     </main>
 
     <script src="aksiomat.js"></script>
@@ -804,6 +820,8 @@
     <script src="discrete-math-practice.js"></script>
     <script src="discrete-math-visuals.js"></script>
     <script src="discrete-math.js"></script>
+    <script src="probability-statistics-visuals.js"></script>
+    <script src="probability-statistics.js"></script>
     <script src="graph.js"></script>
     <script src="algebra.js"></script>
     <script src="app.js"></script>
