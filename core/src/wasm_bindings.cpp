@@ -69,6 +69,10 @@
 #include "aksiomat/linear_algebra/Matrices.hpp"
 #include "aksiomat/linear_algebra/EigenAnalysis.hpp"
 #include "aksiomat/linear_algebra/VectorSpaces.hpp"
+#include "aksiomat/discrete_math/SetsRelations.hpp"
+#include "aksiomat/discrete_math/GraphTheory.hpp"
+#include "aksiomat/discrete_math/Recurrences.hpp"
+#include "aksiomat/discrete_math/AdvancedCombinatorics.hpp"
 
 namespace {
 
@@ -1095,6 +1099,211 @@ std::string laExtractBasis(std::string vectorsText) {
 	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
 }
 
+// Skup zapisan kao "1,2,3" (prazan tekst znaci prazan skup).
+std::vector<long long> parseIntSet(const std::string& text) {
+	std::vector<long long> values;
+	if (text.empty()) return values;
+	std::size_t position = 0;
+	while (position <= text.size()) {
+		const std::size_t end = text.find(',', position);
+		const std::string token = text.substr(position, end == std::string::npos ? end : end - position);
+		if (token.empty()) throw std::invalid_argument("Skup sadrzi praznu vrijednost");
+		std::size_t parsed = 0;
+		const long long value = std::stoll(token, &parsed);
+		if (parsed != token.size()) throw std::invalid_argument("Neispravan element skupa");
+		values.push_back(value);
+		if (end == std::string::npos) break;
+		position = end + 1;
+	}
+	return values;
+}
+
+// Uredeni parovi zapisani kao "1-2;2-3" (svaki par odvojen znakom '-', parovi znakom ';').
+std::vector<std::pair<long long, long long>> parseIntPairs(const std::string& text) {
+	std::vector<std::pair<long long, long long>> pairs;
+	if (text.empty()) return pairs;
+	std::size_t position = 0;
+	while (position <= text.size()) {
+		const std::size_t end = text.find(';', position);
+		const std::string token = text.substr(position, end == std::string::npos ? end : end - position);
+		const std::size_t dash = token.find('-');
+		if (dash == std::string::npos) throw std::invalid_argument("Par mora biti u obliku x-y");
+		const long long first = std::stoll(token.substr(0, dash));
+		const long long second = std::stoll(token.substr(dash + 1));
+		pairs.emplace_back(first, second);
+		if (end == std::string::npos) break;
+		position = end + 1;
+	}
+	return pairs;
+}
+
+std::string jsonIntSet(const std::vector<long long>& values) {
+	std::string result = "[";
+	for (std::size_t i = 0; i < values.size(); ++i) {
+		if (i) result += ',';
+		result += std::to_string(values[i]);
+	}
+	return result + ']';
+}
+
+// Popis susjeda po vrhu zapisan kao "1,2;0,2;0,1" (vrhovi indeksirani od 0).
+std::vector<std::vector<int>> parseAdjacencyList(const std::string& text) {
+	std::vector<std::vector<int>> adjacency;
+	std::size_t position = 0;
+	while (position <= text.size()) {
+		const std::size_t end = text.find(';', position);
+		const std::string row = text.substr(position, end == std::string::npos ? end : end - position);
+		std::vector<int> neighbors;
+		if (!row.empty()) {
+			std::size_t rowPos = 0;
+			while (rowPos <= row.size()) {
+				const std::size_t rowEnd = row.find(',', rowPos);
+				const std::string token = row.substr(rowPos, rowEnd == std::string::npos ? rowEnd : rowEnd - rowPos);
+				if (token.empty()) throw std::invalid_argument("Popis susjeda sadrzi praznu vrijednost");
+				neighbors.push_back(std::stoi(token));
+				if (rowEnd == std::string::npos) break;
+				rowPos = rowEnd + 1;
+			}
+		}
+		adjacency.push_back(std::move(neighbors));
+		if (end == std::string::npos) break;
+		position = end + 1;
+	}
+	return adjacency;
+}
+
+std::string discreteMathSetOperation(std::string mode, std::string setAText, std::string setBText) {
+	try {
+		using namespace aksiomat::discrete_math;
+		const auto a = parseIntSet(setAText);
+		const auto b = parseIntSet(setBText);
+		SetOperationResult result = mode == "union" ? SetsRelations::unionOf(a, b)
+			: mode == "intersection" ? SetsRelations::intersectionOf(a, b)
+			: mode == "difference" ? SetsRelations::differenceOf(a, b)
+			: SetsRelations::symmetricDifferenceOf(a, b);
+		return "{\"result\":" + jsonIntSet(result.result) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string discreteMathRelationProperties(std::string domainText, std::string pairsText) {
+	try {
+		using namespace aksiomat::discrete_math;
+		const auto domain = parseIntSet(domainText);
+		const auto pairs = parseIntPairs(pairsText);
+		const auto result = SetsRelations::analyzeRelation(domain, pairs);
+		auto boolStr = [](bool value) { return value ? "true" : "false"; };
+		return std::string("{\"reflexive\":") + boolStr(result.reflexive) +
+			",\"symmetric\":" + boolStr(result.symmetric) +
+			",\"antisymmetric\":" + boolStr(result.antisymmetric) +
+			",\"transitive\":" + boolStr(result.transitive) +
+			",\"isEquivalence\":" + boolStr(result.isEquivalence) +
+			",\"isPartialOrder\":" + boolStr(result.isPartialOrder) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string discreteMathGraphAnalyze(std::string adjacencyText, bool directed) {
+	try {
+		using namespace aksiomat::discrete_math;
+		const auto adjacency = parseAdjacencyList(adjacencyText);
+		const auto result = GraphTheory::analyze(adjacency, directed);
+		std::string degreesJson = "[";
+		for (std::size_t i = 0; i < result.degrees.size(); ++i) {
+			if (i) degreesJson += ',';
+			degreesJson += std::to_string(result.degrees[i]);
+		}
+		degreesJson += ']';
+		auto boolStr = [](bool value) { return value ? "true" : "false"; };
+		return std::string("{\"degrees\":") + degreesJson +
+			",\"connected\":" + boolStr(result.connected) +
+			",\"eulerian\":" + boolStr(result.eulerian) +
+			",\"bipartite\":" + boolStr(result.bipartite) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string discreteMathShortestPath(std::string adjacencyText, int source, int target) {
+	try {
+		using namespace aksiomat::discrete_math;
+		const auto adjacency = parseAdjacencyList(adjacencyText);
+		const auto result = GraphTheory::shortestPath(adjacency, source, target);
+		std::string pathJson = "[";
+		for (std::size_t i = 0; i < result.path.size(); ++i) {
+			if (i) pathJson += ',';
+			pathJson += std::to_string(result.path[i]);
+		}
+		pathJson += ']';
+		return std::string("{\"reachable\":") + (result.reachable ? "true" : "false") +
+			",\"distance\":" + std::to_string(result.distance) +
+			",\"path\":" + pathJson +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string discreteMathSolveRecurrence(double p, double q, double a0, double a1) {
+	try {
+		using namespace aksiomat::discrete_math;
+		const auto result = Recurrences::solveLinearSecondOrder(p, q, a0, a1);
+		return "{\"root1\":" + formatDouble(result.root1) +
+			",\"root2\":" + formatDouble(result.root2) +
+			",\"coefficient1\":" + formatDouble(result.coefficient1) +
+			",\"coefficient2\":" + formatDouble(result.coefficient2) +
+			",\"repeatedRoot\":" + std::string(result.repeatedRoot ? "true" : "false") +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string discreteMathRecurrenceTerms(double p, double q, double a0, double a1, int count) {
+	try {
+		using namespace aksiomat::discrete_math;
+		const auto result = Recurrences::generateTerms(p, q, a0, a1, count);
+		return "{\"terms\":" + jsonNumbers(result.terms) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string discreteMathInclusionExclusionTwo(double sizeA, double sizeB, double sizeIntersection) {
+	try {
+		using namespace aksiomat::discrete_math;
+		const auto result = AdvancedCombinatorics::unionSizeTwoSets(
+			static_cast<long long>(sizeA), static_cast<long long>(sizeB), static_cast<long long>(sizeIntersection));
+		return "{\"unionSize\":" + std::to_string(result.unionSize) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string discreteMathInclusionExclusionThree(
+	double sizeA, double sizeB, double sizeC,
+	double sizeAB, double sizeAC, double sizeBC, double sizeABC) {
+	try {
+		using namespace aksiomat::discrete_math;
+		const auto result = AdvancedCombinatorics::unionSizeThreeSets(
+			static_cast<long long>(sizeA), static_cast<long long>(sizeB), static_cast<long long>(sizeC),
+			static_cast<long long>(sizeAB), static_cast<long long>(sizeAC), static_cast<long long>(sizeBC), static_cast<long long>(sizeABC));
+		return "{\"unionSize\":" + std::to_string(result.unionSize) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string discreteMathPigeonhole(double items, double holes) {
+	try {
+		using namespace aksiomat::discrete_math;
+		const auto result = AdvancedCombinatorics::pigeonhole(static_cast<long long>(items), static_cast<long long>(holes));
+		return "{\"minimumPerHole\":" + std::to_string(result.minimumPerHole) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string discreteMathDerangements(double n) {
+	try {
+		using namespace aksiomat::discrete_math;
+		const auto result = AdvancedCombinatorics::derangements(static_cast<long long>(n));
+		return "{\"derangements\":" + std::to_string(result.derangements) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
 std::string sequenceAnalyze(std::string terms) {
 	try {
 		const auto values = parseNumbers(terms);
@@ -1690,6 +1899,17 @@ EMSCRIPTEN_BINDINGS(aksiomat_module) {
 	emscripten::function("linearAlgebraEigenSymmetric3x3", &laEigenSymmetric3x3);
 	emscripten::function("linearAlgebraLinearIndependence", &laLinearIndependence);
 	emscripten::function("linearAlgebraExtractBasis", &laExtractBasis);
+
+	emscripten::function("discreteMathSetOperation", &discreteMathSetOperation);
+	emscripten::function("discreteMathRelationProperties", &discreteMathRelationProperties);
+	emscripten::function("discreteMathGraphAnalyze", &discreteMathGraphAnalyze);
+	emscripten::function("discreteMathShortestPath", &discreteMathShortestPath);
+	emscripten::function("discreteMathSolveRecurrence", &discreteMathSolveRecurrence);
+	emscripten::function("discreteMathRecurrenceTerms", &discreteMathRecurrenceTerms);
+	emscripten::function("discreteMathInclusionExclusionTwo", &discreteMathInclusionExclusionTwo);
+	emscripten::function("discreteMathInclusionExclusionThree", &discreteMathInclusionExclusionThree);
+	emscripten::function("discreteMathPigeonhole", &discreteMathPigeonhole);
+	emscripten::function("discreteMathDerangements", &discreteMathDerangements);
 }
 
 #endif // __EMSCRIPTEN__

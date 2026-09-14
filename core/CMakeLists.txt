@@ -62,6 +62,10 @@ add_library(aksiomat_core STATIC
 	src/linear_algebra/Matrices.cpp
 	src/linear_algebra/EigenAnalysis.cpp
 	src/linear_algebra/VectorSpaces.cpp
+	src/discrete_math/SetsRelations.cpp
+	src/discrete_math/GraphTheory.cpp
+	src/discrete_math/Recurrences.cpp
+	src/discrete_math/AdvancedCombinatorics.cpp
 	src/logic/LogicExpression.cpp
 	src/logic/LogicParser.cpp
 	src/logic/TruthTable.cpp

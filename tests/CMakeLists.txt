@@ -67,6 +67,10 @@ add_executable(core_tests
 	test_linear_algebra_matrices.cpp
 	test_linear_algebra_eigen_analysis.cpp
 	test_linear_algebra_vector_spaces.cpp
+	test_discrete_math_sets_relations.cpp
+	test_discrete_math_graph_theory.cpp
+	test_discrete_math_recurrences.cpp
+	test_discrete_math_advanced_combinatorics.cpp
 )
 
 target_link_libraries(core_tests PRIVATE
