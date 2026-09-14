@@ -219,9 +219,9 @@ Smoke test nije zamjena za GoogleTest; on provjerava granicu, ne sve algoritamsk
 
 - sintaksu svih JavaScript datoteka u `web/`
 - JSON sintaksu svih banaka zadataka (formalizacija, geometrija, trigonometrija, nizovi, analitička geometrija, eksponencijalne/logaritamske funkcije, kombinatorika/vjerojatnost/statistika, matematička analiza)
-- duple statičke HTML ID-jeve
+- duple statičke HTML ID-jeve (unutar svake od `index.html`, `osnovna-skola.html`, `srednja-skola.html`, `fakultet.html`, `about.html`)
 - Geometry DOM reference
-- elemente stvorene statički i kroz dinamički template vježbaonice
+- elemente stvorene statički na bilo kojoj HTML stranici i kroz dinamički template vježbaonice
 - 22 geometrijska zadatka te po 24 zadatka za trigonometriju, nizove, analitičku geometriju, eksponencijalne/logaritamske funkcije, kombinatoriku/vjerojatnost/statistiku i matematičku analizu
 - jedinstvenost ID-jeva u svim bankama
 
@@ -233,7 +233,7 @@ node scripts/validate_web.mjs
 
 ### Zašto uključuje JavaScript template
 
-Većina `geometry-practice-*` elemenata ne postoji u `index.html`; stvara ih `geometry-practice.js` nakon poziva `setupGeometryPractice`. Validator zato pregledava i kontrolirani dinamički markup. Provjera samo statičkog HTML-a dala bi lažno pozitivne „missing ID“ greške.
+Većina `geometry-practice-*` elemenata ne postoji ni u jednoj HTML stranici; stvara ih `geometry-practice.js` nakon poziva `setupGeometryPractice`. Validator zato pregledava i kontrolirani dinamički markup uz sve statičke stranice (`index.html`, `osnovna-skola.html`, `srednja-skola.html`, `fakultet.html`, `about.html`). Provjera samo jedne statičke stranice dala bi lažno pozitivne „missing ID“ greške jer su poglavlja sada raspoređena po različitim stranicama razina.
 
 ## Ručna web provjera
 

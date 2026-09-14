@@ -68,6 +68,8 @@ add_library(aksiomat_core STATIC
 	src/discrete_math/AdvancedCombinatorics.cpp
 	src/probability_statistics/Distributions.cpp
 	src/probability_statistics/StatisticalInference.cpp
+	src/complex_numbers/ComplexNumbers.cpp
+	src/complex_numbers/ComplexApplications.cpp
 	src/logic/LogicExpression.cpp
 	src/logic/LogicParser.cpp
 	src/logic/TruthTable.cpp

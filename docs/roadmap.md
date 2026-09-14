@@ -29,7 +29,7 @@ Ovaj odsjek ne duplicira srednjoškolske module. Proširuje istu C++ jezgru form
 | Analitička geometrija i linearna algebra | **Riješeno** | Vektori i ravnine u 3D, opći kvadrici, matrice transformacija, svojstvene vrijednosti i vektorski prostori |
 | Vjerojatnost i statistika | **Riješeno** | Slučajne varijable, distribucije, očekivanje/varijanca, intervali pouzdanosti, testiranje hipoteza i regresija |
 | Diskretna matematika | **Riješeno** | Skupovi, relacije, teorija grafova, rekurencije i napredna kombinatorika |
-| Kompleksni brojevi | **Kasnije** | Algebarski, trigonometrijski i eksponencijalni oblik te primjene u jednadžbama i geometriji |
+| Kompleksni brojevi | **Riješeno** | Algebarski, trigonometrijski i eksponencijalni oblik te primjene u jednadžbama i geometriji |
 
 ## Pravila razvoja
 

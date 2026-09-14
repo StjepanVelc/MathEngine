@@ -2,63 +2,88 @@
 
 ## Pregled
 
-Frontend je statička HTML/CSS/JavaScript aplikacija u mapi `web/`. Ne koristi framework ni bundler. Skripte se učitavaju redoslijedom iz `web/index.html`, dijele globalni Emscripten modul i svaka inicijalizira samo svoju domenu.
+Frontend je statička HTML/CSS/JavaScript aplikacija u mapi `web/`. Ne koristi framework ni bundler.
 
-## Učitavanje aplikacije
+Aplikacija je podijeljena na početnu (landing) stranicu i tri odvojene stranice po obrazovnoj razini:
 
-Relevantni redoslijed skripti:
+- `web/index.html` — samo naslovnica i izbor obrazovne razine; ne sadrži nijedno poglavlje niti WASM inicijalizaciju.
+- `web/osnovna-skola.html`, `web/srednja-skola.html`, `web/fakultet.html` — zasebne statičke stranice, svaka učitava samo skripte poglavlja relevantnih za tu razinu.
+- `web/about.html` — odvojena „O nama“ stranica.
+
+Svaka od stranica poglavlja dijeli globalni Emscripten modul preko zajedničkog bootstrapa `web/level-page.js`, a svaki domenski modul inicijalizira samo svoju domenu.
+
+## Učitavanje početne stranice (`index.html`)
+
+`index.html` učitava samo `style.css` i `app.js`. Ne učitava Emscripten loader niti ijedan domenski modul jer ne prikazuje nijedno poglavlje — samo izbor razine koji nakon klika preusmjerava na odgovarajuću stranicu (vidi [`web/app.js`](#webappjs)).
+
+## Učitavanje stranica razina (`osnovna-skola.html`, `srednja-skola.html`, `fakultet.html`)
+
+Svaka stranica razine učitava vlastiti podskup domenskih skripti (samo poglavlja relevantna za tu razinu) te uvijek završava sa `level-page.js`, koji je zajednički bootstrap. Primjer relevantnog redoslijeda (puni skup, kao na `fakultet.html`):
 
 1. `aksiomat.js` — generirani Emscripten loader
 2. `formalization.js`
 3. `predicates.js`
 4. `arithmetic.js`
-5. `geometry-visuals.js`
-6. `geometry-practice.js`
-7. `geometry.js`
-8. `trigonometry-visuals.js`, `trigonometry-practice.js`, `trigonometry.js`
-9. `sequences-visuals.js`, `sequences-practice.js`, `sequences.js`
-10. `analytic-geometry-visuals.js`, `analytic-geometry-practice.js`, `analytic-geometry.js`
-11. `exponential-logarithmic-visuals.js`, `exponential-logarithmic-practice.js`, `exponential-logarithmic.js`
-12. `combinatorics-probability-statistics-practice.js`, `combinatorics-probability-statistics.js`
-13. `calculus-basics-visuals.js`, `calculus-basics-practice.js`, `calculus-basics.js`
-14. `mathematical-analysis-visuals.js`, `mathematical-analysis-practice.js`, `mathematical-analysis.js`
-15. `graph.js`
-16. `algebra.js`
-17. `app.js`
+5. `geometry-visuals.js`, `geometry-practice.js`, `geometry.js`
+6. `trigonometry-visuals.js`, `trigonometry-practice.js`, `trigonometry.js`
+7. `sequences-visuals.js`, `sequences-practice.js`, `sequences.js`
+8. `analytic-geometry-visuals.js`, `analytic-geometry-practice.js`, `analytic-geometry.js`
+9. `exponential-logarithmic-visuals.js`, `exponential-logarithmic-practice.js`, `exponential-logarithmic.js`
+10. `combinatorics-probability-statistics-visuals.js`, `combinatorics-probability-statistics-practice.js`, `combinatorics-probability-statistics.js`
+11. `calculus-basics-visuals.js`, `calculus-basics-practice.js`, `calculus-basics.js`
+12. `mathematical-analysis-visuals.js`, `mathematical-analysis-practice.js`, `mathematical-analysis.js`
+13. `graph.js`
+14. `algebra.js`
+15. `analytic-algebra.js`, `analytic-algebra-practice.js`
+16. `discrete-math-visuals.js`, `discrete-math-practice.js`, `discrete-math.js`
+17. `probability-statistics-visuals.js`, `probability-statistics.js`
+18. `complex-numbers-visuals.js`, `complex-numbers.js`
+19. `level-page.js`
 
-Domenski moduli definiraju globalne setup funkcije prije nego što `app.js` pozove `init()`.
+Osnovna i srednja škola u svojoj HTML datoteci učitavaju samo skripte poglavlja koja su na toj razini dostupna (npr. `osnovna-skola.html` učitava samo `arithmetic.js`, geometrijske i `algebra.js` module).
+
+Domenski moduli definiraju globalne setup funkcije prije nego što `level-page.js` pozove `initLevelPage()`.
 
 ```mermaid
 sequenceDiagram
-	participant H as index.html
+	participant H as <razina>.html
 	participant E as aksiomat.js
-	participant A as app.js
+	participant A as level-page.js
 	participant W as WebAssembly
 	participant M as Domenski moduli
 
 	H->>E: učitavanje loadera
 	H->>M: registracija setup funkcija
-	H->>A: učitavanje app.js
+	H->>A: učitavanje level-page.js
 	A->>E: createAksiomatModule()
 	E->>W: instanciranje aksiomat.wasm
 	W-->>A: module
 	A->>M: setup*(module)
 ```
 
-Ako `createAksiomatModule` nije dostupan, statusni element prikazuje uputu za WASM build i ostatak aplikacije se ne inicijalizira.
+Ako `createAksiomatModule` nije dostupan, statusni element prikazuje uputu za WASM build i ostatak stranice se ne inicijalizira.
 
 ## `web/index.html`
 
-HTML definira:
+Početna (landing) stranica definira samo:
 
-- zaglavlje aplikacije
-- status učitavanja
-- odabir obrazovne razine
-- poglavlja i pod-panele
+- zaglavlje aplikacije s navigacijom (Početna / O nama)
+- hero sekciju
+- odabir obrazovne razine (`#learning-levels`, kartice razina)
+
+Ne sadrži poglavlja, obrasce, statusni element WASM-a niti ijedan Canvas/SVG spremnik — svi ti elementi premješteni su u stranice pojedinih razina.
+
+## `web/osnovna-skola.html`, `web/srednja-skola.html`, `web/fakultet.html`
+
+Svaka od ovih stranica definira:
+
+- zaglavlje s oznakom trenutačne razine i poveznicom natrag na `index.html` („Izbor škole“)
+- status učitavanja WASM modula
+- poglavlja i pod-panele relevantne za tu razinu
 - obrasce i rezultate
-- Canvas element algebarskog grafa
+- Canvas element algebarskog grafa (gdje je algebra dostupna)
 - spremnike za geometrijske SVG crteže
-- jedan korijenski spremnik za dinamičku geometrijsku vježbaonicu
+- jedan korijenski spremnik za dinamičku geometrijsku vježbaonicu (gdje je geometrija dostupna)
 
 ### Konvencija poglavlja
 
@@ -93,36 +118,51 @@ Gumb preko `data-panel` pokazuje na `id` pripadajućeg panela.
 
 ## `web/app.js`
 
-`app.js` je zajednički orkestrator.
+`app.js` upravlja isključivo izborom razine na početnoj stranici (`index.html`). Ne inicijalizira WASM niti bilo koji domenski modul.
 
 ### Obrazovne razine
 
-`learningLevels` mapira interne identifikatore:
+`learningLevels` mapira interne identifikatore na oznaku i ciljnu stranicu:
 
-- `primary` → Osnovna škola
-- `secondary` → Srednja škola
-- `advanced` → Napredno i fakultet
-
-`supportsLevel(element, level)` provjerava `data-levels`.
+- `primary` → { label: „Osnovna škola“, page: `osnovna-skola.html` }
+- `secondary` → { label: „Srednja škola“, page: `srednja-skola.html` }
+- `advanced` → { label: „Napredno i fakultet“, page: `fakultet.html` }
 
 `setupLearningLevels()`:
 
-- čita spremljenu razinu iz `localStorage`
-- prikazuje odabir ako razina nije postavljena
-- skriva nepodržana poglavlja, gumbe i panele
-- zatvara ranije otvoren sadržaj
-- sprema novi izbor
-- ažurira oznaku aktivne razine i gumb za promjenu škole
+- čita spremljenu razinu iz `localStorage` (ključ `mathengine-learning-level`) i prikazuje je kao trenutačno aktivnu karticu
+- omogućuje otvaranje/zatvaranje mreže kartica razina (`openLevelGrid()` / `closeLevelGrid()`)
+- pri klikom odabranoj karticu (`selectLevel(level)`) sprema izbor u `localStorage` i preusmjerava (`window.location.href`) na pripadajuću stranicu
+- poveznica „Početna“ u zaglavlju poziva `resetLevelSelection()`, koja briše spremljeni izbor i ponovno prikazuje odabir razina bez preusmjeravanja
 
-Ključ pohrane je `mathengine-learning-level`.
+Važno: filtriranje po razini ne mijenja C++ API niti stvara zasebne matematičke implementacije — samo bira koja statička stranica i koji podskup skripti se učitava.
 
-Važno: filtriranje ne mijenja C++ API niti stvara zasebne matematičke implementacije.
+## `web/level-page.js`
+
+`level-page.js` je zajednički bootstrap koji se učitava na dnu svake stranice razine (`osnovna-skola.html`, `srednja-skola.html`, `fakultet.html`).
+
+`supportsLevel(element, level)` provjerava `data-levels`.
+
+`applyLevelFilter(level)`:
+
+- skriva poglavlja (`.chapter`) koja ne podržavaju trenutačnu razinu
+- skriva gumbe i panele svih domenskih klasa (`.subchapter-toggle`, `.arithmetic-toggle`, `.algebra-toggle`, `.geometry-toggle`, `.trigonometry-toggle`, `.sequences-toggle`, `.analytic-geometry-toggle`, `.exponential-logarithmic-toggle`, `.calculus-basics-toggle`, `.mathematical-analysis-toggle`, `.analytic-algebra-toggle`, `.discrete-math-toggle`, `.probability-statistics-toggle`, `.complex-numbers-toggle`) koje ne podržavaju razinu i uklanja im klasu `active`
 
 ### Poglavlja i podpoglavlja
 
 `setupChapters()` kontrolira otvaranje tijela poglavlja i ažurira `aria-expanded` te znak `▸/▾`.
 
 `setupSubchapters()` osigurava da je unutar logike otvoren najviše jedan panel.
+
+### Bootstrap stranice razine
+
+`initLevelPage()`:
+
+1. čita `document.body.dataset.learningLevel` (postavljeno preko `data-learning-level` atributa na `<body>` svake stranice razine)
+2. primjenjuje `applyLevelFilter`, `setupChapters`, `setupSubchapters`
+3. provjerava Emscripten loader; ako nedostaje, statusni element prikazuje uputu za WASM build
+4. čeka `createAksiomatModule()`
+5. poziva `callIfDefined(name, module)` za setup funkciju svake domene koja može biti učitana na toj stranici (logika, predikati, formalizacija, aritmetika, geometrija, trigonometrija, nizovi, analitička geometrija, eksponencijalne/logaritamske funkcije, kombinatorika/vjerojatnost/statistika, matematička analiza, algebra, analitička algebra, diskretna matematika, vjerojatnost i statistika, kompleksni brojevi) — funkcije koje nisu učitane na toj stranici jednostavno se preskaču
 
 Aritmetika, algebra i geometrija imaju istu logiku u vlastitim setup funkcijama jer upravljaju domenski specifičnim klasama.
 
@@ -153,16 +193,6 @@ Aritmetika, algebra i geometrija imaju istu logiku u vlastitim setup funkcijama 
 ### Palete simbola
 
 `setupPalette(palette, onInsert)` umeće simbol na trenutačnu poziciju kursora u ciljani input. Cilj se određuje atributom `data-target`. Nakon umetanja opcionalno poziva callback za ponovnu evaluaciju.
-
-### Bootstrap
-
-`init()`:
-
-1. provjerava Emscripten loader
-2. čeka `createAksiomatModule()`
-3. skriva status
-4. inicijalizira razine i navigaciju
-5. predaje isti `module` svim domenskim setup funkcijama
 
 ## `web/arithmetic.js`
 
@@ -342,6 +372,6 @@ Pri dodavanju novog UI-ja treba zadržati upravljanje tipkovnicom i ne oslanjati
 2. Prije `JSON.parse` uvijek provjeriti `GRESKA:`.
 3. Dinamički tekst postavljati kroz `textContent`; `innerHTML` koristiti samo za kontrolirane lokalne templateove.
 4. Novi panel povezati s `data-levels` filtriranjem.
-5. Novi globalni setup učitati prije `app.js` i pozvati iz `init()`.
+5. Novi globalni setup uz odgovarajuce skripte poglavlja ukljuciti u relevantnu stranicu (stranice) razine prije `level-page.js` i registrirati kroz `callIfDefined(...)` u `initLevelPage()`.
 6. Generirani `aksiomat.js` ne uređivati ručno.
 7. Pokrenuti `scripts/validate_web.mjs` nakon promjene DOM-a, skripti ili JSON banki.

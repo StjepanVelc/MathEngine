@@ -189,7 +189,7 @@ function setupDomain(module) {
 }
 ```
 
-Skriptu učitati prije `app.js`, a setup funkciju pozvati nakon nastanka WASM modula.
+Skriptu učitati u relevantnoj stranici razine (`osnovna-skola.html`, `srednja-skola.html`, `fakultet.html`) prije `level-page.js`, a setup funkciju registrirati u `callIfDefined(...)` popisu unutar `initLevelPage()` u `web/level-page.js` tako da se pozove nakon nastanka WASM modula.
 
 Obavezno:
 

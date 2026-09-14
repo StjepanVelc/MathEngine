@@ -75,6 +75,8 @@
 #include "aksiomat/discrete_math/AdvancedCombinatorics.hpp"
 #include "aksiomat/probability_statistics/Distributions.hpp"
 #include "aksiomat/probability_statistics/StatisticalInference.hpp"
+#include "aksiomat/complex_numbers/ComplexNumbers.hpp"
+#include "aksiomat/complex_numbers/ComplexApplications.hpp"
 
 namespace {
 
@@ -1390,6 +1392,90 @@ std::string probabilityStatisticsRegression(std::string xText, std::string yText
 	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
 }
 
+std::string complexNumbersOperation(std::string mode, double aReal, double aImaginary, double bReal, double bImaginary) {
+	try {
+		using namespace aksiomat::complex_numbers;
+		const ComplexValue a{aReal, aImaginary};
+		const ComplexValue b{bReal, bImaginary};
+		ComplexOperationResult result;
+		if (mode == "add") result = ComplexNumbers::add(a, b);
+		else if (mode == "subtract") result = ComplexNumbers::subtract(a, b);
+		else if (mode == "multiply") result = ComplexNumbers::multiply(a, b);
+		else if (mode == "divide") result = ComplexNumbers::divide(a, b);
+		else throw std::invalid_argument("Nepoznata operacija.");
+		return "{\"real\":" + formatDouble(result.result.real) +
+			",\"imaginary\":" + formatDouble(result.result.imaginary) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string complexNumbersConjugate(double real, double imaginary) {
+	try {
+		using namespace aksiomat::complex_numbers;
+		const auto result = ComplexNumbers::conjugate({real, imaginary});
+		return "{\"real\":" + formatDouble(result.result.real) +
+			",\"imaginary\":" + formatDouble(result.result.imaginary) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string complexNumbersToPolarForm(double real, double imaginary) {
+	try {
+		using namespace aksiomat::complex_numbers;
+		const auto result = ComplexNumbers::toPolarForm({real, imaginary});
+		return "{\"modulus\":" + formatDouble(result.modulus) +
+			",\"argument\":" + formatDouble(result.argument) +
+			",\"argumentDegrees\":" + formatDouble(result.argumentDegrees) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string complexNumbersToAlgebraicForm(double modulus, double argumentDegrees) {
+	try {
+		using namespace aksiomat::complex_numbers;
+		const auto result = ComplexNumbers::toAlgebraicForm(modulus, argumentDegrees);
+		return "{\"real\":" + formatDouble(result.real) +
+			",\"imaginary\":" + formatDouble(result.imaginary) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string complexNumbersPower(double real, double imaginary, int exponent) {
+	try {
+		using namespace aksiomat::complex_numbers;
+		const auto result = ComplexApplications::power({real, imaginary}, exponent);
+		return "{\"real\":" + formatDouble(result.result.real) +
+			",\"imaginary\":" + formatDouble(result.result.imaginary) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string complexNumbersNthRoots(double real, double imaginary, int degree) {
+	try {
+		using namespace aksiomat::complex_numbers;
+		const auto result = ComplexApplications::nthRoots({real, imaginary}, degree);
+		std::string rootsJson = "[";
+		for (std::size_t i = 0; i < result.roots.size(); ++i) {
+			if (i > 0) rootsJson += ",";
+			rootsJson += "{\"real\":" + formatDouble(result.roots[i].real) + ",\"imaginary\":" + formatDouble(result.roots[i].imaginary) + "}";
+		}
+		rootsJson += "]";
+		return "{\"roots\":" + rootsJson + ",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string complexNumbersSolveQuadratic(double a, double b, double c) {
+	try {
+		using namespace aksiomat::complex_numbers;
+		const auto result = ComplexApplications::solveQuadraticEquation(a, b, c);
+		return "{\"root1Real\":" + formatDouble(result.root1.real) +
+			",\"root1Imaginary\":" + formatDouble(result.root1.imaginary) +
+			",\"root2Real\":" + formatDouble(result.root2.real) +
+			",\"root2Imaginary\":" + formatDouble(result.root2.imaginary) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
 std::string sequenceAnalyze(std::string terms) {
 	try {
 		const auto values = parseNumbers(terms);
@@ -2004,6 +2090,13 @@ EMSCRIPTEN_BINDINGS(aksiomat_module) {
 	emscripten::function("probabilityStatisticsConfidenceInterval", &probabilityStatisticsConfidenceInterval);
 	emscripten::function("probabilityStatisticsZTest", &probabilityStatisticsZTest);
 	emscripten::function("probabilityStatisticsRegression", &probabilityStatisticsRegression);
+	emscripten::function("complexNumbersOperation", &complexNumbersOperation);
+	emscripten::function("complexNumbersConjugate", &complexNumbersConjugate);
+	emscripten::function("complexNumbersToPolarForm", &complexNumbersToPolarForm);
+	emscripten::function("complexNumbersToAlgebraicForm", &complexNumbersToAlgebraicForm);
+	emscripten::function("complexNumbersPower", &complexNumbersPower);
+	emscripten::function("complexNumbersNthRoots", &complexNumbersNthRoots);
+	emscripten::function("complexNumbersSolveQuadratic", &complexNumbersSolveQuadratic);
 }
 
 #endif // __EMSCRIPTEN__

@@ -1,0 +1,512 @@
+﻿<!DOCTYPE html>
+<html lang="hr">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Srednja škola — MathEngine</title>
+	<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+	<link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
+	<link rel="stylesheet" href="style.css">
+</head>
+<body data-learning-level="secondary">
+	<main>
+		<header class="app-header">
+			<div class="app-brand">
+				<img src="icons/mathengine-logo.png" alt="MathEngine logo" class="app-logo">
+				<h1>MathEngine</h1>
+			</div>
+			<nav class="app-nav" aria-label="Glavna navigacija">
+				<a href="index.html">Početna</a>
+				<a href="about.html">O nama</a>
+			</nav>
+			<div class="app-header-actions">
+				<p class="current-learning-level">Razina: Srednja škola</p>
+				<a href="index.html" class="change-level-button">Izbor škole</a>
+			</div>
+		</header>
+
+		<section id="status">
+			<p>Učitavam WASM modul…</p>
+		</section>
+
+        <section class="chapter" data-levels="secondary advanced" hidden>
+            <button class="chapter-toggle" aria-expanded="false">Logika ▸</button>
+            <div class="chapter-body" hidden>
+                <div class="subchapter-nav">
+                    <button type="button" class="subchapter-toggle" data-panel="panel-propositional" data-levels="secondary advanced">Iskazna logika</button>
+                    <button type="button" class="subchapter-toggle" data-panel="panel-predicate" data-levels="advanced">Predikatna logika</button>
+                    <button type="button" class="subchapter-toggle" data-panel="panel-formalization" data-levels="secondary advanced">Formalizacija rečenica</button>
+                </div>
+
+                <!-- Podpoglavlje: Iskazna logika -->
+                <div id="panel-propositional" class="subchapter-panel" data-levels="secondary advanced" hidden>
+                    <h2>Iskazna logika</h2>
+                    <p class="tool-description">Provjerava strukturu i istinitost logičkih formula te izrađuje tablicu istinitosti i normalne forme.</p>
+                    <p>Podržani operatori: ¬ (negacija), ∧ (konjunkcija), ∨ (disjunkcija), → (implikacija), ↔ (ekvivalencija), zagrade i varijable.<br>
+                       Možeš tipkati i ASCII: <code>! &amp; | -&gt; &lt;-&gt;</code></p>
+                    <div class="symbol-palette" data-target="logic-input">
+                        <button type="button" data-symbol="¬">¬</button>
+                        <button type="button" data-symbol="∧">∧</button>
+                        <button type="button" data-symbol="∨">∨</button>
+                        <button type="button" data-symbol="→">→</button>
+                        <button type="button" data-symbol="↔">↔</button>
+                        <button type="button" data-symbol="(">(</button>
+                        <button type="button" data-symbol=")">)</button>
+                    </div>
+                    <input type="text" id="logic-input" class="formula-input" placeholder="npr. (p ∧ ¬q) → r" autocomplete="off">
+                    <p id="logic-parsed" class="parsed"></p>
+                    <div id="logic-vars"></div>
+                    <p>Rezultat: <output id="logic-result">—</output></p>
+                    <div id="logic-classification" class="analysis-box"></div>
+                    <details id="normal-forms-box" class="analysis-box" hidden>
+                        <summary>Normalne forme</summary>
+                        <dl>
+                            <dt>NNF</dt><dd id="logic-nnf"></dd>
+                            <dt>Transformirani CNF</dt><dd id="logic-cnf"></dd>
+                            <dt>Kanonski CNF</dt><dd id="logic-canonical-cnf"></dd>
+                            <dt>Transformirani DNF</dt><dd id="logic-dnf"></dd>
+                            <dt>Kanonski DNF</dt><dd id="logic-canonical-dnf"></dd>
+                        </dl>
+                    </details>
+                    <button type="button" id="truth-table-btn">Tablica istinitosti</button>
+                    <div id="truth-table-box"></div>
+                </div>
+
+                <!-- Podpoglavlje: Predikatna logika -->
+                <div id="panel-predicate" class="subchapter-panel" data-levels="advanced" hidden>
+                    <h2>Predikatna logika</h2>
+                    <p class="tool-description">Evaluira predikate i kvantifikatore nad konačnom domenom koju sam zadaješ.</p>
+                    <p>Kvantifikatori: ∀ (za svaki), ∃ (postoji); predikati kao <code>P(x)</code>, <code>Manji(x, y)</code>; veznici kao u iskaznoj logici.<br>
+                       Jednakost: <code>x = y</code>; nejednakost: <code>x ≠ y</code> ili <code>x != y</code>.<br>
+                       ASCII: <code>forall x</code>, <code>exists x</code></p>
+                    <div class="symbol-palette" data-target="pred-input">
+                        <button type="button" data-symbol="∀">∀</button>
+                        <button type="button" data-symbol="∃">∃</button>
+                        <button type="button" data-symbol="¬">¬</button>
+                        <button type="button" data-symbol="∧">∧</button>
+                        <button type="button" data-symbol="∨">∨</button>
+                        <button type="button" data-symbol="→">→</button>
+                        <button type="button" data-symbol="↔">↔</button>
+                        <button type="button" data-symbol="=">=</button>
+                        <button type="button" data-symbol="≠">≠</button>
+                        <button type="button" data-symbol="(">(</button>
+                        <button type="button" data-symbol=")">)</button>
+                    </div>
+                    <input type="text" id="pred-input" class="formula-input" placeholder="npr. ∀x ∃y Manji(x, y)" autocomplete="off">
+                    <p id="pred-parsed" class="parsed"></p>
+                    <p id="pred-highlighted" class="predicate-highlight" aria-label="Označene varijable"></p>
+                    <h3>Interpretacija (konačna domena)</h3>
+                    <label>Domena (elementi odvojeni zarezom):<br>
+                        <input type="text" id="pred-domain" class="formula-input" placeholder="npr. 1,2,3" autocomplete="off">
+                    </label>
+                    <p id="pred-free-vars" class="parsed"></p>
+                    <p id="pred-bound-vars" class="parsed"></p>
+                    <div id="pred-interpretation" class="parsed"></div>
+                    <button type="button" id="pred-eval">Evaluiraj</button>
+                    <p>Rezultat: <output id="pred-result">—</output></p>
+                </div>
+
+                <!-- Podpoglavlje: Formalizacija rečenica -->
+                <div id="panel-formalization" class="subchapter-panel" data-levels="secondary advanced" hidden>
+                    <h2>Formalizacija rečenica</h2>
+                    <p class="tool-description">Vježba prevođenje rečenica iz svakodnevnog jezika u precizne logičke formule.</p>
+                    <p>Prevedi rečenicu na jezik logike. Prihvaća se svaka logički ekvivalentna formula.</p>
+                    <div class="difficulty-nav">
+                        <button type="button" class="difficulty-btn" data-difficulty="pocetna">Početna</button>
+                        <button type="button" class="difficulty-btn" data-difficulty="srednja">Srednja</button>
+                        <button type="button" class="difficulty-btn" data-difficulty="napredna">Napredna</button>
+                    </div>
+                    <p id="form-progress" class="progress"></p>
+                    <div class="form-actions">
+                        <button type="button" id="form-reset-current">Resetiraj odabranu težinu</button>
+                        <button type="button" id="form-reset-all">Resetiraj sve</button>
+                    </div>
+                    <div id="form-exercise" hidden>
+                        <p id="form-sentence" class="sentence"></p>
+                        <p id="form-legend" class="legend"></p>
+                        <div class="symbol-palette" data-target="form-input">
+                            <button type="button" data-symbol="¬">¬</button>
+                            <button type="button" data-symbol="∧">∧</button>
+                            <button type="button" data-symbol="∨">∨</button>
+                            <button type="button" data-symbol="→">→</button>
+                            <button type="button" data-symbol="↔">↔</button>
+                            <button type="button" data-symbol="(">(</button>
+                            <button type="button" data-symbol=")">)</button>
+                        </div>
+                        <input type="text" id="form-input" class="formula-input" placeholder="upiši formulu…" autocomplete="off">
+                        <div class="form-actions">
+                            <button type="button" id="form-check">Provjeri</button>
+                            <button type="button" id="form-next">Sljedeći zadatak</button>
+                        </div>
+                        <p id="form-feedback" class="parsed"></p>
+                        <p id="form-explanation" class="explanation" hidden></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="chapter trigonometry-chapter" data-levels="secondary" hidden>
+            <button class="chapter-toggle" aria-expanded="false">Trigonometrija ▸</button>
+            <div class="chapter-body" hidden>
+                <div class="trigonometry-hero">
+                    <div>
+                        <span class="trigonometry-kicker">Kut postaje koordinata, omjer i val</span>
+                        <h2>Trigonometrijski laboratorij</h2>
+                        <p>Pomakni kut i promatraj kako se ista ideja pojavljuje na kružnici, u trokutu i na grafu.</p>
+                    </div>
+                    <div class="trigonometry-hero-wave" aria-hidden="true"><span></span><span></span><span></span></div>
+                </div>
+                <div class="trigonometry-nav">
+                    <button type="button" class="trigonometry-toggle" data-panel="trigonometry-circle" data-levels="secondary">Jedinična kružnica</button>
+                    <button type="button" class="trigonometry-toggle" data-panel="trigonometry-functions" data-levels="secondary">Sin, cos i tan</button>
+                    <button type="button" class="trigonometry-toggle" data-panel="trigonometry-right-triangle" data-levels="secondary">Pravokutni trokut</button>
+                    <button type="button" class="trigonometry-toggle" data-panel="trigonometry-general-triangle" data-levels="secondary">Opći trokut</button>
+                    <button type="button" class="trigonometry-toggle" data-panel="trigonometry-identities" data-levels="secondary">Identiteti i jednadžbe</button>
+                    <button type="button" class="trigonometry-toggle trigonometry-practice-toggle" data-panel="trigonometry-practice" data-levels="secondary">Vježbaonica</button>
+                </div>
+
+                <div id="trigonometry-circle" class="trigonometry-panel" data-levels="secondary" hidden>
+                    <div class="trigonometry-tool-layout"><div>
+                        <span class="trigonometry-chip">Početna ideja</span><h2>Jedinična kružnica</h2>
+                        <p class="tool-description">Točka na kružnici ima koordinate <strong>(cos α, sin α)</strong>. Zato sinus i kosinus nisu nasumične formule.</p>
+                        <label>Kutna jedinica<select id="trigonometry-angle-unit"><option value="degrees">Stupnjevi</option><option value="radians">Radijani</option></select></label>
+                        <label>Kut α<input id="trigonometry-angle" type="range" min="-360" max="720" step="1" value="30"><output id="trigonometry-angle-value">30°</output></label>
+                        <input id="trigonometry-angle-number" type="number" step="any" value="30" aria-label="Brojčana vrijednost kuta">
+                        <button type="button" id="trigonometry-angle-analyze">Analiziraj kut</button>
+                        <div id="trigonometry-angle-result" class="result-grid"></div>
+                    </div><div id="trigonometry-circle-visual" class="trigonometry-visual" aria-label="Interaktivna jedinična kružnica"></div></div>
+                </div>
+
+                <div id="trigonometry-functions" class="trigonometry-panel" data-levels="secondary" hidden>
+                    <div class="trigonometry-tool-layout"><div>
+                        <span class="trigonometry-chip">Tri pogleda na kut</span><h2>Sinus, kosinus i tangens</h2>
+                        <p class="tool-description">Izračunaj vrijednost ili pronađi glavni kut inverznom funkcijom. Karakteristični kutovi prikazuju se i u točnom obliku.</p>
+                        <div class="trigonometry-form-grid">
+                            <label>Funkcija<select id="trigonometry-function"><option value="sin">sin</option><option value="cos">cos</option><option value="tan">tan</option></select></label>
+                            <label>Način<select id="trigonometry-function-mode"><option value="direct">Vrijednost iz kuta</option><option value="inverse">Kut iz vrijednosti</option></select></label>
+                            <label>Jedinica rezultata/kuta<select id="trigonometry-function-unit"><option value="degrees">Stupnjevi</option><option value="radians">Radijani</option></select></label>
+                            <label>Vrijednost<input id="trigonometry-function-input" type="number" step="any" value="30"></label>
+                        </div>
+                        <aside class="formula-card"><strong>Na kružnici</strong><code>cos α = x, sin α = y</code><code>tan α = sin α / cos α</code><span>Tangens nije definiran kada je cos α = 0.</span></aside>
+                        <button type="button" id="trigonometry-function-calculate">Izračunaj i prikaži</button>
+                        <div id="trigonometry-function-result" class="result-grid"></div>
+                    </div><div><div id="trigonometry-wave-visual" class="trigonometry-visual" aria-label="Povezani graf trigonometrijske funkcije"></div><div class="trigonometry-special-angles"><strong>Karakteristični kutovi</strong><span>0°</span><span>30°</span><span>45°</span><span>60°</span><span>90°</span><small>Točne vrijednosti dolaze iz kružnice i posebnih trokuta 30°–60°–90° i 45°–45°–90°.</small></div></div></div>
+                </div>
+
+                <div id="trigonometry-right-triangle" class="trigonometry-panel" data-levels="secondary" hidden>
+                    <div class="trigonometry-tool-layout"><div>
+                        <span class="trigonometry-chip">Omjeri stranica</span><h2>Riješi pravokutni trokut</h2>
+                        <p class="tool-description">Odaberi poznate podatke. Kalkulator pronalazi sve stranice i kutove te pokazuje koji omjer koristi.</p>
+                        <label>Poznati podaci<select id="trigonometry-right-mode"><option value="legs">Obje katete</option><option value="legHypotenuse">Kateta i hipotenuza</option><option value="sideAngle">Stranica i oštri kut</option></select></label>
+                        <div id="trigonometry-right-inputs" class="trigonometry-form-grid"></div>
+                        <button type="button" id="trigonometry-right-calculate">Riješi trokut korak po korak</button>
+                        <div id="trigonometry-right-result" class="result-grid"></div>
+                        <div id="trigonometry-right-steps" class="trigonometry-steps"></div>
+                    </div><div id="trigonometry-right-visual" class="trigonometry-visual" aria-label="Pravokutni trokut s označenim stranicama i kutom"></div></div>
+                </div>
+
+                <div id="trigonometry-general-triangle" class="trigonometry-panel" data-levels="secondary" hidden>
+                    <div class="trigonometry-tool-layout"><div>
+                        <span class="trigonometry-chip">Kad nema pravog kuta</span><h2>Sinusni i kosinusni poučak</h2>
+                        <p class="tool-description">Riješi jednoznačne SSS, SAS i ASA/AAS slučajeve. Dvosmisleni SSA slučaj namjerno nije skriven iza kalkulatora.</p>
+                        <label>Poznati podaci<select id="trigonometry-general-mode"><option value="sss">Tri stranice (SSS)</option><option value="sas">Dvije stranice i kut između njih (SAS)</option><option value="aas">Stranica i dva kuta (ASA/AAS)</option></select></label>
+                        <div id="trigonometry-general-inputs" class="trigonometry-form-grid"></div>
+                        <button type="button" id="trigonometry-general-calculate">Riješi opći trokut</button>
+                        <div id="trigonometry-general-result" class="result-grid"></div>
+                        <div id="trigonometry-general-steps" class="trigonometry-steps"></div>
+                    </div><div id="trigonometry-general-visual" class="trigonometry-visual" aria-label="Opći trokut s označenim stranicama i kutovima"></div></div>
+                </div>
+
+                <div id="trigonometry-identities" class="trigonometry-panel" data-levels="secondary" hidden>
+                    <div class="trigonometry-tool-layout"><div>
+                        <span class="trigonometry-chip">Jednakosti koje uvijek vrijede</span><h2>Identiteti i jednadžbe</h2>
+                        <div class="trigonometry-mode-switch"><button type="button" id="trigonometry-show-identity" class="active">Provjeri identitet</button><button type="button" id="trigonometry-show-equation">Riješi jednadžbu</button></div>
+                        <div id="trigonometry-identity-form">
+                            <label>Identitet<select id="trigonometry-identity"><option value="pythagorean">sin²x + cos²x = 1</option><option value="tangentRatio">tan x = sin x / cos x</option><option value="doubleSine">sin 2x = 2 sin x cos x</option><option value="doubleCosine">cos 2x = cos²x − sin²x</option></select></label>
+                            <label>Kut x<input id="trigonometry-identity-angle" type="number" step="any" value="37"></label>
+                            <button type="button" id="trigonometry-identity-check">Provjeri obje strane</button>
+                        </div>
+                        <div id="trigonometry-equation-form" hidden>
+                            <div class="trigonometry-form-grid"><label>Funkcija<select id="trigonometry-equation-function"><option value="sin">sin x</option><option value="cos">cos x</option><option value="tan">tan x</option></select></label><label>Jednako<input id="trigonometry-equation-value" type="number" step="any" value="0.5"></label><label>Od<input id="trigonometry-equation-min" type="number" step="any" value="0"></label><label>Do<input id="trigonometry-equation-max" type="number" step="any" value="360"></label></div>
+                            <button type="button" id="trigonometry-equation-solve">Pronađi sva rješenja</button>
+                        </div>
+                        <div id="trigonometry-identity-result" class="result-grid"></div>
+                    </div><div id="trigonometry-identity-visual" class="trigonometry-visual" aria-label="Vizualno objašnjenje identiteta ili rješenja jednadžbe"></div></div>
+                </div>
+
+                <div id="trigonometry-practice" class="trigonometry-panel" data-levels="secondary" hidden>
+                    <div id="trigonometry-practice-root"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="chapter sequences-chapter" data-levels="secondary" hidden>
+            <button class="chapter-toggle" aria-expanded="false">Nizovi i redovi ▸</button>
+            <div class="chapter-body" hidden>
+                <header class="sequences-hero">
+                    <div><span class="sequences-kicker">Od uzorka do formule</span><h2>Laboratorij nizova i redova</h2><p>Promatraj članove kao diskretne točke, otkrij pravilo promjene i prati kako se zbrajanjem gradi red.</p></div>
+                    <div class="sequences-hero-points" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+                </header>
+                <nav class="sequences-nav" aria-label="Područja nizova i redova">
+                    <button type="button" class="sequences-toggle" data-panel="sequences-introduction">Uvod u nizove</button>
+                    <button type="button" class="sequences-toggle" data-panel="sequences-arithmetic">Aritmetički niz</button>
+                    <button type="button" class="sequences-toggle" data-panel="sequences-geometric">Geometrijski niz</button>
+                    <button type="button" class="sequences-toggle" data-panel="sequences-recurrences">Rekurzije i Fibonacci</button>
+                    <button type="button" class="sequences-toggle" data-panel="sequences-applications">Primjene</button>
+                    <button type="button" class="sequences-toggle sequences-practice-toggle" data-panel="sequences-practice">Vježbaonica</button>
+                </nav>
+
+                <div id="sequences-introduction" class="sequences-panel" hidden>
+                    <div class="sequences-tool-layout"><div><span class="sequences-chip">Član + indeks</span><h2>Kako čitamo niz?</h2><p class="tool-description">Upiši konačan dio niza. Svaki član aₙ dobiva indeks n, a razlike otkrivaju raste li, pada ili mijenja smjer.</p>
+                        <label>Članovi odvojeni zarezom<input id="sequences-intro-terms" value="2, 5, 8, 11, 14"></label>
+                        <button type="button" id="sequences-intro-analyze">Analiziraj niz</button><div id="sequences-intro-result" class="result-grid"></div><div id="sequences-intro-table" class="sequences-table-shell"></div>
+                    </div><div id="sequences-intro-visual" class="sequences-visual" aria-label="Diskretni graf članova niza"></div></div>
+                </div>
+
+                <div id="sequences-arithmetic" class="sequences-panel" hidden>
+                    <div class="sequences-tool-layout"><div><span class="sequences-chip">Stalna razlika</span><h2>Aritmetički niz</h2><p class="tool-description">Svaki sljedeći član nastaje dodavanjem iste diferencije d.</p>
+                        <aside class="sequences-formula"><code>aₙ = a₁ + (n − 1)d</code><code>Sₙ = n(a₁ + aₙ) / 2</code></aside>
+                        <div class="sequences-form-grid"><label>Prvi član a₁<input id="sequences-arithmetic-first" type="number" step="any" value="3"></label><label>Diferencija d<input id="sequences-arithmetic-difference" type="number" step="any" value="4"></label><label>Broj članova n<input id="sequences-arithmetic-count" type="number" min="1" max="100" value="8"></label><label>Traženi član<input id="sequences-arithmetic-search" type="number" step="any" value="23"></label></div>
+                        <button type="button" id="sequences-arithmetic-calculate">Izračunaj i prikaži</button><div id="sequences-arithmetic-result" class="result-grid"></div><div id="sequences-arithmetic-steps" class="sequences-steps"></div>
+                    </div><div id="sequences-arithmetic-visual" class="sequences-visual" aria-label="Graf aritmetičkog niza i parcijalnih suma"></div></div>
+                </div>
+
+                <div id="sequences-geometric" class="sequences-panel" hidden>
+                    <div class="sequences-tool-layout"><div><span class="sequences-chip">Stalni kvocijent</span><h2>Geometrijski niz i red</h2><p class="tool-description">Svaki član nastaje množenjem s q. Beskonačni red ima sumu samo kada je |q| &lt; 1.</p>
+                        <aside class="sequences-formula"><code>aₙ = a₁qⁿ⁻¹</code><code>S∞ = a₁ / (1 − q), |q| &lt; 1</code></aside>
+                        <div class="sequences-form-grid"><label>Prvi član a₁<input id="sequences-geometric-first" type="number" step="any" value="8"></label><label>Kvocijent q<input id="sequences-geometric-ratio" type="number" step="any" value="0.5"></label><label>Broj članova n<input id="sequences-geometric-count" type="number" min="1" max="100" value="8"></label><label>Traženi član<input id="sequences-geometric-search" type="number" step="any" value="1"></label></div>
+                        <button type="button" id="sequences-geometric-calculate">Istraži niz i red</button><div id="sequences-geometric-result" class="result-grid"></div><div id="sequences-geometric-steps" class="sequences-steps"></div>
+                    </div><div id="sequences-geometric-visual" class="sequences-visual" aria-label="Graf geometrijskog niza i konvergencije reda"></div></div>
+                </div>
+
+                <div id="sequences-recurrences" class="sequences-panel" hidden>
+                    <div class="sequences-tool-layout"><div><span class="sequences-chip">Sljedeći iz prethodnih</span><h2>Rekurzivni nizovi</h2><p class="tool-description">U rekurzivnom zapisu novi član računa se iz već poznatih članova. Fibonacci zbraja prethodna dva.</p>
+                        <label>Vrsta rekurzije<select id="sequences-recurrence-type"><option value="fibonacci">Fibonacci: aₙ = aₙ₋₁ + aₙ₋₂</option><option value="arithmetic">Aritmetička: aₙ = aₙ₋₁ + d</option><option value="geometric">Geometrijska: aₙ = q · aₙ₋₁</option></select></label>
+                        <div class="sequences-form-grid"><label id="sequences-recurrence-first-label">Prvi član<input id="sequences-recurrence-first" type="number" step="any" value="1"></label><label id="sequences-recurrence-second-label">Drugi član<input id="sequences-recurrence-second" type="number" step="any" value="1"></label><label>Broj članova<input id="sequences-recurrence-count" type="number" min="1" max="50" value="10"></label></div>
+                        <button type="button" id="sequences-recurrence-calculate">Razvij rekurziju</button><div id="sequences-recurrence-result" class="result-grid"></div><div id="sequences-recurrence-steps" class="sequences-steps"></div>
+                    </div><div id="sequences-recurrence-visual" class="sequences-visual" aria-label="Vizualni prikaz rekurzije i Fibonacci niza"></div></div>
+                </div>
+
+                <div id="sequences-applications" class="sequences-panel" hidden>
+                    <div class="sequences-tool-layout"><div><span class="sequences-chip">Matematika kroz vrijeme</span><h2>Kamate, rast i amortizacija</h2><p class="tool-description">Ista ideja ponavljane promjene opisuje štednju, populaciju, pad vrijednosti i otplatu kredita.</p>
+                        <label>Model<select id="sequences-application-type"><option value="simpleInterest">Jednostavna kamata</option><option value="compoundInterest">Složena kamata</option><option value="population">Rast populacije</option><option value="percentage">Ponavljana postotna promjena</option><option value="amortization">Amortizacija zajma</option></select></label>
+                        <div class="sequences-form-grid"><label id="sequences-application-principal-label">Početna vrijednost<input id="sequences-application-principal" type="number" step="any" value="1000"></label><label>Godišnja/promjena stopa (%)<input id="sequences-application-rate" type="number" step="any" value="5"></label><label>Godine / razdoblja<input id="sequences-application-periods" type="number" min="1" max="100" value="5"></label><label id="sequences-application-frequency-label">Obračuna godišnje<input id="sequences-application-frequency" type="number" min="1" max="365" value="12"></label></div>
+                        <button type="button" id="sequences-application-calculate">Izračunaj razvoj</button><div id="sequences-application-result" class="result-grid"></div><div id="sequences-application-steps" class="sequences-steps"></div>
+                    </div><div id="sequences-application-visual" class="sequences-visual" aria-label="Graf financijskog ili populacijskog razvoja"></div></div>
+                </div>
+
+                <div id="sequences-practice" class="sequences-panel" hidden><div id="sequences-practice-root"></div></div>
+            </div>
+        </section>
+
+        <section class="chapter analytic-geometry-chapter" data-levels="secondary" hidden>
+            <button class="chapter-toggle" aria-expanded="false">Analitička geometrija ▸</button>
+            <div class="chapter-body" hidden>
+                <header class="analytic-geometry-hero"><div><span class="analytic-geometry-kicker">Algebra susreće geometriju</span><h2>Koordinatni laboratorij</h2><p>Svaka jednadžba postaje crtež, a svaka geometrijska veza dobiva brojčani dokaz.</p></div><div class="analytic-geometry-hero-grid" aria-hidden="true"><span></span><i></i><b></b></div></header>
+                <nav class="analytic-geometry-nav" aria-label="Područja analitičke geometrije">
+                    <button type="button" class="analytic-geometry-toggle" data-panel="analytic-vectors">Točke i vektori</button>
+                    <button type="button" class="analytic-geometry-toggle" data-panel="analytic-lines">Pravci i udaljenosti</button>
+                    <button type="button" class="analytic-geometry-toggle" data-panel="analytic-circle">Kružnica</button>
+                    <button type="button" class="analytic-geometry-toggle" data-panel="analytic-conics">Konike</button>
+                    <button type="button" class="analytic-geometry-toggle analytic-geometry-practice-toggle" data-panel="analytic-practice">Vježbaonica</button>
+                </nav>
+
+                <div id="analytic-vectors" class="analytic-geometry-panel" hidden><div class="analytic-geometry-layout"><div><span class="analytic-geometry-chip">Smjer + duljina</span><h2>Točke i vektori</h2><p class="tool-description">Vektori opisuju pomak. Skalarni produkt otkriva kut, a determinanta orijentaciju i površinu.</p><div class="analytic-geometry-form-grid"><label>uₓ<input id="analytic-vector-ax" type="number" step="any" value="3"></label><label>uᵧ<input id="analytic-vector-ay" type="number" step="any" value="4"></label><label>vₓ<input id="analytic-vector-bx" type="number" step="any" value="-2"></label><label>vᵧ<input id="analytic-vector-by" type="number" step="any" value="1"></label></div><aside class="analytic-geometry-formula"><code>u · v = |u||v| cos φ</code><code>det(u,v) = uₓvᵧ − uᵧvₓ</code></aside><button id="analytic-vector-calculate" type="button">Analiziraj vektore</button><div id="analytic-vector-result" class="result-grid"></div><div id="analytic-vector-steps" class="analytic-geometry-steps"></div></div><div id="analytic-vector-visual" class="analytic-geometry-visual" aria-label="Vektori u koordinatnom sustavu"></div></div></div>
+
+                <div id="analytic-lines" class="analytic-geometry-panel" hidden><div class="analytic-geometry-layout"><div><span class="analytic-geometry-chip">Ax + By + C = 0</span><h2>Pravci i udaljenosti</h2><p class="tool-description">Svaki pravac zadajemo dvjema točkama. Presjek, kut i udaljenost tada slijede iz koeficijenata općeg oblika.</p><div class="analytic-geometry-form-grid"><label>Aₓ<input id="analytic-line-x1" type="number" step="any" value="-4"></label><label>Aᵧ<input id="analytic-line-y1" type="number" step="any" value="-2"></label><label>Bₓ<input id="analytic-line-x2" type="number" step="any" value="4"></label><label>Bᵧ<input id="analytic-line-y2" type="number" step="any" value="4"></label><label>Cₓ<input id="analytic-line-x3" type="number" step="any" value="-4"></label><label>Cᵧ<input id="analytic-line-y3" type="number" step="any" value="4"></label><label>Dₓ<input id="analytic-line-x4" type="number" step="any" value="4"></label><label>Dᵧ<input id="analytic-line-y4" type="number" step="any" value="-2"></label><label>Pₓ<input id="analytic-line-px" type="number" step="any" value="0"></label><label>Pᵧ<input id="analytic-line-py" type="number" step="any" value="5"></label></div><button id="analytic-line-calculate" type="button">Usporedi pravce</button><div id="analytic-line-result" class="result-grid"></div><div id="analytic-line-steps" class="analytic-geometry-steps"></div></div><div id="analytic-line-visual" class="analytic-geometry-visual" aria-label="Pravci, presjek i udaljenost točke"></div></div></div>
+
+                <div id="analytic-circle" class="analytic-geometry-panel" hidden><div class="analytic-geometry-layout"><div><span class="analytic-geometry-chip">Središte + polumjer</span><h2>Kružnica</h2><p class="tool-description">Istraži standardni oblik, pretvori opću jednadžbu ili pronađi jedinu kružnicu kroz tri nekolinearne točke.</p><label>Način zadavanja<select id="analytic-circle-mode"><option value="centerRadius">Središte i polumjer</option><option value="general">Opća jednadžba x²+y²+Dx+Ey+F=0</option><option value="threePoints">Tri točke</option></select></label><div id="analytic-circle-fields" class="analytic-geometry-form-grid"></div><div class="analytic-geometry-form-grid"><label>Testna točka Pₓ<input id="analytic-circle-px" type="number" step="any" value="3"></label><label>Testna točka Pᵧ<input id="analytic-circle-py" type="number" step="any" value="4"></label></div><button id="analytic-circle-calculate" type="button">Analiziraj kružnicu</button><div id="analytic-circle-result" class="result-grid"></div><div id="analytic-circle-steps" class="analytic-geometry-steps"></div></div><div id="analytic-circle-visual" class="analytic-geometry-visual" aria-label="Kružnica sa središtem i testnom točkom"></div></div></div>
+
+                <div id="analytic-conics" class="analytic-geometry-panel" hidden><div class="analytic-geometry-layout"><div><span class="analytic-geometry-chip">Presjek stošca</span><h2>Parabola, elipsa i hiperbola</h2><p class="tool-description">Promijeni parametre i usporedi fokus, direktrisu i ekscentricitet triju osnovnih konika.</p><label>Konika<select id="analytic-conic-type"><option value="parabola">Parabola</option><option value="ellipse">Elipsa</option><option value="hyperbola">Hiperbola</option></select></label><div class="analytic-geometry-form-grid"><label>Središte/vrh h<input id="analytic-conic-x" type="number" step="any" value="0"></label><label>Središte/vrh k<input id="analytic-conic-y" type="number" step="any" value="0"></label><label id="analytic-conic-first-label">Parametar p<input id="analytic-conic-first" type="number" step="any" value="2"></label><label id="analytic-conic-second-label">Druga poluos<input id="analytic-conic-second" type="number" step="any" value="3"></label></div><label>Glavna os / otvaranje<select id="analytic-conic-horizontal"><option value="false">Okomito</option><option value="true">Vodoravno</option></select></label><aside id="analytic-conic-formula" class="analytic-geometry-formula"></aside><button id="analytic-conic-calculate" type="button">Nacrtaj i analiziraj</button><div id="analytic-conic-result" class="result-grid"></div><div id="analytic-conic-steps" class="analytic-geometry-steps"></div></div><div id="analytic-conic-visual" class="analytic-geometry-visual" aria-label="Odabrana konika s fokusima"></div></div></div>
+
+                <div id="analytic-practice" class="analytic-geometry-panel" hidden><div id="analytic-geometry-practice-root"></div></div>
+            </div>
+        </section>
+
+        <section class="chapter exponential-logarithmic-chapter" data-levels="secondary" hidden>
+            <button class="chapter-toggle" aria-expanded="false">Eksponencijalne i logaritamske funkcije ▸</button>
+            <div class="chapter-body" hidden>
+                <header class="exponential-logarithmic-hero"><div><span class="exponential-logarithmic-kicker">Rast, pad i skale</span><h2>Eksponenti i logaritmi</h2><p>Od potencija i korijena do jednadžbi, grafova i stvarnih primjena poput pH i Richterove skale.</p></div></header>
+                <nav class="exponential-logarithmic-nav" aria-label="Područja eksponencijalnih i logaritamskih funkcija">
+                    <button type="button" class="exponential-logarithmic-toggle" data-panel="explog-powers">Potencije i korijeni</button>
+                    <button type="button" class="exponential-logarithmic-toggle" data-panel="explog-exp">Eksponencijalna funkcija</button>
+                    <button type="button" class="exponential-logarithmic-toggle" data-panel="explog-log">Logaritamska funkcija</button>
+                    <button type="button" class="exponential-logarithmic-toggle" data-panel="explog-equations">Jednadžbe</button>
+                    <button type="button" class="exponential-logarithmic-toggle" data-panel="explog-applications">Primjene</button>
+                    <button type="button" class="exponential-logarithmic-toggle exponential-logarithmic-practice-toggle" data-panel="explog-practice">Vježbaonica</button>
+                </nav>
+
+                <div id="explog-powers" class="exponential-logarithmic-panel" hidden><div class="exponential-logarithmic-layout"><div><span class="exponential-logarithmic-chip">aⁿ i ⁿ√a</span><h2>Potencije i korijeni</h2><p class="tool-description">Izračunaj potenciju ili korijen i provjeri kada rezultat postoji u skupu realnih brojeva.</p><label>Način<select id="explog-powers-mode"><option value="power">Potencija</option><option value="root">Korijen</option></select></label><div id="explog-powers-fields" class="exponential-logarithmic-form-grid"></div><button id="explog-powers-calculate" type="button">Izračunaj</button><div id="explog-powers-result" class="result-grid"></div><div id="explog-powers-steps" class="exponential-logarithmic-steps"></div></div></div></div>
+
+                <div id="explog-exp" class="exponential-logarithmic-panel" hidden><div class="exponential-logarithmic-layout"><div><span class="exponential-logarithmic-chip">f(x) = a·bˣ</span><h2>Eksponencijalna funkcija</h2><p class="tool-description">Promijeni bazu i početnu vrijednost te promatraj rast ili pad funkcije.</p><div class="exponential-logarithmic-form-grid"><label>Početna vrijednost a<input id="explog-exp-initial" type="number" step="any" value="1"></label><label>Baza b<input id="explog-exp-base" type="number" step="any" value="2"></label><label>x min<input id="explog-exp-xmin" type="number" step="any" value="-4"></label><label>x max<input id="explog-exp-xmax" type="number" step="any" value="4"></label></div><button id="explog-exp-calculate" type="button">Nacrtaj graf</button><div id="explog-exp-result" class="result-grid"></div><div id="explog-exp-steps" class="exponential-logarithmic-steps"></div></div><div id="explog-exp-visual" class="exponential-logarithmic-visual" aria-label="Graf eksponencijalne funkcije"></div></div></div>
+
+                <div id="explog-log" class="exponential-logarithmic-panel" hidden><div class="exponential-logarithmic-layout"><div><span class="exponential-logarithmic-chip">f(x) = log_b(x)</span><h2>Logaritamska funkcija</h2><p class="tool-description">Logaritamska funkcija definirana je samo za pozitivne vrijednosti x.</p><div class="exponential-logarithmic-form-grid"><label>Baza b<input id="explog-log-base" type="number" step="any" value="2"></label><label>x min<input id="explog-log-xmin" type="number" step="any" value="0.25"></label><label>x max<input id="explog-log-xmax" type="number" step="any" value="16"></label></div><button id="explog-log-calculate" type="button">Nacrtaj graf</button><div id="explog-log-result" class="result-grid"></div><div id="explog-log-steps" class="exponential-logarithmic-steps"></div></div><div id="explog-log-visual" class="exponential-logarithmic-visual" aria-label="Graf logaritamske funkcije"></div></div></div>
+
+                <div id="explog-equations" class="exponential-logarithmic-panel" hidden><div class="exponential-logarithmic-layout"><div><span class="exponential-logarithmic-chip">Riješi po x</span><h2>Eksponencijalne i logaritamske jednadžbe</h2><p class="tool-description">Riješi jednadžbu oblika bazaˣ·koeficijent=cilj ili koeficijent·log_baza(x)=cilj.</p><label>Vrsta jednadžbe<select id="explog-equation-kind"><option value="exponential">Eksponencijalna</option><option value="logarithmic">Logaritamska</option></select></label><div class="exponential-logarithmic-form-grid"><label>Baza<input id="explog-equation-base" type="number" step="any" value="2"></label><label>Koeficijent<input id="explog-equation-coefficient" type="number" step="any" value="1"></label><label>Cilj<input id="explog-equation-target" type="number" step="any" value="8"></label></div><button id="explog-equation-calculate" type="button">Riješi jednadžbu</button><div id="explog-equation-result" class="result-grid"></div><div id="explog-equation-steps" class="exponential-logarithmic-steps"></div></div></div></div>
+
+                <div id="explog-applications" class="exponential-logarithmic-panel" hidden><div class="exponential-logarithmic-layout"><div><span class="exponential-logarithmic-chip">Iz stvarnog svijeta</span><h2>Primjene</h2><p class="tool-description">Radioaktivni raspad, pH ljestvica, Richterova skala i decibeli — sve su to eksponencijalni i logaritamski modeli.</p><label>Primjena<select id="explog-application-kind"><option value="radioactiveDecay">Radioaktivni raspad</option><option value="phLevel">pH vrijednost</option><option value="richterMagnitude">Richterova magnituda</option><option value="soundIntensityDecibels">Razina zvuka (dB)</option></select></label><div id="explog-application-fields" class="exponential-logarithmic-form-grid"></div><button id="explog-application-calculate" type="button">Izračunaj</button><div id="explog-application-result" class="result-grid"></div></div></div></div>
+
+                <div id="explog-practice" class="exponential-logarithmic-panel" hidden><div id="explog-practice-root"></div></div>
+            </div>
+        </section>
+
+        <section class="chapter" data-levels="primary secondary" hidden>
+            <button class="chapter-toggle" aria-expanded="false">Algebra ▸</button>
+            <div class="chapter-body">
+                <div class="algebra-nav">
+                    <button type="button" class="algebra-toggle" data-panel="algebra-expressions" data-levels="primary secondary">Izrazi</button>
+                    <button type="button" class="algebra-toggle" data-panel="algebra-equations" data-levels="primary secondary">Jednadžbe</button>
+                    <button type="button" class="algebra-toggle" data-panel="algebra-inequalities" data-levels="primary secondary">Nejednadžbe</button>
+                    <button type="button" class="algebra-toggle" data-panel="algebra-systems" data-levels="secondary">Sustavi</button>
+                    <button type="button" class="algebra-toggle" data-panel="algebra-polynomials" data-levels="secondary">Polinomi</button>
+                    <button type="button" class="algebra-toggle" data-panel="algebra-functions" data-levels="secondary">Funkcije i grafovi</button>
+                </div>
+
+                <div id="algebra-expressions" class="algebra-panel" data-levels="primary secondary" hidden>
+                    <h2>Sređivanje izraza</h2>
+                    <p class="tool-description">Spaja istovrsne članove i uklanja suvišne operacije kako bi izraz bio kraći i pregledniji.</p>
+                    <aside class="formula-card"><strong>Pravilo</strong><code>ax + bx = (a + b)x</code><span>Podržani su brojevi, varijabla x, zagrade, potencije i implicitno množenje poput 2x.</span></aside>
+                    <input id="algebra-expression-input" class="formula-input" value="2x + 3x - x + 5 - 2">
+                    <button id="algebra-simplify">Pojednostavi</button>
+                    <div id="algebra-expression-result" class="analysis-box"></div>
+                </div>
+
+                <div id="algebra-equations" class="algebra-panel" data-levels="primary secondary" hidden>
+                    <h2>Linearne jednadžbe</h2>
+                    <p class="tool-description">Rješava linearnu jednadžbu s jednom nepoznanicom i prikazuje svaki korak postupka.</p>
+                    <aside class="formula-card"><strong>Opći oblik</strong><code>ax + b = c  ⇒  x = (c − b) / a</code><span>Ista operacija mora se napraviti na obje strane jednadžbe.</span></aside>
+                    <input id="algebra-equation-input" class="formula-input" value="3(x - 1) = x + 5">
+                    <button id="algebra-equation-solve">Riješi korak po korak</button>
+                    <div id="algebra-equation-result" class="analysis-box"></div>
+                </div>
+
+                <div id="algebra-inequalities" class="algebra-panel" data-levels="primary secondary" hidden>
+                    <h2>Linearne nejednadžbe</h2>
+                    <p class="tool-description">Rješava linearnu nejednadžbu i zapisuje skup rješenja kao interval.</p>
+                    <aside class="formula-card"><strong>Važno pravilo</strong><code>−2x &lt; 6  ⇒  x &gt; −3</code><span>Pri množenju ili dijeljenju negativnim brojem znak nejednakosti se obrće.</span></aside>
+                    <input id="algebra-inequality-input" class="formula-input" value="-2x + 1 <= 5">
+                    <button id="algebra-inequality-solve">Riješi i prikaži interval</button>
+                    <div id="algebra-inequality-result" class="analysis-box"></div>
+                </div>
+
+                <div id="algebra-systems" class="algebra-panel" data-levels="secondary" hidden>
+                    <h2>Sustavi 2×2</h2>
+                    <p class="tool-description">Istodobno rješava dvije linearne jednadžbe s nepoznanicama x i y.</p>
+                    <aside class="formula-card"><strong>Cramerovo pravilo</strong><code>x = Dₓ / D,  y = Dᵧ / D</code><span>Determinanta pokazuje ima li sustav jedno, nijedno ili beskonačno mnogo rješenja.</span></aside>
+                    <input id="algebra-system-first" class="formula-input" value="x + y = 5">
+                    <input id="algebra-system-second" class="formula-input" value="2x - y = 1">
+                    <button id="algebra-system-solve">Riješi sustav</button>
+                    <div id="algebra-system-result" class="analysis-box"></div>
+                </div>
+
+                <div id="algebra-polynomials" class="algebra-panel" data-levels="secondary" hidden>
+                    <h2>Polinomi</h2>
+                    <p class="tool-description">Sređuje polinom, određuje stupanj, derivaciju i podržane realne nultočke.</p>
+                    <aside class="formula-card"><strong>Kvadratna jednadžba</strong><code>x = (−b ± √(b² − 4ac)) / 2a</code><span>Diskriminanta Δ = b² − 4ac određuje broj realnih nultočaka.</span></aside>
+                    <input id="algebra-polynomial-input" class="formula-input" value="x^2 - 5x + 6">
+                    <button id="algebra-polynomial-analyze">Analiziraj</button>
+                    <div id="algebra-polynomial-result" class="analysis-box"></div>
+                </div>
+
+                <div id="algebra-functions" class="algebra-panel" data-levels="secondary" hidden>
+                    <h2>Funkcije i živi grafovi</h2>
+                    <p class="tool-description">Vizualizira funkciju i pokazuje kako parametri mijenjaju položaj i oblik njezina grafa.</p>
+                    <aside class="formula-card"><strong>Kvadratna funkcija</strong><code>f(x) = ax² + bx + c</code><span>a mijenja otvor i širinu parabole, b položaj vrha, a c sjecište s y-osi.</span></aside>
+                    <div class="graph-expression-row">
+                        <input id="graph-expression" class="formula-input" value="a*x^2 + b*x + c" aria-label="Funkcija">
+                        <button id="graph-draw">Nacrtaj</button>
+                        <button id="graph-reset-view">Vrati pogled</button>
+                    </div>
+                    <div class="parameter-controls">
+                        <label>a <input id="graph-a" type="range" min="-5" max="5" step="0.1" value="1"><output id="graph-a-value">1</output></label>
+                        <label>b <input id="graph-b" type="range" min="-10" max="10" step="0.1" value="0"><output id="graph-b-value">0</output></label>
+                        <label>c <input id="graph-c" type="range" min="-10" max="10" step="0.1" value="0"><output id="graph-c-value">0</output></label>
+                    </div>
+                    <div id="graph-analysis" class="analysis-box"></div>
+                    <div class="graph-shell">
+                        <canvas id="algebra-graph" aria-label="Interaktivni graf funkcije"></canvas>
+                        <output id="graph-coordinates" class="graph-coordinates">x: —, y: —</output>
+                    </div>
+                    <p class="graph-help">Povuci graf za pomicanje, koristi kotačić za zumiranje i pomiči klizače za animiranu transformaciju.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="chapter combinatorics-probability-statistics-chapter" data-levels="secondary" hidden>
+            <button class="chapter-toggle" aria-expanded="false">Kombinatorika, vjerojatnost i statistika ▸</button>
+            <div class="chapter-body" hidden>
+                <header class="combinatorics-probability-statistics-hero"><div><span class="combinatorics-probability-statistics-kicker">Prebrojavanje i podaci</span><h2>Kombinatorika, vjerojatnost i statistika</h2><p>Pravila prebrojavanja, vjerojatnost, deskriptivna statistika i vizualizacija podataka na jednom mjestu.</p></div></header>
+                <nav class="combinatorics-probability-statistics-nav" aria-label="Područja kombinatorike, vjerojatnosti i statistike">
+                    <button type="button" class="combinatorics-probability-statistics-toggle" data-panel="cps-counting">Prebrojavanje</button>
+                    <button type="button" class="combinatorics-probability-statistics-toggle" data-panel="cps-probability">Vjerojatnost</button>
+                    <button type="button" class="combinatorics-probability-statistics-toggle" data-panel="cps-statistics">Statistika</button>
+                    <button type="button" class="combinatorics-probability-statistics-toggle" data-panel="cps-visualization">Vizualizacija</button>
+                    <button type="button" class="combinatorics-probability-statistics-toggle combinatorics-probability-statistics-practice-toggle" data-panel="cps-practice">Vježbaonica</button>
+                </nav>
+
+                <div id="cps-counting" class="combinatorics-probability-statistics-panel" hidden><div class="combinatorics-probability-statistics-layout"><div><span class="combinatorics-probability-statistics-chip">n!, P(n,k), C(n,k)</span><h2>Pravila prebrojavanja</h2><p class="tool-description">Odaberi vrstu prebrojavanja i izračunaj broj mogućih rasporeda ili odabira.</p><label>Način<select id="cps-counting-mode"><option value="factorial">Faktorijela</option><option value="permutations">Permutacije (bez ponavljanja)</option><option value="permutationsWithRepetition">Permutacije (s ponavljanjem)</option><option value="combinations">Kombinacije (bez ponavljanja)</option><option value="combinationsWithRepetition">Kombinacije (s ponavljanjem)</option></select></label><div id="cps-counting-fields" class="combinatorics-probability-statistics-form-grid"></div><button id="cps-counting-calculate" type="button">Izračunaj</button><div id="cps-counting-result" class="result-grid"></div><div id="cps-counting-steps" class="combinatorics-probability-statistics-steps"></div></div></div></div>
+
+                <div id="cps-probability" class="combinatorics-probability-statistics-panel" hidden><div class="combinatorics-probability-statistics-layout"><div><span class="combinatorics-probability-statistics-chip">P(A), P(A∪B), P(A|B)</span><h2>Vjerojatnost</h2><p class="tool-description">Istraži klasičnu vjerojatnost, komplement, uniju, uvjetnu vjerojatnost i nezavisne događaje.</p><label>Način<select id="cps-probability-mode"><option value="classical">Klasična vjerojatnost</option><option value="complement">Komplement</option><option value="union">Unija</option><option value="conditional">Uvjetna vjerojatnost</option><option value="independent">Nezavisni događaji</option></select></label><div id="cps-probability-fields" class="combinatorics-probability-statistics-form-grid"></div><button id="cps-probability-calculate" type="button">Izračunaj</button><div id="cps-probability-result" class="result-grid"></div><div id="cps-probability-steps" class="combinatorics-probability-statistics-steps"></div></div></div></div>
+
+                <div id="cps-statistics" class="combinatorics-probability-statistics-panel" hidden><div class="combinatorics-probability-statistics-layout"><div><span class="combinatorics-probability-statistics-chip">Sredina, medijan, mod</span><h2>Deskriptivna statistika</h2><p class="tool-description">Upiši podatke odvojene zarezima i izračunaj mjere središnje vrijednosti i raspršenosti.</p><label>Podaci<input id="cps-statistics-dataset" type="text" value="2, 4, 4, 4, 5, 5, 7, 9"></label><button id="cps-statistics-calculate" type="button">Izračunaj</button><div id="cps-statistics-result" class="result-grid"></div><div id="cps-statistics-steps" class="combinatorics-probability-statistics-steps"></div></div></div></div>
+
+                <div id="cps-visualization" class="combinatorics-probability-statistics-panel" hidden><div class="combinatorics-probability-statistics-layout"><div><span class="combinatorics-probability-statistics-chip">Histogram</span><h2>Vizualizacija podataka</h2><p class="tool-description">Podijeli podatke u razrede i prikaži frekvencije histogramom.</p><label>Podaci<input id="cps-visualization-dataset" type="text" value="2, 4, 4, 4, 5, 5, 7, 9, 12, 15, 15, 18"></label><label>Broj razreda<input id="cps-visualization-bins" type="number" step="1" value="4"></label><button id="cps-visualization-calculate" type="button">Nacrtaj histogram</button><div id="cps-visualization-result" class="result-grid"></div><div id="cps-visualization-steps" class="combinatorics-probability-statistics-steps"></div></div><div id="cps-visualization-visual" class="combinatorics-probability-statistics-visual" aria-label="Histogram frekvencija"></div></div></div>
+
+                <div id="cps-practice" class="combinatorics-probability-statistics-panel" hidden><div id="cps-practice-root"></div></div>
+            </div>
+        </section>
+
+        <section class="chapter calculus-basics-chapter" data-levels="secondary" hidden>
+            <button class="chapter-toggle" aria-expanded="false">Matematička analiza — srednjoškolske osnove ▸</button>
+            <div class="chapter-body" hidden>
+                <header class="calculus-basics-hero"><div><span class="calculus-basics-kicker">Limes, derivacija, integral</span><h2>Matematička analiza — srednjoškolske osnove</h2><p>Intuitivni limes, derivacija kao brzina promjene, primjene derivacije i određeni integral kao površina.</p></div></header>
+                <nav class="calculus-basics-nav" aria-label="Područja matematičke analize">
+                    <button type="button" class="calculus-basics-toggle" data-panel="calculus-limits">Limes</button>
+                    <button type="button" class="calculus-basics-toggle" data-panel="calculus-derivatives">Derivacija</button>
+                    <button type="button" class="calculus-basics-toggle" data-panel="calculus-applications">Primjene derivacije</button>
+                    <button type="button" class="calculus-basics-toggle" data-panel="calculus-integral">Određeni integral</button>
+                    <button type="button" class="calculus-basics-toggle calculus-basics-practice-toggle" data-panel="calculus-basics-practice">Vježbaonica</button>
+                </nav>
+
+                <div id="calculus-limits" class="calculus-basics-panel"><div class="calculus-basics-layout"><div><span class="calculus-basics-chip">lim f(x)</span><h2>Intuitivni limes</h2><p class="tool-description">Procijeni limes polinoma kada x teži zadanoj točki, numeričkim približavanjem s obje strane.</p><label>Izraz f(x)<input id="calculus-limit-expression" type="text" value="x^2+1"></label><label>Točka<input id="calculus-limit-point" type="number" step="any" value="2"></label><button id="calculus-limit-calculate" type="button">Izračunaj</button><div id="calculus-limit-result" class="result-grid"></div><div id="calculus-limit-steps" class="calculus-basics-steps"></div><div id="calculus-limit-visual" class="calculus-basics-visual"></div></div></div></div>
+
+                <div id="calculus-derivatives" class="calculus-basics-panel" hidden><div class="calculus-basics-layout"><div><span class="calculus-basics-chip">f'(x), tangenta</span><h2>Derivacija kao brzina promjene</h2><p class="tool-description">Izračunaj derivaciju polinoma, nagib tangente u točki te usporedi prosječnu i trenutnu brzinu promjene.</p><label>Izraz f(x)<input id="calculus-derivative-expression" type="text" value="x^3-2x^2+x"></label><label>Točka<input id="calculus-derivative-point" type="number" step="any" value="2"></label><button id="calculus-derivative-calculate" type="button">Izračunaj derivaciju</button><div id="calculus-derivative-result" class="result-grid"></div><div id="calculus-derivative-steps" class="calculus-basics-steps"></div><label>Izraz f(x) za brzinu promjene<input id="calculus-rate-expression" type="text" value="x^2"></label><label>Interval a<input id="calculus-rate-a" type="number" step="any" value="1"></label><label>Interval b<input id="calculus-rate-b" type="number" step="any" value="3"></label><button id="calculus-rate-calculate" type="button">Usporedi brzine promjene</button><div id="calculus-rate-result" class="result-grid"></div><div id="calculus-rate-steps" class="calculus-basics-steps"></div></div></div></div>
+
+                <div id="calculus-applications" class="calculus-basics-panel" hidden><div class="calculus-basics-layout"><div><span class="calculus-basics-chip">ekstremi, monotonost</span><h2>Primjene derivacije</h2><p class="tool-description">Analiziraj monotonost i lokalne ekstreme polinoma stupnja do 3 (izvod stupnja do 2).</p><label>Izraz f(x)<input id="calculus-applications-expression" type="text" value="x^3-3x"></label><button id="calculus-applications-calculate" type="button">Analiziraj</button><div id="calculus-applications-result" class="result-grid"></div><div id="calculus-applications-steps" class="calculus-basics-steps"></div></div></div></div>
+
+                <div id="calculus-integral" class="calculus-basics-panel" hidden><div class="calculus-basics-layout"><div><span class="calculus-basics-chip">∫ f(x) dx</span><h2>Određeni integral kao površina</h2><p class="tool-description">Izračunaj određeni integral polinoma na [a,b] pomoću antiderivacije, uz nezavisnu Simpsonovu numeričku provjeru.</p><label>Izraz f(x)<input id="calculus-integral-expression" type="text" value="x^2"></label><label>Donja granica a<input id="calculus-integral-lower" type="number" step="any" value="0"></label><label>Gornja granica b<input id="calculus-integral-upper" type="number" step="any" value="3"></label><button id="calculus-integral-calculate" type="button">Izračunaj integral</button><div id="calculus-integral-result" class="result-grid"></div><div id="calculus-integral-steps" class="calculus-basics-steps"></div></div></div></div>
+
+                <div id="calculus-basics-practice" class="calculus-basics-panel" hidden><div id="calculus-basics-practice-root"></div></div>
+            </div>
+        </section>
+	</main>
+
+    <script src="aksiomat.js"></script>
+    <script src="formalization.js"></script>
+    <script src="predicates.js"></script>
+    <script src="trigonometry-visuals.js"></script>
+    <script src="trigonometry-practice.js"></script>
+    <script src="trigonometry.js"></script>
+    <script src="sequences-visuals.js"></script>
+    <script src="sequences-practice.js"></script>
+    <script src="sequences.js"></script>
+    <script src="analytic-geometry-visuals.js"></script>
+    <script src="analytic-geometry-practice.js"></script>
+    <script src="analytic-geometry.js"></script>
+    <script src="exponential-logarithmic-visuals.js"></script>
+    <script src="exponential-logarithmic-practice.js"></script>
+    <script src="exponential-logarithmic.js"></script>
+    <script src="graph.js"></script>
+    <script src="algebra.js"></script>
+    <script src="combinatorics-probability-statistics-visuals.js"></script>
+    <script src="combinatorics-probability-statistics-practice.js"></script>
+    <script src="combinatorics-probability-statistics.js"></script>
+    <script src="calculus-basics-visuals.js"></script>
+    <script src="calculus-basics-practice.js"></script>
+    <script src="calculus-basics.js"></script>
+    <script src="level-page.js"></script>
+</body>
+</html>

@@ -73,6 +73,8 @@ add_executable(core_tests
 	test_discrete_math_advanced_combinatorics.cpp
 	test_probability_statistics_distributions.cpp
 	test_probability_statistics_inference.cpp
+	test_complex_numbers.cpp
+	test_complex_applications.cpp
 )
 
 target_link_libraries(core_tests PRIVATE

@@ -59,7 +59,10 @@ Adapter ne smije ponovno implementirati matematičku formulu.
 
 ### 3. Web frontend
 
-`web/index.html` definira statičku strukturu aplikacije. `web/app.js` inicijalizira WASM modul, obrazovne razine i domenske kontrolere. Svaka veća domena ima vlastiti JavaScript modul.
+`web/index.html` je samostalna početna (landing) stranica koja sadrži samo naslovnicu i izbor obrazovne razine; 
+`web/app.js` upravlja tim izborom i nakon odabira preusmjerava korisnika na posebnu stranicu razine (`osnovna-skola.html`, `srednja-skola.html` ili `fakultet.html`). 
+Svaka od tih stranica učitava samo skripte poglavlja koja su joj potrebna te dijeli zajednički bootstrap `web/level-page.js`, koji inicijalizira WASM modul, 
+filtrira poglavlja po razini i poziva setup funkcije dostupnih domenskih kontrolera. Svaka veća domena ima vlastiti JavaScript modul.
 
 Frontend je odgovoran za:
 
@@ -120,8 +123,13 @@ MathEngine/
 ├── tests/                       GoogleTest testovi
 ├── web/
 │   ├── data/                    JSON banke zadataka
-│   ├── index.html              aplikacijska struktura
-│   ├── app.js                  bootstrap i zajednički UI
+│   ├── index.html              početna (landing) stranica i izbor razine
+│   ├── osnovna-skola.html      stranica za osnovnu školu
+│   ├── srednja-skola.html      stranica za srednju školu
+│   ├── fakultet.html           stranica za napredno i fakultet
+│   ├── about.html              odvojena „O nama“ stranica
+│   ├── app.js                  bootstrap početne stranice (izbor razine)
+│   ├── level-page.js           zajednički bootstrap stranica razina
 │   ├── <domena>.js             domenski kontroleri
 │   ├── style.css               zajednički dizajn
 │   └── aksiomat.{js,wasm}      generirani Emscripten artefakti

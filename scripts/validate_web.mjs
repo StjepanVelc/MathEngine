@@ -15,13 +15,16 @@ for (const name of ["formalization-exercises.json", "geometry-exercises.json", "
     JSON.parse(fs.readFileSync(path.join(web, "data", name), "utf8"));
 }
 
-const html = fs.readFileSync(path.join(web, "index.html"), "utf8");
+const htmlPageNames = ["index.html", "osnovna-skola.html", "srednja-skola.html", "fakultet.html", "about.html"];
+const htmlByPage = new Map(htmlPageNames.map((name) => [name, fs.readFileSync(path.join(web, name), "utf8")]));
 const dynamicHtml = fs.readFileSync(path.join(web, "geometry-practice.js"), "utf8") + fs.readFileSync(path.join(web, "trigonometry-practice.js"), "utf8") + fs.readFileSync(path.join(web, "sequences-practice.js"), "utf8") + fs.readFileSync(path.join(web, "analytic-geometry-practice.js"), "utf8") + fs.readFileSync(path.join(web, "exponential-logarithmic-practice.js"), "utf8") + fs.readFileSync(path.join(web, "combinatorics-probability-statistics-practice.js"), "utf8") + fs.readFileSync(path.join(web, "calculus-basics-practice.js"), "utf8");
-const allMarkup = `${html}\n${dynamicHtml}`;
-const staticIds = [...html.matchAll(/\bid="([^"]+)"/g)].map((match) => match[1]);
-const duplicates = staticIds.filter((id, index) => staticIds.indexOf(id) !== index);
-if (duplicates.length) {
-    throw new Error(`Duplicate static HTML IDs: ${[...new Set(duplicates)].join(", ")}`);
+const allMarkup = `${[...htmlByPage.values()].join("\n")}\n${dynamicHtml}`;
+for (const [name, html] of htmlByPage) {
+    const staticIds = [...html.matchAll(/\bid="([^"]+)"/g)].map((match) => match[1]);
+    const duplicates = staticIds.filter((id, index) => staticIds.indexOf(id) !== index);
+    if (duplicates.length) {
+        throw new Error(`Duplicate static HTML IDs in ${name}: ${[...new Set(duplicates)].join(", ")}`);
+    }
 }
 
 const referencedIds = new Set();
@@ -106,4 +109,5 @@ for (const exercise of allCalculusExercises) {
     if (!Number.isFinite(exercise.answer) || !Number.isFinite(exercise.tolerance) || exercise.tolerance < 0) throw new Error(`Calculus Basics exercise ${exercise.id} has invalid numeric validation`);
 }
 
-console.log(`${scriptFiles.length} JavaScript files, 8 JSON banks, ${staticIds.length} static IDs, ${referencedIds.size} domain references, 22 Geometry and 24 exercises in each other secondary-school practice bank valid.`);
+const totalStaticIds = [...htmlByPage.values()].reduce((count, html) => count + [...html.matchAll(/\bid="([^"]+)"/g)].length, 0);
+console.log(`${scriptFiles.length} JavaScript files, 8 JSON banks, ${totalStaticIds} static IDs across ${htmlByPage.size} HTML pages, ${referencedIds.size} domain references, 22 Geometry and 24 exercises in each other secondary-school practice bank valid.`);
