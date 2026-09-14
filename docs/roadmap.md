@@ -38,3 +38,4 @@ Ovaj odsjek ne duplicira srednjoškolske module. Proširuje istu C++ jezgru form
 3. Web sloj određuje jezik objašnjenja, primjere, vizualizacije i razinu težine.
 4. Novi modul završava tek kada prođu native testovi, WASM smoke test i web validator.
 5. Status u ovom dokumentu ažurira se nakon završne validacije modula.
+6. Za rezultate koji se mogu smisleno i matematički ispravno prikazati (brojevni pravac, grafovi funkcija/polinoma, vektori, geometrijski oblici i sl.) dodaje se SVG vizualizacija u istom stilu kao postojeći `.number-line`/`.algebra-plot` elementi. Vizualizacija se izvodi iz podataka koje backend već vraća (koeficijenti, koordinate, korijeni), ne re-parsiranjem izvornog izraza u JS-u, kako bi ostala pouzdana. Ako backend ne vraća dovoljno podataka za pouzdan prikaz, vizualizacija se izostavlja dok se API ne proširi.

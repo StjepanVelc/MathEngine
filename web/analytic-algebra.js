@@ -10,6 +10,54 @@ function setupAnalyticAlgebra(module) {
     function steps(boxId, items) { const box = document.getElementById(boxId); box.innerHTML = ""; items.forEach((entry, index) => { const item = document.createElement("div"); item.className = "analytic-algebra-step"; const badge = document.createElement("span"); badge.textContent = index + 1; const content = document.createElement("p"); content.textContent = entry; item.append(badge, content); box.append(item); }); }
     function matrixText(matrix) { return matrix.map((row) => `[${row.map(format).join(", ")}]`).join(", "); }
 
+    function appendVectorDiagram(boxId, ax, ay, bx, by, cross) {
+        const box = document.getElementById(boxId);
+        const namespace = "http://www.w3.org/2000/svg";
+        const figure = document.createElement("figure");
+        figure.className = "algebra-plot";
+        const figcaption = document.createElement("figcaption");
+        figcaption.textContent = "Vektori a i b (projekcija na xy ravninu)";
+        const svg = document.createElementNS(namespace, "svg");
+        svg.setAttribute("viewBox", "0 0 640 320");
+        svg.setAttribute("role", "img");
+        svg.setAttribute("aria-label", figcaption.textContent);
+        const maxMagnitude = Math.max(1, Math.abs(ax), Math.abs(ay), Math.abs(bx), Math.abs(by), Math.abs(cross || 0));
+        const scale = 120 / maxMagnitude;
+        const originX = 320, originY = 160;
+        const toScreenX = (x) => originX + x * scale;
+        const toScreenY = (y) => originY - y * scale;
+        const defs = document.createElementNS(namespace, "defs");
+        const makeMarker = (id, colorClass) => {
+            const marker = document.createElementNS(namespace, "marker");
+            marker.setAttribute("id", id);
+            marker.setAttribute("markerWidth", "8");
+            marker.setAttribute("markerHeight", "8");
+            marker.setAttribute("refX", "4");
+            marker.setAttribute("refY", "4");
+            marker.setAttribute("orient", "auto");
+            const path = document.createElementNS(namespace, "path");
+            path.setAttribute("d", "M0,0 L8,4 L0,8 Z");
+            path.setAttribute("class", colorClass);
+            marker.append(path);
+            defs.append(marker);
+        };
+        makeMarker("algebra-arrow-a", "algebra-plot-point");
+        makeMarker("algebra-arrow-b", "algebra-plot-point");
+        svg.append(defs);
+        const addLine = (x1, y1, x2, y2, className) => {
+            const line = document.createElementNS(namespace, "line");
+            Object.entries({ x1, y1, x2, y2 }).forEach(([key, value]) => line.setAttribute(key, value));
+            line.setAttribute("class", className);
+            svg.append(line);
+        };
+        addLine(40, originY, 600, originY, "algebra-plot-axis");
+        addLine(originX, 20, originX, 300, "algebra-plot-axis");
+        addLine(originX, originY, toScreenX(ax), toScreenY(ay), "algebra-plot-vector-a");
+        addLine(originX, originY, toScreenX(bx), toScreenY(by), "algebra-plot-vector-b");
+        figure.append(figcaption, svg);
+        box.append(figure);
+    }
+
     // Vektori u prostoru
     function calculateSpaceVectors() {
         try {
@@ -19,7 +67,10 @@ function setupAnalyticAlgebra(module) {
             if (!result) return;
             render("aga-vectors-result", [["Vektorski produkt", `(${format(result.cross.x)}, ${format(result.cross.y)}, ${format(result.cross.z)})`, true], ["Duljina produkta", format(result.crossMagnitude)], ["Skalarni produkt", format(result.dot)]]);
             steps("aga-vectors-steps", result.steps);
-        } catch (error) { fail("aga-vectors-result", error); }
+            const visualBox = document.getElementById("aga-vectors-visual");
+            visualBox.innerHTML = "";
+            if (az === 0 && bz === 0) appendVectorDiagram("aga-vectors-visual", ax, ay, bx, by, result.cross.z);
+        } catch (error) { fail("aga-vectors-result", error); document.getElementById("aga-vectors-visual").innerHTML = ""; }
     }
     document.getElementById("aga-vectors-calculate").addEventListener("click", calculateSpaceVectors);
 

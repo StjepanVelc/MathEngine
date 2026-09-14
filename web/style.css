@@ -517,6 +517,79 @@
     stroke-width: 5;
 }
 
+.algebra-plot {
+    margin: 1rem 0 0;
+    padding: 0.8rem;
+    background: #181825;
+    border: 1px solid #45475a;
+    border-radius: 8px;
+}
+
+.algebra-plot figcaption {
+    margin-bottom: 0.4rem;
+    color: #a6adc8;
+    font-weight: 600;
+}
+
+.algebra-plot svg {
+    display: block;
+    width: 100%;
+    max-height: 260px;
+    overflow: visible;
+}
+
+.algebra-plot text {
+    fill: #cdd6f4;
+    font: 13px ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+
+.algebra-plot-axis {
+    stroke: #6c7086;
+    stroke-width: 2;
+}
+
+.algebra-plot-grid {
+    stroke: #313244;
+    stroke-width: 1;
+}
+
+.algebra-plot-line-a {
+    stroke: #89b4fa;
+    stroke-width: 3;
+    fill: none;
+}
+
+.algebra-plot-line-b {
+    stroke: #f38ba8;
+    stroke-width: 3;
+    fill: none;
+}
+
+.algebra-plot-point {
+    fill: #a6e3a1;
+    stroke: #11111b;
+    stroke-width: 1.5;
+}
+
+.algebra-plot-vector-a {
+    stroke: #89b4fa;
+    stroke-width: 3;
+    marker-end: url(#algebra-arrow-a);
+}
+
+.algebra-plot-vector-b {
+    stroke: #f38ba8;
+    stroke-width: 3;
+    marker-end: url(#algebra-arrow-b);
+}
+
+.algebra-plot-vector-cross {
+    stroke: #a6e3a1;
+    stroke-width: 3;
+    stroke-dasharray: 5 4;
+    marker-end: url(#algebra-arrow-cross);
+}
+
 .method-card {
     margin-top: 0.7rem;
     padding: 0.65rem 0.8rem;

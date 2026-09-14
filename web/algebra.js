@@ -65,6 +65,108 @@ function setupAlgebra(module) {
         box.append(figure);
     }
 
+    function createSvgPlot(box, caption) {
+        const figure = document.createElement("figure");
+        figure.className = "algebra-plot";
+        const figcaption = document.createElement("figcaption");
+        figcaption.textContent = caption;
+        const namespace = "http://www.w3.org/2000/svg";
+        const svg = document.createElementNS(namespace, "svg");
+        svg.setAttribute("viewBox", "0 0 640 320");
+        svg.setAttribute("role", "img");
+        svg.setAttribute("aria-label", caption);
+        figure.append(figcaption, svg);
+        box.append(figure);
+        return svg;
+    }
+
+    function appendAxes(svg, range) {
+        const namespace = "http://www.w3.org/2000/svg";
+        const [xMin, xMax] = range;
+        const toScreenX = (x) => 40 + ((x - xMin) / (xMax - xMin)) * 560;
+        const toScreenY = (y) => 280 - ((y - xMin) / (xMax - xMin)) * 240;
+        const addLine = (x1, y1, x2, y2, className) => {
+            const line = document.createElementNS(namespace, "line");
+            Object.entries({ x1, y1, x2, y2 }).forEach(([key, value]) => line.setAttribute(key, value));
+            line.setAttribute("class", className);
+            svg.append(line);
+        };
+        addLine(toScreenX(xMin), toScreenY(0), toScreenX(xMax), toScreenY(0), "algebra-plot-axis");
+        addLine(toScreenX(0), toScreenY(xMin), toScreenX(0), toScreenY(xMax), "algebra-plot-axis");
+    }
+
+    function appendPolynomialPlot(box, normalized, roots, vertex) {
+        const namespace = "http://www.w3.org/2000/svg";
+        const coefficients = parsePolynomialCoefficients(normalized);
+        if (!coefficients) return;
+        const rootValues = (roots || []).map(Number).filter(Number.isFinite);
+        const anchors = [...rootValues];
+        if (vertex) anchors.push(vertex.x);
+        const bounds = anchors.length ? [Math.min(...anchors) - 3, Math.max(...anchors) + 3] : [-10, 10];
+        const range = [Math.min(-10, bounds[0]), Math.max(10, bounds[1])];
+        const svg = createSvgPlot(box, "Graf polinoma");
+        appendAxes(svg, range);
+        const [xMin, xMax] = range;
+        const toScreenX = (x) => 40 + ((x - xMin) / (xMax - xMin)) * 560;
+        const toScreenY = (y) => 280 - ((y - xMin) / (xMax - xMin)) * 240;
+        const samples = 120;
+        const points = [];
+        for (let i = 0; i <= samples; i++) {
+            const x = xMin + ((xMax - xMin) * i) / samples;
+            const y = Math.max(xMin, Math.min(xMax, evaluatePolynomial(coefficients, x)));
+            points.push(`${toScreenX(x)},${toScreenY(y)}`);
+        }
+        const polyline = document.createElementNS(namespace, "polyline");
+        polyline.setAttribute("points", points.join(" "));
+        polyline.setAttribute("class", "algebra-plot-line-a");
+        svg.append(polyline);
+        rootValues.forEach((root) => {
+            const point = document.createElementNS(namespace, "circle");
+            point.setAttribute("cx", toScreenX(root));
+            point.setAttribute("cy", toScreenY(0));
+            point.setAttribute("r", "6");
+            point.setAttribute("class", "algebra-plot-point");
+            svg.append(point);
+        });
+        if (vertex) {
+            const point = document.createElementNS(namespace, "circle");
+            point.setAttribute("cx", toScreenX(vertex.x));
+            point.setAttribute("cy", toScreenY(vertex.y));
+            point.setAttribute("r", "6");
+            point.setAttribute("class", "algebra-plot-point");
+            svg.append(point);
+        }
+    }
+
+    function parsePolynomialCoefficients(normalized) {
+        if (!normalized) return null;
+        const terms = normalized.replace(/\s+/g, "").match(/[+-]?[^+-]+/g);
+        if (!terms) return null;
+        const coefficients = {};
+        let maxDegree = 0;
+        for (const rawTerm of terms) {
+            const match = rawTerm.match(/^([+-]?\d*\.?\d*)(x(?:\^(\d+))?)?$/);
+            if (!match) return null;
+            let [, coefficientText, hasX, exponentText] = match;
+            let degree = 0;
+            if (hasX) degree = exponentText ? parseInt(exponentText, 10) : 1;
+            let coefficient;
+            if (coefficientText === "" || coefficientText === "+") coefficient = 1;
+            else if (coefficientText === "-") coefficient = -1;
+            else coefficient = parseFloat(coefficientText);
+            if (!Number.isFinite(coefficient)) return null;
+            coefficients[degree] = (coefficients[degree] || 0) + coefficient;
+            maxDegree = Math.max(maxDegree, degree);
+        }
+        const result = [];
+        for (let degree = maxDegree; degree >= 0; degree--) result.push(coefficients[degree] || 0);
+        return result;
+    }
+
+    function evaluatePolynomial(coefficients, x) {
+        return coefficients.reduce((acc, coefficient, index) => acc + coefficient * Math.pow(x, coefficients.length - 1 - index), 0);
+    }
+
     function appendRows(box, rows) {
         const grid = document.createElement("div");
         grid.className = "result-grid";
@@ -180,6 +282,9 @@ function setupAlgebra(module) {
             ["Vrh parabole", data.vertex ? `(${data.vertex.x}, ${data.vertex.y})` : "nije primjenjivo"],
             ["Faktorizirani oblik", data.factorized ?? "nema faktorizacije nad realnim brojevima"]
         ]);
+        if (data.degree >= 1 && data.degree <= 6) {
+            appendPolynomialPlot(document.getElementById("algebra-polynomial-result"), data.normalized, data.roots, data.vertex);
+        }
     });
 
     setupAlgebraGraph(module);
