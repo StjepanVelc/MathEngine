@@ -1,0 +1,114 @@
+function setupAnalyticAlgebra(module) {
+    const toggles = [...document.querySelectorAll(".analytic-algebra-toggle")];
+    const format = (value) => new Intl.NumberFormat("hr-HR", { maximumFractionDigits: 6 }).format(value);
+    toggles.forEach((button) => button.addEventListener("click", () => { const panel = document.getElementById(button.dataset.panel); const open = panel.hidden; document.querySelectorAll(".analytic-algebra-panel").forEach((item) => (item.hidden = true)); toggles.forEach((item) => item.classList.remove("active")); if (open) { panel.hidden = false; button.classList.add("active"); } }));
+
+    function number(id) { const input = document.getElementById(id); const value = Number(input.value); if (!input || input.value.trim() === "" || !Number.isFinite(value)) throw new Error("Upiši ispravan konačan broj."); return value; }
+    function parse(result, boxId) { if (result.startsWith("GRESKA:")) { fail(boxId, result); return null; } return JSON.parse(result); }
+    function fail(boxId, error) { const box = document.getElementById(boxId); box.innerHTML = ""; box.textContent = String(error.message || error).replace(/^GRESKA:\s*/, "GRESKA: "); box.classList.add("error"); }
+    function render(boxId, rows) { const box = document.getElementById(boxId); box.innerHTML = ""; box.classList.remove("error"); rows.forEach(([label, value, primary = false]) => { const row = document.createElement("div"); row.className = `result-row${primary ? " result-primary" : ""}`; const name = document.createElement("span"); name.textContent = label; const content = document.createElement("strong"); content.textContent = value; row.append(name, content); box.append(row); }); }
+    function steps(boxId, items) { const box = document.getElementById(boxId); box.innerHTML = ""; items.forEach((entry, index) => { const item = document.createElement("div"); item.className = "analytic-algebra-step"; const badge = document.createElement("span"); badge.textContent = index + 1; const content = document.createElement("p"); content.textContent = entry; item.append(badge, content); box.append(item); }); }
+    function matrixText(matrix) { return matrix.map((row) => `[${row.map(format).join(", ")}]`).join(", "); }
+
+    // Vektori u prostoru
+    function calculateSpaceVectors() {
+        try {
+            const ax = number("aga-vectors-ax"), ay = number("aga-vectors-ay"), az = number("aga-vectors-az");
+            const bx = number("aga-vectors-bx"), by = number("aga-vectors-by"), bz = number("aga-vectors-bz");
+            const result = parse(module.linearAlgebraSpaceVectors(ax, ay, az, bx, by, bz), "aga-vectors-result");
+            if (!result) return;
+            render("aga-vectors-result", [["Vektorski produkt", `(${format(result.cross.x)}, ${format(result.cross.y)}, ${format(result.cross.z)})`, true], ["Duljina produkta", format(result.crossMagnitude)], ["Skalarni produkt", format(result.dot)]]);
+            steps("aga-vectors-steps", result.steps);
+        } catch (error) { fail("aga-vectors-result", error); }
+    }
+    document.getElementById("aga-vectors-calculate").addEventListener("click", calculateSpaceVectors);
+
+    function calculatePlaneFromPoints() {
+        try {
+            const x1 = number("aga-plane-x1"), y1 = number("aga-plane-y1"), z1 = number("aga-plane-z1");
+            const x2 = number("aga-plane-x2"), y2 = number("aga-plane-y2"), z2 = number("aga-plane-z2");
+            const x3 = number("aga-plane-x3"), y3 = number("aga-plane-y3"), z3 = number("aga-plane-z3");
+            const result = parse(module.linearAlgebraPlaneFromPoints(x1, y1, z1, x2, y2, z2, x3, y3, z3), "aga-plane-result");
+            if (!result) return;
+            render("aga-plane-result", [["Jednadžba ravnine", `${format(result.normalX)}x + ${format(result.normalY)}y + ${format(result.normalZ)}z + ${format(result.constant)} = 0`, true]]);
+            steps("aga-plane-steps", result.steps);
+        } catch (error) { fail("aga-plane-result", error); }
+    }
+    document.getElementById("aga-plane-calculate").addEventListener("click", calculatePlaneFromPoints);
+
+    // Kvadrici
+    function calculateQuadric() {
+        try {
+            const a = number("aga-quadric-a"), b = number("aga-quadric-b"), c = number("aga-quadric-c"), d = number("aga-quadric-d");
+            const result = parse(module.linearAlgebraClassifyQuadricCentral(a, b, c, d), "aga-quadric-result");
+            if (!result) return;
+            render("aga-quadric-result", [["Vrsta kvadrike", result.typeName, true]]);
+            steps("aga-quadric-steps", result.steps);
+        } catch (error) { fail("aga-quadric-result", error); }
+    }
+    document.getElementById("aga-quadric-calculate").addEventListener("click", calculateQuadric);
+
+    // Matrice
+    function calculateMatrix() {
+        try {
+            const text = document.getElementById("aga-matrix-input").value.trim();
+            if (!text) throw new Error("Upiši matricu.");
+            const determinantResult = parse(module.linearAlgebraMatrixDeterminant(text), "aga-matrix-result");
+            if (!determinantResult) return;
+            const inverseResult = parse(module.linearAlgebraMatrixInverse(text), "aga-matrix-result");
+            if (!inverseResult) return;
+            const rows = [["Determinanta", format(determinantResult.determinant), true], ["Invertibilna", inverseResult.invertible ? "da" : "ne"]];
+            if (inverseResult.invertible) rows.push(["Inverzna matrica", matrixText(inverseResult.inverse)]);
+            render("aga-matrix-result", rows);
+            steps("aga-matrix-steps", [...determinantResult.steps, ...inverseResult.steps]);
+        } catch (error) { fail("aga-matrix-result", error); }
+    }
+    document.getElementById("aga-matrix-calculate").addEventListener("click", calculateMatrix);
+
+    function calculateTransform() {
+        try {
+            const matrixInput = document.getElementById("aga-transform-matrix").value.trim();
+            const vectorInput = document.getElementById("aga-transform-vector").value.trim();
+            if (!matrixInput || !vectorInput) throw new Error("Upiši matricu i vektor.");
+            const result = parse(module.linearAlgebraMatrixTransform(matrixInput, vectorInput), "aga-transform-result");
+            if (!result) return;
+            render("aga-transform-result", [["Transformirani vektor", `[${result.transformedVector.map(format).join(", ")}]`, true]]);
+            steps("aga-transform-steps", result.steps);
+        } catch (error) { fail("aga-transform-result", error); }
+    }
+    document.getElementById("aga-transform-calculate").addEventListener("click", calculateTransform);
+
+    // Svojstvene vrijednosti
+    function calculateEigen() {
+        try {
+            const text = document.getElementById("aga-eigen-input").value.trim();
+            if (!text) throw new Error("Upiši simetricnu matricu.");
+            const rows = text.split(";").map((row) => row.split(",").map(Number));
+            const result = rows.length === 2
+                ? parse(module.linearAlgebraEigenSymmetric2x2(rows[0][0], rows[0][1], rows[1][1]), "aga-eigen-result")
+                : parse(module.linearAlgebraEigenSymmetric3x3(text), "aga-eigen-result");
+            if (!result) return;
+            const rowsOut = result.eigenPairs.map((pair, index) => [`λ${index + 1}`, `${format(pair.eigenvalue)}, vektor: [${pair.eigenvector.map(format).join(", ")}]`, index === 0]);
+            render("aga-eigen-result", rowsOut);
+            steps("aga-eigen-steps", result.steps);
+        } catch (error) { fail("aga-eigen-result", error); }
+    }
+    document.getElementById("aga-eigen-calculate").addEventListener("click", calculateEigen);
+
+    // Vektorski prostori
+    function calculateVectorSpace() {
+        try {
+            const text = document.getElementById("aga-vectorspace-input").value.trim();
+            if (!text) throw new Error("Upiši skup vektora.");
+            const independence = parse(module.linearAlgebraLinearIndependence(text), "aga-vectorspace-result");
+            if (!independence) return;
+            const basis = parse(module.linearAlgebraExtractBasis(text), "aga-vectorspace-result");
+            if (!basis) return;
+            render("aga-vectorspace-result", [["Linearno nezavisni", independence.linearlyIndependent ? "da" : "ne", true], ["Rang", independence.rank], ["Baza", matrixText(basis.basisVectors)]]);
+            steps("aga-vectorspace-steps", [...independence.steps, ...basis.steps]);
+        } catch (error) { fail("aga-vectorspace-result", error); }
+    }
+    document.getElementById("aga-vectorspace-calculate").addEventListener("click", calculateVectorSpace);
+
+    setupAnalyticAlgebraPractice({ root: document.getElementById("aga-practice-root"), format });
+}

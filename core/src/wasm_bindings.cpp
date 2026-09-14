@@ -64,6 +64,11 @@
 #include "aksiomat/mathematical_analysis/FunctionSeries.hpp"
 #include "aksiomat/mathematical_analysis/MultivariableCalculus.hpp"
 #include "aksiomat/mathematical_analysis/DifferentialEquations.hpp"
+#include "aksiomat/linear_algebra/SpaceVectorsPlanes.hpp"
+#include "aksiomat/linear_algebra/Quadrics.hpp"
+#include "aksiomat/linear_algebra/Matrices.hpp"
+#include "aksiomat/linear_algebra/EigenAnalysis.hpp"
+#include "aksiomat/linear_algebra/VectorSpaces.hpp"
 
 namespace {
 
@@ -901,6 +906,195 @@ std::vector<double> parseNumbers(const std::string& text) {
 	return values;
 }
 
+// Redci matrice/vektora odvojeni su znakom ';', a vrijednosti unutar retka znakom ','.
+std::vector<std::vector<double>> parseRows(const std::string& text) {
+	std::vector<std::vector<double>> rows;
+	std::size_t position = 0;
+	while (position <= text.size()) {
+		const std::size_t end = text.find(';', position);
+		const std::string row = text.substr(position, end == std::string::npos ? end : end - position);
+		rows.push_back(parseNumbers(row));
+		if (end == std::string::npos) break;
+		position = end + 1;
+	}
+	return rows;
+}
+
+std::string jsonMatrix(const std::vector<std::vector<double>>& matrix) {
+	std::string result = "[";
+	for (std::size_t i = 0; i < matrix.size(); ++i) {
+		if (i) result += ',';
+		result += jsonNumbers(matrix[i]);
+	}
+	return result + ']';
+}
+
+std::string laSpaceVectors(double ax, double ay, double az, double bx, double by, double bz) {
+	try {
+		using namespace aksiomat::linear_algebra;
+		const Vector3D a{ax, ay, az}, b{bx, by, bz};
+		const auto analysisA = SpaceVectorsPlanes::analyze(a);
+		const auto crossResult = SpaceVectorsPlanes::cross(a, b);
+		return "{\"magnitudeA\":" + formatDouble(analysisA.magnitude) +
+			",\"dot\":" + formatDouble(SpaceVectorsPlanes::dot(a, b)) +
+			",\"cross\":{\"x\":" + formatDouble(crossResult.crossProduct.x) +
+			",\"y\":" + formatDouble(crossResult.crossProduct.y) +
+			",\"z\":" + formatDouble(crossResult.crossProduct.z) + "}" +
+			",\"crossMagnitude\":" + formatDouble(crossResult.parallelepipedVolumeHint) +
+			",\"steps\":" + jsonSteps(crossResult.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string laPlaneFromPoints(double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3, double z3) {
+	try {
+		using namespace aksiomat::linear_algebra;
+		const auto result = SpaceVectorsPlanes::planeFromThreePoints({x1, y1, z1}, {x2, y2, z2}, {x3, y3, z3});
+		return "{\"normalX\":" + formatDouble(result.normalX) +
+			",\"normalY\":" + formatDouble(result.normalY) +
+			",\"normalZ\":" + formatDouble(result.normalZ) +
+			",\"constant\":" + formatDouble(result.constant) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string laLineVsPlane(double x0, double y0, double z0, double dx, double dy, double dz,
+	double normalX, double normalY, double normalZ, double constant) {
+	try {
+		using namespace aksiomat::linear_algebra;
+		const auto result = SpaceVectorsPlanes::lineVsPlane({x0, y0, z0}, {dx, dy, dz}, normalX, normalY, normalZ, constant);
+		std::string intersectionJson = "null";
+		if (result.intersectionPoint) {
+			intersectionJson = "{\"x\":" + formatDouble(result.intersectionPoint->x) +
+				",\"y\":" + formatDouble(result.intersectionPoint->y) +
+				",\"z\":" + formatDouble(result.intersectionPoint->z) + "}";
+		}
+		return "{\"lineLiesOnPlane\":" + std::string(result.lineLiesOnPlane ? "true" : "false") +
+			",\"lineParallelToPlane\":" + std::string(result.lineParallelToPlane ? "true" : "false") +
+			",\"intersects\":" + std::string(result.intersects ? "true" : "false") +
+			",\"intersectionPoint\":" + intersectionJson +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string laClassifyQuadric(std::string mode, double a, double b, double c) {
+	try {
+		using namespace aksiomat::linear_algebra;
+		QuadricClassificationResult result = mode == "paraboloid"
+			? Quadrics::classifyParaboloid(a, b, c)
+			: Quadrics::classifyCentral(a, b, c, 0.0);
+		return "{\"typeName\":" + jsonString(result.typeName) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string laClassifyQuadricCentral(double a, double b, double c, double d) {
+	try {
+		using namespace aksiomat::linear_algebra;
+		const auto result = Quadrics::classifyCentral(a, b, c, d);
+		return "{\"typeName\":" + jsonString(result.typeName) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string laMatrixDeterminant(std::string matrixText) {
+	try {
+		using namespace aksiomat::linear_algebra;
+		const auto matrix = parseRows(matrixText);
+		const auto result = Matrices::determinant(matrix);
+		return "{\"determinant\":" + formatDouble(result.determinant) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string laMatrixInverse(std::string matrixText) {
+	try {
+		using namespace aksiomat::linear_algebra;
+		const auto matrix = parseRows(matrixText);
+		const auto result = Matrices::inverse(matrix);
+		return "{\"invertible\":" + std::string(result.invertible ? "true" : "false") +
+			",\"determinant\":" + formatDouble(result.determinant) +
+			",\"inverse\":" + jsonMatrix(result.inverse) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string laMatrixMultiply(std::string leftText, std::string rightText) {
+	try {
+		using namespace aksiomat::linear_algebra;
+		const auto left = parseRows(leftText);
+		const auto right = parseRows(rightText);
+		const auto result = Matrices::multiply(left, right);
+		return "{\"matrix\":" + jsonMatrix(result.matrix) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string laMatrixTransform(std::string matrixText, std::string vectorText) {
+	try {
+		using namespace aksiomat::linear_algebra;
+		const auto matrix = parseRows(matrixText);
+		const auto vector = parseNumbers(vectorText);
+		const auto result = Matrices::applyTransformation(matrix, vector);
+		return "{\"transformedVector\":" + jsonNumbers(result.transformedVector) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string laEigenSymmetric2x2(double a11, double a12, double a22) {
+	try {
+		using namespace aksiomat::linear_algebra;
+		const auto result = EigenAnalysis::analyzeSymmetric2x2(a11, a12, a22);
+		std::string pairsJson = "[";
+		for (std::size_t i = 0; i < result.eigenPairs.size(); ++i) {
+			if (i) pairsJson += ',';
+			pairsJson += "{\"eigenvalue\":" + formatDouble(result.eigenPairs[i].eigenvalue) +
+				",\"eigenvector\":" + jsonNumbers(result.eigenPairs[i].eigenvector) + "}";
+		}
+		pairsJson += ']';
+		return "{\"eigenPairs\":" + pairsJson +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string laEigenSymmetric3x3(std::string matrixText) {
+	try {
+		using namespace aksiomat::linear_algebra;
+		const auto matrix = parseRows(matrixText);
+		const auto result = EigenAnalysis::analyzeSymmetric3x3(matrix);
+		std::string pairsJson = "[";
+		for (std::size_t i = 0; i < result.eigenPairs.size(); ++i) {
+			if (i) pairsJson += ',';
+			pairsJson += "{\"eigenvalue\":" + formatDouble(result.eigenPairs[i].eigenvalue) +
+				",\"eigenvector\":" + jsonNumbers(result.eigenPairs[i].eigenvector) + "}";
+		}
+		pairsJson += ']';
+		return "{\"eigenPairs\":" + pairsJson +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string laLinearIndependence(std::string vectorsText) {
+	try {
+		using namespace aksiomat::linear_algebra;
+		const auto vectors = parseRows(vectorsText);
+		const auto result = VectorSpaces::checkLinearIndependence(vectors);
+		return "{\"linearlyIndependent\":" + std::string(result.linearlyIndependent ? "true" : "false") +
+			",\"rank\":" + std::to_string(result.rank) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string laExtractBasis(std::string vectorsText) {
+	try {
+		using namespace aksiomat::linear_algebra;
+		const auto vectors = parseRows(vectorsText);
+		const auto result = VectorSpaces::extractBasis(vectors);
+		return "{\"basisVectors\":" + jsonMatrix(result.basisVectors) +
+			",\"dimension\":" + std::to_string(result.dimension) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
 std::string sequenceAnalyze(std::string terms) {
 	try {
 		const auto values = parseNumbers(terms);
@@ -1482,6 +1676,20 @@ EMSCRIPTEN_BINDINGS(aksiomat_module) {
 	emscripten::function("algebraSolveSystem", &algebraSolveSystem);
 	emscripten::function("algebraAnalyzePolynomial", &algebraAnalyzePolynomial);
 	emscripten::function("algebraAnalyzeFunction", &algebraAnalyzeFunction);
+
+	emscripten::function("linearAlgebraSpaceVectors", &laSpaceVectors);
+	emscripten::function("linearAlgebraPlaneFromPoints", &laPlaneFromPoints);
+	emscripten::function("linearAlgebraLineVsPlane", &laLineVsPlane);
+	emscripten::function("linearAlgebraClassifyQuadricParaboloid", &laClassifyQuadric);
+	emscripten::function("linearAlgebraClassifyQuadricCentral", &laClassifyQuadricCentral);
+	emscripten::function("linearAlgebraMatrixDeterminant", &laMatrixDeterminant);
+	emscripten::function("linearAlgebraMatrixInverse", &laMatrixInverse);
+	emscripten::function("linearAlgebraMatrixMultiply", &laMatrixMultiply);
+	emscripten::function("linearAlgebraMatrixTransform", &laMatrixTransform);
+	emscripten::function("linearAlgebraEigenSymmetric2x2", &laEigenSymmetric2x2);
+	emscripten::function("linearAlgebraEigenSymmetric3x3", &laEigenSymmetric3x3);
+	emscripten::function("linearAlgebraLinearIndependence", &laLinearIndependence);
+	emscripten::function("linearAlgebraExtractBasis", &laExtractBasis);
 }
 
 #endif // __EMSCRIPTEN__

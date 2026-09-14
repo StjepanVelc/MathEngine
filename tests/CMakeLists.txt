@@ -62,6 +62,11 @@ add_executable(core_tests
 	test_mathematical_analysis_function_series.cpp
 	test_mathematical_analysis_multivariable_calculus.cpp
 	test_mathematical_analysis_differential_equations.cpp
+	test_linear_algebra_space_vectors_planes.cpp
+	test_linear_algebra_quadrics.cpp
+	test_linear_algebra_matrices.cpp
+	test_linear_algebra_eigen_analysis.cpp
+	test_linear_algebra_vector_spaces.cpp
 )
 
 target_link_libraries(core_tests PRIVATE

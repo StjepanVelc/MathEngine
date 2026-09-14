@@ -57,6 +57,11 @@ add_library(aksiomat_core STATIC
 	src/mathematical_analysis/FunctionSeries.cpp
 	src/mathematical_analysis/MultivariableCalculus.cpp
 	src/mathematical_analysis/DifferentialEquations.cpp
+	src/linear_algebra/SpaceVectorsPlanes.cpp
+	src/linear_algebra/Quadrics.cpp
+	src/linear_algebra/Matrices.cpp
+	src/linear_algebra/EigenAnalysis.cpp
+	src/linear_algebra/VectorSpaces.cpp
 	src/logic/LogicExpression.cpp
 	src/logic/LogicParser.cpp
 	src/logic/TruthTable.cpp
