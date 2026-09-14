@@ -151,6 +151,54 @@ Vraća `expression`, `antiderivative`, `lowerBound`, `upperBound`, `area`, `nume
 
 Sve `calculus*` funkcije rade isključivo s polinomskim izrazima jedne varijable.
 
+## Matematička analiza (napredno i fakultet)
+
+Funkcije s prefiksom `mathematicalAnalysis*` pokrivaju šest naprednih područja. Za dijelove koji zahtijevaju funkciju kao ulaz (funkcije više varijabli, redovi, diferencijalne jednadžbe, nepravi integral), adapter ne prima proizvoljan izraz nego naziv iz unaprijed definiranog kataloga jer u jezgri ne postoji opći parser izraza s više varijabli.
+
+### `mathematicalAnalysisFormalLimit(expression, point, variable)`
+
+Vraća `expression`, `point`, `limitValue`, `existsFinite`, `epsilonDeltaTable` (niz `{ "epsilon", "delta" }`) i `steps`. Radi isključivo s polinomskim izrazima jedne varijable.
+
+### `mathematicalAnalysisContinuity(expression, point, variable)`
+
+Vraća `isContinuous`, `functionValueAtPoint`, `limitValue` i `steps`.
+
+### `mathematicalAnalysisNthDerivative(expression, order, point, variable)`
+
+`order` je pozitivan cijeli broj. Vraća `derivativeExpression`, `derivativeValueAtPoint` i `steps`.
+
+### `mathematicalAnalysisChainRule(outerExpression, innerExpression, point, variable)`
+
+Vraća `innerValueAtPoint`, `outerDerivativeAtInnerValue`, `innerDerivativeAtPoint`, `compositeDerivativeAtPoint` i `steps` za `(f∘g)'(x) = f'(g(x))·g'(x)`.
+
+### `mathematicalAnalysisImproperIntegral(functionName, lowerBound)`
+
+`functionName` je jedan od kataloških naziva (`gaussian`, `reciprocal_square`, `exp`, `sin`). Vraća `convergent`, `approximateValue` i `steps`.
+
+### `mathematicalAnalysisSubstitutionIntegral(a, b, power, lowerBound, upperBound)`
+
+Računa određeni integral oblika `(ax+b)^n` metodom supstitucije. Vraća `value` i `steps`.
+
+### `mathematicalAnalysisTaylorSeries(functionName, center, order, point)`
+
+`functionName` je `exp` ili `sin`. Vraća `coefficients`, `taylorApproximationAtPoint`, `actualValueAtPoint`, `approximationError` i `steps`.
+
+### `mathematicalAnalysisPowerSeries(coefficientsText, testPoint)`
+
+`coefficientsText` je popis koeficijenata odvojenih zarezom. Vraća `radiusOfConvergence`, `convergesAtPoint` i `steps`.
+
+### `mathematicalAnalysisPartialDerivatives(functionName, x, y)`
+
+`functionName` je jedan od kataloških naziva dvovarijabilnih funkcija (npr. `sum_squares`, `x2y`, `product`). Vraća `partialX`, `partialY`, `gradient` (niz od dva broja) i `gradientMagnitude`.
+
+### `mathematicalAnalysisDirectionalDerivative(functionName, x, y, directionX, directionY)`
+
+Normalizira zadani vektor smjera i vraća `directionalDerivative`, `partialX`, `partialY` i `steps`.
+
+### `mathematicalAnalysisSolveOde(functionName, method, initialT, initialY, finalT, stepSize)`
+
+`method` je `euler` ili `rk4`. `functionName` je naziv iz kataloga desnih strana `y' = f(t,y)` (npr. `exponential_growth`, `logistic`, `harmonic_velocity`). Vraća `points` (niz `{ "t", "y" }`), `finalValue` i `steps`.
+
 ## Iskazna logika
 
 ### `logicToString(formula)`

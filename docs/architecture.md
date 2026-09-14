@@ -19,6 +19,7 @@ flowchart LR
 	CORE --> EL[Exponential/Logarithmic]
 	CORE --> CPS[Combinatorics/Probability/Statistics]
 	CORE --> CB[Calculus basics]
+	CORE --> MA[Mathematical analysis]
 	WB -->|string ili JSON| UI
 ```
 

@@ -4,6 +4,8 @@
 
 #include <emscripten/bind.h>
 
+#include <cmath>
+#include <functional>
 #include "aksiomat/arithmetic/Arithmetic.hpp"
 #include "aksiomat/arithmetic/NumberTheory.hpp"
 #include "aksiomat/arithmetic/NumeralSystems.hpp"
@@ -56,6 +58,12 @@
 #include "aksiomat/calculus_basics/Derivatives.hpp"
 #include "aksiomat/calculus_basics/DerivativeApplications.hpp"
 #include "aksiomat/calculus_basics/DefiniteIntegral.hpp"
+#include "aksiomat/mathematical_analysis/FormalLimits.hpp"
+#include "aksiomat/mathematical_analysis/AdvancedDerivatives.hpp"
+#include "aksiomat/mathematical_analysis/AdvancedIntegrals.hpp"
+#include "aksiomat/mathematical_analysis/FunctionSeries.hpp"
+#include "aksiomat/mathematical_analysis/MultivariableCalculus.hpp"
+#include "aksiomat/mathematical_analysis/DifferentialEquations.hpp"
 
 namespace {
 
@@ -68,6 +76,7 @@ std::string formatDouble(double value) {
 
 std::string jsonString(const std::string& value);
 std::string jsonSteps(const std::vector<std::string>& steps);
+std::vector<double> parseNumbers(const std::string& text);
 
 aksiomat::trigonometry::AngleUnit trigAngleUnit(const std::string& unit) {
 	if (unit == "degrees") return aksiomat::trigonometry::AngleUnit::Degrees;
@@ -645,6 +654,222 @@ std::string calculusDefiniteIntegral(std::string expression, double lowerBound, 
 			",\"area\":" + formatDouble(result.area) +
 			",\"numericCheck\":" + formatDouble(result.numericCheck) +
 			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+// Katalog imenovanih funkcija jedne varijable koje web frontend moze birati iz padajuceg izbornika
+// (WASM/JS ne moze proslijediti proizvoljan C++ callable, pa se koristi imenovani katalog).
+std::function<double(double)> namedSingleVariableFunction(const std::string& name) {
+	if (name == "exp") return [](double x) { return std::exp(x); };
+	if (name == "reciprocal_square") return [](double x) { return 1.0 / (x * x + 1.0); };
+	if (name == "sin") return [](double x) { return std::sin(x); };
+	if (name == "gaussian") return [](double x) { return std::exp(-x * x); };
+	throw std::invalid_argument("Nepoznata funkcija za nepravi integral");
+}
+
+std::function<double(int, double)> namedDerivativeFunction(const std::string& name) {
+	if (name == "exp") return [](int, double x) { return std::exp(x); };
+	if (name == "sin") return [](int n, double x) {
+		switch (n % 4) {
+			case 0: return std::sin(x);
+			case 1: return std::cos(x);
+			case 2: return -std::sin(x);
+			default: return -std::cos(x);
+		}
+	};
+	throw std::invalid_argument("Nepoznata funkcija za Taylorov red");
+}
+
+std::function<double(double, double)> namedTwoVariableFunction(const std::string& name) {
+	if (name == "x2y") return [](double x, double y) { return x * x * y; };
+	if (name == "sum_squares") return [](double x, double y) { return x * x + y * y; };
+	if (name == "product") return [](double x, double y) { return x * y; };
+	throw std::invalid_argument("Nepoznata funkcija dvije varijable");
+}
+
+std::function<double(double, double)> namedOdeFunction(const std::string& name) {
+	if (name == "exponential_growth") return [](double, double y) { return y; };
+	if (name == "logistic") return [](double, double y) { return y * (1.0 - y); };
+	if (name == "harmonic_velocity") return [](double t, double) { return std::cos(t); };
+	throw std::invalid_argument("Nepoznata diferencijalna jednadzba");
+}
+
+std::string maFormalLimit(std::string expression, double point, std::string variable) {
+	try {
+		using namespace aksiomat::mathematical_analysis;
+		const auto result = FormalLimits::evaluate(expression, point, variable);
+		std::string tableJson = "[";
+		for (std::size_t index = 0; index < result.epsilonDeltaTable.size(); ++index) {
+			if (index) tableJson += ',';
+			tableJson += "{\"epsilon\":" + formatDouble(result.epsilonDeltaTable[index].epsilon) +
+				",\"delta\":" + formatDouble(result.epsilonDeltaTable[index].delta) + '}';
+		}
+		tableJson += ']';
+		return "{\"expression\":" + jsonString(result.expression) +
+			",\"point\":" + formatDouble(result.point) +
+			",\"limitValue\":" + formatDouble(result.limitValue) +
+			",\"existsFinite\":" + std::string(result.existsFinite ? "true" : "false") +
+			",\"epsilonDeltaTable\":" + tableJson +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string maContinuity(std::string expression, double point, std::string variable) {
+	try {
+		using namespace aksiomat::mathematical_analysis;
+		const auto result = FormalLimits::checkContinuity(expression, point, variable);
+		return "{\"expression\":" + jsonString(result.expression) +
+			",\"point\":" + formatDouble(result.point) +
+			",\"functionDefinedAtPoint\":" + std::string(result.functionDefinedAtPoint ? "true" : "false") +
+			",\"functionValueAtPoint\":" + formatDouble(result.functionValueAtPoint) +
+			",\"limitValue\":" + formatDouble(result.limitValue) +
+			",\"isContinuous\":" + std::string(result.isContinuous ? "true" : "false") +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string maNthDerivative(std::string expression, int order, double point, std::string variable) {
+	try {
+		using namespace aksiomat::mathematical_analysis;
+		const auto result = AdvancedDerivatives::nthDerivative(expression, order, point, variable);
+		return "{\"expression\":" + jsonString(result.expression) +
+			",\"order\":" + std::to_string(result.order) +
+			",\"derivativeExpression\":" + jsonString(result.derivativeExpression) +
+			",\"point\":" + formatDouble(result.point) +
+			",\"derivativeValueAtPoint\":" + formatDouble(result.derivativeValueAtPoint) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string maChainRule(std::string outerExpression, std::string innerExpression, double point, std::string variable) {
+	try {
+		using namespace aksiomat::mathematical_analysis;
+		const auto result = AdvancedDerivatives::chainRule(outerExpression, innerExpression, point, variable);
+		return "{\"outerExpression\":" + jsonString(result.outerExpression) +
+			",\"innerExpression\":" + jsonString(result.innerExpression) +
+			",\"point\":" + formatDouble(result.point) +
+			",\"innerValueAtPoint\":" + formatDouble(result.innerValueAtPoint) +
+			",\"outerDerivativeAtInnerValue\":" + formatDouble(result.outerDerivativeAtInnerValue) +
+			",\"innerDerivativeAtPoint\":" + formatDouble(result.innerDerivativeAtPoint) +
+			",\"compositeDerivativeAtPoint\":" + formatDouble(result.compositeDerivativeAtPoint) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string maImproperIntegral(std::string functionName, double lowerBound) {
+	try {
+		using namespace aksiomat::mathematical_analysis;
+		const auto integrand = namedSingleVariableFunction(functionName);
+		const auto result = AdvancedIntegrals::improperIntegral(integrand, functionName, lowerBound);
+		return "{\"description\":" + jsonString(result.description) +
+			",\"lowerBound\":" + formatDouble(result.lowerBound) +
+			",\"convergent\":" + std::string(result.convergent ? "true" : "false") +
+			",\"approximateValue\":" + formatDouble(result.approximateValue) +
+			",\"partialSums\":" + jsonNumbers(result.partialSums) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string maSubstitutionIntegral(double a, double b, int power, double lowerBound, double upperBound) {
+	try {
+		using namespace aksiomat::mathematical_analysis;
+		const auto result = AdvancedIntegrals::integrateBySubstitution(a, b, power, lowerBound, upperBound);
+		return "{\"linearCoefficientA\":" + formatDouble(result.linearCoefficientA) +
+			",\"linearCoefficientB\":" + formatDouble(result.linearCoefficientB) +
+			",\"power\":" + std::to_string(result.power) +
+			",\"lowerBound\":" + formatDouble(result.lowerBound) +
+			",\"upperBound\":" + formatDouble(result.upperBound) +
+			",\"value\":" + formatDouble(result.value) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string maTaylorSeries(std::string functionName, double center, int order, double point) {
+	try {
+		using namespace aksiomat::mathematical_analysis;
+		const auto derivativeAt = namedDerivativeFunction(functionName);
+		const auto actual = namedSingleVariableFunction(functionName);
+		const auto result = FunctionSeries::buildTaylorSeries(derivativeAt, actual, functionName, center, order, point);
+		return "{\"description\":" + jsonString(result.description) +
+			",\"center\":" + formatDouble(result.center) +
+			",\"order\":" + std::to_string(result.order) +
+			",\"coefficients\":" + jsonNumbers(result.coefficients) +
+			",\"point\":" + formatDouble(result.point) +
+			",\"taylorApproximationAtPoint\":" + formatDouble(result.taylorApproximationAtPoint) +
+			",\"actualValueAtPoint\":" + formatDouble(result.actualValueAtPoint) +
+			",\"approximationError\":" + formatDouble(result.approximationError) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string maPowerSeries(std::string coefficientsText, double testPoint) {
+	try {
+		using namespace aksiomat::mathematical_analysis;
+		const auto coefficients = parseNumbers(coefficientsText);
+		const auto result = FunctionSeries::analyzePowerSeries(coefficients, testPoint);
+		return "{\"coefficients\":" + jsonNumbers(result.coefficients) +
+			",\"radiusOfConvergence\":" + formatDouble(result.radiusOfConvergence) +
+			",\"convergesAtPoint\":" + std::string(result.convergesAtPoint ? "true" : "false") +
+			",\"testPoint\":" + formatDouble(result.testPoint) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string maPartialDerivatives(std::string functionName, double x, double y) {
+	try {
+		using namespace aksiomat::mathematical_analysis;
+		const auto f = namedTwoVariableFunction(functionName);
+		const auto result = MultivariableCalculus::partialDerivatives(f, functionName, x, y);
+		return "{\"description\":" + jsonString(result.description) +
+			",\"x\":" + formatDouble(result.x) +
+			",\"y\":" + formatDouble(result.y) +
+			",\"partialX\":" + formatDouble(result.partialX) +
+			",\"partialY\":" + formatDouble(result.partialY) +
+			",\"gradient\":" + jsonNumbers(result.gradient) +
+			",\"gradientMagnitude\":" + formatDouble(result.gradientMagnitude) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string maDirectionalDerivative(std::string functionName, double x, double y, double directionX, double directionY) {
+	try {
+		using namespace aksiomat::mathematical_analysis;
+		const auto f = namedTwoVariableFunction(functionName);
+		const auto result = MultivariableCalculus::directionalDerivative(f, x, y, directionX, directionY);
+		return "{\"partialX\":" + formatDouble(result.partialX) +
+			",\"partialY\":" + formatDouble(result.partialY) +
+			",\"directionX\":" + formatDouble(result.directionX) +
+			",\"directionY\":" + formatDouble(result.directionY) +
+			",\"directionalDerivative\":" + formatDouble(result.directionalDerivative) +
+			",\"steps\":" + jsonSteps(result.steps) + '}';
+	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
+}
+
+std::string jsonOdeResult(const aksiomat::mathematical_analysis::OdeSolutionResult& result) {
+	std::string pointsJson = "[";
+	for (std::size_t index = 0; index < result.points.size(); ++index) {
+		if (index) pointsJson += ',';
+		pointsJson += "{\"t\":" + formatDouble(result.points[index].t) +
+			",\"y\":" + formatDouble(result.points[index].y) + '}';
+	}
+	pointsJson += ']';
+	return "{\"description\":" + jsonString(result.description) +
+		",\"method\":" + jsonString(result.method) +
+		",\"initialT\":" + formatDouble(result.initialT) +
+		",\"initialY\":" + formatDouble(result.initialY) +
+		",\"stepSize\":" + formatDouble(result.stepSize) +
+		",\"points\":" + pointsJson +
+		",\"finalValue\":" + formatDouble(result.finalValue) +
+		",\"steps\":" + jsonSteps(result.steps) + '}';
+}
+
+std::string maSolveOde(std::string functionName, std::string method, double initialT, double initialY, double finalT, double stepSize) {
+	try {
+		using namespace aksiomat::mathematical_analysis;
+		const auto f = namedOdeFunction(functionName);
+		if (method == "euler") return jsonOdeResult(DifferentialEquations::solveEuler(f, functionName, initialT, initialY, finalT, stepSize));
+		if (method == "rk4") return jsonOdeResult(DifferentialEquations::solveRungeKutta4(f, functionName, initialT, initialY, finalT, stepSize));
+		throw std::invalid_argument("Nepoznata numericka metoda za ODE");
 	} catch (const std::exception& e) { return std::string("GRESKA: ") + e.what(); }
 }
 
@@ -1238,6 +1463,19 @@ EMSCRIPTEN_BINDINGS(aksiomat_module) {
 	emscripten::function("calculusRateOfChange", &calculusRateOfChange);
 	emscripten::function("calculusDerivativeApplications", &calculusDerivativeApplications);
 	emscripten::function("calculusDefiniteIntegral", &calculusDefiniteIntegral);
+
+	emscripten::function("mathematicalAnalysisFormalLimit", &maFormalLimit);
+	emscripten::function("mathematicalAnalysisContinuity", &maContinuity);
+	emscripten::function("mathematicalAnalysisNthDerivative", &maNthDerivative);
+	emscripten::function("mathematicalAnalysisChainRule", &maChainRule);
+	emscripten::function("mathematicalAnalysisImproperIntegral", &maImproperIntegral);
+	emscripten::function("mathematicalAnalysisSubstitutionIntegral", &maSubstitutionIntegral);
+	emscripten::function("mathematicalAnalysisTaylorSeries", &maTaylorSeries);
+	emscripten::function("mathematicalAnalysisPowerSeries", &maPowerSeries);
+	emscripten::function("mathematicalAnalysisPartialDerivatives", &maPartialDerivatives);
+	emscripten::function("mathematicalAnalysisDirectionalDerivative", &maDirectionalDerivative);
+	emscripten::function("mathematicalAnalysisSolveOde", &maSolveOde);
+
 	emscripten::function("algebraSimplify", &algebraSimplify);
 	emscripten::function("algebraSolveEquation", &algebraSolveEquation);
 	emscripten::function("algebraSolveInequality", &algebraSolveInequality);

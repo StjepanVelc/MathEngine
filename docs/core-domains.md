@@ -340,6 +340,24 @@ Namespace `aksiomat::calculus_basics` gradi na `aksiomat::algebra::Polynomial` i
 
 Sve funkcije rade isključivo s polinomskim izrazima jedne varijable; općenitiji izrazi (trigonometrijski, eksponencijalni) i formalne definicije limesa/kontinuiteta ostaju fakultetsko proširenje.
 
+## Matematička analiza (napredno i fakultet)
+
+Namespace `aksiomat::mathematical_analysis` proširuje `calculus_basics` formalnijim definicijama i općenitijim strukturama, razdvajajući šest odgovornosti u zasebne datoteke.
+
+`FormalLimits::evaluate(...)` gradi epsilon-delta tablicu (`EpsilonDeltaSample`) za limes polinoma u točki i vraća `FormalLimitResult` s vrijednošću limesa, oznakom postoji li konačan limes, tablicom i objašnjavajućim koracima. `FormalLimits::checkContinuity(...)` uspoređuje f(točka) s limesom u toj točki i vraća `ContinuityResult`.
+
+`AdvancedDerivatives::nthDerivative(...)` ponovljeno primjenjuje `Polynomial::derivative()` za proizvoljni pozitivni red i vraća `HigherOrderDerivativeResult` s izvedenim izrazom i vrijednošću u točki. `AdvancedDerivatives::chainRule(...)` računa derivaciju kompozicije dviju polinomskih funkcija `(f∘g)'(x) = f'(g(x)) · g'(x)` i vraća `ChainRuleResult`.
+
+`AdvancedIntegrals::improperIntegral(...)` prima `std::function<double(double)>` te Simpsonovom integracijom uz rastuću gornju granicu procjenjuje konvergira li nepravi integral, vraćajući `ImproperIntegralResult`. `AdvancedIntegrals::integrateBySubstitution(...)` analitički računa određeni integral oblika `(ax+b)^n` i vraća `SubstitutionIntegralResult`.
+
+`FunctionSeries::buildTaylorSeries(...)` koristi callback funkcije i njihove derivacije za izgradnju Taylorovog reda oko točke `a` do zadanog reda te vraća `TaylorSeriesResult` s koeficijentima, aproksimacijom i pogreškom. `FunctionSeries::analyzePowerSeries(...)` procjenjuje radijus konvergencije reda potencija omjer-testom nad koeficijentima i vraća `PowerSeriesConvergenceResult`.
+
+`MultivariableCalculus::partialDerivatives(...)` računa numeričke parcijalne derivacije funkcije dviju varijabli (`std::function<double(double,double)>`) centralnom diferencijom, uz gradijent i njegovu magnitudu (`PartialDerivativeResult`). `MultivariableCalculus::directionalDerivative(...)` normalizira vektor smjera i računa skalarni produkt s gradijentom (`DirectionalDerivativeResult`).
+
+`DifferentialEquations::solveEuler(...)` i `DifferentialEquations::solveRungeKutta4(...)` rješavaju početni problem `y' = f(t,y)` (callback funkcija) generirajući niz točaka (`OdeSolutionPoint`) od početnog do konačnog vremena uz zadani korak, te vraćaju `OdeSolutionResult` s konačnom vrijednošću i objašnjavajućim koracima.
+
+Budući da ne postoji opći parser izraza s više varijabli, funkcije više varijabli, redovi i diferencijalne jednadžbe koriste callback-based `std::function` sučelje umjesto parsiranja teksta; WASM adapter premošćuje to imenovanim katalogom poznatih funkcija (vidi [WebAssembly API](wasm-api.md)).
+
 Domene koriste standardne iznimke:
 
 - `std::invalid_argument` za neispravan matematički ili sintaksni ulaz

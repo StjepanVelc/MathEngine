@@ -21,9 +21,10 @@ Relevantni redoslijed skripti:
 11. `exponential-logarithmic-visuals.js`, `exponential-logarithmic-practice.js`, `exponential-logarithmic.js`
 12. `combinatorics-probability-statistics-practice.js`, `combinatorics-probability-statistics.js`
 13. `calculus-basics-visuals.js`, `calculus-basics-practice.js`, `calculus-basics.js`
-14. `graph.js`
-15. `algebra.js`
-16. `app.js`
+14. `mathematical-analysis-visuals.js`, `mathematical-analysis-practice.js`, `mathematical-analysis.js`
+15. `graph.js`
+16. `algebra.js`
+17. `app.js`
 
 Domenski moduli definiraju globalne setup funkcije prije nego što `app.js` pozove `init()`.
 
@@ -86,6 +87,7 @@ Svaka domena ima vlastitu klasu gumba i panela:
 - `.exponential-logarithmic-toggle` / `.exponential-logarithmic-panel`
 - `.cps-toggle` / `.cps-panel`
 - `.calculus-basics-toggle` / `.calculus-basics-panel`
+- `.mathematical-analysis-toggle` / `.mathematical-analysis-panel`
 
 Gumb preko `data-panel` pokazuje na `id` pripadajućeg panela.
 
@@ -143,6 +145,10 @@ Aritmetika, algebra i geometrija imaju istu logiku u vlastitim setup funkcijama 
 ## Frontend matematičke analize (srednjoškolske osnove)
 
 `calculus-basics.js` upravlja s pet panela: limes, derivacija (uključujući prosječnu/trenutnu brzinu promjene), primjene derivacije (monotonost i ekstremi), određeni integral te vježbaonica. `calculus-basics-visuals.js` crta SVG vizualizaciju približavanja limesu (`CalculusBasicsVisuals.limitApproach`). `calculus-basics-practice.js` uvačava `web/data/calculus-basics-exercises.json` i sprema napredak pod ključem `mathengine-calculus-basics-practice-v1`.
+
+## Frontend matematičke analize (napredno i fakultet)
+
+`mathematical-analysis.js` upravlja sa šest panela za formalnu i naprednu analizu (formalni limes/kontinuitet, napredne derivacije, napredni integrali, redovi funkcija, funkcije više varijabli, diferencijalne jednadžbe) te vježbaonicom. Panel odabire funkciju iz padajućeg izbornika (`<select>`) umjesto slobodnog unosa izraza kad WASM adapter očekuje naziv iz kataloga (nepravi integrali, Taylorov red, funkcije više varijabli, diferencijalne jednadžbe), jer jezgra nema opći parser izraza s više varijabli. `mathematical-analysis-visuals.js` crta SVG usporedbu Taylorove aproksimacije sa stvarnom funkcijom (`MathematicalAnalysisVisuals.taylorApproximation`) i putanje Eulerove/RK4 metode (`MathematicalAnalysisVisuals.odeTrajectory`). `mathematical-analysis-practice.js` učitava `web/data/mathematical-analysis-exercises.json` i sprema napredak pod ključem `mathengine-mathematical-analysis-practice-v1`. Poglavlje je vidljivo samo na obrazovnoj razini `advanced` (`data-levels="advanced"`).
 
 ### Palete simbola
 

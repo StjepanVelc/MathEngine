@@ -118,6 +118,17 @@ Pokrivene su permutacije/kombinacije s ponavljanjem i bez, klasična/uvjetna/nez
 
 Pokriveni su numerički limes s obje strane, derivacija i tangenta, prosječna/trenutna brzina promjene, monotonost i lokalni ekstremi te određeni integral s neovisnom Simpsonovom provjerom. Posljednje potvrđeno stanje nakon integracije je 229/229 uspješnih testova.
 
+### Matematička analiza (napredno i fakultet)
+
+- `test_mathematical_analysis_formal_limits.cpp`
+- `test_mathematical_analysis_advanced_derivatives.cpp`
+- `test_mathematical_analysis_advanced_integrals.cpp`
+- `test_mathematical_analysis_function_series.cpp`
+- `test_mathematical_analysis_multivariable_calculus.cpp`
+- `test_mathematical_analysis_differential_equations.cpp`
+
+Pokriveni su epsilon-delta tablica i neprekidnost polinoma, viši red derivacije i lančano pravilo, konvergencija nepravog integrala i integracija supstitucijom, Taylorov red i radijus konvergencije reda potencija, numeričke parcijalne/usmjerene derivacije te Eulerova i Runge-Kutta 4 metoda za obične diferencijalne jednadžbe. Posljednje potvrđeno stanje nakon integracije je 254/254 uspješnih testova.
+
 ## Pokretanje svih native testova
 
 ```powershell

@@ -56,6 +56,12 @@ add_executable(core_tests
 	test_calculus_basics_derivatives.cpp
 	test_calculus_basics_derivative_applications.cpp
 	test_calculus_basics_definite_integral.cpp
+	test_mathematical_analysis_formal_limits.cpp
+	test_mathematical_analysis_advanced_derivatives.cpp
+	test_mathematical_analysis_advanced_integrals.cpp
+	test_mathematical_analysis_function_series.cpp
+	test_mathematical_analysis_multivariable_calculus.cpp
+	test_mathematical_analysis_differential_equations.cpp
 )
 
 target_link_libraries(core_tests PRIVATE

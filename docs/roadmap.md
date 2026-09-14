@@ -25,7 +25,7 @@ Ovaj odsjek ne duplicira srednjoškolske module. Proširuje istu C++ jezgru form
 
 | Modul | Status | Planirano proširenje |
 |---|---|---|
-| Matematička analiza | **Kasnije** | Formalni limesi i kontinuitet, napredne derivacije i integrali, redovi funkcija, funkcije više varijabli i diferencijalne jednadžbe |
+| Matematička analiza | **Riješeno** | Formalni limesi i kontinuitet, napredne derivacije i integrali, redovi funkcija, funkcije više varijabli i diferencijalne jednadžbe |
 | Analitička geometrija i linearna algebra | **Kasnije** | Vektori i ravnine u 3D, opći kvadrici, matrice transformacija, svojstvene vrijednosti i vektorski prostori |
 | Vjerojatnost i statistika | **Kasnije** | Slučajne varijable, distribucije, očekivanje/varijanca, intervali pouzdanosti, testiranje hipoteza i regresija |
 | Diskretna matematika | **Kasnije** | Skupovi, relacije, teorija grafova, rekurencije i napredna kombinatorika |

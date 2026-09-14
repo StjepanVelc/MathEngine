@@ -51,6 +51,12 @@ add_library(aksiomat_core STATIC
 	src/calculus_basics/Derivatives.cpp
 	src/calculus_basics/DerivativeApplications.cpp
 	src/calculus_basics/DefiniteIntegral.cpp
+	src/mathematical_analysis/FormalLimits.cpp
+	src/mathematical_analysis/AdvancedDerivatives.cpp
+	src/mathematical_analysis/AdvancedIntegrals.cpp
+	src/mathematical_analysis/FunctionSeries.cpp
+	src/mathematical_analysis/MultivariableCalculus.cpp
+	src/mathematical_analysis/DifferentialEquations.cpp
 	src/logic/LogicExpression.cpp
 	src/logic/LogicParser.cpp
 	src/logic/TruthTable.cpp

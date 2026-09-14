@@ -4,7 +4,7 @@
 
 Tekst zadatka, trag, objašnjenje i razina težine pedagoški su sadržaj. Smješteni su u JSON kako bi se mogli mijenjati bez C++ rekompilacije i WASM builda. C++ jezgra i dalje provodi formalnu matematičku provjeru kada je potrebna.
 
-Trenutačno postoji osam banaka:
+Trenutačno postoji devet banaka:
 
 - `web/data/formalization-exercises.json`
 - `web/data/geometry-exercises.json`
@@ -14,6 +14,7 @@ Trenutačno postoji osam banaka:
 - `web/data/exponential-logarithmic-exercises.json`
 - `web/data/combinatorics-probability-statistics-exercises.json`
 - `web/data/calculus-basics-exercises.json`
+- `web/data/mathematical-analysis-exercises.json`
 
 Trigonometrijska banka ima razine `temelji`, `primjena` i `izazov`, ukupno 24 zadatka. Koristi isti brojčani model odgovora i tolerancije kao geometrija, a stanje sprema pod ključem `mathengine-trigonometry-practice-v1`.
 
@@ -26,6 +27,8 @@ Banka eksponencijalnih i logaritamskih funkcija sadrži 24 zadatka iz potencija,
 Banka kombinatorike, vjerojatnosti i statistike sadrži 24 zadatka kroz `temelji`, `primjena` i `izazov`, pokrivajući prebrojavanje, klasičnu/uvjetnu/nezavisnu vjerojatnost te deskriptivnu statistiku. Koristi isti brojčani model odgovora, a napredak sprema pod `mathengine-combinatorics-probability-statistics-practice-v1`.
 
 Banka matematičke analize (srednjoškolske osnove) sadrži 24 zadatka kroz `temelji`, `primjena` i `izazov`, pokrivajući limes, derivaciju, primjene derivacije (monotonost/ekstremi) i određeni integral. Koristi isti brojčani model odgovora, a napredak sprema pod `mathengine-calculus-basics-practice-v1`.
+
+Banka matematičke analize (napredno i fakultet) sadrži 17 zadataka kroz `temelji`, `primjena` i `izazov`, pokrivajući formalni limes/kontinuitet, viši red derivacije, lančano pravilo, integraciju supstitucijom, konvergenciju nepravog integrala, Taylorov red, radijus konvergencije reda potencija, parcijalne/usmjerene derivacije te Eulerovu/RK4 metodu. Koristi isti brojčani model odgovora, a napredak sprema pod `mathengine-mathematical-analysis-practice-v1`.
 
 Banke se učitavaju preko `fetch`, pa aplikaciju treba pokretati preko HTTP servera, ne izravno protokolom `file://`.
 
