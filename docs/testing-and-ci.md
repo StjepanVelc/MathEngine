@@ -285,6 +285,18 @@ provjera web/aksiomat.js i web/aksiomat.wasm
 
 Trenutačni CI potvrđuje postojanje artefakata, ali ne pokreće Node smoke test ni `scripts/validate_web.mjs`. To su preporučena buduća CI proširenja.
 
+### Job `deploy`
+
+Pokreće se samo na `push` prema grani `master` (ne na `pull_request`), nakon uspješnog `wasm` job-a. Preuzima artefakt otpremljen u `wasm` jobu (`actions/upload-pages-artifact` nad mapom `web/`, koja u tom trenutku već sadrži svježe izgrađene `aksiomat.js`/`aksiomat.wasm`) i objavljuje ga na GitHub Pages preko `actions/deploy-pages`.
+
+Preduvjeti da ovaj job proradi:
+
+1. U postavkama repozitorija (Settings → Pages) izabrati izvor **GitHub Actions** (ne "Deploy from a branch").
+2. Workflow treba dozvole `pages: write` i `id-token: write` (već postavljeno na razini datoteke u `permissions:`).
+3. Nema dodatnih tajni ni troškova — GitHub Pages je besplatan za javne repozitorije.
+
+Nakon prvog uspješnog pokretanja stranica je dostupna na `https://<korisnik>.github.io/<repo>/`.
+
 ## Kriterij završene promjene
 
 Promjena je spremna kada su primjenjivi uvjeti zadovoljeni:

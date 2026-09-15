@@ -4,6 +4,15 @@ on:
   push:
   pull_request:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
 jobs:
   native:
     name: Native C++ tests
@@ -32,3 +41,21 @@ jobs:
         run: cmake --build out/build/ci-wasm
       - name: Verify artifacts
         run: test -f web/aksiomat.js && test -f web/aksiomat.wasm
+      - name: Upload web artifact
+        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: web
+
+  deploy:
+    name: Deploy GitHub Pages
+    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+    needs: wasm
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
