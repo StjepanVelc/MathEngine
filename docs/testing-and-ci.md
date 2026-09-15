@@ -287,7 +287,7 @@ Trenutačni CI potvrđuje postojanje artefakata, ali ne pokreće Node smoke test
 
 ### Job `deploy`
 
-Pokreće se samo na `push` prema grani `master` (ne na `pull_request`), nakon uspješnog `wasm` job-a. Preuzima artefakt otpremljen u `wasm` jobu (`actions/upload-pages-artifact` nad mapom `web/`, koja u tom trenutku već sadrži svježe izgrađene `aksiomat.js`/`aksiomat.wasm`) i objavljuje ga na GitHub Pages preko `actions/deploy-pages`.
+Pokreće se samo na `push` prema grani `master` (ne na `pull_request`), nakon uspješnog `native` i `wasm` job-a (`needs: [native, wasm]`) — dakle tek kad prođu i C++ testovi i WASM build. Preuzima artefakt otpremljen u `wasm` jobu (`actions/upload-pages-artifact` nad mapom `web/`, koja u tom trenutku već sadrži svježe izgrađene `aksiomat.js`/`aksiomat.wasm`) i objavljuje ga na GitHub Pages preko `actions/deploy-pages`.
 
 Preduvjeti da ovaj job proradi:
 
