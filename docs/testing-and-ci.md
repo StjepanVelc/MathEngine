@@ -291,6 +291,12 @@ Pokreće se samo na `push` prema grani `master` (ne na `pull_request`), nakon us
 dakle tek kad prođu i C++ testovi i WASM build. Preuzima artefakt otpremljen u `wasm` jobu (`actions/upload-pages-artifact` nad mapom `web/`, 
 koja u tom trenutku već sadrži svježe izgrađene `aksiomat.js`/`aksiomat.wasm`) i objavljuje ga na GitHub Pages preko `actions/deploy-pages`.
 
+### Analitika (Cloudflare Web Analytics)
+
+Sve stranice u `web/` (`index.html`, `about.html`, `fakultet.html`, `osnovna-skola.html`, `srednja-skola.html`) sadrže Cloudflare Web Analytics beacon skriptu u `<head>`. 
+Ovo je cookie-free, privacy-friendly analitika (bez cookie bannera, bez praćenja korisnika preko kolačića) koja daje osnovni uvid u broj posjeta i posjećene stranice. 
+Token se upravlja preko Cloudflare dashboarda (Analytics → Web Analytics) i nije potrebno mijenjati DNS niti hosting.
+
 ## Kriterij završene promjene
 
 Promjena je spremna kada su primjenjivi uvjeti zadovoljeni:
