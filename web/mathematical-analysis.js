@@ -44,8 +44,8 @@ function setupMathematicalAnalysis(module) {
     function calculateNthDerivative() {
         try {
             const expression = text("ma-nth-expression");
-            const order = number("ma-nth-order");
-            const point = number("ma-nth-point");
+            const order = boundedNumber("ma-nth-order", { min: 1, max: 50, integer: true });
+            const point = boundedNumber("ma-nth-point", { min: -1e6, max: 1e6 });
             const result = parse(module.mathematicalAnalysisNthDerivative(expression, order, point, "x"), "ma-nth-result");
             if (!result) return;
             render("ma-nth-result", [["n-ta derivacija", result.derivativeExpression, true], ["Vrijednost u točki", format(result.derivativeValueAtPoint)]]);
@@ -159,10 +159,10 @@ function setupMathematicalAnalysis(module) {
     function calculateOde() {
         try {
             const functionName = select("ma-ode-function");
-            const initialT = number("ma-ode-t0");
-            const initialY = number("ma-ode-y0");
-            const finalT = number("ma-ode-tfinal");
-            const stepSize = number("ma-ode-step");
+            const initialT = boundedNumber("ma-ode-t0", { min: -1e6, max: 1e6 });
+            const initialY = boundedNumber("ma-ode-y0", { min: -1e6, max: 1e6 });
+            const finalT = boundedNumber("ma-ode-tfinal", { min: -1e6, max: 1e6 });
+            const stepSize = boundedNumber("ma-ode-step", { min: 1e-6, max: 1e6 });
             const euler = parse(module.mathematicalAnalysisSolveOde(functionName, "euler", initialT, initialY, finalT, stepSize), "ma-ode-result");
             const rk4 = parse(module.mathematicalAnalysisSolveOde(functionName, "rk4", initialT, initialY, finalT, stepSize), "ma-ode-result");
             if (!euler || !rk4) return;

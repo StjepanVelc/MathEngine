@@ -6,10 +6,25 @@
 
 namespace aksiomat::mathematical_analysis {
 
+namespace {
+
+constexpr double maximumOdeSteps = 5000.0;
+
+void requireBoundedStepCount(double initialT, double finalT, double stepSize) {
+	const double span = finalT - initialT;
+	const double estimatedSteps = std::ceil(span / stepSize);
+	if (!std::isfinite(estimatedSteps) || estimatedSteps > maximumOdeSteps) {
+		throw std::invalid_argument("Prevelik broj koraka (vise od " + std::to_string(static_cast<long long>(maximumOdeSteps)) + "). Povecaj velicinu koraka ili smanji interval.");
+	}
+}
+
+} // namespace
+
 OdeSolutionResult DifferentialEquations::solveEuler(const std::function<double(double, double)>& f,
 	const std::string& description, double initialT, double initialY, double finalT, double stepSize) {
 	if (stepSize <= 0.0) throw std::invalid_argument("Korak mora biti pozitivan");
 	if (finalT < initialT) throw std::invalid_argument("Konacni t mora biti veci ili jednak pocetnom t");
+	requireBoundedStepCount(initialT, finalT, stepSize);
 
 	OdeSolutionResult result;
 	result.description = description;
@@ -43,6 +58,7 @@ OdeSolutionResult DifferentialEquations::solveRungeKutta4(const std::function<do
 	const std::string& description, double initialT, double initialY, double finalT, double stepSize) {
 	if (stepSize <= 0.0) throw std::invalid_argument("Korak mora biti pozitivan");
 	if (finalT < initialT) throw std::invalid_argument("Konacni t mora biti veci ili jednak pocetnom t");
+	requireBoundedStepCount(initialT, finalT, stepSize);
 
 	OdeSolutionResult result;
 	result.description = description;

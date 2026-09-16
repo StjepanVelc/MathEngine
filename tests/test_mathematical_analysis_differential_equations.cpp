@@ -36,3 +36,9 @@ TEST(DifferentialEquations, RejectsFinalTBeforeInitialT) {
 	const auto f = [](double, double y) { return y; };
 	EXPECT_THROW(DifferentialEquations::solveRungeKutta4(f, "y' = y", 1.0, 1.0, 0.0, 0.1), std::invalid_argument);
 }
+
+TEST(DifferentialEquations, RejectsExcessiveStepCount) {
+	const auto f = [](double, double y) { return y; };
+	EXPECT_THROW(DifferentialEquations::solveEuler(f, "y' = y", 0.0, 1.0, 1.0, 1e-12), std::invalid_argument);
+	EXPECT_THROW(DifferentialEquations::solveRungeKutta4(f, "y' = y", 0.0, 1.0, 1.0, 1e-12), std::invalid_argument);
+}

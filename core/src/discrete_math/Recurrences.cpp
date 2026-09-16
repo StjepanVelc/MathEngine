@@ -8,6 +8,8 @@ namespace aksiomat::discrete_math {
 
 namespace {
 
+constexpr int maximumRecurrenceTerms = 500;
+
 std::string formatNumber(double value) {
 	std::ostringstream stream;
 	stream.precision(6);
@@ -62,12 +64,19 @@ RecurrenceTermsResult Recurrences::generateTerms(double p, double q, double a0, 
 	if (count < 0) {
 		throw std::invalid_argument("Broj clanova ne smije biti negativan.");
 	}
+	if (count > maximumRecurrenceTerms) {
+		throw std::invalid_argument("Broj clanova ne smije biti veci od " + std::to_string(maximumRecurrenceTerms) + ".");
+	}
 	std::vector<double> terms;
 	terms.reserve(static_cast<std::size_t>(count));
 	if (count > 0) terms.push_back(a0);
 	if (count > 1) terms.push_back(a1);
 	for (int i = 2; i < count; ++i) {
-		terms.push_back(p * terms[i - 1] + q * terms[i - 2]);
+		const double next = p * terms[i - 1] + q * terms[i - 2];
+		if (!std::isfinite(next)) {
+			throw std::invalid_argument("Rekurzija je preplavila (overflow) prije dostizanja trazenog broja clanova.");
+		}
+		terms.push_back(next);
 	}
 	std::vector<std::string> steps{
 		"Clanovi rekurzije generirani su izravnom primjenom formule a_n = " + formatNumber(p) + "*a_(n-1) + " + formatNumber(q) + "*a_(n-2)."

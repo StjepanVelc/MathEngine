@@ -7,9 +7,14 @@
 
 namespace aksiomat::mathematical_analysis {
 
+namespace {
+constexpr int maximumDerivativeOrder = 50;
+} // namespace
+
 HigherOrderDerivativeResult AdvancedDerivatives::nthDerivative(const std::string& expression, int order, double point,
 	const std::string& variable) {
 	if (order < 1) throw std::invalid_argument("Red derivacije mora biti barem 1");
+	if (order > maximumDerivativeOrder) throw std::invalid_argument("Red derivacije ne smije biti veci od " + std::to_string(maximumDerivativeOrder));
 
 	auto polynomial = aksiomat::algebra::Polynomial::parse(expression, variable);
 

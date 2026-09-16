@@ -24,6 +24,11 @@ TEST(AnalyticGeometryVectors, RejectsZeroAndNonFiniteVectors) {
 	EXPECT_THROW(PointsVectors::magnitude({std::numeric_limits<double>::infinity(), 0}), std::invalid_argument);
 }
 
+TEST(AnalyticGeometryVectors, RejectsCoordinatesAboveMagnitudeLimit) {
+	EXPECT_THROW(PointsVectors::magnitude({2e6, 0}), std::invalid_argument);
+	EXPECT_NO_THROW(PointsVectors::magnitude({1e6, 0}));
+}
+
 TEST(AnalyticGeometryLines, HandlesGeneralAndVerticalLines) {
 	const auto diagonal = LinesDistances::throughPoints({0, 0}, {2, 2});
 	const auto analysis = LinesDistances::analyze(diagonal);

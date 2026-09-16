@@ -27,12 +27,16 @@ function makeInput(type, value) {
 
 function loadInputGuard() {
     const listeners = {};
+    const elements = {};
     const context = {
         document: {
             addEventListener(event, handler) {
                 listeners[event] = handler;
             },
             activeElement: null,
+            getElementById(id) {
+                return elements[id] || null;
+            },
         },
         window: {},
         setTimeout,
@@ -40,7 +44,7 @@ function loadInputGuard() {
     };
     vm.createContext(context);
     new vm.Script(source, { filename: "input-guard.js" }).runInContext(context);
-    return { context, listeners };
+    return { context, listeners, elements };
 }
 
 let passed = 0;
@@ -50,12 +54,13 @@ function check(name, fn) {
     console.log(`ok - ${name}`);
 }
 
-const { context } = loadInputGuard();
+const { context, elements } = loadInputGuard();
 const { guardValue } = context.window;
-const { formatNumberForDisplay } = context;
+const { formatNumberForDisplay, boundedNumber } = context;
 
 assert.equal(typeof guardValue, "function", "window.guardValue must be exposed");
 assert.equal(typeof formatNumberForDisplay, "function", "formatNumberForDisplay must be exposed globally");
+assert.equal(typeof boundedNumber, "function", "boundedNumber must be exposed globally");
 
 check("strips angle brackets from text input", () => {
     const el = makeInput("text", "x^2 <script>alert(1)</script>");
@@ -119,6 +124,37 @@ check("formatNumberForDisplay handles non-finite input gracefully", () => {
     assert.equal(formatNumberForDisplay(Infinity), "Infinity");
     assert.equal(formatNumberForDisplay(NaN), "NaN");
     assert.equal(formatNumberForDisplay("not-a-number"), "not-a-number");
+});
+
+check("boundedNumber accepts a value within range", () => {
+    elements["num-1"] = makeInput("number", "42");
+    const value = boundedNumber("num-1", { min: 0, max: 100 });
+    assert.equal(value, 42);
+});
+
+check("boundedNumber rejects an empty field", () => {
+    elements["num-2"] = makeInput("number", "  ");
+    assert.throws(() => boundedNumber("num-2"), /Upiši broj/);
+});
+
+check("boundedNumber rejects a semantically huge but short value like 1e308", () => {
+    elements["num-3"] = makeInput("number", "1e308");
+    assert.throws(() => boundedNumber("num-3", { min: -1e6, max: 1e6 }), /između/);
+});
+
+check("boundedNumber rejects non-finite values", () => {
+    elements["num-4"] = makeInput("number", "Infinity");
+    assert.throws(() => boundedNumber("num-4"), /konačan broj/);
+});
+
+check("boundedNumber enforces integer option", () => {
+    elements["num-5"] = makeInput("number", "3.5");
+    assert.throws(() => boundedNumber("num-5", { integer: true }), /cijeli broj/);
+});
+
+check("boundedNumber uses default range of +-1000000 when not specified", () => {
+    elements["num-6"] = makeInput("number", "2000000");
+    assert.throws(() => boundedNumber("num-6"), /između/);
 });
 
 console.log(`${passed} input-guard tests passed.`);

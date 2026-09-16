@@ -47,3 +47,33 @@ function formatNumberForDisplay(value, digits = 3) {
     if (abs >= 1e6 || abs < 1e-6) return n.toExponential(digits);
     return Number(n.toFixed(digits)).toString();
 }
+
+// boundedNumber(id, options) čita broj iz inputa i validira ga semantički
+// (ne samo duljinu stringa), jer kratki unosi poput "1e308" i dalje mogu
+// preplaviti C++/WASM izračun. Baca Error s hrvatskom porukom ako je unos
+// prazan, beskonačan, izvan raspona ili (ako je traženo) nije cijeli broj.
+function boundedNumber(id, { min = -1000000, max = 1000000, integer = false } = {}) {
+    const input = document.getElementById(id);
+
+    if (!input || input.value.trim() === "") {
+        throw new Error("Upiši broj.");
+    }
+
+    const value = Number(input.value);
+
+    if (!Number.isFinite(value)) {
+        throw new Error("Vrijednost mora biti konačan broj.");
+    }
+
+    if (integer && !Number.isInteger(value)) {
+        throw new Error("Vrijednost mora biti cijeli broj.");
+    }
+
+    if (value < min || value > max) {
+        throw new Error(`Vrijednost mora biti između ${min} i ${max}.`);
+    }
+
+    return value;
+}
+
+window.boundedNumber = boundedNumber;

@@ -24,6 +24,10 @@ TEST(AdvancedDerivatives, RejectsNonPositiveOrder) {
 	EXPECT_THROW(AdvancedDerivatives::nthDerivative("x^2", 0, 1.0), std::invalid_argument);
 }
 
+TEST(AdvancedDerivatives, RejectsOrderAboveMaximum) {
+	EXPECT_THROW(AdvancedDerivatives::nthDerivative("x^2", 51, 1.0), std::invalid_argument);
+}
+
 TEST(AdvancedDerivatives, ComputesChainRuleDerivative) {
 	// h(x) = f(g(x)) with f(x) = x^2, g(x) = 2x + 1 => h'(x) = 2*g(x)*2 = 4*(2x+1)
 	const auto result = AdvancedDerivatives::chainRule("x^2", "2x + 1", 1.0);

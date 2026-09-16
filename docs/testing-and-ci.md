@@ -246,12 +246,25 @@ node scripts/validate_web.mjs
 - da se polja koja nisu tekst/broj/search (npr. `range`) i ne-input elementi ignoriraju
 - da `formatNumberForDisplay` vraća plošni decimalni zapis za uobičajene brojeve, a znanstveni zapis (`1.235e+8`, `1.234e-7`) za vrlo velike/male vrijednosti
 - da `formatNumberForDisplay` ne baca grešku na `NaN`/`Infinity`/ne-brojčane vrijednosti
+- da `boundedNumber(id, {min, max, integer})` odbija prazna, ne-konačna, izvan raspona i (kad je traženo) ne-cjelobrojna polja, uključujući kratke ali semantički ogromne unose poput `1e308`
 
 Pokretanje:
 
 ```powershell
 node scripts/test_input_guard.mjs
 ```
+
+## Ograničenja složenosti (computational limits)
+
+Duljina unosa (`maxlength`) i `boundedNumber()` sprječavaju očito prevelike ili besmislene unose na razini preglednika, ali WASM funkcije mogu se pozvati i izravno iz konzole preglednika, pa je stvarna granica u C++ core-u:
+
+- `discrete_math::Recurrences::generateTerms` — najviše 500 članova (`maximumRecurrenceTerms`), uz provjeru overflowa tijekom generiranja
+- `mathematical_analysis::DifferentialEquations::solveEuler` i `solveRungeKutta4` — procijenjeni broj koraka `ceil((finalT - initialT) / stepSize)` ne smije prijeći 5000 (`maximumOdeSteps`)
+- `mathematical_analysis::AdvancedDerivatives::nthDerivative` — red derivacije ograničen na 1-50 (`maximumDerivativeOrder`)
+- `analytic_geometry::PointsVectors` (2D) i `linear_algebra::SpaceVectorsPlanes` (3D) — koordinate i skalari ograničeni na raspon [-1e6, 1e6] (`maximumMagnitude`) u zajedničkoj `requireFinite` provjeri
+- `wasm_bindings.cpp::formatDouble` — baca `std::overflow_error` ako je konačan unos svejedno proizveo `NaN`/`Infinity` rezultat (npr. zbog međurezultata koji je preplavio raspon), pa se to nikad ne vraća kao JSON
+
+Ova ograničenja pokrivena su odgovarajućim GoogleTest testovima u `tests/` (npr. `Recurrences.ThrowsWhenCountExceedsMaximum`, `DifferentialEquations.RejectsExcessiveStepCount`, `AdvancedDerivatives.RejectsOrderAboveMaximum`, `AnalyticGeometryVectors.RejectsCoordinatesAboveMagnitudeLimit`, `SpaceVectorsPlanes.RejectsCoordinatesAboveMagnitudeLimit`) koji se pokreću u sklopu redovnog `native` CI posla.
 
 ### Zašto uključuje JavaScript template
 

@@ -8,9 +8,14 @@ namespace aksiomat::linear_algebra {
 
 namespace {
 
+constexpr double maximumMagnitude = 1e6;
+
 void requireFinite(double value, const char* name) {
 	if (!std::isfinite(value)) {
 		throw std::invalid_argument(std::string(name) + " mora biti konacan broj.");
+	}
+	if (std::abs(value) > maximumMagnitude) {
+		throw std::invalid_argument(std::string(name) + " mora biti u rasponu [-1e6, 1e6].");
 	}
 }
 

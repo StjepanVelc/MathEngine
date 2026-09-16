@@ -81,6 +81,9 @@
 namespace {
 
 std::string formatDouble(double value) {
+	if (!std::isfinite(value)) {
+		throw std::overflow_error("Rezultat je izvan podrzanog numerickog raspona.");
+	}
 	std::string text = std::to_string(value);
 	text.erase(text.find_last_not_of('0') + 1);
 	if (!text.empty() && text.back() == '.') text.pop_back();

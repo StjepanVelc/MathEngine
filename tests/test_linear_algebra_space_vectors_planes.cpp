@@ -39,6 +39,11 @@ TEST(SpaceVectorsPlanes, RejectsCollinearPointsForPlane) {
 	EXPECT_THROW(SpaceVectorsPlanes::planeFromThreePoints(Point3D{0, 0, 0}, Point3D{1, 1, 1}, Point3D{2, 2, 2}), std::invalid_argument);
 }
 
+TEST(SpaceVectorsPlanes, RejectsCoordinatesAboveMagnitudeLimit) {
+	EXPECT_THROW(SpaceVectorsPlanes::analyze(Vector3D{2e6, 0, 0}), std::invalid_argument);
+	EXPECT_NO_THROW(SpaceVectorsPlanes::analyze(Vector3D{1e6, 0, 0}));
+}
+
 TEST(SpaceVectorsPlanes, FindsLinePlaneIntersection) {
 	// Pravac kroz (0,0,0) u smjeru (0,0,1), ravnina z - 5 = 0.
 	LinePlaneRelation relation = SpaceVectorsPlanes::lineVsPlane(Point3D{0, 0, 0}, Vector3D{0, 0, 1}, 0, 0, 1, -5);

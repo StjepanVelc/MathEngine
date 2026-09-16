@@ -61,8 +61,8 @@ function setupAnalyticAlgebra(module) {
     // Vektori u prostoru
     function calculateSpaceVectors() {
         try {
-            const ax = number("aga-vectors-ax"), ay = number("aga-vectors-ay"), az = number("aga-vectors-az");
-            const bx = number("aga-vectors-bx"), by = number("aga-vectors-by"), bz = number("aga-vectors-bz");
+            const ax = boundedNumber("aga-vectors-ax", { min: -1e6, max: 1e6 }), ay = boundedNumber("aga-vectors-ay", { min: -1e6, max: 1e6 }), az = boundedNumber("aga-vectors-az", { min: -1e6, max: 1e6 });
+            const bx = boundedNumber("aga-vectors-bx", { min: -1e6, max: 1e6 }), by = boundedNumber("aga-vectors-by", { min: -1e6, max: 1e6 }), bz = boundedNumber("aga-vectors-bz", { min: -1e6, max: 1e6 });
             const result = parse(module.linearAlgebraSpaceVectors(ax, ay, az, bx, by, bz), "aga-vectors-result");
             if (!result) return;
             render("aga-vectors-result", [["Vektorski produkt", `(${format(result.cross.x)}, ${format(result.cross.y)}, ${format(result.cross.z)})`, true], ["Duljina produkta", format(result.crossMagnitude)], ["Skalarni produkt", format(result.dot)]]);
@@ -76,9 +76,9 @@ function setupAnalyticAlgebra(module) {
 
     function calculatePlaneFromPoints() {
         try {
-            const x1 = number("aga-plane-x1"), y1 = number("aga-plane-y1"), z1 = number("aga-plane-z1");
-            const x2 = number("aga-plane-x2"), y2 = number("aga-plane-y2"), z2 = number("aga-plane-z2");
-            const x3 = number("aga-plane-x3"), y3 = number("aga-plane-y3"), z3 = number("aga-plane-z3");
+            const x1 = boundedNumber("aga-plane-x1", { min: -1e6, max: 1e6 }), y1 = boundedNumber("aga-plane-y1", { min: -1e6, max: 1e6 }), z1 = boundedNumber("aga-plane-z1", { min: -1e6, max: 1e6 });
+            const x2 = boundedNumber("aga-plane-x2", { min: -1e6, max: 1e6 }), y2 = boundedNumber("aga-plane-y2", { min: -1e6, max: 1e6 }), z2 = boundedNumber("aga-plane-z2", { min: -1e6, max: 1e6 });
+            const x3 = boundedNumber("aga-plane-x3", { min: -1e6, max: 1e6 }), y3 = boundedNumber("aga-plane-y3", { min: -1e6, max: 1e6 }), z3 = boundedNumber("aga-plane-z3", { min: -1e6, max: 1e6 });
             const result = parse(module.linearAlgebraPlaneFromPoints(x1, y1, z1, x2, y2, z2, x3, y3, z3), "aga-plane-result");
             if (!result) return;
             render("aga-plane-result", [["Jednadžba ravnine", `${format(result.normalX)}x + ${format(result.normalY)}y + ${format(result.normalZ)}z + ${format(result.constant)} = 0`, true]]);

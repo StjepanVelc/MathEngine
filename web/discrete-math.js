@@ -83,10 +83,10 @@ function setupDiscreteMath(module) {
     // Rekurzije
     function calculateRecurrence() {
         try {
-            const p = Number(document.getElementById("dm-recurrence-p").value);
-            const q = Number(document.getElementById("dm-recurrence-q").value);
-            const a0 = Number(document.getElementById("dm-recurrence-a0").value);
-            const a1 = Number(document.getElementById("dm-recurrence-a1").value);
+            const p = boundedNumber("dm-recurrence-p", { min: -1e6, max: 1e6 });
+            const q = boundedNumber("dm-recurrence-q", { min: -1e6, max: 1e6 });
+            const a0 = boundedNumber("dm-recurrence-a0", { min: -1e6, max: 1e6 });
+            const a1 = boundedNumber("dm-recurrence-a1", { min: -1e6, max: 1e6 });
             const result = parse(module.discreteMathSolveRecurrence(p, q, a0, a1), "dm-recurrence-result");
             if (!result) return;
             const rows = result.repeatedRoot
@@ -100,11 +100,11 @@ function setupDiscreteMath(module) {
 
     function calculateTerms() {
         try {
-            const p = Number(document.getElementById("dm-recurrence-p").value);
-            const q = Number(document.getElementById("dm-recurrence-q").value);
-            const a0 = Number(document.getElementById("dm-recurrence-a0").value);
-            const a1 = Number(document.getElementById("dm-recurrence-a1").value);
-            const count = integer("dm-terms-count");
+            const p = boundedNumber("dm-recurrence-p", { min: -1e6, max: 1e6 });
+            const q = boundedNumber("dm-recurrence-q", { min: -1e6, max: 1e6 });
+            const a0 = boundedNumber("dm-recurrence-a0", { min: -1e6, max: 1e6 });
+            const a1 = boundedNumber("dm-recurrence-a1", { min: -1e6, max: 1e6 });
+            const count = boundedNumber("dm-terms-count", { min: 0, max: 500, integer: true });
             const result = parse(module.discreteMathRecurrenceTerms(p, q, a0, a1, count), "dm-terms-result");
             if (!result) return;
             render("dm-terms-result", [["Clanovi", `[${result.terms.map(format).join(", ")}]`, true]]);

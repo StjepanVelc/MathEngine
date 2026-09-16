@@ -8,8 +8,11 @@
 namespace aksiomat::analytic_geometry {
 namespace {
 
+constexpr double maximumMagnitude = 1e6;
+
 void requireFinite(double value) {
 	if (!std::isfinite(value)) throw std::invalid_argument("Coordinates and scalars must be finite");
+	if (std::abs(value) > maximumMagnitude) throw std::invalid_argument("Coordinates and scalars must not exceed 1e6 in magnitude");
 }
 
 void requireFinite(Point2D point) {

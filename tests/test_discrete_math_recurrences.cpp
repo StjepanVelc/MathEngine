@@ -35,3 +35,11 @@ TEST(Recurrences, GeneratesFibonacciTerms) {
 TEST(Recurrences, ThrowsOnNegativeCount) {
 	EXPECT_THROW(Recurrences::generateTerms(1, 1, 0, 1, -1), std::invalid_argument);
 }
+
+TEST(Recurrences, ThrowsWhenCountExceedsMaximum) {
+	EXPECT_THROW(Recurrences::generateTerms(1, 1, 0, 1, 501), std::invalid_argument);
+}
+
+TEST(Recurrences, AllowsCountAtMaximum) {
+	EXPECT_NO_THROW(Recurrences::generateTerms(1, 1, 0, 1, 500));
+}
