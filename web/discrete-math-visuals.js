@@ -110,7 +110,7 @@ window.DiscreteMathVisuals = (() => {
             const x = plotLeft + ((index + 0.5) / terms.length) * (plotRight - plotLeft);
             const y = toY(value), zero = toY(0);
             svg.append(node("rect", { x: x - barWidth / 2, y: Math.min(y, zero), width: barWidth, height: Math.abs(y - zero) || 1, fill: colors.bar }));
-            svg.append(node("text", { x, y: y - (value >= 0 ? 8 : -18), fill: colors.text, "font-size": 12, "text-anchor": "middle" }, `a${index}=${Number(value.toFixed(2))}`));
+            svg.append(node("text", { x, y: y - (value >= 0 ? 8 : -18), fill: colors.text, "font-size": 12, "text-anchor": "middle" }, `a${index}=${formatNumberForDisplay(value, 2)}`));
         });
         cache.set(containerId, () => termsChart(containerId, terms));
     }

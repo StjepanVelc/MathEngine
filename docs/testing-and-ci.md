@@ -10,8 +10,11 @@ flowchart TD
 	C --> W[WASM build]
 	W --> S[Node smoke pozivi]
 	J[Web/JSON promjena] --> V[validate_web.mjs]
+	J --> G[test_input_guard.mjs]
 	U --> CI[GitHub Actions]
 	W --> CI
+	V --> CI
+	G --> CI
 ```
 
 - GoogleTest provjerava matematičko ponašanje izravno nad C++ API-jem.
@@ -224,11 +227,30 @@ Smoke test nije zamjena za GoogleTest; on provjerava granicu, ne sve algoritamsk
 - elemente stvorene statički na bilo kojoj HTML stranici i kroz dinamički template vježbaonice
 - 22 geometrijska zadatka te po 24 zadatka za trigonometriju, nizove, analitičku geometriju, eksponencijalne/logaritamske funkcije, kombinatoriku/vjerojatnost/statistiku i matematičku analizu
 - jedinstvenost ID-jeva u svim bankama
+- da `osnovna-skola.html`, `srednja-skola.html` i `fakultet.html` učitavaju `input-guard.js` prije `aksiomat.js` i ostalih modula
+- da svaki `type="text"` input na tim stranicama ima atribut `maxlength`
 
 Pokretanje:
 
 ```powershell
 node scripts/validate_web.mjs
+```
+
+## Test zaštite unosa (`input-guard.js`)
+
+`scripts/test_input_guard.mjs` učitava `web/input-guard.js` u Node `vm` kontekst s minimalnim `document`/`window` stubovima (bez pravog preglednika) i provjerava:
+
+- da `guardValue` uklanja `<`/`>` iz tekstualnih i brojčanih polja
+- da se tekstualni unos skraćuje na 200 znakova, a brojčani na 32 znaka
+- da legitimna matematička/logička notacija (unicode simboli poput ∧, ¬, →, ∀, ∃) ostaje netaknuta
+- da se polja koja nisu tekst/broj/search (npr. `range`) i ne-input elementi ignoriraju
+- da `formatNumberForDisplay` vraća plošni decimalni zapis za uobičajene brojeve, a znanstveni zapis (`1.235e+8`, `1.234e-7`) za vrlo velike/male vrijednosti
+- da `formatNumberForDisplay` ne baca grešku na `NaN`/`Infinity`/ne-brojčane vrijednosti
+
+Pokretanje:
+
+```powershell
+node scripts/test_input_guard.mjs
 ```
 
 ### Zašto uključuje JavaScript template
@@ -269,6 +291,21 @@ ctest --output-on-failure
 
 Linux CI je koristan dodatak lokalnom MSVC buildu jer otkriva neprenosive pretpostavke i razlike compilerskih implementacija.
 
+### Job `web`
+
+Okruženje: `ubuntu-latest`, Node.js 22.
+
+Koraci:
+
+```text
+checkout
+setup Node.js
+node scripts/validate_web.mjs
+node scripts/test_input_guard.mjs
+```
+
+Ovaj job pokreće web validator i test zaštite unosa opisane gore, na svaki `push`/`pull_request`.
+
 ### Job `wasm`
 
 Okruženje: `ubuntu-latest`, Emscripten 4.0.15.
@@ -283,12 +320,12 @@ build
 provjera web/aksiomat.js i web/aksiomat.wasm
 ```
 
-Trenutačni CI potvrđuje postojanje artefakata, ali ne pokreće Node smoke test ni `scripts/validate_web.mjs`. To su preporučena buduća CI proširenja.
+Trenutačni CI ne pokreće Node WASM smoke test (poziv generiranog modula); to je preporučeno buduće CI proširenje.
 
 ### Job `deploy`
 
-Pokreće se samo na `push` prema grani `master` (ne na `pull_request`), nakon uspješnog `native` i `wasm` job-a (`needs: [native, wasm]`) — 
-dakle tek kad prođu i C++ testovi i WASM build. Preuzima artefakt otpremljen u `wasm` jobu (`actions/upload-pages-artifact` nad mapom `web/`, 
+Pokreće se samo na `push` prema grani `master` (ne na `pull_request`), nakon uspješnog `native`, `web` i `wasm` job-a (`needs: [native, web, wasm]`) —
+dakle tek kad prođu i C++ testovi, web validacija/testovi te WASM build. Preuzima artefakt otpremljen u `wasm` jobu (`actions/upload-pages-artifact` nad mapom `web/`,
 koja u tom trenutku već sadrži svježe izgrađene `aksiomat.js`/`aksiomat.wasm`) i objavljuje ga na GitHub Pages preko `actions/deploy-pages`.
 
 ### Analitika (Cloudflare Web Analytics)

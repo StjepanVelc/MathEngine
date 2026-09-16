@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="hr">
 <head>
 	<meta charset="UTF-8">
@@ -59,7 +59,7 @@
                         <button type="button" data-symbol="(">(</button>
                         <button type="button" data-symbol=")">)</button>
                     </div>
-                    <input type="text" id="logic-input" class="formula-input" placeholder="npr. (p ∧ ¬q) → r" autocomplete="off">
+                    <input type="text" maxlength="200" id="logic-input" class="formula-input" placeholder="npr. (p ∧ ¬q) → r" autocomplete="off">
                     <p id="logic-parsed" class="parsed"></p>
                     <div id="logic-vars"></div>
                     <p>Rezultat: <output id="logic-result">—</output></p>
@@ -98,12 +98,12 @@
                         <button type="button" data-symbol="(">(</button>
                         <button type="button" data-symbol=")">)</button>
                     </div>
-                    <input type="text" id="pred-input" class="formula-input" placeholder="npr. ∀x ∃y Manji(x, y)" autocomplete="off">
+                    <input type="text" maxlength="200" id="pred-input" class="formula-input" placeholder="npr. ∀x ∃y Manji(x, y)" autocomplete="off">
                     <p id="pred-parsed" class="parsed"></p>
                     <p id="pred-highlighted" class="predicate-highlight" aria-label="Označene varijable"></p>
                     <h3>Interpretacija (konačna domena)</h3>
                     <label>Domena (elementi odvojeni zarezom):<br>
-                        <input type="text" id="pred-domain" class="formula-input" placeholder="npr. 1,2,3" autocomplete="off">
+                        <input type="text" maxlength="200" id="pred-domain" class="formula-input" placeholder="npr. 1,2,3" autocomplete="off">
                     </label>
                     <p id="pred-free-vars" class="parsed"></p>
                     <p id="pred-bound-vars" class="parsed"></p>
@@ -139,7 +139,7 @@
                             <button type="button" data-symbol="(">(</button>
                             <button type="button" data-symbol=")">)</button>
                         </div>
-                        <input type="text" id="form-input" class="formula-input" placeholder="upiši formulu…" autocomplete="off">
+                        <input type="text" maxlength="200" id="form-input" class="formula-input" placeholder="upiši formulu…" autocomplete="off">
                         <div class="form-actions">
                             <button type="button" id="form-check">Provjeri</button>
                             <button type="button" id="form-next">Sljedeći zadatak</button>
@@ -454,9 +454,9 @@
 
                 <div id="cps-probability" class="combinatorics-probability-statistics-panel" hidden><div class="combinatorics-probability-statistics-layout"><div><span class="combinatorics-probability-statistics-chip">P(A), P(A∪B), P(A|B)</span><h2>Vjerojatnost</h2><p class="tool-description">Istraži klasičnu vjerojatnost, komplement, uniju, uvjetnu vjerojatnost i nezavisne događaje.</p><label>Način<select id="cps-probability-mode"><option value="classical">Klasična vjerojatnost</option><option value="complement">Komplement</option><option value="union">Unija</option><option value="conditional">Uvjetna vjerojatnost</option><option value="independent">Nezavisni događaji</option></select></label><div id="cps-probability-fields" class="combinatorics-probability-statistics-form-grid"></div><button id="cps-probability-calculate" type="button">Izračunaj</button><div id="cps-probability-result" class="result-grid"></div><div id="cps-probability-steps" class="combinatorics-probability-statistics-steps"></div></div></div></div>
 
-                <div id="cps-statistics" class="combinatorics-probability-statistics-panel" hidden><div class="combinatorics-probability-statistics-layout"><div><span class="combinatorics-probability-statistics-chip">Sredina, medijan, mod</span><h2>Deskriptivna statistika</h2><p class="tool-description">Upiši podatke odvojene zarezima i izračunaj mjere središnje vrijednosti i raspršenosti.</p><label>Podaci<input id="cps-statistics-dataset" type="text" value="2, 4, 4, 4, 5, 5, 7, 9"></label><button id="cps-statistics-calculate" type="button">Izračunaj</button><div id="cps-statistics-result" class="result-grid"></div><div id="cps-statistics-steps" class="combinatorics-probability-statistics-steps"></div></div></div></div>
+                <div id="cps-statistics" class="combinatorics-probability-statistics-panel" hidden><div class="combinatorics-probability-statistics-layout"><div><span class="combinatorics-probability-statistics-chip">Sredina, medijan, mod</span><h2>Deskriptivna statistika</h2><p class="tool-description">Upiši podatke odvojene zarezima i izračunaj mjere središnje vrijednosti i raspršenosti.</p><label>Podaci<input id="cps-statistics-dataset" type="text" maxlength="200" value="2, 4, 4, 4, 5, 5, 7, 9"></label><button id="cps-statistics-calculate" type="button">Izračunaj</button><div id="cps-statistics-result" class="result-grid"></div><div id="cps-statistics-steps" class="combinatorics-probability-statistics-steps"></div></div></div></div>
 
-                <div id="cps-visualization" class="combinatorics-probability-statistics-panel" hidden><div class="combinatorics-probability-statistics-layout"><div><span class="combinatorics-probability-statistics-chip">Histogram</span><h2>Vizualizacija podataka</h2><p class="tool-description">Podijeli podatke u razrede i prikaži frekvencije histogramom.</p><label>Podaci<input id="cps-visualization-dataset" type="text" value="2, 4, 4, 4, 5, 5, 7, 9, 12, 15, 15, 18"></label><label>Broj razreda<input id="cps-visualization-bins" type="number" step="1" value="4"></label><button id="cps-visualization-calculate" type="button">Nacrtaj histogram</button><div id="cps-visualization-result" class="result-grid"></div><div id="cps-visualization-steps" class="combinatorics-probability-statistics-steps"></div></div><div id="cps-visualization-visual" class="combinatorics-probability-statistics-visual" aria-label="Histogram frekvencija"></div></div></div>
+                <div id="cps-visualization" class="combinatorics-probability-statistics-panel" hidden><div class="combinatorics-probability-statistics-layout"><div><span class="combinatorics-probability-statistics-chip">Histogram</span><h2>Vizualizacija podataka</h2><p class="tool-description">Podijeli podatke u razrede i prikaži frekvencije histogramom.</p><label>Podaci<input id="cps-visualization-dataset" type="text" maxlength="200" value="2, 4, 4, 4, 5, 5, 7, 9, 12, 15, 15, 18"></label><label>Broj razreda<input id="cps-visualization-bins" type="number" step="1" value="4"></label><button id="cps-visualization-calculate" type="button">Nacrtaj histogram</button><div id="cps-visualization-result" class="result-grid"></div><div id="cps-visualization-steps" class="combinatorics-probability-statistics-steps"></div></div><div id="cps-visualization-visual" class="combinatorics-probability-statistics-visual" aria-label="Histogram frekvencija"></div></div></div>
 
                 <div id="cps-practice" class="combinatorics-probability-statistics-panel" hidden><div id="cps-practice-root"></div></div>
             </div>
@@ -474,19 +474,20 @@
                     <button type="button" class="calculus-basics-toggle calculus-basics-practice-toggle" data-panel="calculus-basics-practice">Vježbaonica</button>
                 </nav>
 
-                <div id="calculus-limits" class="calculus-basics-panel"><div class="calculus-basics-layout"><div><span class="calculus-basics-chip">lim f(x)</span><h2>Intuitivni limes</h2><p class="tool-description">Procijeni limes polinoma kada x teži zadanoj točki, numeričkim približavanjem s obje strane.</p><label>Izraz f(x)<input id="calculus-limit-expression" type="text" value="x^2+1"></label><label>Točka<input id="calculus-limit-point" type="number" step="any" value="2"></label><button id="calculus-limit-calculate" type="button">Izračunaj</button><div id="calculus-limit-result" class="result-grid"></div><div id="calculus-limit-steps" class="calculus-basics-steps"></div><div id="calculus-limit-visual" class="calculus-basics-visual"></div></div></div></div>
+                <div id="calculus-limits" class="calculus-basics-panel"><div class="calculus-basics-layout"><div><span class="calculus-basics-chip">lim f(x)</span><h2>Intuitivni limes</h2><p class="tool-description">Procijeni limes polinoma kada x teži zadanoj točki, numeričkim približavanjem s obje strane.</p><label>Izraz f(x)<input id="calculus-limit-expression" type="text" maxlength="200" value="x^2+1"></label><label>Točka<input id="calculus-limit-point" type="number" step="any" value="2"></label><button id="calculus-limit-calculate" type="button">Izračunaj</button><div id="calculus-limit-result" class="result-grid"></div><div id="calculus-limit-steps" class="calculus-basics-steps"></div><div id="calculus-limit-visual" class="calculus-basics-visual"></div></div></div></div>
 
-                <div id="calculus-derivatives" class="calculus-basics-panel" hidden><div class="calculus-basics-layout"><div><span class="calculus-basics-chip">f'(x), tangenta</span><h2>Derivacija kao brzina promjene</h2><p class="tool-description">Izračunaj derivaciju polinoma, nagib tangente u točki te usporedi prosječnu i trenutnu brzinu promjene.</p><label>Izraz f(x)<input id="calculus-derivative-expression" type="text" value="x^3-2x^2+x"></label><label>Točka<input id="calculus-derivative-point" type="number" step="any" value="2"></label><button id="calculus-derivative-calculate" type="button">Izračunaj derivaciju</button><div id="calculus-derivative-result" class="result-grid"></div><div id="calculus-derivative-steps" class="calculus-basics-steps"></div><label>Izraz f(x) za brzinu promjene<input id="calculus-rate-expression" type="text" value="x^2"></label><label>Interval a<input id="calculus-rate-a" type="number" step="any" value="1"></label><label>Interval b<input id="calculus-rate-b" type="number" step="any" value="3"></label><button id="calculus-rate-calculate" type="button">Usporedi brzine promjene</button><div id="calculus-rate-result" class="result-grid"></div><div id="calculus-rate-steps" class="calculus-basics-steps"></div></div></div></div>
+                <div id="calculus-derivatives" class="calculus-basics-panel" hidden><div class="calculus-basics-layout"><div><span class="calculus-basics-chip">f'(x), tangenta</span><h2>Derivacija kao brzina promjene</h2><p class="tool-description">Izračunaj derivaciju polinoma, nagib tangente u točki te usporedi prosječnu i trenutnu brzinu promjene.</p><label>Izraz f(x)<input id="calculus-derivative-expression" type="text" maxlength="200" value="x^3-2x^2+x"></label><label>Točka<input id="calculus-derivative-point" type="number" step="any" value="2"></label><button id="calculus-derivative-calculate" type="button">Izračunaj derivaciju</button><div id="calculus-derivative-result" class="result-grid"></div><div id="calculus-derivative-steps" class="calculus-basics-steps"></div><label>Izraz f(x) za brzinu promjene<input id="calculus-rate-expression" type="text" maxlength="200" value="x^2"></label><label>Interval a<input id="calculus-rate-a" type="number" step="any" value="1"></label><label>Interval b<input id="calculus-rate-b" type="number" step="any" value="3"></label><button id="calculus-rate-calculate" type="button">Usporedi brzine promjene</button><div id="calculus-rate-result" class="result-grid"></div><div id="calculus-rate-steps" class="calculus-basics-steps"></div></div></div></div>
 
-                <div id="calculus-applications" class="calculus-basics-panel" hidden><div class="calculus-basics-layout"><div><span class="calculus-basics-chip">ekstremi, monotonost</span><h2>Primjene derivacije</h2><p class="tool-description">Analiziraj monotonost i lokalne ekstreme polinoma stupnja do 3 (izvod stupnja do 2).</p><label>Izraz f(x)<input id="calculus-applications-expression" type="text" value="x^3-3x"></label><button id="calculus-applications-calculate" type="button">Analiziraj</button><div id="calculus-applications-result" class="result-grid"></div><div id="calculus-applications-steps" class="calculus-basics-steps"></div></div></div></div>
+                <div id="calculus-applications" class="calculus-basics-panel" hidden><div class="calculus-basics-layout"><div><span class="calculus-basics-chip">ekstremi, monotonost</span><h2>Primjene derivacije</h2><p class="tool-description">Analiziraj monotonost i lokalne ekstreme polinoma stupnja do 3 (izvod stupnja do 2).</p><label>Izraz f(x)<input id="calculus-applications-expression" type="text" maxlength="200" value="x^3-3x"></label><button id="calculus-applications-calculate" type="button">Analiziraj</button><div id="calculus-applications-result" class="result-grid"></div><div id="calculus-applications-steps" class="calculus-basics-steps"></div></div></div></div>
 
-                <div id="calculus-integral" class="calculus-basics-panel" hidden><div class="calculus-basics-layout"><div><span class="calculus-basics-chip">∫ f(x) dx</span><h2>Određeni integral kao površina</h2><p class="tool-description">Izračunaj određeni integral polinoma na [a,b] pomoću antiderivacije, uz nezavisnu Simpsonovu numeričku provjeru.</p><label>Izraz f(x)<input id="calculus-integral-expression" type="text" value="x^2"></label><label>Donja granica a<input id="calculus-integral-lower" type="number" step="any" value="0"></label><label>Gornja granica b<input id="calculus-integral-upper" type="number" step="any" value="3"></label><button id="calculus-integral-calculate" type="button">Izračunaj integral</button><div id="calculus-integral-result" class="result-grid"></div><div id="calculus-integral-steps" class="calculus-basics-steps"></div></div></div></div>
+                <div id="calculus-integral" class="calculus-basics-panel" hidden><div class="calculus-basics-layout"><div><span class="calculus-basics-chip">∫ f(x) dx</span><h2>Određeni integral kao površina</h2><p class="tool-description">Izračunaj određeni integral polinoma na [a,b] pomoću antiderivacije, uz nezavisnu Simpsonovu numeričku provjeru.</p><label>Izraz f(x)<input id="calculus-integral-expression" type="text" maxlength="200" value="x^2"></label><label>Donja granica a<input id="calculus-integral-lower" type="number" step="any" value="0"></label><label>Gornja granica b<input id="calculus-integral-upper" type="number" step="any" value="3"></label><button id="calculus-integral-calculate" type="button">Izračunaj integral</button><div id="calculus-integral-result" class="result-grid"></div><div id="calculus-integral-steps" class="calculus-basics-steps"></div></div></div></div>
 
                 <div id="calculus-basics-practice" class="calculus-basics-panel" hidden><div id="calculus-basics-practice-root"></div></div>
             </div>
         </section>
 	</main>
 
+    <script src="input-guard.js"></script>
     <script src="aksiomat.js"></script>
     <script src="formalization.js"></script>
     <script src="predicates.js"></script>

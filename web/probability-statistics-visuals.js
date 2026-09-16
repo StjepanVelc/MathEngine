@@ -34,10 +34,10 @@ window.ProbabilityStatisticsVisuals = (() => {
 
         const meanX = toX(mean);
         svg.append(node("line", { x1: meanX, y1: marginY, x2: meanX, y2: marginY + plotHeight, stroke: colors.line, "stroke-width": 1.5, "stroke-dasharray": "4 4" }));
-        svg.append(node("text", { x: meanX, y: marginY - 10, fill: colors.text, "font-size": 13, "text-anchor": "middle" }, `mu = ${mean}`));
+        svg.append(node("text", { x: meanX, y: marginY - 10, fill: colors.text, "font-size": 13, "text-anchor": "middle" }, `mu = ${formatNumberForDisplay(mean, 2)}`));
         [-2, -1, 0, 1, 2].forEach((k) => {
             const x = mean + k * stdDev;
-            svg.append(node("text", { x: toX(x), y: marginY + plotHeight + 22, fill: colors.text, "font-size": 12, "text-anchor": "middle" }, x.toFixed(2)));
+            svg.append(node("text", { x: toX(x), y: marginY + plotHeight + 22, fill: colors.text, "font-size": 12, "text-anchor": "middle" }, formatNumberForDisplay(x, 2)));
         });
     }
 
@@ -58,8 +58,8 @@ window.ProbabilityStatisticsVisuals = (() => {
         const baseline = marginY + plotHeight;
         const pathData = `M${toX(xMin).toFixed(2)},${baseline} L${toX(lowerBound).toFixed(2)},${baseline} L${toX(lowerBound).toFixed(2)},${toY(density).toFixed(2)} L${toX(upperBound).toFixed(2)},${toY(density).toFixed(2)} L${toX(upperBound).toFixed(2)},${baseline} L${toX(xMax).toFixed(2)},${baseline}`;
         svg.append(node("path", { d: pathData, fill: "none", stroke: colors.curve, "stroke-width": 2.5 }));
-        svg.append(node("text", { x: toX(lowerBound), y: marginY + plotHeight + 22, fill: colors.text, "font-size": 12, "text-anchor": "middle" }, `a=${lowerBound}`));
-        svg.append(node("text", { x: toX(upperBound), y: marginY + plotHeight + 22, fill: colors.text, "font-size": 12, "text-anchor": "middle" }, `b=${upperBound}`));
+        svg.append(node("text", { x: toX(lowerBound), y: marginY + plotHeight + 22, fill: colors.text, "font-size": 12, "text-anchor": "middle" }, `a=${formatNumberForDisplay(lowerBound, 2)}`));
+        svg.append(node("text", { x: toX(upperBound), y: marginY + plotHeight + 22, fill: colors.text, "font-size": 12, "text-anchor": "middle" }, `b=${formatNumberForDisplay(upperBound, 2)}`));
     }
 
     function regressionScatter(containerId, x, y, slope, intercept) {

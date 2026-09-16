@@ -26,6 +26,19 @@ jobs:
       - name: Test
         run: ctest --test-dir out/build/ci-native --output-on-failure
 
+  web:
+    name: Web validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate web assets
+        run: node scripts/validate_web.mjs
+      - name: Test input guard
+        run: node scripts/test_input_guard.mjs
+
   wasm:
     name: WebAssembly build
     runs-on: ubuntu-latest
@@ -50,7 +63,7 @@ jobs:
   deploy:
     name: Deploy GitHub Pages
     if: github.ref == 'refs/heads/master' && github.event_name == 'push'
-    needs: [native, wasm]
+    needs: [native, web, wasm]
     runs-on: ubuntu-latest
     environment:
       name: github-pages

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="hr">
 <head>
 	<meta charset="UTF-8">
@@ -55,7 +55,7 @@
                         <button type="button" data-symbol="sqrt(">√</button><button type="button" data-symbol="pi">π</button>
                         <button type="button" data-symbol="abs(">|x|</button><button type="button" data-symbol="(">(</button><button type="button" data-symbol=")">)</button>
                     </div>
-                    <input type="text" id="arith-input" class="formula-input" placeholder="npr. -2^2 + sqrt(16) * 3!" autocomplete="off">
+                    <input type="text" maxlength="200" id="arith-input" class="formula-input" placeholder="npr. -2^2 + sqrt(16) * 3!" autocomplete="off">
                     <button id="arith-eval">Izračunaj</button>
                     <div class="result-grid"><div class="result-row result-primary"><span>Rezultat</span><output id="arith-result">—</output></div></div>
                 </div>
@@ -290,6 +290,7 @@
         </section>
 	</main>
 
+    <script src="input-guard.js"></script>
     <script src="aksiomat.js"></script>
     <script src="arithmetic.js"></script>
     <script src="geometry-visuals.js"></script>

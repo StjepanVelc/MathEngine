@@ -60,13 +60,13 @@ function setupAlgebraGraph(module) {
             const [px] = toCanvas(x, 0);
             context.strokeStyle = Math.abs(x) < step / 100 ? colors.axis : colors.grid;
             context.beginPath(); context.moveTo(px, 0); context.lineTo(px, canvas.height); context.stroke();
-            if (Math.abs(x) >= step / 100) { context.fillStyle = colors.text; context.fillText(Number(x.toPrecision(4)), px + 4, Math.min(canvas.height - 5, Math.max(14, toCanvas(0, 0)[1] - 5))); }
+            if (Math.abs(x) >= step / 100) { context.fillStyle = colors.text; context.fillText(formatNumberForDisplay(x, 4), px + 4, Math.min(canvas.height - 5, Math.max(14, toCanvas(0, 0)[1] - 5))); }
         }
         for (let y = Math.ceil(view.minY / step) * step; y <= view.maxY; y += step) {
             const [, py] = toCanvas(0, y);
             context.strokeStyle = Math.abs(y) < step / 100 ? colors.axis : colors.grid;
             context.beginPath(); context.moveTo(0, py); context.lineTo(canvas.width, py); context.stroke();
-            if (Math.abs(y) >= step / 100) { context.fillStyle = colors.text; context.fillText(Number(y.toPrecision(4)), Math.min(canvas.width - 45, Math.max(5, toCanvas(0, 0)[0] + 5)), py - 4); }
+            if (Math.abs(y) >= step / 100) { context.fillStyle = colors.text; context.fillText(formatNumberForDisplay(y, 4), Math.min(canvas.width - 45, Math.max(5, toCanvas(0, 0)[0] + 5)), py - 4); }
         }
     }
 
@@ -99,7 +99,7 @@ function setupAlgebraGraph(module) {
         context.fillStyle = colors.point;
         context.beginPath(); context.arc(x, y, 5, 0, Math.PI * 2); context.fill();
         context.fillStyle = colors.text;
-        context.fillText(`${label} (${Number(point.x.toFixed(3))}, ${Number(point.y.toFixed(3))})`, x + 8, y - 8);
+        context.fillText(`${label} (${formatNumberForDisplay(point.x)}, ${formatNumberForDisplay(point.y)})`, x + 8, y - 8);
     }
 
     function paint(timestamp = performance.now()) {
@@ -161,7 +161,7 @@ function setupAlgebraGraph(module) {
         const rectangle = canvas.getBoundingClientRect();
         const [x, y] = toWorld((event.clientX - rectangle.left) * canvas.width / rectangle.width,
             (event.clientY - rectangle.top) * canvas.height / rectangle.height);
-        coordinateOutput.textContent = `x: ${x.toFixed(3)}, y: ${y.toFixed(3)}`;
+        coordinateOutput.textContent = `x: ${formatNumberForDisplay(x)}, y: ${formatNumberForDisplay(y)}`;
         if (!dragging) return;
         const scale = unitsPerWidth / rectangle.width;
         centerX -= (event.clientX - dragPoint[0]) * scale;

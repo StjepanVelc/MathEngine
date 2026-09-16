@@ -21,7 +21,7 @@ window.CalculusBasicsVisuals = (() => {
             group.forEach((sample) => svg.append(node("circle", { cx: toX(sample.x), cy: toY(sample.value), r: 5, fill: colors.point })));
         });
         svg.append(node("circle", { cx: toX(point), cy: toY(limitValue), r: 7, fill: colors.target }));
-        svg.append(node("text", { x: toX(point) + 10, y: toY(limitValue) - 10, fill: colors.text, "font-size": 13 }, `L = ${Number(limitValue.toFixed(4))}`));
+        svg.append(node("text", { x: toX(point) + 10, y: toY(limitValue) - 10, fill: colors.text, "font-size": 13 }, `L = ${formatNumberForDisplay(limitValue, 4)}`));
         cache.set(containerId, () => limitApproach(containerId, point, limitValue, leftSamples, rightSamples));
     }
 

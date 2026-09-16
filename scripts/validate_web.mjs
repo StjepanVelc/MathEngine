@@ -111,3 +111,21 @@ for (const exercise of allCalculusExercises) {
 
 const totalStaticIds = [...htmlByPage.values()].reduce((count, html) => count + [...html.matchAll(/\bid="([^"]+)"/g)].length, 0);
 console.log(`${scriptFiles.length} JavaScript files, 8 JSON banks, ${totalStaticIds} static IDs across ${htmlByPage.size} HTML pages, ${referencedIds.size} domain references, 22 Geometry and 24 exercises in each other secondary-school practice bank valid.`);
+
+const guardedPages = ["osnovna-skola.html", "srednja-skola.html", "fakultet.html"];
+for (const name of guardedPages) {
+    const html = htmlByPage.get(name);
+    const guardIndex = html.indexOf('<script src="input-guard.js"></script>');
+    if (guardIndex === -1) throw new Error(`${name} must include input-guard.js`);
+    const aksiomatIndex = html.indexOf('<script src="aksiomat.js"></script>');
+    if (aksiomatIndex !== -1 && guardIndex > aksiomatIndex) {
+        throw new Error(`${name} must load input-guard.js before aksiomat.js`);
+    }
+    const textInputsWithoutMaxlength = [...html.matchAll(/<input[^>]*type="text"[^>]*>/g)]
+        .map((match) => match[0])
+        .filter((tag) => !tag.includes("maxlength="));
+    if (textInputsWithoutMaxlength.length) {
+        throw new Error(`${name} has text inputs without maxlength: ${textInputsWithoutMaxlength.join(", ")}`);
+    }
+}
+console.log(`${guardedPages.length} level pages load input-guard.js before other scripts and constrain text inputs with maxlength.`);
