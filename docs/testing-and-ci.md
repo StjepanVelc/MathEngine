@@ -240,7 +240,7 @@ node scripts/validate_web.mjs
 
 `scripts/test_input_guard.mjs` učitava `web/input-guard.js` u Node `vm` kontekst s minimalnim `document`/`window` stubovima (bez pravog preglednika) i provjerava:
 
-- da `guardValue` uklanja `<`/`>` iz tekstualnih i brojčanih polja
+- da `guardValue` **ne** uklanja `<`/`>` iz unosa (ovi znakovi su legitimni operatori nejednadžbi, npr. `-2x + 1 <= 5`) i da samo skraćuje predugačak unos
 - da se tekstualni unos skraćuje na 200 znakova, a brojčani na 32 znaka
 - da legitimna matematička/logička notacija (unicode simboli poput ∧, ¬, →, ∀, ∃) ostaje netaknuta
 - da se polja koja nisu tekst/broj/search (npr. `range`) i ne-input elementi ignoriraju

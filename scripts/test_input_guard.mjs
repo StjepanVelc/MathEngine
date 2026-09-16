@@ -62,12 +62,16 @@ assert.equal(typeof guardValue, "function", "window.guardValue must be exposed")
 assert.equal(typeof formatNumberForDisplay, "function", "formatNumberForDisplay must be exposed globally");
 assert.equal(typeof boundedNumber, "function", "boundedNumber must be exposed globally");
 
-check("strips angle brackets from text input", () => {
-    const el = makeInput("text", "x^2 <script>alert(1)</script>");
+check("preserves angle brackets used as inequality operators", () => {
+    const el = makeInput("text", "-2x + 1 <= 5");
     guardValue(el);
-    assert.ok(!el.value.includes("<"));
-    assert.ok(!el.value.includes(">"));
-    assert.equal(el.value, "x^2 scriptalert(1)/script");
+    assert.equal(el.value, "-2x + 1 <= 5");
+});
+
+check("preserves strict inequality operator", () => {
+    const el = makeInput("text", "2x < 10");
+    guardValue(el);
+    assert.equal(el.value, "2x < 10");
 });
 
 check("truncates text input longer than 200 characters", () => {

@@ -120,7 +120,8 @@ function setupMathematicalAnalysis(module) {
             const point = number("ma-series-point");
             const result = parse(module.mathematicalAnalysisPowerSeries(coefficientsText, point), "ma-series-result");
             if (!result) return;
-            render("ma-series-result", [["Radijus konvergencije", format(result.radiusOfConvergence), true], ["Konvergira u testnoj točki", result.convergesAtPoint ? "da" : "ne"]]);
+            const radiusText = result.infiniteRadius ? "∞" : format(result.radiusOfConvergence);
+            render("ma-series-result", [["Radijus konvergencije", radiusText, true], ["Konvergira u testnoj točki", result.convergesAtPoint ? "da" : "ne"]]);
             steps("ma-series-steps", result.steps);
         } catch (error) { fail("ma-series-result", error); }
     }

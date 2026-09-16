@@ -1,11 +1,12 @@
 // Zajednička zaštita unosa i formatiranje brojeva za sve alate na razini-stranicama.
 //
-// 1) guardInputs() sprječava unos znakova '<' i '>' u bilo koje tekstualno/brojčano
-//    polje (ti znakovi nisu potrebni ni u jednom matematičkom/logičkom unosu, a
-//    upravo preko njih ide klasičan pokušaj ubacivanja HTML/skripti) te ograničava
-//    duljinu unosa kako WASM parser ne bi dobio apsurdno dugačak string.
-//    Radi generički (event delegation na document razini) pa pokriva i inpute koje
-//    moduli generiraju dinamički nakon učitavanja stranice.
+// 1) guardInputs() ograničava duljinu unosa (tekstualni na 200, brojčani na 32
+//    znaka) kako WASM parser ne bi dobio apsurdno dugačak string. Ne uklanja
+//    '<'/'>' jer su to legitimni operatori u matematičkom unosu (npr. nejednadžbe
+//    poput "2x < 10"); zaštita od XSS-a oslanja se na to da se rezultati prikazuju
+//    preko textContent, a ne innerHTML. Radi generički (event delegation na
+//    document razini) pa pokriva i inpute koje moduli generiraju dinamički nakon
+//    učitavanja stranice.
 //
 // 2) formatNumberForDisplay(n) prikazuje vrlo velike ili vrlo male brojeve u
 //    znanstvenom zapisu (npr. 1.234e+8) umjesto pune decimale, radi čitljivosti na
@@ -24,7 +25,7 @@
     function guardValue(el) {
         if (!isGuardedInput(el)) return;
         const original = el.value;
-        let value = original.replace(/[<>]/g, "");
+        let value = original;
         const max = el.type === "number" ? MAX_NUMBER_LENGTH : MAX_TEXT_LENGTH;
         if (value.length > max) value = value.slice(0, max);
         if (value !== original) el.value = value;

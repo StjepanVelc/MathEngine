@@ -823,8 +823,11 @@ std::string maPowerSeries(std::string coefficientsText, double testPoint) {
 		using namespace aksiomat::mathematical_analysis;
 		const auto coefficients = parseNumbers(coefficientsText);
 		const auto result = FunctionSeries::analyzePowerSeries(coefficients, testPoint);
+		const bool infiniteRadius = !std::isfinite(result.radiusOfConvergence);
+		const std::string radiusJson = infiniteRadius ? "null" : formatDouble(result.radiusOfConvergence);
 		return "{\"coefficients\":" + jsonNumbers(result.coefficients) +
-			",\"radiusOfConvergence\":" + formatDouble(result.radiusOfConvergence) +
+			",\"radiusOfConvergence\":" + radiusJson +
+			",\"infiniteRadius\":" + std::string(infiniteRadius ? "true" : "false") +
 			",\"convergesAtPoint\":" + std::string(result.convergesAtPoint ? "true" : "false") +
 			",\"testPoint\":" + formatDouble(result.testPoint) +
 			",\"steps\":" + jsonSteps(result.steps) + '}';

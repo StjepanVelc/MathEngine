@@ -36,7 +36,11 @@ OdeSolutionResult DifferentialEquations::solveEuler(const std::function<double(d
 	double t = initialT;
 	double y = initialY;
 	result.points.push_back({t, y});
+	std::size_t iterations = 0;
 	while (t < finalT - 1e-12) {
+		if (++iterations > static_cast<std::size_t>(maximumOdeSteps)) {
+			throw std::runtime_error("Prekinuto zbog prekoracenja broja koraka.");
+		}
 		const double h = std::min(stepSize, finalT - t);
 		y = y + h * f(t, y);
 		t = t + h;
@@ -70,7 +74,11 @@ OdeSolutionResult DifferentialEquations::solveRungeKutta4(const std::function<do
 	double t = initialT;
 	double y = initialY;
 	result.points.push_back({t, y});
+	std::size_t iterations = 0;
 	while (t < finalT - 1e-12) {
+		if (++iterations > static_cast<std::size_t>(maximumOdeSteps)) {
+			throw std::runtime_error("Prekinuto zbog prekoracenja broja koraka.");
+		}
 		const double h = std::min(stepSize, finalT - t);
 		const double k1 = f(t, y);
 		const double k2 = f(t + h / 2, y + h / 2 * k1);
