@@ -42,13 +42,16 @@ function setupDifferentialCalculus(module) {
     }
 
     function showSteps(el, steps) {
-        const ol = document.createElement("ol");
-        for (const s of steps) {
-            const li = document.createElement("li");
-            li.textContent = s;
-            ol.appendChild(li);
-        }
-        el.replaceChildren(ol);
+        el.replaceChildren(...steps.map((s, i) => {
+            const row = document.createElement("div");
+            row.className = "mathematical-analysis-step";
+            const n = document.createElement("span");
+            n.textContent = String(i + 1);
+            const p = document.createElement("p");
+            p.textContent = s;
+            row.append(n, p);
+            return row;
+        }));
     }
 
     function limitText(l) {
@@ -151,7 +154,7 @@ function setupDifferentialCalculus(module) {
         const panels = root.querySelectorAll(".dc-panel");
         function show(id) {
             panels.forEach((p) => { p.hidden = p.id !== id; });
-            buttons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.panel === id)));
+            buttons.forEach((b) => { b.classList.toggle("active", b.dataset.panel === id); b.setAttribute("aria-pressed", String(b.dataset.panel === id)); });
         }
         buttons.forEach((b) => b.addEventListener("click", () => show(b.dataset.panel)));
         show("dc-limit");

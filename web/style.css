@@ -1985,3 +1985,12 @@ output.error {
         grid-template-columns: 1fr;
     }
 }
+
+.differential-calculus-chapter { --ma-blue: #89dceb; --ma-green: #a6e3a1; --ma-red: #f38ba8; --ma-orange: #fab387; }
+.differential-calculus-chapter canvas { display: block; width: 100%; height: auto; margin-top: .8rem; border: 1px solid #45475a; border-radius: 12px; background: #fff; }
+.differential-calculus-chapter .mathematical-analysis-table { overflow-x: auto; }
+.differential-calculus-chapter table { width: 100%; border-collapse: collapse; color: #d5dbef; font-size: .86rem; }
+.differential-calculus-chapter th, .differential-calculus-chapter td { padding: .35rem .6rem; border-bottom: 1px solid #45475a; text-align: right; }
+.differential-calculus-chapter .result-card { display: grid; gap: .15rem; padding: .5rem .7rem; margin-bottom: .45rem; background: #181825aa; border: 1px solid #45475a; border-radius: 10px; }
+.differential-calculus-chapter .result-card span { color: #bac2de; font-size: .8rem; }
+.differential-calculus-chapter .result-card strong { color: #fff; overflow-wrap: anywhere; }
