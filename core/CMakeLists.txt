@@ -78,6 +78,15 @@ add_library(aksiomat_core STATIC
 	src/predicate/PredicateExpression.cpp
 	src/predicate/PredicateParser.cpp
 	src/predicate/Interpretation.cpp
+	src/differential_calculus/FunctionExpression.cpp
+	src/differential_calculus/FunctionParser.cpp
+	src/differential_calculus/Differentiation.cpp
+	src/differential_calculus/RealFunctionLimits.cpp
+	src/differential_calculus/RootFinding.cpp
+	src/differential_calculus/FunctionContinuity.cpp
+	src/differential_calculus/DerivativeAtPoint.cpp
+	src/differential_calculus/FunctionStudy.cpp
+	src/differential_calculus/DifferentialCalculusJson.cpp
 )
 
 target_include_directories(aksiomat_core PUBLIC

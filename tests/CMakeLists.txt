@@ -75,6 +75,10 @@ add_executable(core_tests
 	test_probability_statistics_inference.cpp
 	test_complex_numbers.cpp
 	test_complex_applications.cpp
+	test_differential_calculus_derivatives.cpp
+	test_differential_calculus_limits.cpp
+	test_differential_calculus_analysis.cpp
+	test_differential_calculus_json.cpp
 )
 
 target_link_libraries(core_tests PRIVATE

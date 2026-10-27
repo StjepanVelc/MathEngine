@@ -639,3 +639,16 @@ Novi export treba:
 6. registrirati funkciju u `EMSCRIPTEN_BINDINGS`
 7. dodati WASM smoke test
 8. dokumentirati argumente i povrat u ovom dokumentu
+
+## Diferencijalni racun (diffCalc*)
+
+Sve funkcije vracaju JSON ili tekst s prefiksom GRESKA:. Beskonacni/nedefinirani brojevi su null; limesi imaju oblik {kind: finite|plus_infinity|minus_infinity|does_not_exist|undefined, value, text}.
+
+- diffCalcLimit(izraz, tocka) - tocka je broj ili inf/-inf
+- diffCalcDerivative(izraz, red)
+- diffCalcContinuity(izraz, a)
+- diffCalcTangent(izraz, a)
+- diffCalcMeanValue(izraz, a, b)
+- diffCalcStudy(izraz, xMin, xMax)
+- diffCalcSample(izraz, xMin, xMax, n)
+

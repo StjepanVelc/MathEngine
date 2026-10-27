@@ -151,6 +151,91 @@
             </div>
         </section>
 
+        <section class="chapter differential-calculus-chapter" data-levels="advanced" hidden>
+            <button class="chapter-toggle" aria-expanded="false">Diferencijalni račun i limesi — realne funkcije ▸</button>
+            <div class="chapter-body" hidden>
+                <header class="mathematical-analysis-hero"><div><span class="mathematical-analysis-kicker">Limesi i derivacije</span><h2>Diferencijalni račun realne funkcije jedne varijable</h2><p>Limesi, neprekidnost, derivacija kao nagib tangente, pravila deriviranja, teoremi srednje vrijednosti i ispitivanje toka funkcije — s grafovima i objašnjenjem svakog koraka. Podržano: sin, cos, tan, exp, ln, sqrt, abs, asin, acos, atan, sinh, cosh, tanh, pi, e; beskonačnost upiši kao inf ili -inf.</p></div></header>
+                <nav class="mathematical-analysis-nav" aria-label="Područja diferencijalnog računa">
+                    <button type="button" class="mathematical-analysis-toggle dc-toggle" data-panel="dc-limit">Limesi</button>
+                    <button type="button" class="mathematical-analysis-toggle dc-toggle" data-panel="dc-continuity">Neprekidnost</button>
+                    <button type="button" class="mathematical-analysis-toggle dc-toggle" data-panel="dc-tangent">Derivacija i tangenta</button>
+                    <button type="button" class="mathematical-analysis-toggle dc-toggle" data-panel="dc-rules">Pravila deriviranja</button>
+                    <button type="button" class="mathematical-analysis-toggle dc-toggle" data-panel="dc-mean">Rolle i Lagrange</button>
+                    <button type="button" class="mathematical-analysis-toggle dc-toggle" data-panel="dc-study">Tok funkcije</button>
+                </nav>
+
+                <div id="dc-limit" class="mathematical-analysis-panel dc-panel"><div class="mathematical-analysis-layout"><div>
+                    <span class="mathematical-analysis-chip">lim</span><h2>Limes funkcije</h2>
+                    <p class="tool-description">Limes opisuje kamo teže vrijednosti f(x) kad se x približava točki a, a ne vrijednost u samoj točki. Gledamo obje strane (slijeva i zdesna); limes postoji samo ako se slažu.</p>
+                    <label>Izraz f(x)<input id="dc-limit-expression" type="text" maxlength="200" value="sin(x)/x"></label>
+                    <label>x teži prema (broj, inf ili -inf)<input id="dc-limit-point" type="text" maxlength="30" value="0"></label>
+                    <button id="dc-limit-calculate" type="button">Izračunaj limes</button>
+                    <div id="dc-limit-result" class="result-grid"></div>
+                    <canvas id="dc-limit-canvas" width="640" height="320" role="img" aria-label="Graf funkcije u okolini točke limesa"></canvas>
+                    <div id="dc-limit-table" class="mathematical-analysis-table"></div>
+                    <div id="dc-limit-steps" class="mathematical-analysis-steps"></div>
+                </div></div></div>
+
+                <div id="dc-continuity" class="mathematical-analysis-panel dc-panel" hidden><div class="mathematical-analysis-layout"><div>
+                    <span class="mathematical-analysis-chip">neprekidnost</span><h2>Neprekidnost i vrste prekida</h2>
+                    <p class="tool-description">f je neprekidna u a ako je f(a) definiran, limes u a postoji i jednak je f(a). Inače razlikujemo uklonjiv prekid, skok, beskonačni prekid i oscilaciju.</p>
+                    <label>Izraz f(x)<input id="dc-cont-expression" type="text" maxlength="200" value="(x^2-1)/(x-1)"></label>
+                    <label>Točka a<input id="dc-cont-point" type="number" step="any" value="1"></label>
+                    <button id="dc-cont-calculate" type="button">Provjeri</button>
+                    <div id="dc-cont-result" class="result-grid"></div>
+                    <canvas id="dc-cont-canvas" width="640" height="300" role="img" aria-label="Graf funkcije oko točke prekida"></canvas>
+                    <div id="dc-cont-steps" class="mathematical-analysis-steps"></div>
+                </div></div></div>
+
+                <div id="dc-tangent" class="mathematical-analysis-panel dc-panel" hidden><div class="mathematical-analysis-layout"><div>
+                    <span class="mathematical-analysis-chip">f′(a)</span><h2>Derivacija po definiciji, tangenta i normala</h2>
+                    <p class="tool-description">Derivacija je limes nagiba sekante kad se druga točka približava prvoj. Klizačem smanji h i gledaj kako sekanta prelazi u tangentu.</p>
+                    <label>Izraz f(x)<input id="dc-tan-expression" type="text" maxlength="200" value="x^2"></label>
+                    <label>Točka a<input id="dc-tan-point" type="number" step="any" value="1"></label>
+                    <button id="dc-tan-calculate" type="button">Izračunaj</button>
+                    <label>Udaljenost h druge točke (sekanta): <output id="dc-tan-h-label">1</output><input id="dc-tan-h" type="range" min="-3" max="0.7" step="0.01" value="0"></label>
+                    <div id="dc-tan-result" class="result-grid"></div>
+                    <canvas id="dc-tan-canvas" width="640" height="340" role="img" aria-label="Sekanta koja prelazi u tangentu"></canvas>
+                    <div id="dc-tan-table" class="mathematical-analysis-table"></div>
+                    <div id="dc-tan-steps" class="mathematical-analysis-steps"></div>
+                </div></div></div>
+
+                <div id="dc-rules" class="mathematical-analysis-panel dc-panel" hidden><div class="mathematical-analysis-layout"><div>
+                    <span class="mathematical-analysis-chip">(f)′</span><h2>Pravila deriviranja</h2>
+                    <p class="tool-description">Simbolička derivacija s objašnjenjem koje je pravilo primijenjeno u kojem koraku: zbroj, produkt, kvocijent, potencija i lančano pravilo.</p>
+                    <label>Izraz f(x)<input id="dc-rules-expression" type="text" maxlength="200" value="x^2*sin(x)"></label>
+                    <label>Red derivacije<input id="dc-rules-order" type="number" min="1" max="10" step="1" value="1"></label>
+                    <button id="dc-rules-calculate" type="button">Derivirati</button>
+                    <div id="dc-rules-result" class="result-grid"></div>
+                    <div id="dc-rules-steps" class="mathematical-analysis-steps"></div>
+                </div></div></div>
+
+                <div id="dc-mean" class="mathematical-analysis-panel dc-panel" hidden><div class="mathematical-analysis-layout"><div>
+                    <span class="mathematical-analysis-chip">c ∈ (a, b)</span><h2>Rolleov i Lagrangeov teorem</h2>
+                    <p class="tool-description">Ako je f neprekidna na [a, b] i derivabilna na (a, b), postoji točka c u kojoj je tangenta paralelna sekanti kroz krajeve. Ako je još f(a) = f(b), tangenta je vodoravna (Rolle).</p>
+                    <label>Izraz f(x)<input id="dc-mean-expression" type="text" maxlength="200" value="x^2"></label>
+                    <label>a<input id="dc-mean-a" type="number" step="any" value="0"></label>
+                    <label>b<input id="dc-mean-b" type="number" step="any" value="2"></label>
+                    <button id="dc-mean-calculate" type="button">Primijeni teorem</button>
+                    <div id="dc-mean-result" class="result-grid"></div>
+                    <canvas id="dc-mean-canvas" width="640" height="340" role="img" aria-label="Sekanta i tangente paralelne sekanti"></canvas>
+                    <div id="dc-mean-steps" class="mathematical-analysis-steps"></div>
+                </div></div></div>
+
+                <div id="dc-study" class="mathematical-analysis-panel dc-panel" hidden><div class="mathematical-analysis-layout"><div>
+                    <span class="mathematical-analysis-chip">tok funkcije</span><h2>Ispitivanje toka funkcije</h2>
+                    <p class="tool-description">Domena, nultočke, f′ (monotonost i ekstremi), f″ (zakrivljenost i infleksije) i asimptote. Plavo je f, narančasto f′, zeleno f″.</p>
+                    <label>Izraz f(x)<input id="dc-study-expression" type="text" maxlength="200" value="x^3-3x"></label>
+                    <label>Od x<input id="dc-study-min" type="number" step="any" value="-3"></label>
+                    <label>Do x<input id="dc-study-max" type="number" step="any" value="3"></label>
+                    <button id="dc-study-calculate" type="button">Ispitaj funkciju</button>
+                    <div id="dc-study-result" class="result-grid"></div>
+                    <canvas id="dc-study-canvas" width="720" height="420" role="img" aria-label="Graf funkcije s ekstremima, infleksijama i asimptotama"></canvas>
+                    <div id="dc-study-steps" class="mathematical-analysis-steps"></div>
+                </div></div></div>
+            </div>
+        </section>
+
         <section class="chapter mathematical-analysis-chapter" data-levels="advanced" hidden>
             <button class="chapter-toggle" aria-expanded="false">Matematička analiza — napredno i fakultet ▸</button>
             <div class="chapter-body" hidden>
@@ -274,6 +359,7 @@
     <script src="mathematical-analysis-visuals.js"></script>
     <script src="mathematical-analysis-practice.js"></script>
     <script src="mathematical-analysis.js"></script>
+    <script src="differential-calculus.js"></script>
     <script src="analytic-algebra-practice.js"></script>
     <script src="analytic-algebra.js"></script>
     <script src="discrete-math-practice.js"></script>

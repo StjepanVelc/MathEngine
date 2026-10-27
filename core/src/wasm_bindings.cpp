@@ -77,6 +77,7 @@
 #include "aksiomat/probability_statistics/StatisticalInference.hpp"
 #include "aksiomat/complex_numbers/ComplexNumbers.hpp"
 #include "aksiomat/complex_numbers/ComplexApplications.hpp"
+#include "aksiomat/differential_calculus/DifferentialCalculusJson.hpp"
 
 namespace {
 
@@ -1989,6 +1990,42 @@ std::string predicateEvaluate(std::string formula, std::string domain, std::stri
 	}
 }
 
+std::string dcCall(const std::function<std::string()>& call) {
+	try {
+		return call();
+	} catch (const std::exception& e) {
+		return std::string("GRESKA: ") + e.what();
+	}
+}
+
+std::string dcLimit(std::string expression, std::string point) {
+	return dcCall([&] { return aksiomat::differential_calculus::DifferentialCalculusJson::limit(expression, point); });
+}
+
+std::string dcDerivative(std::string expression, int order) {
+	return dcCall([&] { return aksiomat::differential_calculus::DifferentialCalculusJson::derivative(expression, order); });
+}
+
+std::string dcContinuity(std::string expression, double point) {
+	return dcCall([&] { return aksiomat::differential_calculus::DifferentialCalculusJson::continuity(expression, point); });
+}
+
+std::string dcTangent(std::string expression, double point) {
+	return dcCall([&] { return aksiomat::differential_calculus::DifferentialCalculusJson::tangent(expression, point); });
+}
+
+std::string dcMeanValue(std::string expression, double a, double b) {
+	return dcCall([&] { return aksiomat::differential_calculus::DifferentialCalculusJson::meanValue(expression, a, b); });
+}
+
+std::string dcStudy(std::string expression, double xMin, double xMax) {
+	return dcCall([&] { return aksiomat::differential_calculus::DifferentialCalculusJson::study(expression, xMin, xMax); });
+}
+
+std::string dcSample(std::string expression, double xMin, double xMax, int count) {
+	return dcCall([&] { return aksiomat::differential_calculus::DifferentialCalculusJson::sample(expression, xMin, xMax, count); });
+}
+
 } // namespace
 
 EMSCRIPTEN_BINDINGS(aksiomat_module) {
@@ -2103,6 +2140,13 @@ EMSCRIPTEN_BINDINGS(aksiomat_module) {
 	emscripten::function("complexNumbersPower", &complexNumbersPower);
 	emscripten::function("complexNumbersNthRoots", &complexNumbersNthRoots);
 	emscripten::function("complexNumbersSolveQuadratic", &complexNumbersSolveQuadratic);
+	emscripten::function("diffCalcLimit", &dcLimit);
+	emscripten::function("diffCalcDerivative", &dcDerivative);
+	emscripten::function("diffCalcContinuity", &dcContinuity);
+	emscripten::function("diffCalcTangent", &dcTangent);
+	emscripten::function("diffCalcMeanValue", &dcMeanValue);
+	emscripten::function("diffCalcStudy", &dcStudy);
+	emscripten::function("diffCalcSample", &dcSample);
 }
 
 #endif // __EMSCRIPTEN__
