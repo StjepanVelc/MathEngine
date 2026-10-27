@@ -1994,3 +1994,9 @@ output.error {
 .differential-calculus-chapter .result-card { display: grid; gap: .15rem; padding: .5rem .7rem; margin-bottom: .45rem; background: #181825aa; border: 1px solid #45475a; border-radius: 10px; }
 .differential-calculus-chapter .result-card span { color: #bac2de; font-size: .8rem; }
 .differential-calculus-chapter .result-card strong { color: #fff; overflow-wrap: anywhere; }
+
+.differential-calculus-chapter .mathematical-analysis-kicker, .differential-calculus-chapter .mathematical-analysis-chip { color: #11111b !important; background: #fab387 !important; }
+.differential-calculus-chapter .mathematical-analysis-nav button { color: #11111b !important; background: #a6e3a1 !important; border: 0 !important; opacity: 1 !important; }
+.differential-calculus-chapter .mathematical-analysis-nav button.active { background: #fab387 !important; box-shadow: 0 0 0 2px #fab38766 !important; }
+.differential-calculus-chapter .mathematical-analysis-panel button[id$='-calculate'] { display: block; margin: .8rem 0; padding: .8rem 1.4rem; color: #11111b !important; background: #f9e2af !important; border: 2px solid #fab387 !important; border-radius: 10px; font-size: 1rem; font-weight: 800; cursor: pointer; box-shadow: 0 4px 14px #11111b66; }
+.differential-calculus-chapter .mathematical-analysis-panel button[id$='-calculate']:hover { background: #fab387 !important; }
