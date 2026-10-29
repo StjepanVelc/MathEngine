@@ -53,6 +53,14 @@ TEST(IntegralJson, DefiniteAreaImproper) {
 	EXPECT_TRUE(balanced(IntegralCalculusJson::meanValue("x^2", 0, 3)));
 }
 
+TEST(IntegralJson, Application) {
+	const auto v = IntegralCalculusJson::application("volume", "x", 0, 3);
+	EXPECT_TRUE(balanced(v));
+	EXPECT_TRUE(has(v, "\"quantity\":\"volumen rotacije\""));
+	EXPECT_TRUE(balanced(IntegralCalculusJson::application("arc", "x^2", 0, 1)));
+	EXPECT_THROW(IntegralCalculusJson::application("zzz", "x", 0, 1), std::invalid_argument);
+}
+
 TEST(IntegralJson, OdeInductionSequenceSample) {
 	const auto o = IntegralCalculusJson::ode("separable", "2*x", "y", true, 0, 1, 1, 0);
 	EXPECT_TRUE(balanced(o));

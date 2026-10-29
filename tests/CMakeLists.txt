@@ -84,6 +84,7 @@ add_executable(core_tests
 			test_integral_calculus_definite.cpp
 				test_integral_calculus_ode.cpp
 					test_integral_calculus_sequences.cpp
+						test_integral_calculus_applications.cpp
 						test_integral_calculus_json.cpp
 )
 

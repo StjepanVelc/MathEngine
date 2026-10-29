@@ -8,6 +8,7 @@
 #include "aksiomat/differential_calculus/FunctionExpression.hpp"
 #include "aksiomat/integral_calculus/DefiniteIntegral.hpp"
 #include "aksiomat/integral_calculus/IndefiniteIntegral.hpp"
+#include "aksiomat/integral_calculus/IntegralApplications.hpp"
 #include "aksiomat/integral_calculus/OrdinaryDifferentialEquations.hpp"
 #include "aksiomat/integral_calculus/RiemannSums.hpp"
 #include "aksiomat/integral_calculus/SequenceLimits.hpp"
@@ -182,6 +183,16 @@ std::string IntegralCalculusJson::sample(const std::string& expression, double x
 		out += "{\"x\":" + num(x) + ",\"y\":" + num(differential_calculus::evaluate(f, x)) + "}";
 	}
 	return out + "]";
+}
+
+std::string IntegralCalculusJson::application(const std::string& kind, const std::string& expression, double a, double b) {
+	IntegralApplicationResult r;
+	if (kind == "volume") r = IntegralApplications::volumeOfRevolution(expression, a, b);
+	else if (kind == "arc") r = IntegralApplications::arcLength(expression, a, b);
+	else throw std::invalid_argument("Nepoznata primjena integrala: " + kind);
+	return "{\"quantity\":" + str(r.quantity) + ",\"expression\":" + str(r.expression) + ",\"integrand\":" + str(r.integrand) +
+		",\"lower\":" + num(r.lower) + ",\"upper\":" + num(r.upper) + ",\"value\":" + num(r.value) + ",\"exact\":" + boolean(r.exact) +
+		",\"steps\":" + strings(r.steps) + "}";
 }
 
 } // namespace aksiomat::integral_calculus

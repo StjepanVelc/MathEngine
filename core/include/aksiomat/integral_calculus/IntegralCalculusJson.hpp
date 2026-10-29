@@ -23,6 +23,8 @@ public:
 	static std::string induction(const std::string& kind, const std::string& left, const std::string& right, int n0, int maxN);
 	static std::string sequence(const std::string& expression, double epsilon, int termCount);
 	static std::string sample(const std::string& expression, double xMin, double xMax, int count);
+	// kind: "volume" (volumen rotacije oko osi x) ili "arc" (duljina luka).
+	static std::string application(const std::string& kind, const std::string& expression, double a, double b);
 };
 
 } // namespace aksiomat::integral_calculus

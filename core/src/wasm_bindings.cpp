@@ -2067,6 +2067,10 @@ std::string icSample(std::string expression, double xMin, double xMax, int count
 	return dcCall([&] { return aksiomat::integral_calculus::IntegralCalculusJson::sample(expression, xMin, xMax, count); });
 }
 
+std::string icApplication(std::string kind, std::string expression, double a, double b) {
+	return dcCall([&] { return aksiomat::integral_calculus::IntegralCalculusJson::application(kind, expression, a, b); });
+}
+
 } // namespace
 
 EMSCRIPTEN_BINDINGS(aksiomat_module) {
@@ -2198,6 +2202,7 @@ EMSCRIPTEN_BINDINGS(aksiomat_module) {
 	emscripten::function("integralInduction", &icInduction);
 	emscripten::function("integralSequence", &icSequence);
 	emscripten::function("integralSample", &icSample);
+	emscripten::function("integralApplication", &icApplication);
 }
 
 #endif // __EMSCRIPTEN__
