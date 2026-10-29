@@ -82,6 +82,7 @@ add_executable(core_tests
 	test_integral_calculus_riemann.cpp
 		test_integral_calculus_indefinite.cpp
 			test_integral_calculus_definite.cpp
+				test_integral_calculus_ode.cpp
 )
 
 target_link_libraries(core_tests PRIVATE

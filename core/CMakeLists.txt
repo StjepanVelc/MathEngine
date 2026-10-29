@@ -95,6 +95,7 @@ add_library(aksiomat_core STATIC
 	src/integral_calculus/SubstitutionAndParts.cpp
 	src/integral_calculus/IndefiniteIntegral.cpp
 	src/integral_calculus/DefiniteIntegral.cpp
+	src/integral_calculus/OrdinaryDifferentialEquations.cpp
 )
 
 target_include_directories(aksiomat_core PUBLIC
