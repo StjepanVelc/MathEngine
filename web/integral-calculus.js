@@ -323,7 +323,36 @@ function setupIntegralCalculus(module) {
         if (kind === "arc") drawCurve(ctx, v, sampleCurve(expr, a - pad, b + pad, 200), COLORS.axis, 1);
     }
 
+    function runMultiple() {
+        const dim = Number($("ic-multi-dim").value);
+        const r = call(() => module.integralMultiple($("ic-multi-expression").value, dim, num("ic-multi-x0"), num("ic-multi-x1"),
+            num("ic-multi-y0"), num("ic-multi-y1"), num("ic-multi-z0"), num("ic-multi-z1"), dim === 2 ? 40 : 16), $("ic-multi-result"), $("ic-multi-steps"));
+        if (!r) return;
+        showCards($("ic-multi-result"), [[dim === 2 ? "∬ f dA" : "∭ f dV", fmt(r.value)], [dim === 2 ? "Površina područja" : "Volumen kvadra", fmt(r.measure)],
+            ["Srednja vrijednost", fmt(r.mean)], ["Podintervala po osi", String(r.subdivisions)]]);
+        showSteps($("ic-multi-steps"), r.steps);
+    }
+
+    function runFourier() {
+        const r = call(() => module.integralFourier($("ic-fourier-expression").value, num("ic-fourier-l"), Math.round(num("ic-fourier-n")), 300), $("ic-fourier-result"), $("ic-fourier-steps"));
+        if (!r) return;
+        const cards = [["a₀/2", fmt(r.a0 / 2)], ["Pogreška (MSE)", fmt(r.meanSquareError)]];
+        r.a.slice(0, 4).forEach((v, i) => cards.push([`a${i + 1} / b${i + 1}`, `${fmt(v)} / ${fmt(r.b[i])}`]));
+        showCards($("ic-fourier-result"), cards);
+        showSteps($("ic-fourier-steps"), r.steps);
+        const canvas = $("ic-fourier-canvas"), ctx = canvas.getContext("2d");
+        const fPts = r.points.map((p) => [p.x, p.f]);
+        const sPts = r.points.map((p) => [p.x, p.s]);
+        const [yMin, yMax] = rangeY([fPts, sPts]);
+        const v = makeView(canvas, -r.halfPeriod, r.halfPeriod, yMin, yMax);
+        drawAxes(ctx, v);
+        drawCurve(ctx, v, fPts, COLORS.f, 2.5);
+        drawCurve(ctx, v, sPts, COLORS.fillEdge, 2.5);
+    }
+
     toggles();
+    $("ic-multi-calculate").addEventListener("click", runMultiple);
+    $("ic-fourier-calculate").addEventListener("click", runFourier);
     $("ic-app-calculate").addEventListener("click", runApplication);
     $("ic-rie-calculate").addEventListener("click", runRiemann);
     $("ic-rie-n").addEventListener("input", runRiemann);

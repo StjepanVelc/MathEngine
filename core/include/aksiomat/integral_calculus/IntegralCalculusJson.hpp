@@ -25,6 +25,9 @@ public:
 	static std::string sample(const std::string& expression, double xMin, double xMax, int count);
 	// kind: "volume" (volumen rotacije oko osi x) ili "arc" (duljina luka).
 	static std::string application(const std::string& kind, const std::string& expression, double a, double b);
+	// dimension 2 ili 3; granice u b[0..5] = x0, x1, y0, y1, z0, z1 (z se ignorira za 2).
+	static std::string multiple(const std::string& expression, int dimension, double x0, double x1, double y0, double y1, double z0, double z1, int n);
+	static std::string fourier(const std::string& expression, double halfPeriod, int terms, int sampleCount);
 };
 
 } // namespace aksiomat::integral_calculus

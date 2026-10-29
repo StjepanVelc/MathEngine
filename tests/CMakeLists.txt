@@ -86,6 +86,8 @@ add_executable(core_tests
 					test_integral_calculus_sequences.cpp
 						test_integral_calculus_applications.cpp
 						test_integral_calculus_json.cpp
+						test_integral_calculus_multiple.cpp
+						test_integral_calculus_fourier.cpp
 )
 
 target_link_libraries(core_tests PRIVATE

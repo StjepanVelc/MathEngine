@@ -268,7 +268,9 @@
                     <button type="button" class="mathematical-analysis-toggle ic-toggle" data-panel="ic-definite">Određeni integral i površina</button>
                     <button type="button" class="mathematical-analysis-toggle ic-toggle" data-panel="ic-improper">Nepravi integrali</button>
                     <button type="button" class="mathematical-analysis-toggle ic-toggle" data-panel="ic-seq">Nizovi i indukcija</button>
-                                        <button type="button" class="mathematical-analysis-toggle ic-toggle" data-panel="ic-apps">Volumen i duljina luka</button>
+                                        data-panel="ic-apps">Volumen i duljina luka</button>
+                                                            <button type="button" class="mathematical-analysis-toggle ic-toggle" data-panel="ic-multi">Dvostruki i trostruki integrali</button>
+                                                            <button type="button" class="mathematical-analysis-toggle ic-toggle" data-panel="ic-fourier">Fourierovi redovi</button>
                                         <button type="button" class="mathematical-analysis-toggle ic-toggle" data-panel="ic-practice">Vježbaonica</button>
                 </nav>
 
@@ -331,6 +333,34 @@
                     <div id="ic-imp-result" class="result-grid"></div>
                     <canvas id="ic-imp-canvas" width="680" height="300" role="img" aria-label="Parcijalni integrali do granice b"></canvas>
                     <div id="ic-imp-steps" class="mathematical-analysis-steps"></div>
+                </div></div></div>
+
+                <div id="ic-multi" class="mathematical-analysis-panel ic-panel" hidden><div class="mathematical-analysis-layout"><div>
+                    <span class="mathematical-analysis-chip">∬ f dA, ∭ f dV</span><h2>Dvostruki i trostruki integrali</h2>
+                    <p class="tool-description">Integral funkcije f(x, y) odnosno f(x, y, z) nad pravokutnikom ili kvadrom (Fubinijev teorem + Simpsonova formula u C++ jezgri). Koristi varijable x, y i z.</p>
+                    <label>Izraz f<input id="ic-multi-expression" type="text" maxlength="200" value="x*y"></label>
+                    <label>Dimenzija<select id="ic-multi-dim"><option value="2">Dvostruki (x, y)</option><option value="3">Trostruki (x, y, z)</option></select></label>
+                    <label>x od<input id="ic-multi-x0" type="number" step="any" value="0"></label>
+                    <label>x do<input id="ic-multi-x1" type="number" step="any" value="2"></label>
+                    <label>y od<input id="ic-multi-y0" type="number" step="any" value="0"></label>
+                    <label>y do<input id="ic-multi-y1" type="number" step="any" value="1"></label>
+                    <label>z od<input id="ic-multi-z0" type="number" step="any" value="0"></label>
+                    <label>z do<input id="ic-multi-z1" type="number" step="any" value="1"></label>
+                    <button id="ic-multi-calculate" type="button">Izračunaj</button>
+                    <div id="ic-multi-result" class="result-grid"></div>
+                    <div id="ic-multi-steps" class="mathematical-analysis-steps"></div>
+                </div></div></div>
+
+                <div id="ic-fourier" class="mathematical-analysis-panel ic-panel" hidden><div class="mathematical-analysis-layout"><div>
+                    <span class="mathematical-analysis-chip">a₀/2 + Σ aₙcos + bₙsin</span><h2>Fourierovi redovi</h2>
+                    <p class="tool-description">Trigonometrijski razvoj funkcije na [−L, L]: koeficijenti aₙ, bₙ i usporedba parcijalne sume s funkcijom.</p>
+                    <label>Izraz f(x)<input id="ic-fourier-expression" type="text" maxlength="200" value="x"></label>
+                    <label>Poluperiod L<input id="ic-fourier-l" type="number" step="any" min="0.1" value="3.14159265"></label>
+                    <label>Broj članova N<input id="ic-fourier-n" type="number" min="1" max="50" value="5"></label>
+                    <button id="ic-fourier-calculate" type="button">Razvij u red</button>
+                    <div id="ic-fourier-result" class="result-grid"></div>
+                    <canvas id="ic-fourier-canvas" width="680" height="340" role="img" aria-label="Graf funkcije i parcijalne Fourierove sume"></canvas>
+                    <div id="ic-fourier-steps" class="mathematical-analysis-steps"></div>
                 </div></div></div>
 
                 <div id="ic-apps" class="mathematical-analysis-panel ic-panel" hidden><div class="mathematical-analysis-layout"><div>

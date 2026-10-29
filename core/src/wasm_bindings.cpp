@@ -2047,6 +2047,14 @@ std::string icImproper(std::string expression, std::string kind, double a, doubl
 	return dcCall([&] { return aksiomat::integral_calculus::IntegralCalculusJson::improper(expression, kind, a, b); });
 }
 
+std::string icMultiple(std::string expression, int dimension, double x0, double x1, double y0, double y1, double z0, double z1, int n) {
+	return dcCall([&] { return aksiomat::integral_calculus::IntegralCalculusJson::multiple(expression, dimension, x0, x1, y0, y1, z0, z1, n); });
+}
+
+std::string icFourier(std::string expression, double halfPeriod, int terms, int sampleCount) {
+	return dcCall([&] { return aksiomat::integral_calculus::IntegralCalculusJson::fourier(expression, halfPeriod, terms, sampleCount); });
+}
+
 std::string icMeanValue(std::string expression, double a, double b) {
 	return dcCall([&] { return aksiomat::integral_calculus::IntegralCalculusJson::meanValue(expression, a, b); });
 }
@@ -2203,6 +2211,8 @@ EMSCRIPTEN_BINDINGS(aksiomat_module) {
 	emscripten::function("integralSequence", &icSequence);
 	emscripten::function("integralSample", &icSample);
 	emscripten::function("integralApplication", &icApplication);
+	emscripten::function("integralMultiple", &icMultiple);
+	emscripten::function("integralFourier", &icFourier);
 }
 
 #endif // __EMSCRIPTEN__

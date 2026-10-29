@@ -7,6 +7,8 @@
 
 #include "aksiomat/differential_calculus/FunctionExpression.hpp"
 #include "aksiomat/integral_calculus/DefiniteIntegral.hpp"
+#include "aksiomat/integral_calculus/FourierSeries.hpp"
+#include "aksiomat/integral_calculus/MultipleIntegrals.hpp"
 #include "aksiomat/integral_calculus/IndefiniteIntegral.hpp"
 #include "aksiomat/integral_calculus/IntegralApplications.hpp"
 #include "aksiomat/integral_calculus/OrdinaryDifferentialEquations.hpp"
@@ -193,6 +195,34 @@ std::string IntegralCalculusJson::application(const std::string& kind, const std
 	return "{\"quantity\":" + str(r.quantity) + ",\"expression\":" + str(r.expression) + ",\"integrand\":" + str(r.integrand) +
 		",\"lower\":" + num(r.lower) + ",\"upper\":" + num(r.upper) + ",\"value\":" + num(r.value) + ",\"exact\":" + boolean(r.exact) +
 		",\"steps\":" + strings(r.steps) + "}";
+}
+
+std::string IntegralCalculusJson::multiple(const std::string& expression, int dimension, double x0, double x1,
+	double y0, double y1, double z0, double z1, int n) {
+	MultipleIntegralResult r;
+	if (dimension == 2) r = MultipleIntegrals::doubleIntegral(expression, x0, x1, y0, y1, n);
+	else if (dimension == 3) r = MultipleIntegrals::tripleIntegral(expression, x0, x1, y0, y1, z0, z1, n);
+	else throw std::invalid_argument("Dimenzija mora biti 2 ili 3.");
+	return "{\"expression\":" + str(r.expression) + ",\"dimension\":" + std::to_string(r.dimension) +
+		",\"value\":" + num(r.value) + ",\"measure\":" + num(r.volume) + ",\"mean\":" + num(r.mean) +
+		",\"subdivisions\":" + std::to_string(r.subdivisions) + ",\"steps\":" + strings(r.steps) + "}";
+}
+
+std::string IntegralCalculusJson::fourier(const std::string& expression, double halfPeriod, int terms, int sampleCount) {
+	if (sampleCount < 2 || sampleCount > 2000) throw std::invalid_argument("Broj tocaka mora biti izmedu 2 i 2000.");
+	const auto r = FourierSeries::compute(expression, halfPeriod, terms);
+	const auto f = differential_calculus::parseFunction(expression);
+	std::string pts = "[";
+	for (int i = 0; i < sampleCount; ++i) {
+		const double x = -halfPeriod + 2.0 * halfPeriod * i / (sampleCount - 1);
+		if (i) pts += ",";
+		pts += "{\"x\":" + num(x) + ",\"f\":" + num(differential_calculus::evaluate(f, x)) +
+			",\"s\":" + num(FourierSeries::partialSum(r, x)) + "}";
+	}
+	pts += "]";
+	return "{\"expression\":" + str(r.expression) + ",\"halfPeriod\":" + num(r.halfPeriod) + ",\"terms\":" + std::to_string(r.terms) +
+		",\"a0\":" + num(r.a0) + ",\"a\":" + numbers(r.a) + ",\"b\":" + numbers(r.b) +
+		",\"meanSquareError\":" + num(r.meanSquareError) + ",\"points\":" + pts + ",\"steps\":" + strings(r.steps) + "}";
 }
 
 } // namespace aksiomat::integral_calculus

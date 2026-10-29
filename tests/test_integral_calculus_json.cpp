@@ -61,6 +61,18 @@ TEST(IntegralJson, Application) {
 	EXPECT_THROW(IntegralCalculusJson::application("zzz", "x", 0, 1), std::invalid_argument);
 }
 
+TEST(IntegralJson, MultipleAndFourier) {
+	const auto m = IntegralCalculusJson::multiple("x*y", 2, 0, 2, 0, 1, 0, 0, 20);
+	EXPECT_TRUE(balanced(m));
+	EXPECT_TRUE(has(m, "\"dimension\":2"));
+	EXPECT_TRUE(balanced(IntegralCalculusJson::multiple("x+y+z", 3, 0, 1, 0, 1, 0, 1, 8)));
+	EXPECT_THROW(IntegralCalculusJson::multiple("x", 4, 0, 1, 0, 1, 0, 1, 8), std::invalid_argument);
+	const auto f = IntegralCalculusJson::fourier("x", 3.14159265358979, 5, 50);
+	EXPECT_TRUE(balanced(f));
+	EXPECT_TRUE(has(f, "\"points\":[{"));
+	EXPECT_THROW(IntegralCalculusJson::fourier("x", 1.0, 5, 1), std::invalid_argument);
+}
+
 TEST(IntegralJson, OdeInductionSequenceSample) {
 	const auto o = IntegralCalculusJson::ode("separable", "2*x", "y", true, 0, 1, 1, 0);
 	EXPECT_TRUE(balanced(o));
