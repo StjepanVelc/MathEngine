@@ -364,6 +364,16 @@ Podržano je:
 - Eulerova metoda
 - Runge-Kutta metoda četvrtog reda — RK4
 
+### Integralni račun (modul `integral_calculus`)
+
+- Riemannove sume (lijeva, desna, sredina, trapezi, Simpson) s donjom i gornjom Darbouxovom sumom
+- neodređeni integral: tablice, linearnost, supstitucija, parcijalna integracija, parcijalni razlomci, uz provjeru deriviranjem
+- određeni integral (Newton–Leibniz), površina između krivulja, srednja vrijednost, volumen rotacije, duljina luka
+- nepravi integrali (beskonačne granice, singulariteti) i p-test
+- diferencijalne jednadžbe prvog reda: separabilne, linearne, rast/raspad, logistički model
+- nizovi (limes, monotonost, ε–N) i numerička provjera matematičke indukcije
+- web sučelje u fakultetskoj razini s Canvas grafovima; API je opisan u `docs/wasm-api.md`
+
 ---
 
 ## Analitička geometrija i linearna algebra

@@ -652,3 +652,19 @@ Sve funkcije vracaju JSON ili tekst s prefiksom GRESKA:. Beskonacni/nedefinirani
 - diffCalcStudy(izraz, xMin, xMax)
 - diffCalcSample(izraz, xMin, xMax, n)
 
+## Integralni racun (integral*)
+
+Sve funkcije vracaju JSON ili tekst s prefiksom GRESKA:. Nekonacni/nedefinirani brojevi su null. Rezultati sadrze polje steps (koraci na hrvatskom).
+
+- integralRiemann(izraz, a, b, n, metoda) - metoda: left|right|midpoint|trapezoid|simpson; vraca pravokutnike, donju/gornju sumu, referentnu vrijednost i pogresku
+- integralIndefinite(izraz) - antiderivacija (tablice, linearnost, supstitucija, parcijalna integracija, parcijalni razlomci); found=false ako nije podrzano
+- integralDefinite(izraz, a, b) - Newton-Leibniz, uz numericku provjeru i Simpson zamjenu
+- integralAreaBetween(f, g, a, b) - povrsina izmedu krivulja, sa sjecistima
+- integralImproper(izraz, vrsta, a, b) - vrsta: upper|lower|both|singular_lower|singular_upper|ptest_infinity|ptest_zero (kod p-testa p se salje u a)
+- integralMeanValue(izraz, a, b) - srednja vrijednost funkcije
+- integralApplication(vrsta, izraz, a, b) - vrsta: volume (rotacija oko osi x) | arc (duljina luka)
+- integralOde(vrsta, p1, p2, imaPocetni, x0, y0, xKraj, K) - vrsta: separable (g(x), h(y)) | linear (p(x), q(x)) | growth (x0 = k) | logistic (x0 = r, K = kapacitet)
+- integralInduction(vrsta, lijevo, desno, n0, maxN) - vrsta: sum | inequality; numericka provjera, ne formalni dokaz
+- integralSequence(izraz, epsilon, brojClanova) - limes, monotonost, ogranicenost, epsilon-N
+- integralSample(izraz, xMin, xMax, n) - tocke za crtanje
+
