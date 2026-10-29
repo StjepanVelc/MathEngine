@@ -1,4 +1,4 @@
-# Zadaci i lokalna pohrana
+﻿# Zadaci i lokalna pohrana
 
 ## Zašto su zadaci izvan C++ jezgre
 
@@ -28,7 +28,10 @@ Banka kombinatorike, vjerojatnosti i statistike sadrži 24 zadatka kroz `temelji
 
 Banka matematičke analize (srednjoškolske osnove) sadrži 24 zadatka kroz `temelji`, `primjena` i `izazov`, pokrivajući limes, derivaciju, primjene derivacije (monotonost/ekstremi) i određeni integral. Koristi isti brojčani model odgovora, a napredak sprema pod `mathengine-calculus-basics-practice-v1`.
 
-Banka matematičke analize (napredno i fakultet) sadrži 17 zadataka kroz `temelji`, `primjena` i `izazov`, pokrivajući formalni limes/kontinuitet, viši red derivacije, lančano pravilo, integraciju supstitucijom, konvergenciju nepravog integrala, Taylorov red, radijus konvergencije reda potencija, parcijalne/usmjerene derivacije te Eulerovu/RK4 metodu. Koristi isti brojčani model odgovora, a napredak sprema pod `mathengine-mathematical-analysis-practice-v1`.
+Banka matematičke analize (formalna analiza; integrali i diferencijalne jednadžbe su u svojim poglavljima) sadrži 12 zadataka kroz `temelji`, `primjena` i `izazov`, pokrivajući formalni limes/kontinuitet, viši red derivacije, lančano pravilo, Taylorov red, radijus konvergencije reda potencija, parcijalne/usmjerene derivacije. Koristi isti brojčani model odgovora, a napredak sprema pod `mathengine-mathematical-analysis-practice-v1`.
+
+Dodatne banke fakultetske razine (isti brojčani model, 	emelji/primjena/izazov): web/data/integral-calculus-exercises.json (12 zadataka: osnovni integrali, površina, supstitucija, volumen, duljina luka, nepravi integrali, dijelovi; ključ mathengine-integral-calculus-practice-v1), differential-calculus-exercises.json (limesi, derivacije, Rolle/Lagrange, tok funkcije, diferencijalne jednadžbe; mathengine-differential-calculus-practice-v1), probability-statistics-exercises.json (mathengine-probability-statistics-practice-v1) i complex-numbers-exercises.json (mathengine-complex-numbers-practice-v1). Sve četiri renderira web/chapter-practice.js.
+
 
 Banke se učitavaju preko `fetch`, pa aplikaciju treba pokretati preko HTTP servera, ne izravno protokolom `file://`.
 
@@ -252,3 +255,4 @@ Ograničenja:
 - jedinstvenost geometrijskih ID-jeva
 
 Za semantičku kvalitetu zadataka i točnost objašnjenja i dalje je potreban stručni pregled.
+

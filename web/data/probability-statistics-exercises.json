@@ -1,0 +1,74 @@
+{
+  "temelji": [
+    {
+      "id": "ps-t-01",
+      "topic": "Binomna razdioba",
+      "title": "Točno 2 uspjeha",
+      "question": "Bacamo 4 poštena novčića. Kolika je vjerojatnost točno 2 glave?",
+      "answer": 0.375,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "C(4,2)·0,5⁴.",
+      "explanation": "6/16 = 0,375."
+    },
+    {
+      "id": "ps-t-02",
+      "topic": "Očekivanje",
+      "title": "Očekivanje binomne",
+      "question": "Koliko je očekivanje B(10; 0,3)?",
+      "answer": 3,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "E = n·p.",
+      "explanation": "10·0,3 = 3."
+    }
+  ],
+  "primjena": [
+    {
+      "id": "ps-p-01",
+      "topic": "Varijanca",
+      "title": "Varijanca binomne",
+      "question": "Kolika je varijanca B(10; 0,3)?",
+      "answer": 2.1,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "Var = n·p·(1−p).",
+      "explanation": "10·0,3·0,7 = 2,1."
+    },
+    {
+      "id": "ps-p-02",
+      "topic": "Uniformna razdioba",
+      "title": "P(X ≤ 3)",
+      "question": "X ~ U(0,10). Kolika je P(X ≤ 3)?",
+      "answer": 0.3,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "(x−a)/(b−a).",
+      "explanation": "3/10 = 0,3."
+    }
+  ],
+  "izazov": [
+    {
+      "id": "ps-i-01",
+      "topic": "Normalna razdioba",
+      "title": "Gustoća u 0",
+      "question": "Kolika je gustoća standardne normalne razdiobe u x = 0?",
+      "answer": 0.3989,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "1/√(2π).",
+      "explanation": "1/√(2π) ≈ 0,3989."
+    },
+    {
+      "id": "ps-i-02",
+      "topic": "Interval pouzdanosti",
+      "title": "Poluširina intervala",
+      "question": "σ = 2, n = 16, razina 95% (z = 1,96). Kolika je poluširina intervala pouzdanosti?",
+      "answer": 0.98,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "z·σ/√n.",
+      "explanation": "1,96·2/4 = 0,98."
+    }
+  ]
+}

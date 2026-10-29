@@ -1,0 +1,74 @@
+{
+  "temelji": [
+    {
+      "id": "cn-t-01",
+      "topic": "Modul",
+      "title": "Modul 3+4i",
+      "question": "Koliki je |3+4i|?",
+      "answer": 5,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "√(a²+b²).",
+      "explanation": "√(9+16) = 5."
+    },
+    {
+      "id": "cn-t-02",
+      "topic": "Operacije",
+      "title": "Umnožak",
+      "question": "Koliki je realni dio (1+i)(1−i)?",
+      "answer": 2,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "(a+bi)(a−bi) = a²+b².",
+      "explanation": "1+1 = 2."
+    }
+  ],
+  "primjena": [
+    {
+      "id": "cn-p-01",
+      "topic": "Potenciranje",
+      "title": "Kvadrat",
+      "question": "Koliki je imaginarni dio (1+i)²?",
+      "answer": 2,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "Razvij: 1+2i+i².",
+      "explanation": "1+2i−1 = 2i."
+    },
+    {
+      "id": "cn-p-02",
+      "topic": "Argument",
+      "title": "Argument od i",
+      "question": "Koliki je argument broja i u stupnjevima?",
+      "answer": 90,
+      "unit": "°",
+      "tolerance": 0.01,
+      "hint": "Broj leži na pozitivnoj imaginarnoj osi.",
+      "explanation": "arg(i) = 90°."
+    }
+  ],
+  "izazov": [
+    {
+      "id": "cn-i-01",
+      "topic": "Potencije od i",
+      "title": "i¹⁰",
+      "question": "Koliki je realni dio od i¹⁰?",
+      "answer": -1,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "Potencije od i se ponavljaju s periodom 4.",
+      "explanation": "i¹⁰ = i² = −1."
+    },
+    {
+      "id": "cn-i-02",
+      "topic": "De Moivre",
+      "title": "Modul potencije",
+      "question": "Koliki je |(1+i)⁸|?",
+      "answer": 16,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "|zⁿ| = |z|ⁿ.",
+      "explanation": "(√2)⁸ = 16."
+    }
+  ]
+}

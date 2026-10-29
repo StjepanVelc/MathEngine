@@ -143,7 +143,7 @@ function setupIntegralCalculus(module) {
             buttons.forEach((b) => { b.classList.toggle("active", b.dataset.panel === id); b.setAttribute("aria-pressed", String(b.dataset.panel === id)); });
         }
         buttons.forEach((b) => b.addEventListener("click", () => show(b.dataset.panel)));
-        show("ic-riemann");
+        show("ic-basic");
     }
 
     // ---- Riemannove sume ----

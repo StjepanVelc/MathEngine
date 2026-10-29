@@ -1,0 +1,140 @@
+{
+  "temelji": [
+    {
+      "id": "ic-t-01",
+      "topic": "Osnovni integral",
+      "title": "Integral potencije",
+      "question": "Izračunaj ∫₀² x dx.",
+      "answer": 2,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "x²/2.",
+      "explanation": "[x²/2]₀²=2."
+    },
+    {
+      "id": "ic-t-02",
+      "topic": "Osnovni integral",
+      "title": "Integral x²",
+      "question": "Izračunaj ∫₀³ x² dx.",
+      "answer": 9,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "x³/3.",
+      "explanation": "27/3=9."
+    },
+    {
+      "id": "ic-t-03",
+      "topic": "Osnovni integral",
+      "title": "Linearnost",
+      "question": "Izračunaj ∫₀¹ (3x²+2) dx.",
+      "answer": 3,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "x³+2x.",
+      "explanation": "1+2=3."
+    },
+    {
+      "id": "ic-t-04",
+      "topic": "Osnovni integral",
+      "title": "Integral kosinusa",
+      "question": "Izračunaj ∫₀^(π/2) cos x dx.",
+      "answer": 1,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "sin x.",
+      "explanation": "sin(π/2)−0=1."
+    }
+  ],
+  "primjena": [
+    {
+      "id": "ic-p-01",
+      "topic": "Površina",
+      "title": "Površina ispod parabole",
+      "question": "Površina ispod y=x² na [0,2], 4 decimale.",
+      "answer": 2.6667,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "x³/3.",
+      "explanation": "8/3≈2,6667."
+    },
+    {
+      "id": "ic-p-02",
+      "topic": "Supstitucija",
+      "title": "Supstitucija",
+      "question": "Izračunaj ∫₀¹ 2x·e^(x²) dx, 4 decimale.",
+      "answer": 1.7183,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "u=x².",
+      "explanation": "e−1≈1,7183."
+    },
+    {
+      "id": "ic-p-03",
+      "topic": "Volumen",
+      "title": "Volumen stošca",
+      "question": "Volumen rotacije y=x na [0,1] oko osi x, u jedinicama π (4 decimale).",
+      "answer": 0.3333,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "V=π∫x²dx.",
+      "explanation": "π/3, tj. 1/3 u jedinicama π."
+    },
+    {
+      "id": "ic-p-04",
+      "topic": "Duljina luka",
+      "title": "Duljina luka pravca",
+      "question": "Duljina luka y=x na [0,1], 4 decimale.",
+      "answer": 1.4142,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "√(1+y′²).",
+      "explanation": "√2≈1,4142."
+    }
+  ],
+  "izazov": [
+    {
+      "id": "ic-i-01",
+      "topic": "Nepravi integral",
+      "title": "Konvergentan nepravi",
+      "question": "Izračunaj ∫₁^∞ 1/x² dx.",
+      "answer": 1,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "Granica 1−1/b.",
+      "explanation": "Vrijednost je 1."
+    },
+    {
+      "id": "ic-i-02",
+      "topic": "Nepravi integral",
+      "title": "Eksponencijalni nepravi",
+      "question": "Izračunaj ∫₀^∞ e^(−x) dx.",
+      "answer": 1,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "−e^(−x).",
+      "explanation": "Vrijednost je 1."
+    },
+    {
+      "id": "ic-i-03",
+      "topic": "Metoda dijelova",
+      "title": "Dijelovi",
+      "question": "Izračunaj ∫₀¹ x·e^x dx.",
+      "answer": 1,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "Parcijalna integracija.",
+      "explanation": "[(x−1)e^x]₀¹=1."
+    },
+    {
+      "id": "ic-i-04",
+      "topic": "Određeni integral",
+      "title": "Sinus",
+      "question": "Izračunaj ∫₀^π sin x dx.",
+      "answer": 2,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "−cos x.",
+      "explanation": "1+1=2."
+    }
+  ]
+}

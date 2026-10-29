@@ -1,0 +1,173 @@
+{
+  "temelji": [
+    {
+      "id": "dc-t-01",
+      "topic": "Limes",
+      "title": "Limes racionalne funkcije",
+      "question": "Izračunaj lim (x²−1)/(x−1) kad x teži 1.",
+      "answer": 2,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "Skrati (x−1).",
+      "explanation": "(x²−1)/(x−1) = x+1, pa je limes 2."
+    },
+    {
+      "id": "dc-t-02",
+      "topic": "Derivacija",
+      "title": "Derivacija potencije",
+      "question": "Koliko je f′(2) za f(x) = x³?",
+      "answer": 12,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "f′(x) = 3x².",
+      "explanation": "f′(2) = 3·4 = 12."
+    },
+    {
+      "id": "dc-t-03",
+      "topic": "Diferencijalne jednadžbe",
+      "title": "Eulerova metoda",
+      "question": "Za y′=y, y(0)=1, korak h=1, odredi y(1) jednim Eulerovim korakom.",
+      "answer": 2,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "y₁ = y₀ + h·f(x₀,y₀).",
+      "explanation": "y₁ = 1 + 1·1 = 2."
+    },
+    {
+      "id": "dc-t-04",
+      "topic": "Derivacija",
+      "title": "Derivacija umnoška",
+      "question": "Koliko je f′(1) za f(x)=x·e^x? (4 decimale)",
+      "answer": 5.4366,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "Pravilo umnoška.",
+      "explanation": "f′=e^x(1+x), f′(1)=2e≈5,4366."
+    },
+    {
+      "id": "dc-t-05",
+      "topic": "Diferencijalne jednadžbe",
+      "title": "Separabilna jednadžba",
+      "question": "y′=2xy, y(0)=1. Koliko je y(1)?",
+      "answer": 2.7183,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "y=e^(x²).",
+      "explanation": "y(1)=e≈2,7183."
+    }
+  ],
+  "primjena": [
+    {
+      "id": "dc-p-01",
+      "topic": "Derivacija",
+      "title": "Nagib tangente",
+      "question": "Koliki je nagib tangente na sin(x) u točki x = 0?",
+      "answer": 1,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "Derivacija od sin je cos.",
+      "explanation": "cos(0) = 1."
+    },
+    {
+      "id": "dc-p-02",
+      "topic": "Lagrange",
+      "title": "Točka c iz Lagrangeova teorema",
+      "question": "Za f(x)=x² na [0,2] odredi c iz Lagrangeova teorema.",
+      "answer": 1,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "f′(c) = (f(2)−f(0))/2.",
+      "explanation": "(4−0)/2 = 2 = 2c, pa je c = 1."
+    },
+    {
+      "id": "dc-p-03",
+      "topic": "Diferencijalne jednadžbe",
+      "title": "Točna vrijednost e",
+      "question": "Za y′=y, y(0)=1 koliko je y(1) na 4 decimale?",
+      "answer": 2.7183,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "Rješenje je eˣ.",
+      "explanation": "y(1) = e ≈ 2,7183."
+    },
+    {
+      "id": "dc-p-04",
+      "topic": "Rolle",
+      "title": "Točka iz Rolleova teorema",
+      "question": "Za f(x)=x²−4x na [0,4] odredi c s f′(c)=0.",
+      "answer": 2,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "f(0)=f(4)=0.",
+      "explanation": "2c−4=0, c=2."
+    },
+    {
+      "id": "dc-p-05",
+      "topic": "Diferencijalne jednadžbe",
+      "title": "Linearna jednadžba",
+      "question": "y′+y=0, y(0)=3. Koliko je y(1)? (4 decimale)",
+      "answer": 1.1036,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "y=3e^(−x).",
+      "explanation": "3/e≈1,1036."
+    }
+  ],
+  "izazov": [
+    {
+      "id": "dc-i-01",
+      "topic": "Limes",
+      "title": "Prvi značajni limes",
+      "question": "Izračunaj lim sin(x)/x kad x teži 0.",
+      "answer": 1,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "Poznati značajni limes.",
+      "explanation": "lim sin(x)/x = 1."
+    },
+    {
+      "id": "dc-i-02",
+      "topic": "Tok funkcije",
+      "title": "Lokalni minimum",
+      "question": "Kolika je vrijednost lokalnog minimuma funkcije x³−3x?",
+      "answer": -2,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "f′(x)=3x²−3=0 pa je x=1.",
+      "explanation": "f(1) = 1−3 = −2."
+    },
+    {
+      "id": "dc-i-03",
+      "topic": "Diferencijalne jednadžbe",
+      "title": "Eksponencijalni rast",
+      "question": "Za y′=2y, y(0)=1 koliko je y(1)?",
+      "answer": 7.3891,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "y = e^(2x).",
+      "explanation": "y(1) = e² ≈ 7,3891."
+    },
+    {
+      "id": "dc-i-04",
+      "topic": "Diferencijalne jednadžbe",
+      "title": "Logistički model",
+      "question": "y′=y(1−y/100), y(0)=50. Kolika je granica y kad x→∞?",
+      "answer": 100,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "Ravnoteža je y=K.",
+      "explanation": "Rješenje teži kapacitetu K=100."
+    },
+    {
+      "id": "dc-i-05",
+      "topic": "Limes",
+      "title": "Limes e",
+      "question": "Izračunaj lim (1+1/n)^n kad n→∞ (4 decimale).",
+      "answer": 2.7183,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "Definicija broja e.",
+      "explanation": "Limes je e≈2,7183."
+    }
+  ]
+}

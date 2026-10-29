@@ -1,4 +1,4 @@
-# Web frontend
+﻿# Web frontend
 
 ## Pregled
 
@@ -375,3 +375,11 @@ Pri dodavanju novog UI-ja treba zadržati upravljanje tipkovnicom i ne oslanjati
 5. Novi globalni setup uz odgovarajuce skripte poglavlja ukljuciti u relevantnu stranicu (stranice) razine prije `level-page.js` i registrirati kroz `callIfDefined(...)` u `initLevelPage()`.
 6. Generirani `aksiomat.js` ne uređivati ručno.
 7. Pokrenuti `scripts/validate_web.mjs` nakon promjene DOM-a, skripti ili JSON banki.
+
+## Struktura fakultetskih poglavlja
+
+- **Diferencijalni račun** (differential-calculus.js): limesi, neprekidnost, derivacija, teoremi srednje vrijednosti, tok funkcije, diferencijalne jednadžbe prvog reda (ic-ode panel, WASM integralOde) i vježbaonica.
+- **Integralni račun i nizovi** (integral-calculus.js): osnovni integrali → neodređeni → Riemannove sume → određeni i površina → nepravi → volumen i duljina luka → nizovi/indukcija → vježbaonica.
+- **Matematička analiza** (mathematical-analysis.js): formalni limesi, napredne derivacije, redovi funkcija, funkcije više varijabli.
+- chapter-practice.js dinamički gradi vježbaonice (integrali, diferencijalni račun, vjerojatnost, kompleksni brojevi) iz JSON banki.
+

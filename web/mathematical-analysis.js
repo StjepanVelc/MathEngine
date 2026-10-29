@@ -1,8 +1,9 @@
 function setupMathematicalAnalysis(module) {
     const visuals = window.MathematicalAnalysisVisuals || {};
-    const toggles = [...document.querySelectorAll(".mathematical-analysis-toggle")];
+    const chapter = document.querySelector(".mathematical-analysis-chapter");
+        const toggles = chapter ? [...chapter.querySelectorAll(".mathematical-analysis-toggle")] : [];
     const format = (value) => new Intl.NumberFormat("hr-HR", { maximumFractionDigits: 6 }).format(value);
-    toggles.forEach((button) => button.addEventListener("click", () => { const panel = document.getElementById(button.dataset.panel); const open = panel.hidden; document.querySelectorAll(".mathematical-analysis-panel").forEach((item) => (item.hidden = true)); toggles.forEach((item) => item.classList.remove("active")); if (open) { panel.hidden = false; button.classList.add("active"); visuals.refresh?.(panel.id); } }));
+    chapter.querySelectorAll(".mathematical-analysis-panel").forEach((item) => (item.hidden = true)); toggles.forEach
 
     function number(id) { const input = document.getElementById(id); const value = Number(input.value); if (!input || input.value.trim() === "" || !Number.isFinite(value)) throw new Error("Upiši ispravan konačan broj."); return value; }
     function text(id) { const input = document.getElementById(id); const value = (input.value || "").trim(); if (!value) throw new Error("Upiši izraz s varijablom x."); return value; }
@@ -67,33 +68,6 @@ function setupMathematicalAnalysis(module) {
     }
     document.getElementById("ma-chain-calculate").addEventListener("click", calculateChainRule);
 
-    // Napredni integrali
-    function calculateImproperIntegral() {
-        try {
-            const functionName = select("ma-improper-function");
-            const lowerBound = number("ma-improper-lower");
-            const result = parse(module.mathematicalAnalysisImproperIntegral(functionName, lowerBound), "ma-improper-result");
-            if (!result) return;
-            render("ma-improper-result", [["Konvergira", result.convergent ? "da" : "ne", true], ["Približna vrijednost", format(result.approximateValue)]]);
-            steps("ma-improper-steps", result.steps);
-        } catch (error) { fail("ma-improper-result", error); }
-    }
-    document.getElementById("ma-improper-calculate").addEventListener("click", calculateImproperIntegral);
-
-    function calculateSubstitutionIntegral() {
-        try {
-            const a = number("ma-subst-a");
-            const b = number("ma-subst-b");
-            const power = number("ma-subst-power");
-            const lowerBound = number("ma-subst-lower");
-            const upperBound = number("ma-subst-upper");
-            const result = parse(module.mathematicalAnalysisSubstitutionIntegral(a, b, power, lowerBound, upperBound), "ma-subst-result");
-            if (!result) return;
-            render("ma-subst-result", [["Vrijednost integrala", format(result.value), true]]);
-            steps("ma-subst-steps", result.steps);
-        } catch (error) { fail("ma-subst-result", error); }
-    }
-    document.getElementById("ma-subst-calculate").addEventListener("click", calculateSubstitutionIntegral);
 
     // Redovi funkcija
     const taylorActual = { exp: Math.exp, sin: Math.sin };
@@ -156,23 +130,6 @@ function setupMathematicalAnalysis(module) {
     }
     document.getElementById("ma-directional-calculate").addEventListener("click", calculateDirectionalDerivative);
 
-    // Diferencijalne jednadzbe
-    function calculateOde() {
-        try {
-            const functionName = select("ma-ode-function");
-            const initialT = boundedNumber("ma-ode-t0", { min: -1e6, max: 1e6 });
-            const initialY = boundedNumber("ma-ode-y0", { min: -1e6, max: 1e6 });
-            const finalT = boundedNumber("ma-ode-tfinal", { min: -1e6, max: 1e6 });
-            const stepSize = boundedNumber("ma-ode-step", { min: 1e-6, max: 1e6 });
-            const euler = parse(module.mathematicalAnalysisSolveOde(functionName, "euler", initialT, initialY, finalT, stepSize), "ma-ode-result");
-            const rk4 = parse(module.mathematicalAnalysisSolveOde(functionName, "rk4", initialT, initialY, finalT, stepSize), "ma-ode-result");
-            if (!euler || !rk4) return;
-            render("ma-ode-result", [["Euler y(final)", format(euler.finalValue), true], ["RK4 y(final)", format(rk4.finalValue)]]);
-            steps("ma-ode-steps", rk4.steps);
-            visuals.odeTrajectory?.("ma-ode-visual", euler.points, rk4.points);
-        } catch (error) { fail("ma-ode-result", error); }
-    }
-    document.getElementById("ma-ode-calculate").addEventListener("click", calculateOde);
 
     setupMathematicalAnalysisPractice({ root: document.getElementById("ma-practice-root"), format });
 }
