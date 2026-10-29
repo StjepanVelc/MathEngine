@@ -61,3 +61,9 @@
 #*.PDF   diff=astextplain
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
+
+*.wasm binary
+*.png binary
+*.ps1 text eol=crlf
+*.sh text eol=lf
+*.yml text eol=lf
