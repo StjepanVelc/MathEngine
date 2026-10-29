@@ -79,6 +79,7 @@ add_executable(core_tests
 	test_differential_calculus_limits.cpp
 	test_differential_calculus_analysis.cpp
 	test_differential_calculus_json.cpp
+	test_integral_calculus_riemann.cpp
 )
 
 target_link_libraries(core_tests PRIVATE

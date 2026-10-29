@@ -87,6 +87,7 @@ add_library(aksiomat_core STATIC
 	src/differential_calculus/DerivativeAtPoint.cpp
 	src/differential_calculus/FunctionStudy.cpp
 	src/differential_calculus/DifferentialCalculusJson.cpp
+	src/integral_calculus/RiemannSums.cpp
 )
 
 target_include_directories(aksiomat_core PUBLIC
