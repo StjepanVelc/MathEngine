@@ -38,6 +38,8 @@ jobs:
         run: node scripts/validate_web.mjs
       - name: Test input guard
         run: node scripts/test_input_guard.mjs
+      - name: Check faculty page DOM
+        run: node web/tests/check-dom.js
 
   wasm:
     name: WebAssembly build
