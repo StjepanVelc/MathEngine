@@ -12,9 +12,9 @@ constexpr double kPi = 3.14159265358979323846;
 
 TEST(IntegralApplications, VolumeOfRevolution) {
 	const auto cone = IntegralApplications::volumeOfRevolution("x", 0, 3);
-	9.0 * kPi
+	EXPECT_NEAR(cone.value, 9.0 * kPi, 1e-6);
 	const auto sphere = IntegralApplications::volumeOfRevolution("sqrt(4-x^2)", -2, 2);
-	32.0 * kPi / 3.0
+	EXPECT_NEAR(sphere.value, 32.0 * kPi / 3.0, 1e-3);
 	EXPECT_FALSE(cone.steps.empty());
 	EXPECT_THROW(IntegralApplications::volumeOfRevolution("x", 2, 1), std::invalid_argument);
 }
