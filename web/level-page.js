@@ -75,7 +75,11 @@ function setupSubchapters() {
 
 function callIfDefined(name, ...args) {
     if (typeof window[name] === "function") {
-        window[name](...args);
+        try {
+            window[name](...args);
+        } catch (error) {
+            console.error(`Inicijalizacija "${name}" nije uspjela:`, error);
+        }
     }
 }
 
