@@ -247,6 +247,8 @@
                     <button type="button" class="mathematical-analysis-toggle ic-toggle" data-panel="ic-improper">Nepravi integrali</button>
                     <button type="button" class="mathematical-analysis-toggle ic-toggle" data-panel="ic-ode">Diferencijalne jednadžbe</button>
                     <button type="button" class="mathematical-analysis-toggle ic-toggle" data-panel="ic-seq">Nizovi i indukcija</button>
+                                        <button type="button" class="mathematical-analysis-toggle ic-toggle" data-panel="ic-apps">Volumen i duljina luka</button>
+                                        <button type="button" class="mathematical-analysis-toggle ic-toggle" data-panel="ic-practice">Vježbaonica</button>
                 </nav>
 
                 <div id="ic-riemann" class="mathematical-analysis-panel ic-panel"><div class="mathematical-analysis-layout"><div>
@@ -315,7 +317,31 @@
                     <div id="ic-ode-steps" class="mathematical-analysis-steps"></div>
                 </div></div></div>
 
-                <div id="ic-seq" class="mathematical-analysis-panel ic-panel" hidden><div class="mathematical-analysis-layout"><div>
+                <div id="ic-apps" class="mathematical-analysis-panel ic-panel" hidden><div class="mathematical-analysis-layout"><div>
+                                    <span class="mathematical-analysis-chip">V, L</span><h2>Volumen rotacije i duljina luka</h2>
+                                    <p class="tool-description">Rotacija grafa oko osi x (metoda diskova, V = π∫f²dx) i duljina luka L = ∫√(1+f′²)dx. Narančasto je tijelo (presjek) ili luk.</p>
+                                    <label>Izraz f(x)<input id="ic-app-expression" type="text" maxlength="200" value="sqrt(x)"></label>
+                                    <label>a<input id="ic-app-a" type="number" step="any" value="0"></label>
+                                    <label>b<input id="ic-app-b" type="number" step="any" value="4"></label>
+                                    <label>Veličina<select id="ic-app-kind"><option value="volume">Volumen rotacije oko osi x</option><option value="arc">Duljina luka</option></select></label>
+                                    <button id="ic-app-calculate" type="button">Izračunaj</button>
+                                    <div id="ic-app-result" class="result-grid"></div>
+                                    <canvas id="ic-app-canvas" width="680" height="340" role="img" aria-label="Graf funkcije i njegova zrcalna slika uz os x"></canvas>
+                                    <div id="ic-app-steps" class="mathematical-analysis-steps"></div>
+                                </div></div></div>
+
+                                <div id="ic-practice" class="mathematical-analysis-panel ic-panel" hidden><div class="mathematical-analysis-layout"><div>
+                                    <span class="mathematical-analysis-chip">vježba</span><h2>Vježbaonica integrala</h2>
+                                    <p class="tool-description">Riješi zadatak i upiši broj (decimale s točkom). Točno rješenje računa C++ jezgra; tolerancija je 0,01.</p>
+                                    <p id="ic-prac-task" class="tool-description"></p>
+                                    <label>Tvoj odgovor<input id="ic-prac-answer" type="text" inputmode="decimal" maxlength="30"></label>
+                                    <button id="ic-prac-calculate" type="button">Provjeri</button>
+                                    <button id="ic-prac-next" type="button">Sljedeći zadatak</button>
+                                    <div id="ic-prac-result" class="result-grid"></div>
+                                    <div id="ic-prac-steps" class="mathematical-analysis-steps"></div>
+                                </div></div></div>
+
+                                <div id="ic-seq" class="mathematical-analysis-panel ic-panel" hidden>
                     <span class="mathematical-analysis-chip">aₙ, n → ∞</span><h2>Nizovi i matematička indukcija</h2>
                     <p class="tool-description">Limes niza (varijabla je n), monotonost, ograničenost i ε–N. Indukcija: provjera baze i tvrdnje za mnogo n (numerički dokaz nije formalni).</p>
                     <label>Niz aₙ<input id="ic-seq-expression" type="text" maxlength="200" value="(1+1/n)^n"></label>
