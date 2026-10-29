@@ -239,6 +239,85 @@ ImproperIntegralInfo DefiniteIntegration::improper(const std::string& expression
 	return r;
 }
 
+ImproperIntegralInfo DefiniteIntegration::improperSingular(const std::string& expression, double a, double b,
+	bool singularAtLower) {
+	if (!std::isfinite(a) || !std::isfinite(b) || !(a < b)) throw std::invalid_argument("Potrebno je konacno a < b.");
+	ImproperIntegralInfo r;
+	r.expression = differential_calculus::toString(differential_calculus::simplify(parseFunction(expression)));
+	r.lower = a;
+	r.upper = b;
+	r.steps.push_back(std::string("Funkcija divergira u ") + (singularAtLower ? "donjem" : "gornjem") +
+		" rubu, pa integral definiramo limesom: ∫ = lim_{eps->0+} integral na intervalu bez eps-okoline singulariteta.");
+	const double width = b - a;
+	const auto anti = IndefiniteIntegration::integrate(expression);
+	const auto F = anti.found ? parseFunction(anti.antiderivative) : nullptr;
+	for (int k = 1; k <= 8; ++k) {
+		const double eps = width * std::pow(10.0, -k);
+		const double lo = singularAtLower ? a + eps : a;
+		const double hi = singularAtLower ? b : b - eps;
+		double v = F ? evaluate(F, hi) - evaluate(F, lo) : std::nan("");
+		if (!std::isfinite(v)) v = DefiniteIntegration::integrate(expression, lo, hi).value;
+		r.bounds.push_back(singularAtLower ? lo : hi);
+		r.partials.push_back(v);
+	}
+	const std::size_t n = r.partials.size();
+	const double d1 = std::fabs(r.partials[n - 1] - r.partials[n - 2]);
+	const double d0 = std::fabs(r.partials[n - 2] - r.partials[n - 3]);
+	const double last = r.partials[n - 1];
+	if (!std::isfinite(last) || std::fabs(last) > 1e5) {
+		r.kind = ImproperKind::Divergent;
+	} else if (d1 <= 1e-9 * (1.0 + std::fabs(last))) {
+		r.kind = ImproperKind::Convergent;
+		r.value = differential_calculus::snapToNice(last);
+	} else if (d0 > 0.0 && d1 < 0.6 * d0) {
+		const double q = d1 / d0;
+		const double sign = r.partials[n - 1] >= r.partials[n - 2] ? 1.0 : -1.0;
+		r.kind = ImproperKind::Convergent;
+		r.value = differential_calculus::snapToNice(last + sign * d1 * q / (1.0 - q));
+	} else {
+		r.kind = ImproperKind::Divergent;
+	}
+	std::string seq;
+	for (std::size_t i = 0; i < r.partials.size(); ++i)
+		seq += (i ? ", " : "") + formatValue(r.bounds[i]) + ": " + formatValue(r.partials[i]);
+	r.steps.push_back("Integral sve blize singularitetu (granica: vrijednost): " + seq + ".");
+	r.steps.push_back(r.kind == ImproperKind::Convergent ? "Vrijednosti se stabiliziraju, integral konvergira, priblizno " + formatValue(r.value) + "."
+		: r.kind == ImproperKind::Divergent ? "Vrijednosti neograniceno rastu, integral divergira."
+											: "Numericki se ne moze pouzdano odluciti.");
+	return r;
+}
+
+ImproperIntegralInfo DefiniteIntegration::pTest(double p, bool atInfinity) {
+	if (!std::isfinite(p)) throw std::invalid_argument("p mora biti konacan broj.");
+	ImproperIntegralInfo r;
+	r.expression = "1/x^" + formatValue(p);
+	r.lower = atInfinity ? 1.0 : 0.0;
+	r.upper = atInfinity ? 0.0 : 1.0;
+	r.upperInfinite = atInfinity;
+	if (atInfinity) {
+		r.steps.push_back("p-test na beskonacnosti: ∫_1^inf dx/x^p konvergira tocno kad je p > 1, a tada iznosi 1/(p-1).");
+		if (p > 1.0) {
+			r.kind = ImproperKind::Convergent;
+			r.value = 1.0 / (p - 1.0);
+			r.steps.push_back("Ovdje je p = " + formatValue(p) + " > 1, pa konvergira i iznosi " + formatValue(r.value) + ".");
+		} else {
+			r.kind = ImproperKind::Divergent;
+			r.steps.push_back("Ovdje je p = " + formatValue(p) + " <= 1, pa integral divergira (za p = 1 raste kao ln t).");
+		}
+	} else {
+		r.steps.push_back("p-test uz singularitet u 0: ∫_0^1 dx/x^p konvergira tocno kad je p < 1, a tada iznosi 1/(1-p).");
+		if (p < 1.0) {
+			r.kind = ImproperKind::Convergent;
+			r.value = 1.0 / (1.0 - p);
+			r.steps.push_back("Ovdje je p = " + formatValue(p) + " < 1, pa konvergira i iznosi " + formatValue(r.value) + ".");
+		} else {
+			r.kind = ImproperKind::Divergent;
+			r.steps.push_back("Ovdje je p = " + formatValue(p) + " >= 1, pa integral divergira.");
+		}
+	}
+	return r;
+}
+
 DefiniteIntegralResult DefiniteIntegration::meanValue(const std::string& expression, double a, double b) {
 	if (!(a < b)) throw std::invalid_argument("Potrebno je a < b.");
 	DefiniteIntegralResult r = integrate(expression, a, b);

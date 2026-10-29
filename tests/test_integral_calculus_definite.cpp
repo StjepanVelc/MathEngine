@@ -56,6 +56,23 @@ TEST(DefiniteIntegral, ImproperIntegral) {
 	EXPECT_THROW(DefiniteIntegration::improper("x", 0, false, 1, false), std::invalid_argument);
 }
 
+TEST(DefiniteIntegral, SingularEndpoint) {
+	const auto r = DefiniteIntegration::improperSingular("1/sqrt(x)", 0, 1, true);
+	EXPECT_EQ(r.kind, ImproperKind::Convergent);
+	EXPECT_NEAR(r.value, 2.0, 1e-2);
+	EXPECT_EQ(DefiniteIntegration::improperSingular("1/x", 0, 1, true).kind, ImproperKind::Divergent);
+	EXPECT_THROW(DefiniteIntegration::improperSingular("1/x", 1, 0, true), std::invalid_argument);
+}
+
+TEST(DefiniteIntegral, PTest) {
+	EXPECT_EQ(DefiniteIntegration::pTest(2, true).kind, ImproperKind::Convergent);
+	EXPECT_NEAR(DefiniteIntegration::pTest(3, true).value, 0.5, 1e-12);
+	EXPECT_EQ(DefiniteIntegration::pTest(1, true).kind, ImproperKind::Divergent);
+	EXPECT_EQ(DefiniteIntegration::pTest(0.5, false).kind, ImproperKind::Convergent);
+	EXPECT_NEAR(DefiniteIntegration::pTest(0.5, false).value, 2.0, 1e-12);
+	EXPECT_EQ(DefiniteIntegration::pTest(2, false).kind, ImproperKind::Divergent);
+}
+
 TEST(DefiniteIntegral, MeanValue) {
 	const auto r = DefiniteIntegration::meanValue("x^2", 0, 3);
 	EXPECT_NEAR(r.value / 3.0, 3.0, 1e-9);

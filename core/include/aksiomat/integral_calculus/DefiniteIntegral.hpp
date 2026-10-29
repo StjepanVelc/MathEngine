@@ -57,6 +57,13 @@ public:
 	static ImproperIntegralInfo improper(const std::string& expression, double a, bool lowerInfinite,
 		double b, bool upperInfinite);
 
+	// Nepravi integral sa singularitetom u jednom rubu (npr. 1/sqrt(x) na (0,1]).
+	// singularAtLower: true ako f divergira u a, false ako divergira u b.
+	static ImproperIntegralInfo improperSingular(const std::string& expression, double a, double b, bool singularAtLower);
+
+	// p-test: konvergira li ∫_1^inf 1/x^p dx (p > 1) odnosno ∫_0^1 1/x^p dx (p < 1).
+	static ImproperIntegralInfo pTest(double p, bool atInfinity);
+
 	// Srednja vrijednost funkcije na [a, b] i tocka c iz teorema srednje vrijednosti za integrale.
 	static DefiniteIntegralResult meanValue(const std::string& expression, double a, double b);
 };
