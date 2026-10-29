@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <limits>
 #include <stdexcept>
 
 #include "aksiomat/differential_calculus/FunctionExpression.hpp"

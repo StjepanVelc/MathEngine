@@ -88,6 +88,12 @@ add_library(aksiomat_core STATIC
 	src/differential_calculus/FunctionStudy.cpp
 	src/differential_calculus/DifferentialCalculusJson.cpp
 	src/integral_calculus/RiemannSums.cpp
+	src/integral_calculus/PolynomialExpr.cpp
+	src/integral_calculus/IntegrationInternal.cpp
+	src/integral_calculus/TableIntegration.cpp
+	src/integral_calculus/RationalIntegration.cpp
+	src/integral_calculus/SubstitutionAndParts.cpp
+	src/integral_calculus/IndefiniteIntegral.cpp
 )
 
 target_include_directories(aksiomat_core PUBLIC
