@@ -31,6 +31,13 @@
 			</div>
 		</header>
 
+		<section id="topic-search-box" class="topic-search">
+			<label>Pretraži teme<input id="topic-search" type="search" maxlength="60" placeholder="npr. integral, Fourier, limes…" autocomplete="off"></label>
+			<ul id="topic-search-results" hidden></ul>
+		</section>
+
+		<section id="progress-overview" class="progress-overview" aria-label="Pregled napretka"></section>
+
 		<section id="status">
 			<p>Učitavam WASM modul…</p>
 		</section>
@@ -536,6 +543,8 @@
     <script src="complex-numbers-visuals.js"></script>
     <script src="complex-numbers.js"></script>
     <script src="chapter-practice.js"></script>
+    <script src="topic-search.js"></script>
+    <script src="progress.js"></script>
     <script src="level-page.js"></script>
 </body>
 </html>

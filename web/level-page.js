@@ -88,6 +88,8 @@ async function initLevelPage() {
     applyLevelFilter(level);
     setupChapters();
     setupSubchapters();
+    callIfDefined("setupTopicSearch");
+    callIfDefined("setupProgressOverview");
 
     const status = document.getElementById("status");
     if (typeof createAksiomatModule !== "function") {

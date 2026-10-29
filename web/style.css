@@ -2011,3 +2011,26 @@ output.error {
 .integral-calculus-chapter .mathematical-analysis-nav button.active { background: #fab387 !important; box-shadow: 0 0 0 2px #fab38766 !important; }
 .integral-calculus-chapter .mathematical-analysis-panel button[id$='-calculate'] { display: block; margin: .8rem 0; padding: .8rem 1.4rem; color: #11111b !important; background: #f9e2af !important; border: 2px solid #fab387 !important; border-radius: 10px; font-size: 1rem; font-weight: 800; cursor: pointer; box-shadow: 0 4px 14px #11111b66; }
 .integral-calculus-chapter .mathematical-analysis-panel button[id$='-calculate']:hover { background: #fab387 !important; }
+
+.topic-search { margin: 1rem 0; position: relative; }
+.topic-search label { display: grid; gap: .32rem; color: #bac2de; }
+.topic-search input { width: 100%; max-width: 480px; }
+.topic-search ul { list-style: none; margin: .25rem 0 0; padding: 0; max-width: 480px; border: 1px solid #45475a; border-radius: 10px; background: #1c2232; box-shadow: 0 8px 22px #11111b55; overflow: hidden; }
+.topic-search li button { width: 100%; text-align: left; background: none; border: 0; padding: .55rem .8rem; cursor: pointer; color: inherit; }
+.topic-search li button:hover, .topic-search li button:focus-visible { background: #2a3550; }
+.topic-search-empty { padding: .55rem .8rem; color: #9399b2; }
+
+.progress-overview { margin: 1rem 0; padding: .8rem 1rem; border: 1px solid #45475a; border-radius: 12px; background: #202a3a; }
+.progress-row { display: grid; grid-template-columns: 11rem 1fr; gap: .2rem .8rem; align-items: center; margin-bottom: .5rem; }
+.progress-row small { grid-column: 2; color: #9399b2; }
+.progress-row progress { width: 100%; }
+.progress-suggestion { margin: .5rem 0 0; font-weight: 600; }
+
+canvas { max-width: 100%; height: auto; }
+@media (max-width: 600px) {
+  .progress-row { grid-template-columns: 1fr; }
+  .progress-row small { grid-column: 1; }
+  .topic-search input, .topic-search ul { max-width: none; }
+  .mathematical-analysis-panel input, .mathematical-analysis-panel select, .mathematical-analysis-panel button { min-height: 2.75rem; font-size: 1rem; }
+  .mathematical-analysis-panel { padding: .85rem; }
+}
