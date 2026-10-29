@@ -190,6 +190,14 @@ Aritmetika, algebra i geometrija imaju istu logiku u vlastitim setup funkcijama 
 
 `mathematical-analysis.js` upravlja sa šest panela za formalnu i naprednu analizu (formalni limes/kontinuitet, napredne derivacije, napredni integrali, redovi funkcija, funkcije više varijabli, diferencijalne jednadžbe) te vježbaonicom. Panel odabire funkciju iz padajućeg izbornika (`<select>`) umjesto slobodnog unosa izraza kad WASM adapter očekuje naziv iz kataloga (nepravi integrali, Taylorov red, funkcije više varijabli, diferencijalne jednadžbe), jer jezgra nema opći parser izraza s više varijabli. `mathematical-analysis-visuals.js` crta SVG usporedbu Taylorove aproksimacije sa stvarnom funkcijom (`MathematicalAnalysisVisuals.taylorApproximation`) i putanje Eulerove/RK4 metode (`MathematicalAnalysisVisuals.odeTrajectory`). `mathematical-analysis-practice.js` učitava `web/data/mathematical-analysis-exercises.json` i sprema napredak pod ključem `mathengine-mathematical-analysis-practice-v1`. Poglavlje je vidljivo samo na obrazovnoj razini `advanced` (`data-levels="advanced"`).
 
+## Fakultet: integrali, pretraga i napredak
+
+- `integral-calculus.js` sadrži panele neodređenog (tablični, supstitucija, parcijalna integracija, racionalne funkcije), određenog i nepravog integrala, Riemannovih suma, nizova, primjena te **dvostrukih/trostrukih integrala** (`ic-multi`) i **Fourierovih redova** (`ic-fourier`, Canvas graf funkcije i parcijalne sume). Vježbaonica integrala koristi samo `chapter-practice.js` i `data/integral-calculus-exercises.json`.
+- Banke zadataka (diferencijalni, integralni, vjerojatnost/statistika, kompleksni brojevi) imaju po 24 zadatka (8 po razini: temelji, primjena, izazov).
+- `topic-search.js` – pretraga tema (otvara poglavlje i panel); `progress.js` – pregled napretka iz `localStorage` (isti ključevi kao `chapter-practice.js`) i prijedlog sljedećeg koraka.
+- `level-page.js` svaku setup funkciju izvodi u `try/catch` pa greška u jednom poglavlju ne ruši ostala.
+- Provjere: `node web/tests/check-dom.js`, `scripts/pre-push-check.ps1` (JS sintaksa, web validacija, ctest) i CI web job.
+
 ### Palete simbola
 
 `setupPalette(palette, onInsert)` umeće simbol na trenutačnu poziciju kursora u ciljani input. Cilj se određuje atributom `data-target`. Nakon umetanja opcionalno poziva callback za ponovnu evaluaciju.

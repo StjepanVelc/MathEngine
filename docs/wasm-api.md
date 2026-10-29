@@ -667,4 +667,6 @@ Sve funkcije vracaju JSON ili tekst s prefiksom GRESKA:. Nekonacni/nedefinirani 
 - integralInduction(vrsta, lijevo, desno, n0, maxN) - vrsta: sum | inequality; numericka provjera, ne formalni dokaz
 - integralSequence(izraz, epsilon, brojClanova) - limes, monotonost, ogranicenost, epsilon-N
 - integralSample(izraz, xMin, xMax, n) - tocke za crtanje
+- integralMultiple(izraz, dimenzija, x0, x1, y0, y1, z0, z1, n) - dvostruki (2) ili trostruki (3) integral nad pravokutnikom/kvadrom (Fubini + Simpson); izraz koristi x, y, z; vraca value, measure, mean, subdivisions, steps
+- integralFourier(izraz, L, brojClanova, brojTocaka) - Fourierov red na [-L, L] (clanova 1..50); vraca a0, a[], b[], meanSquareError, points[] (x, f, s), steps
 
