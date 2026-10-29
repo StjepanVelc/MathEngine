@@ -323,48 +323,8 @@ function setupIntegralCalculus(module) {
         if (kind === "arc") drawCurve(ctx, v, sampleCurve(expr, a - pad, b + pad, 200), COLORS.axis, 1);
     }
 
-    // ---- Vjezbaonica ----
-    const TASKS = [
-        { text: "Izračunaj ∫₀³ x² dx.", call: () => module.integralDefinite("x^2", 0, 3), key: "value" },
-        { text: "Izračunaj ∫₀^π sin(x) dx.", call: () => module.integralDefinite("sin(x)", 0, Math.PI), key: "value" },
-        { text: "Izračunaj ∫₁^e 1/x dx.", call: () => module.integralDefinite("1/x", 1, Math.E), key: "value" },
-        { text: "Izračunaj ∫₀¹ x·exp(x) dx (parcijalna integracija).", call: () => module.integralDefinite("x*exp(x)", 0, 1), key: "value" },
-        { text: "Izračunaj ∫₀¹ 2x·(x²+1)³ dx (supstitucija u = x²+1).", call: () => module.integralDefinite("2*x*(x^2+1)^3", 0, 1), key: "value" },
-        { text: "Površina između y = x i y = x² na [0, 1].", call: () => module.integralAreaBetween("x", "x^2", 0, 1), key: "area" },
-        { text: "Volumen rotacije y = x na [0, 3] oko osi x (podijeli s π i upiši broj V/π).", call: () => module.integralApplication("volume", "x", 0, 3), key: "value", div: Math.PI },
-        { text: "Duljina luka y = x na [0, 1].", call: () => module.integralApplication("arc", "x", 0, 1), key: "value" },
-        { text: "Nepravi integral ∫₁^∞ 1/x² dx (upiši vrijednost).", call: () => module.integralImproper("1/x^2", "upper", 1, 0), key: "value" },
-        { text: "Nepravi integral ∫₀^∞ exp(-x) dx (upiši vrijednost).", call: () => module.integralImproper("exp(-x)", "upper", 0, 0), key: "value" },
-    ];
-    let currentTask = -1;
-
-    function nextPractice() {
-        let i;
-        do { i = Math.floor(Math.random() * TASKS.length); } while (i === currentTask && TASKS.length > 1);
-        currentTask = i;
-        $("ic-prac-task").textContent = TASKS[i].text;
-        $("ic-prac-answer").value = "";
-        $("ic-prac-result").replaceChildren();
-        $("ic-prac-steps").replaceChildren();
-    }
-
-    function checkPractice() {
-        const task = TASKS[currentTask];
-        const given = Number($("ic-prac-answer").value.trim().replace(",", "."));
-        if ($("ic-prac-answer").value.trim() === "" || !Number.isFinite(given)) { fail($("ic-prac-result"), "Upiši broj."); return; }
-        const r = call(task.call, $("ic-prac-result"), $("ic-prac-steps"));
-        if (!r) return;
-        const correct = task.div ? r[task.key] / task.div : r[task.key];
-        const ok = Math.abs(given - correct) <= 0.01;
-        showCards($("ic-prac-result"), [["Ishod", ok ? "Točno!" : "Netočno"], ["Točan odgovor", fmt(correct)], ["Tvoj odgovor", fmt(given)]]);
-        showSteps($("ic-prac-steps"), r.steps || []);
-    }
-
     toggles();
     $("ic-app-calculate").addEventListener("click", runApplication);
-    $("ic-prac-calculate").addEventListener("click", checkPractice);
-    $("ic-prac-next").addEventListener("click", nextPractice);
-    nextPractice();
     $("ic-rie-calculate").addEventListener("click", runRiemann);
     $("ic-rie-n").addEventListener("input", runRiemann);
     $("ic-ind-calculate").addEventListener("click", runIndefinite);
