@@ -78,6 +78,7 @@
 #include "aksiomat/complex_numbers/ComplexNumbers.hpp"
 #include "aksiomat/complex_numbers/ComplexApplications.hpp"
 #include "aksiomat/differential_calculus/DifferentialCalculusJson.hpp"
+#include "aksiomat/integral_calculus/IntegralCalculusJson.hpp"
 
 namespace {
 
@@ -2026,6 +2027,46 @@ std::string dcSample(std::string expression, double xMin, double xMax, int count
 	return dcCall([&] { return aksiomat::differential_calculus::DifferentialCalculusJson::sample(expression, xMin, xMax, count); });
 }
 
+std::string icRiemann(std::string expression, double a, double b, int n, std::string method) {
+	return dcCall([&] { return aksiomat::integral_calculus::IntegralCalculusJson::riemann(expression, a, b, n, method); });
+}
+
+std::string icIndefinite(std::string expression) {
+	return dcCall([&] { return aksiomat::integral_calculus::IntegralCalculusJson::indefinite(expression); });
+}
+
+std::string icDefinite(std::string expression, double a, double b) {
+	return dcCall([&] { return aksiomat::integral_calculus::IntegralCalculusJson::definite(expression, a, b); });
+}
+
+std::string icAreaBetween(std::string f, std::string g, double a, double b) {
+	return dcCall([&] { return aksiomat::integral_calculus::IntegralCalculusJson::areaBetween(f, g, a, b); });
+}
+
+std::string icImproper(std::string expression, std::string kind, double a, double b) {
+	return dcCall([&] { return aksiomat::integral_calculus::IntegralCalculusJson::improper(expression, kind, a, b); });
+}
+
+std::string icMeanValue(std::string expression, double a, double b) {
+	return dcCall([&] { return aksiomat::integral_calculus::IntegralCalculusJson::meanValue(expression, a, b); });
+}
+
+std::string icOde(std::string kind, std::string p1, std::string p2, bool hasInitial, double x0, double y0, double xEnd, double extra) {
+	return dcCall([&] { return aksiomat::integral_calculus::IntegralCalculusJson::ode(kind, p1, p2, hasInitial, x0, y0, xEnd, extra); });
+}
+
+std::string icInduction(std::string kind, std::string left, std::string right, int n0, int maxN) {
+	return dcCall([&] { return aksiomat::integral_calculus::IntegralCalculusJson::induction(kind, left, right, n0, maxN); });
+}
+
+std::string icSequence(std::string expression, double epsilon, int termCount) {
+	return dcCall([&] { return aksiomat::integral_calculus::IntegralCalculusJson::sequence(expression, epsilon, termCount); });
+}
+
+std::string icSample(std::string expression, double xMin, double xMax, int count) {
+	return dcCall([&] { return aksiomat::integral_calculus::IntegralCalculusJson::sample(expression, xMin, xMax, count); });
+}
+
 } // namespace
 
 EMSCRIPTEN_BINDINGS(aksiomat_module) {
@@ -2147,6 +2188,16 @@ EMSCRIPTEN_BINDINGS(aksiomat_module) {
 	emscripten::function("diffCalcMeanValue", &dcMeanValue);
 	emscripten::function("diffCalcStudy", &dcStudy);
 	emscripten::function("diffCalcSample", &dcSample);
+	emscripten::function("integralRiemann", &icRiemann);
+	emscripten::function("integralIndefinite", &icIndefinite);
+	emscripten::function("integralDefinite", &icDefinite);
+	emscripten::function("integralAreaBetween", &icAreaBetween);
+	emscripten::function("integralImproper", &icImproper);
+	emscripten::function("integralMeanValue", &icMeanValue);
+	emscripten::function("integralOde", &icOde);
+	emscripten::function("integralInduction", &icInduction);
+	emscripten::function("integralSequence", &icSequence);
+	emscripten::function("integralSample", &icSample);
 }
 
 #endif // __EMSCRIPTEN__

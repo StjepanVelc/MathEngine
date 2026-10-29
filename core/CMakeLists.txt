@@ -97,6 +97,7 @@ add_library(aksiomat_core STATIC
 	src/integral_calculus/DefiniteIntegral.cpp
 	src/integral_calculus/OrdinaryDifferentialEquations.cpp
 	src/integral_calculus/SequenceLimits.cpp
+	src/integral_calculus/IntegralCalculusJson.cpp
 )
 
 target_include_directories(aksiomat_core PUBLIC
