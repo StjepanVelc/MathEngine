@@ -54,6 +54,39 @@
       "tolerance": 0.01,
       "hint": "y=e^(x²).",
       "explanation": "y(1)=e≈2,7183."
+    },
+    {
+      "id": "dc-t-06",
+      "topic": "Limes",
+      "title": "Limes razlike kvadrata",
+      "question": "Izračunaj lim (x²−9)/(x−3) kad x teži 3.",
+      "answer": 6,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "Faktoriziraj brojnik.",
+      "explanation": "(x−3)(x+3)/(x−3) = x+3, limes je 6."
+    },
+    {
+      "id": "dc-t-07",
+      "topic": "Derivacija",
+      "title": "Derivacija x⁴",
+      "question": "Koliko je f′(1) za f(x)=x⁴?",
+      "answer": 4,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "f′(x)=4x³.",
+      "explanation": "f′(1)=4."
+    },
+    {
+      "id": "dc-t-08",
+      "topic": "Neprekidnost",
+      "title": "Limes polinoma",
+      "question": "Izračunaj lim (x²+1) kad x teži 2.",
+      "answer": 5,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "Polinom je neprekidan.",
+      "explanation": "Limes je f(2)=5."
     }
   ],
   "primjena": [
@@ -111,6 +144,39 @@
       "tolerance": 0.01,
       "hint": "y=3e^(−x).",
       "explanation": "3/e≈1,1036."
+    },
+    {
+      "id": "dc-p-06",
+      "topic": "Derivacija",
+      "title": "Derivacija logaritma",
+      "question": "Koliko je f′(2) za f(x)=ln x?",
+      "answer": 0.5,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "f′(x)=1/x.",
+      "explanation": "f′(2)=1/2."
+    },
+    {
+      "id": "dc-p-07",
+      "topic": "Tangenta",
+      "title": "Tangenta na parabolu",
+      "question": "Tangenta na y=x² u x=1 je pravac. Kolika je njegova y-vrijednost u x=2?",
+      "answer": 3,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "Tangenta: y=2x−1.",
+      "explanation": "y(2)=2·2−1=3."
+    },
+    {
+      "id": "dc-p-08",
+      "topic": "Diferencijalne jednadžbe",
+      "title": "Eksponencijalni raspad",
+      "question": "y′=−2y, y(0)=4. Koliko je y(1)? (4 decimale)",
+      "answer": 0.5413,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "y=4e^(−2x).",
+      "explanation": "4e^(−2)≈0,5413."
     }
   ],
   "izazov": [
@@ -168,6 +234,39 @@
       "tolerance": 0.01,
       "hint": "Definicija broja e.",
       "explanation": "Limes je e≈2,7183."
+    },
+    {
+      "id": "dc-i-06",
+      "topic": "Tok funkcije",
+      "title": "Lokalni maksimum",
+      "question": "Kolika je vrijednost lokalnog maksimuma funkcije x³−3x?",
+      "answer": 2,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "f′(x)=3x²−3=0 pa je x=−1.",
+      "explanation": "f(−1)=−1+3=2."
+    },
+    {
+      "id": "dc-i-07",
+      "topic": "Limes",
+      "title": "Limes (eˣ−1)/x",
+      "question": "Izračunaj lim (e^x−1)/x kad x teži 0.",
+      "answer": 1,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "To je derivacija e^x u 0.",
+      "explanation": "Limes je 1."
+    },
+    {
+      "id": "dc-i-08",
+      "topic": "Diferencijalne jednadžbe",
+      "title": "Separabilna jednadžba",
+      "question": "y′=x·y, y(0)=2. Koliko je y(2)? (4 decimale)",
+      "answer": 14.7781,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "y=2e^(x²/2).",
+      "explanation": "y(2)=2e²≈14,7781."
     }
   ]
 }

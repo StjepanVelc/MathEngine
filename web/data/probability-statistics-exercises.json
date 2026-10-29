@@ -21,6 +21,72 @@
       "tolerance": 0.01,
       "hint": "E = n·p.",
       "explanation": "10·0,3 = 3."
+    },
+    {
+      "id": "ps-t-03",
+      "topic": "Vjerojatnost",
+      "title": "Paran broj na kocki",
+      "question": "Kolika je vjerojatnost da na kocki padne paran broj?",
+      "answer": 0.5,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "Povoljni: 2, 4, 6.",
+      "explanation": "3/6=0,5."
+    },
+    {
+      "id": "ps-t-04",
+      "topic": "Očekivanje",
+      "title": "Očekivanje kocke",
+      "question": "Koliko je očekivanje broja na pravednoj kocki?",
+      "answer": 3.5,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "Prosjek brojeva 1 do 6.",
+      "explanation": "21/6=3,5."
+    },
+    {
+      "id": "ps-t-05",
+      "topic": "Binomna razdioba",
+      "title": "Sve glave",
+      "question": "Bacamo 3 poštena novčića. Kolika je vjerojatnost 3 glave?",
+      "answer": 0.125,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "0,5³.",
+      "explanation": "1/8=0,125."
+    },
+    {
+      "id": "ps-t-06",
+      "topic": "Uniformna razdioba",
+      "title": "Očekivanje U(2,10)",
+      "question": "Koliko je očekivanje X ~ U(2,10)?",
+      "answer": 6,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "(a+b)/2.",
+      "explanation": "(2+10)/2=6."
+    },
+    {
+      "id": "ps-t-07",
+      "topic": "Statistika",
+      "title": "Aritmetička sredina",
+      "question": "Kolika je aritmetička sredina brojeva 2, 4, 6, 8?",
+      "answer": 5,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "Zbroj podijeli s brojem članova.",
+      "explanation": "20/4=5."
+    },
+    {
+      "id": "ps-t-08",
+      "topic": "Statistika",
+      "title": "Medijan",
+      "question": "Koliki je medijan brojeva 2, 9, 4, 7?",
+      "answer": 5.5,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "Poredaj: 2, 4, 7, 9.",
+      "explanation": "(4+7)/2=5,5."
     }
   ],
   "primjena": [
@@ -45,6 +111,72 @@
       "tolerance": 0.01,
       "hint": "(x−a)/(b−a).",
       "explanation": "3/10 = 0,3."
+    },
+    {
+      "id": "ps-p-03",
+      "topic": "Varijanca",
+      "title": "Varijanca B(20; 0,5)",
+      "question": "Kolika je varijanca binomne razdiobe B(20; 0,5)?",
+      "answer": 5,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "n·p·(1−p).",
+      "explanation": "20·0,5·0,5=5."
+    },
+    {
+      "id": "ps-p-04",
+      "topic": "Uniformna razdioba",
+      "title": "Varijanca U(0,6)",
+      "question": "Kolika je varijanca X ~ U(0,6)?",
+      "answer": 3,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "(b−a)²/12.",
+      "explanation": "36/12=3."
+    },
+    {
+      "id": "ps-p-05",
+      "topic": "Poissonova razdioba",
+      "title": "P(X=0) za λ=4",
+      "question": "X ~ Poisson(4). Kolika je P(X=0)? (4 decimale)",
+      "answer": 0.0183,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "e^(−λ).",
+      "explanation": "e^(−4)≈0,0183."
+    },
+    {
+      "id": "ps-p-06",
+      "topic": "Varijanca",
+      "title": "Standardna devijacija",
+      "question": "Varijanca je 2,1. Kolika je standardna devijacija? (4 decimale)",
+      "answer": 1.4491,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "Korijen varijance.",
+      "explanation": "√2,1≈1,4491."
+    },
+    {
+      "id": "ps-p-07",
+      "topic": "Normalna razdioba",
+      "title": "z-vrijednost",
+      "question": "X ~ N(100, 15²). Kolika je z-vrijednost za x = 130?",
+      "answer": 2,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "(x−μ)/σ.",
+      "explanation": "(130−100)/15=2."
+    },
+    {
+      "id": "ps-p-08",
+      "topic": "Nezavisnost",
+      "title": "Presjek nezavisnih događaja",
+      "question": "P(A)=0,4 i P(B)=0,5, događaji su nezavisni. Kolika je P(A∩B)?",
+      "answer": 0.2,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "Pomnoži vjerojatnosti.",
+      "explanation": "0,4·0,5=0,2."
     }
   ],
   "izazov": [
@@ -69,6 +201,72 @@
       "tolerance": 0.01,
       "hint": "z·σ/√n.",
       "explanation": "1,96·2/4 = 0,98."
+    },
+    {
+      "id": "ps-i-03",
+      "topic": "Interval pouzdanosti",
+      "title": "Poluširina za σ=10",
+      "question": "σ=10, n=100, z=1,96. Kolika je poluširina intervala pouzdanosti?",
+      "answer": 1.96,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "z·σ/√n.",
+      "explanation": "1,96·10/10=1,96."
+    },
+    {
+      "id": "ps-i-04",
+      "topic": "Eksponencijalna razdioba",
+      "title": "P(X>1) za λ=2",
+      "question": "X ~ Exp(2). Kolika je P(X>1)? (4 decimale)",
+      "answer": 0.1353,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "e^(−λx).",
+      "explanation": "e^(−2)≈0,1353."
+    },
+    {
+      "id": "ps-i-05",
+      "topic": "Geometrijska razdioba",
+      "title": "Očekivanje geometrijske",
+      "question": "Geometrijska razdioba s p=0,25. Koliko je očekivanje broja pokušaja?",
+      "answer": 4,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "1/p.",
+      "explanation": "1/0,25=4."
+    },
+    {
+      "id": "ps-i-06",
+      "topic": "Bayesova formula",
+      "title": "Test na bolest",
+      "question": "P(A)=0,01, P(+|A)=0,9, P(+|nA)=0,1. Kolika je P(A|+)? (4 decimale)",
+      "answer": 0.4762,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "P(+)=0,9·0,01+0,1·0,99=0,0189.",
+      "explanation": "0,009/0,0189≈0,4762."
+    },
+    {
+      "id": "ps-i-07",
+      "topic": "Poissonova razdioba",
+      "title": "Varijanca Poissona",
+      "question": "X ~ Poisson(3,5). Kolika je varijanca?",
+      "answer": 3.5,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "Varijanca je jednaka λ.",
+      "explanation": "Var=λ=3,5."
+    },
+    {
+      "id": "ps-i-08",
+      "topic": "Binomna razdioba",
+      "title": "Barem jedan uspjeh",
+      "question": "B(3; 0,5): kolika je P(X≥1)?",
+      "answer": 0.875,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "1−P(X=0).",
+      "explanation": "1−0,125=0,875."
     }
   ]
 }

@@ -21,6 +21,72 @@
       "tolerance": 0.01,
       "hint": "(a+bi)(a−bi) = a²+b².",
       "explanation": "1+1 = 2."
+    },
+    {
+      "id": "cn-t-03",
+      "topic": "Operacije",
+      "title": "Zbrajanje",
+      "question": "Koliki je imaginarni dio (2+3i)+(4−i)?",
+      "answer": 2,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "Zbroji imaginarne dijelove.",
+      "explanation": "3−1=2."
+    },
+    {
+      "id": "cn-t-04",
+      "topic": "Konjugat",
+      "title": "Konjugat",
+      "question": "Koliki je imaginarni dio konjugata od 5−2i?",
+      "answer": 2,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "Konjugat mijenja predznak imaginarnog dijela.",
+      "explanation": "Konjugat je 5+2i."
+    },
+    {
+      "id": "cn-t-05",
+      "topic": "Operacije",
+      "title": "Množenje",
+      "question": "Koliki je realni dio (2+i)(3+i)?",
+      "answer": 5,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "6+2i+3i+i².",
+      "explanation": "6−1=5."
+    },
+    {
+      "id": "cn-t-06",
+      "topic": "Modul",
+      "title": "Modul 5+12i",
+      "question": "Koliki je |5+12i|?",
+      "answer": 13,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "√(25+144).",
+      "explanation": "√169=13."
+    },
+    {
+      "id": "cn-t-07",
+      "topic": "Potencije od i",
+      "title": "i³",
+      "question": "Koliki je imaginarni dio od i³?",
+      "answer": -1,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "i³=i²·i.",
+      "explanation": "i³=−i."
+    },
+    {
+      "id": "cn-t-08",
+      "topic": "Operacije",
+      "title": "Oduzimanje",
+      "question": "Koliki je imaginarni dio (7+2i)−(3+5i)?",
+      "answer": -3,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "Oduzmi imaginarne dijelove.",
+      "explanation": "2−5=−3."
     }
   ],
   "primjena": [
@@ -45,6 +111,72 @@
       "tolerance": 0.01,
       "hint": "Broj leži na pozitivnoj imaginarnoj osi.",
       "explanation": "arg(i) = 90°."
+    },
+    {
+      "id": "cn-p-03",
+      "topic": "Dijeljenje",
+      "title": "Realni dio kvocijenta",
+      "question": "Koliki je realni dio (4+2i)/(1+i)?",
+      "answer": 3,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "Pomnoži s konjugatom nazivnika.",
+      "explanation": "(4+2i)(1−i)/2=(6−2i)/2=3−i."
+    },
+    {
+      "id": "cn-p-04",
+      "topic": "Dijeljenje",
+      "title": "Imaginarni dio kvocijenta",
+      "question": "Koliki je imaginarni dio (4+2i)/(1+i)?",
+      "answer": -1,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "Rezultat je 3−i.",
+      "explanation": "Imaginarni dio je −1."
+    },
+    {
+      "id": "cn-p-05",
+      "topic": "Argument",
+      "title": "Argument od 1+i",
+      "question": "Koliki je argument broja 1+i u stupnjevima?",
+      "answer": 45,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "tan φ = 1.",
+      "explanation": "φ=45°."
+    },
+    {
+      "id": "cn-p-06",
+      "topic": "Modul",
+      "title": "Modul −6+8i",
+      "question": "Koliki je |−6+8i|?",
+      "answer": 10,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "√(36+64).",
+      "explanation": "√100=10."
+    },
+    {
+      "id": "cn-p-07",
+      "topic": "Potenciranje",
+      "title": "Kvadrat 3+2i",
+      "question": "Koliki je realni dio (3+2i)²?",
+      "answer": 5,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "9+12i+4i².",
+      "explanation": "9−4=5."
+    },
+    {
+      "id": "cn-p-08",
+      "topic": "Korijeni",
+      "title": "Korijen od −16",
+      "question": "Koliki je modul rješenja jednadžbe z²=−16?",
+      "answer": 4,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "z=±4i.",
+      "explanation": "|4i|=4."
     }
   ],
   "izazov": [
@@ -69,6 +201,72 @@
       "tolerance": 0.01,
       "hint": "|zⁿ| = |z|ⁿ.",
       "explanation": "(√2)⁸ = 16."
+    },
+    {
+      "id": "cn-i-03",
+      "topic": "Potencije od i",
+      "title": "i²⁰²⁵",
+      "question": "Koliki je imaginarni dio od i^2025?",
+      "answer": 1,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "2025 mod 4 = 1.",
+      "explanation": "i^2025=i."
+    },
+    {
+      "id": "cn-i-04",
+      "topic": "De Moivre",
+      "title": "Realni dio potencije",
+      "question": "Koliki je realni dio (cos30°+i·sin30°)⁶?",
+      "answer": -1,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "Kut se množi sa 6.",
+      "explanation": "cos180°=−1."
+    },
+    {
+      "id": "cn-i-05",
+      "topic": "De Moivre",
+      "title": "Modul (1+i)¹⁰",
+      "question": "Koliki je |(1+i)^10|?",
+      "answer": 32,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "(√2)¹⁰.",
+      "explanation": "2⁵=32."
+    },
+    {
+      "id": "cn-i-06",
+      "topic": "Argument",
+      "title": "Argument (1+i)⁴",
+      "question": "Koliki je argument od (1+i)⁴ u stupnjevima (između 0 i 360)?",
+      "answer": 180,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "(1+i)⁴=−4.",
+      "explanation": "arg(−4)=180°."
+    },
+    {
+      "id": "cn-i-07",
+      "topic": "Korijeni",
+      "title": "Zbroj trećih korijena",
+      "question": "Koliki je zbroj sva tri kubna korijena iz 1?",
+      "answer": 0,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "Vietove formule za z³−1=0.",
+      "explanation": "Zbroj je 0."
+    },
+    {
+      "id": "cn-i-08",
+      "topic": "Eulerova formula",
+      "title": "e^(iπ)",
+      "question": "Koliki je realni dio od e^(iπ)?",
+      "answer": -1,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "cos π + i·sin π.",
+      "explanation": "cos π=−1."
     }
   ]
 }

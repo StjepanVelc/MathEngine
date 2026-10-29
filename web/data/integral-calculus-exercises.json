@@ -43,6 +43,50 @@
       "tolerance": 0.01,
       "hint": "sin x.",
       "explanation": "sin(π/2)−0=1."
+    },
+    {
+      "id": "ic-t-05",
+      "topic": "Osnovni integral",
+      "title": "Integral x³",
+      "question": "Izračunaj ∫₀¹ x³ dx.",
+      "answer": 0.25,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "x⁴/4.",
+      "explanation": "1/4=0,25."
+    },
+    {
+      "id": "ic-t-06",
+      "topic": "Osnovni integral",
+      "title": "Integral 1/x",
+      "question": "Izračunaj ∫₁² 1/x dx (4 decimale).",
+      "answer": 0.6931,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "ln|x|.",
+      "explanation": "ln2≈0,6931."
+    },
+    {
+      "id": "ic-t-07",
+      "topic": "Osnovni integral",
+      "title": "Integral eˣ",
+      "question": "Izračunaj ∫₀¹ e^x dx (4 decimale).",
+      "answer": 1.7183,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "e^x.",
+      "explanation": "e−1≈1,7183."
+    },
+    {
+      "id": "ic-t-08",
+      "topic": "Osnovni integral",
+      "title": "Linearna funkcija",
+      "question": "Izračunaj ∫₀² (x+1) dx.",
+      "answer": 4,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "x²/2+x.",
+      "explanation": "2+2=4."
     }
   ],
   "primjena": [
@@ -89,6 +133,50 @@
       "tolerance": 0.01,
       "hint": "√(1+y′²).",
       "explanation": "√2≈1,4142."
+    },
+    {
+      "id": "ic-p-05",
+      "topic": "Površina",
+      "title": "Površina između krivulja",
+      "question": "Površina između y=x i y=x² na [0,1] (4 decimale).",
+      "answer": 0.1667,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "∫(x−x²)dx.",
+      "explanation": "1/2−1/3=1/6."
+    },
+    {
+      "id": "ic-p-06",
+      "topic": "Površina",
+      "title": "Površina ispod korijena",
+      "question": "Površina ispod y=√x na [0,4] (4 decimale).",
+      "answer": 5.3333,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "(2/3)x^(3/2).",
+      "explanation": "16/3≈5,3333."
+    },
+    {
+      "id": "ic-p-07",
+      "topic": "Supstitucija",
+      "title": "Supstitucija u=x²+1",
+      "question": "Izračunaj ∫₀¹ 2x(x²+1)³ dx.",
+      "answer": 3.75,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "(x²+1)⁴/4.",
+      "explanation": "(16−1)/4=3,75."
+    },
+    {
+      "id": "ic-p-08",
+      "topic": "Volumen",
+      "title": "Volumen paraboloida",
+      "question": "Volumen rotacije y=x² na [0,1] oko osi x, u jedinicama π.",
+      "answer": 0.2,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "V=π∫x⁴dx.",
+      "explanation": "π/5, tj. 0,2 u jedinicama π."
     }
   ],
   "izazov": [
@@ -135,6 +223,50 @@
       "tolerance": 0.01,
       "hint": "−cos x.",
       "explanation": "1+1=2."
+    },
+    {
+      "id": "ic-i-05",
+      "topic": "Nepravi integral",
+      "title": "Gamma(2)",
+      "question": "Izračunaj ∫₀^∞ x·e^(−x) dx.",
+      "answer": 1,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "Parcijalna integracija.",
+      "explanation": "Vrijednost je 1."
+    },
+    {
+      "id": "ic-i-06",
+      "topic": "Nepravi integral",
+      "title": "Integral 1/x³",
+      "question": "Izračunaj ∫₁^∞ 1/x³ dx.",
+      "answer": 0.5,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "−1/(2x²).",
+      "explanation": "Vrijednost je 1/2."
+    },
+    {
+      "id": "ic-i-07",
+      "topic": "Nepravi integral",
+      "title": "Integral ln x",
+      "question": "Izračunaj ∫₀¹ ln x dx.",
+      "answer": -1,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "x·ln x − x.",
+      "explanation": "Vrijednost je −1."
+    },
+    {
+      "id": "ic-i-08",
+      "topic": "Metoda dijelova",
+      "title": "x·sin x",
+      "question": "Izračunaj ∫₀^π x·sin x dx (4 decimale).",
+      "answer": 3.1416,
+      "unit": "",
+      "tolerance": 0.01,
+      "hint": "u=x, dv=sin x dx.",
+      "explanation": "[−x cos x + sin x]₀^π = π."
     }
   ]
 }
