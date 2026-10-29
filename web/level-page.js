@@ -107,6 +107,7 @@ async function initLevelPage() {
     callIfDefined("setupCalculusBasics", module);
     callIfDefined("setupMathematicalAnalysis", module);
     callIfDefined("setupDifferentialCalculus", module);
+    callIfDefined("setupIntegralCalculus", module);
     callIfDefined("setupAlgebra", module);
     callIfDefined("setupAnalyticAlgebra", module);
     callIfDefined("setupDiscreteMath", module);

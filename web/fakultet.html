@@ -236,6 +236,106 @@
             </div>
         </section>
 
+        <section class="chapter integral-calculus-chapter" data-levels="advanced" hidden>
+            <button class="chapter-toggle" aria-expanded="false">Integralni račun, diferencijalne jednadžbe i nizovi ▸</button>
+            <div class="chapter-body" hidden>
+                <header class="mathematical-analysis-hero"><div><span class="mathematical-analysis-kicker">Integrali</span><h2>Integralni račun jedne varijable</h2><p>Riemannove sume, neodređeni i određeni integral, nepravi integrali, površine, diferencijalne jednadžbe prvog reda te nizovi i indukcija — s grafovima i koracima. Beskonačnost se bira u izborniku.</p></div></header>
+                <nav class="mathematical-analysis-nav" aria-label="Područja integralnog računa">
+                    <button type="button" class="mathematical-analysis-toggle ic-toggle" data-panel="ic-riemann">Riemannove sume</button>
+                    <button type="button" class="mathematical-analysis-toggle ic-toggle" data-panel="ic-indefinite">Neodređeni integral</button>
+                    <button type="button" class="mathematical-analysis-toggle ic-toggle" data-panel="ic-definite">Određeni integral i površina</button>
+                    <button type="button" class="mathematical-analysis-toggle ic-toggle" data-panel="ic-improper">Nepravi integrali</button>
+                    <button type="button" class="mathematical-analysis-toggle ic-toggle" data-panel="ic-ode">Diferencijalne jednadžbe</button>
+                    <button type="button" class="mathematical-analysis-toggle ic-toggle" data-panel="ic-seq">Nizovi i indukcija</button>
+                </nav>
+
+                <div id="ic-riemann" class="mathematical-analysis-panel ic-panel"><div class="mathematical-analysis-layout"><div>
+                    <span class="mathematical-analysis-chip">Σ f(xᵢ)Δx</span><h2>Riemannove sume</h2>
+                    <p class="tool-description">Plavo je f, narančasti pravokutnici su aproksimacija. Povećaj n i gledaj kako suma teži integralu.</p>
+                    <label>Izraz f(x)<input id="ic-rie-expression" type="text" maxlength="200" value="x^2"></label>
+                    <label>a<input id="ic-rie-a" type="number" step="any" value="0"></label>
+                    <label>b<input id="ic-rie-b" type="number" step="any" value="2"></label>
+                    <label>Podintervala n: <output id="ic-rie-n-label">8</output><input id="ic-rie-n" type="range" min="1" max="200" step="1" value="8"></label>
+                    <label>Metoda<select id="ic-rie-method"><option value="left">Lijeva</option><option value="right">Desna</option><option value="midpoint">Sredina</option><option value="trapezoid">Trapezi</option><option value="simpson">Simpson</option></select></label>
+                    <button id="ic-rie-calculate" type="button">Izračunaj</button>
+                    <div id="ic-rie-result" class="result-grid"></div>
+                    <canvas id="ic-rie-canvas" width="680" height="340" role="img" aria-label="Riemannova suma kao pravokutnici ispod grafa"></canvas>
+                    <div id="ic-rie-steps" class="mathematical-analysis-steps"></div>
+                </div></div></div>
+
+                <div id="ic-indefinite" class="mathematical-analysis-panel ic-panel" hidden><div class="mathematical-analysis-layout"><div>
+                    <span class="mathematical-analysis-chip">∫ f dx</span><h2>Neodređeni integral</h2>
+                    <p class="tool-description">Tablični integrali, linearnost, supstitucija, parcijalna integracija i racionalne funkcije (parcijalni razlomci). Rezultat se provjerava deriviranjem.</p>
+                    <label>Izraz f(x)<input id="ic-ind-expression" type="text" maxlength="200" value="x*exp(x)"></label>
+                    <button id="ic-ind-calculate" type="button">Integriraj</button>
+                    <div id="ic-ind-result" class="result-grid"></div>
+                    <div id="ic-ind-steps" class="mathematical-analysis-steps"></div>
+                </div></div></div>
+
+                <div id="ic-definite" class="mathematical-analysis-panel ic-panel" hidden><div class="mathematical-analysis-layout"><div>
+                    <span class="mathematical-analysis-chip">∫ₐᵇ</span><h2>Određeni integral i površina između krivulja</h2>
+                    <p class="tool-description">Newton–Leibniz. Ako drugi izraz g(x) nije prazan, računa se površina između f i g (sjecišta su označena).</p>
+                    <label>f(x)<input id="ic-def-f" type="text" maxlength="200" value="x"></label>
+                    <label>g(x) (neobavezno)<input id="ic-def-g" type="text" maxlength="200" value="x^2"></label>
+                    <label>a<input id="ic-def-a" type="number" step="any" value="0"></label>
+                    <label>b<input id="ic-def-b" type="number" step="any" value="2"></label>
+                    <button id="ic-def-calculate" type="button">Izračunaj</button>
+                    <div id="ic-def-result" class="result-grid"></div>
+                    <canvas id="ic-def-canvas" width="680" height="340" role="img" aria-label="Površina ispod grafa ili između krivulja"></canvas>
+                    <div id="ic-def-steps" class="mathematical-analysis-steps"></div>
+                </div></div></div>
+
+                <div id="ic-improper" class="mathematical-analysis-panel ic-panel" hidden><div class="mathematical-analysis-layout"><div>
+                    <span class="mathematical-analysis-chip">∫ → ∞</span><h2>Nepravi integrali i p-test</h2>
+                    <p class="tool-description">Konvergencija se prati preko integrala do granice b koja raste. Za p-test upiši p u polje a.</p>
+                    <label>Izraz f(x)<input id="ic-imp-expression" type="text" maxlength="200" value="1/x^2"></label>
+                    <label>Vrsta<select id="ic-imp-kind"><option value="upper">[a, +∞)</option><option value="lower">(−∞, b]</option><option value="both">(−∞, +∞)</option><option value="singular_lower">singularitet u a</option><option value="singular_upper">singularitet u b</option><option value="ptest_infinity">p-test na [1, ∞)</option><option value="ptest_zero">p-test na (0, 1]</option></select></label>
+                    <label>a (ili p)<input id="ic-imp-a" type="number" step="any" value="1"></label>
+                    <label>b<input id="ic-imp-b" type="number" step="any" value="1"></label>
+                    <button id="ic-imp-calculate" type="button">Ispitaj</button>
+                    <div id="ic-imp-result" class="result-grid"></div>
+                    <canvas id="ic-imp-canvas" width="680" height="300" role="img" aria-label="Parcijalni integrali do granice b"></canvas>
+                    <div id="ic-imp-steps" class="mathematical-analysis-steps"></div>
+                </div></div></div>
+
+                <div id="ic-ode" class="mathematical-analysis-panel ic-panel" hidden><div class="mathematical-analysis-layout"><div>
+                    <span class="mathematical-analysis-chip">y′ = …</span><h2>Diferencijalne jednadžbe prvog reda</h2>
+                    <p class="tool-description">Separabilna y′ = g(x)·h(y), linearna y′ + p(x)y = q(x), rast/raspad y′ = ky i logistički model. Za modele upiši parametre u polja x₀ (k ili r), y₀ i K.</p>
+                    <label>Vrsta<select id="ic-ode-kind"><option value="separable">Separabilna: p1 = g(x), p2 = h(y)</option><option value="linear">Linearna: p1 = p(x), p2 = q(x)</option><option value="growth">Rast/raspad: x₀ = k</option><option value="logistic">Logistički: x₀ = r, K</option></select></label>
+                    <label>p1<input id="ic-ode-p1" type="text" maxlength="200" value="2*x"></label>
+                    <label>p2<input id="ic-ode-p2" type="text" maxlength="200" value="y"></label>
+                    <label>x₀ (ili k, r)<input id="ic-ode-x0" type="number" step="any" value="0"></label>
+                    <label>y₀<input id="ic-ode-y0" type="number" step="any" value="1"></label>
+                    <label>Kraj intervala<input id="ic-ode-end" type="number" step="any" value="2"></label>
+                    <label>K (kapacitet)<input id="ic-ode-k" type="number" step="any" value="100"></label>
+                    <label><input id="ic-ode-initial" type="checkbox" checked> Početni uvjet y(x₀) = y₀</label>
+                    <button id="ic-ode-calculate" type="button">Riješi</button>
+                    <div id="ic-ode-result" class="result-grid"></div>
+                    <canvas id="ic-ode-canvas" width="680" height="340" role="img" aria-label="Graf rješenja diferencijalne jednadžbe"></canvas>
+                    <div id="ic-ode-steps" class="mathematical-analysis-steps"></div>
+                </div></div></div>
+
+                <div id="ic-seq" class="mathematical-analysis-panel ic-panel" hidden><div class="mathematical-analysis-layout"><div>
+                    <span class="mathematical-analysis-chip">aₙ, n → ∞</span><h2>Nizovi i matematička indukcija</h2>
+                    <p class="tool-description">Limes niza (varijabla je n), monotonost, ograničenost i ε–N. Indukcija: provjera baze i tvrdnje za mnogo n (numerički dokaz nije formalni).</p>
+                    <label>Niz aₙ<input id="ic-seq-expression" type="text" maxlength="200" value="(1+1/n)^n"></label>
+                    <label>ε<input id="ic-seq-eps" type="number" step="any" min="0.0000001" value="0.01"></label>
+                    <button id="ic-seq-calculate" type="button">Analiziraj niz</button>
+                    <div id="ic-seq-result" class="result-grid"></div>
+                    <canvas id="ic-seq-canvas" width="680" height="280" role="img" aria-label="Članovi niza"></canvas>
+                    <div id="ic-seq-steps" class="mathematical-analysis-steps"></div>
+                    <h2>Indukcija</h2>
+                    <label>Vrsta<select id="ic-idx-kind"><option value="sum">Σ k=1..n f(k) = g(n)</option><option value="inequality">f(n) ≤ g(n) za n ≥ n₀</option></select></label>
+                    <label>f<input id="ic-idx-left" type="text" maxlength="200" value="k"></label>
+                    <label>g<input id="ic-idx-right" type="text" maxlength="200" value="n*(n+1)/2"></label>
+                    <label>n₀<input id="ic-idx-n0" type="number" step="1" value="1"></label>
+                    <button id="ic-idx-calculate" type="button">Provjeri</button>
+                    <div id="ic-idx-result" class="result-grid"></div>
+                    <div id="ic-idx-steps" class="mathematical-analysis-steps"></div>
+                </div></div></div>
+            </div>
+        </section>
+
         <section class="chapter mathematical-analysis-chapter" data-levels="advanced" hidden>
             <button class="chapter-toggle" aria-expanded="false">Matematička analiza — napredno i fakultet ▸</button>
             <div class="chapter-body" hidden>
@@ -360,6 +460,7 @@
     <script src="mathematical-analysis-practice.js"></script>
     <script src="mathematical-analysis.js"></script>
     <script src="differential-calculus.js"></script>
+    <script src="integral-calculus.js"></script>
     <script src="analytic-algebra-practice.js"></script>
     <script src="analytic-algebra.js"></script>
     <script src="discrete-math-practice.js"></script>
